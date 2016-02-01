@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.RData
+inst/doc
+README/README-cache*
+README/README-fig*png
+

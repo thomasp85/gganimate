@@ -1,0 +1,25 @@
+Package: gganimate
+Type: Package
+Title: Create easy animations with ggplot2
+Version: 0.1
+Date: 2016-02-01
+Author: c(person("David", "Robinson", email = "drobinson@stackoverflow.com",
+    role = c("aut", "cre")))
+Maintainer: David Robinson <drobinson@stackoverflow.com>
+Description: Create animations with ggplot2 by treating the "frame" as an
+    aesthetic similar to x, y, or color. Compatible with presenting animations
+    in knitr or saving to a video or animated image file.
+License: GPL-2
+LazyData: TRUE
+VignetteBuilder: knitr
+Suggests:
+    knitr,
+    rmarkdown,
+    gapminder
+RoxygenNote: 5.0.1
+Imports: plyr,
+    ggplot2,
+    grid,
+    animation
+URL: http://github.com/dgrtwo/gganimate
+BugReports: http://github.com/dgrtwo/gganimate/issues
