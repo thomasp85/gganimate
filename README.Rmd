@@ -31,7 +31,11 @@ opts_knit$set(animation.fun = function(x, options, format = "gif") {
   mov.fname = paste0(sub(paste0(fig.num, "$"), "", x[1]), ".", 
                      format)
 
-  animation::im.convert(fig.fname, output = mov.fname)
+  # order correctly
+  figs <- Sys.glob(fig.fname)
+  figs <- figs[order(as.numeric(stringr::str_match(figs, paste0("(\\d+)\\.", x[2]))[, 2]))]
+
+  animation::im.convert(figs, output = mov.fname)
   
   sprintf("![%s](%s)", options$label, paste0(opts_knit$get("base.url"), mov.fname))
 })
