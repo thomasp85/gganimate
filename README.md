@@ -17,7 +17,7 @@ output:
 
 The core of the approach is to treat "frame" (as in, the time point within an animation) as another aesthetic, just like **x**, **y**, **size**, **color**, or so on. Thus, a variable in your data can be mapped to frame just as others are mapped to x or y.
 
-For example, suppose we wanted to create an animation similar to the [Gapminder world](http://www.gapminder.org/world) animation.
+For example, suppose we wanted to create an animation similar to the [Gapminder world](http://www.gapminder.org/world) animation, using Jenny Bryan's [gapminder](https://github.com/jennybc/gapminder) package for the data.
 
 
 ```r
@@ -33,7 +33,7 @@ p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent, fr
   scale_x_log10()
 ```
 
-Once we have created that plot (notice it was saved as `p`), we display it as an animation with the `gg_animate` function:
+Notice we added `frame = year` and saved the plot as `p`. We then display it as an animation with the `gg_animate` function:
 
 
 ```r
@@ -58,7 +58,7 @@ gg_animate(p, "output.html")
 
 (Each of these requires ffmpeg, ImageMagick, or other such drivers to be installed on your computer: see the [animation package](http://www.inside-r.org/packages/cran/animation/docs/animation) documentation for more).
 
-Notice that the axis limits and legend stay fixed between animation frames, even though the points move. This is one of the advantages of the **gganimate** package as opposed to creating animations manually: the plot (and its axes and legend) is built only once but rendered for each frame.
+Notice that the axis limits and legend stay fixed between animation frames, even though the points move. This is one of the advantages of the **gganimate** package as opposed to creating each ggplot separately and combining them with the **animation** package: the plot (with its axes and legend) is built only once but rendered for each frame.
 
 ### Customization
 
@@ -76,7 +76,7 @@ gg_animate(p)
 
 ![unnamed-chunk-5](README/README-fig-unnamed-chunk-5-.gif)
 
-Note that while animating over time is intuitive, you could match any variable in your data to the `frame` aesthetic. We could animate across continents instead:
+Note that while it's intuitive to match `frame` to a "time" dimension, you could match any variable in your data to the `frame` aesthetic. We could animate across continents instead:
 
 
 ```r
@@ -89,7 +89,7 @@ gg_animate(p)
 
 ![unnamed-chunk-6](README/README-fig-unnamed-chunk-6-.gif)
 
-Finally, note that if there is a stat summarization (such as a `geom_smooth`) that you want to animate, you should also add a `group` aesthetic to that layer. Otherwise, the layer will be calculated once across all frames (and therefore be constant in the animation):
+Note that if there is a stat summarization (such as a `geom_smooth`) that you want to animate, you should also add a `group` aesthetic to that layer. Otherwise, the layer will be calculated once across all frames (and therefore be constant in the animation):
 
 
 ```r
@@ -104,12 +104,12 @@ gg_animate(p)
 
 ![unnamed-chunk-7](README/README-fig-unnamed-chunk-7-.gif)
 
-Note also that you can control your animation the same way you would in the animation package, using the [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options) function:
+Finally, note that you can control your animation the same way you would in the animation package, using the [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options) function:
 
 
 ```r
 library(animation)
 ani.options(interval = .3)
-gg_animate(p, "output.gif")
+gg_animate(p, "output.mp4")
 ```
 
