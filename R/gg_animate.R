@@ -27,8 +27,6 @@ gg_animate <- function(p = last_plot(), filename = NULL, saver = NULL,
     stop("no plot to save")
   }
 
-  # add group mappings
-
   built <- ggplot_build(p)
 
   # get frames
@@ -42,7 +40,7 @@ gg_animate <- function(p = last_plot(), filename = NULL, saver = NULL,
     b <- built
     for (i in seq_along(b$data)) {
       if (!is.null(b$data[[i]]$frame)) {
-        sub <- b$data[[i]]$frame == f
+        sub <- b$data[[i]]$frame == f | is.na(b$data[[i]]$frame)
         b$data[[i]] <- b$data[[i]][sub, ]
       }
     }
