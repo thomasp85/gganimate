@@ -1,9 +1,3 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
-
 ## gganimate: Create easy animations with ggplot2
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
