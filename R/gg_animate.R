@@ -66,7 +66,7 @@ gg_animate <- function(p = last_plot(), filename = NULL, saver = NULL,
   built <- ggplot_build(p)
 
   # get frames
-  frames <- sort(unique(unlist(plyr::compact(lapply(built$data, function(d) d$frame)))))
+  frames <- sort(unique(do.call(c, plyr::compact(lapply(built$data, function(d) d$frame)))))
   if (length(frames) == 0) {
     stop("No frame aesthetic found; cannot create animation")
   }
