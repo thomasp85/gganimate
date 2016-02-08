@@ -34,7 +34,7 @@
 #'
 #' p
 #'
-#' gg_animate(p, pause = .5)
+#' gg_animate(p)
 #'
 #' \dontrun{
 #' gg_animate(p, "output.gif")
@@ -50,7 +50,7 @@
 #' p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
 #'   geom_line()
 #'
-#' gg_animate(p2, pause = .5, title_frame = FALSE)
+#' gg_animate(p2, title_frame = FALSE)
 #'
 #'
 #' @export
