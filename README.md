@@ -42,7 +42,7 @@ gg_animate(p)
 
 ![unnamed-chunk-3](README/README-fig-unnamed-chunk-3-.gif)
 
-This displays each of the frames of the plot in sequence (note that if you're running it interactively it will be too fast to see all of them). When combined with knitr's `fig.show = "animate"`, we create an animation as seen above.
+This creates a animation you can view within RStudio. When run within knitr (and combined with knitr's `fig.show = "animate"` chunk option), it instead displays each of the figures in sequence to let knitr create an animation as seen above.
 
 You can also save the animation to a file, such as an GIF, video, or an animated webpage:
 
