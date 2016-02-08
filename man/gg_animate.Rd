@@ -4,23 +4,19 @@
 \alias{gg_animate}
 \title{Show an animation of a ggplot2 object}
 \usage{
-gg_animate(p = last_plot(), filename = NULL, saver = NULL, pause = NULL,
+gg_animate(p = last_plot(), filename = NULL, saver = NULL,
   title_frame = TRUE, ...)
 }
 \arguments{
 \item{p}{A ggplot2 object. If no plot is provided, use the last plot by default.}
 
-\item{filename}{Output file. If not given, simply prints to the screen (typical for animated
-knitr chunks)}
+\item{filename}{Optionally, an output file to save to. If not given, will
+store as plots without (yet) saving to a file}
 
-\item{saver}{Can specify a function (or a string such as "mp4" or "html") that specifies
-a function to use for saving. Functions from the animation package such as \code{saveVideo}
-and \code{saveGIF} are also recognized from the filename extension.}
-
-\item{pause}{Amount of time to pause between displaying each plot. Only used when
-displaying to the screen, not saving to a file (and not useful when creating an
-animation in a knitr chunk). When saving to a file, use
-\code{ani.options(interval = ...)}}
+\item{saver}{A string such as "mp4" or "gif" that specifies
+a function from the animation package such as \code{saveVideo}
+or \code{saveGIF} to use for saving. This can also be recognized from the
+filename extension.}
 
 \item{title_frame}{Whether to title each image with the current \code{frame} value.
 The value is appended on to any existing title.}

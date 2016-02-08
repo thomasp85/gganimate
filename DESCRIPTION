@@ -12,14 +12,18 @@ Description: Create animations with ggplot2 by treating the "frame" as an
 License: GPL-2
 LazyData: TRUE
 VignetteBuilder: knitr
-Suggests:
+Suggests: 
     knitr,
     rmarkdown,
-    gapminder
+    gapminder,
+    testthat
 RoxygenNote: 5.0.1
 Imports: plyr,
     ggplot2,
     grid,
-    animation
+    animation,
+    base64enc,
+    htmltools,
+    withr
 URL: http://github.com/dgrtwo/gganimate
 BugReports: http://github.com/dgrtwo/gganimate/issues

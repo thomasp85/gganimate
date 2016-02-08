@@ -10,15 +10,12 @@
 #' the frames build cumulatively rather than each being generated with separate data.
 #'
 #' @param p A ggplot2 object. If no plot is provided, use the last plot by default.
-#' @param filename Output file. If not given, simply prints to the screen (typical for animated
-#' knitr chunks)
-#' @param saver Can specify a function (or a string such as "mp4" or "html") that specifies
-#' a function to use for saving. Functions from the animation package such as \code{saveVideo}
-#' and \code{saveGIF} are also recognized from the filename extension.
-#' @param pause Amount of time to pause between displaying each plot. Only used when
-#' displaying to the screen, not saving to a file (and not useful when creating an
-#' animation in a knitr chunk). When saving to a file, use
-#' \code{ani.options(interval = ...)}
+#' @param filename Optionally, an output file to save to. If not given, will
+#' store as plots without (yet) saving to a file
+#' @param saver A string such as "mp4" or "gif" that specifies
+#' a function from the animation package such as \code{saveVideo}
+#' or \code{saveGIF} to use for saving. This can also be recognized from the
+#' filename extension.
 #' @param title_frame Whether to title each image with the current \code{frame} value.
 #' The value is appended on to any existing title.
 #' @param ... If saving to a file, extra arguments to pass along to the animation
@@ -57,8 +54,8 @@
 #'
 #'
 #' @export
-gg_animate <- function(p = last_plot(), filename = NULL, saver = NULL,
-                       pause = NULL, title_frame = TRUE, ...) {
+gg_animate <- function(p = last_plot(), filename = NULL,
+                       saver = NULL, title_frame = TRUE, ...) {
   if (is.null(p)) {
     stop("no plot to save")
   }
@@ -66,10 +63,19 @@ gg_animate <- function(p = last_plot(), filename = NULL, saver = NULL,
   built <- ggplot_build(p)
 
   # get frames
-  frames <- sort(unique(do.call(c, plyr::compact(lapply(built$data, function(d) d$frame)))))
+  frames <- plyr::compact(lapply(built$data, function(d) d$frame))
+
   if (length(frames) == 0) {
     stop("No frame aesthetic found; cannot create animation")
   }
+
+  if (is.factor(frames[[1]])) {
+    # for factors, have to use unlist to combine
+    frames <- sort(unique(unlist(frames)))
+  } else {
+    frames <- sort(unique(do.call(c, frames)))
+  }
+  frames <- sort(unique(frames))
 
   plots <- lapply(frames, function(f) {
     # replace each data object with a subset
@@ -98,46 +104,68 @@ gg_animate <- function(p = last_plot(), filename = NULL, saver = NULL,
     b
   })
 
-  if (!is.null(filename))  {
-    saver_func <- animation_saver(saver, filename)
+  ret <- list(plots = plots, frames = frames)
+  class(ret) <- "gg_animate"
 
-    saver_func(for (pl in plots) {
-      plot_ggplot_build(pl)
-    }, filename, ...)
+  if (!is.null(filename)) {
+    gg_animate_save(ret, filename, saver, ...)
+    ret$saved <- TRUE
   } else {
-    for (pl in plots) {
-      plot_ggplot_build(pl)
-      if (!is.null(pause)) {
-        Sys.sleep(pause)
-      }
-    }
+    ret$ani_opts <- list(...)
+    ret$saved <- FALSE
   }
+
+  ret
 }
 
 
-#' Retrieve a function for saving animations based on a string/function or a filename
+#' Print a gganimate object, allowing browsing in RStudio
 #'
-#' @param saver A function or string describing an animation saver
-#' @param filename File name to save to
-animation_saver <- function(saver, filename) {
-  if (is.function(saver)) {
-    return(saver)
+#' Print a gganimate object as browsable HTML, which allows visualization
+#' directly in RStudio. If we are in knitr, directly print each of the
+#' images instead (you should use the \code{fig.show = "animate"} option
+#' in the chunk).
+#'
+#' @param x gg_animate object
+#' @param format What format to display in, such as "gif" (default),
+#' "mp4", or "avi".
+#' @param ... Extra arguments for the <img> or <video> tag, such
+#' as width or height
+#'
+#' This saves the plot to a file using \code{\link{gg_animate_save}}
+#' (and then loads the contents of that file into memory) if it has
+#' not already been saved.
+#'
+#' @export
+print.gg_animate <- function(x, format = "gif", ...) {
+  # if knitr is running, use a special case. Print all figures
+  if (!(is.null(getOption("knitr.in.progress")))) {
+    # don't print if it has already been saved
+    if (!x$saved) {
+      for (pl in x$plots) {
+        plot_ggplot_build(pl)
+      }
+    }
+    return()
   }
-  if (is.null(saver)) {
-    saver <- tolower(tools::file_ext(filename))
-  }
-  savers <- list(gif = animation::saveGIF,
-                 mp4 = animation::saveVideo,
-                 webm = animation::saveVideo,
-                 avi = animation::saveVideo,
-                 html = function(expr, filename, ...) animation::saveHTML(expr, htmlfile = filename, ...),
-                 tex = function(expr, filename, ...) animation::saveLatex(expr, latex.filename = filename, ...),
-                 pdf = function(expr, filename, ...) animation::saveLatex(expr, latex.filename = gsub("pdf$", "tex", filename, perl = TRUE)),
-                 swf = animation::saveSWF)
 
-  if (is.null(savers[[saver]])) {
-    stop("Don't know how to save animation of type ", saver)
+  # if it has not yet been saved to a file, save now (to a temporary file)
+  if (!x$saved) {
+    x <- do.call(gg_animate_save, c(list(x, saver = format), x$ani_opts))
   }
 
-  savers[[saver]]
+  # construct HTML
+  if (!is.null(x$mime_type) && grepl("^video", x$mime_type)) {
+    d <- htmltools::tags$video(htmltools::tags$source(src = x$src),
+                               autoplay = TRUE,
+                               loop = TRUE, ...)
+  } else if (!is.null(x$mime_type) && grepl("^image", x$mime_type)) {
+    d <- htmltools::tags$img(src = x$src, ...)
+  } else {
+    message("opening gganimate file stored at", x$filename)
+    auto_browse(x$filename)
+    return()
+  }
+
+  print(htmltools::browsable(d))
 }

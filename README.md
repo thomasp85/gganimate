@@ -64,50 +64,71 @@ You can have some layers of your plot animated and others not, simply by adding 
 
 
 ```r
-p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
+p2 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
   geom_point() +
   geom_point(aes(frame = year), color = "red") +
   scale_x_log10()
 
-gg_animate(p)
+gg_animate(p2)
 ```
 
 ![unnamed-chunk-5](README/README-fig-unnamed-chunk-5-.gif)
+
+You could also make a layer cumulative by adding an aesthetic `cumulative = TRUE`, which is useful for building up an object or path over time.
+
+
+```r
+p3 <- ggplot(gapminder, aes(gdpPercap, lifeExp, frame = year)) +
+  geom_path(aes(cumulative = TRUE, group = country)) +
+  scale_x_log10() +
+  facet_wrap(~continent)
+
+gg_animate(p3)
+```
+
+![unnamed-chunk-6](README/README-fig-unnamed-chunk-6-.gif)
 
 Note that while it's intuitive to match `frame` to a "time" dimension, you could match any variable in your data to the `frame` aesthetic. We could animate across continents instead:
 
 
 ```r
-p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = continent)) +
+p4 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = continent)) +
   geom_point() +
   scale_x_log10()
 
-gg_animate(p)
+gg_animate(p4)
 ```
 
-![unnamed-chunk-6](README/README-fig-unnamed-chunk-6-.gif)
+![unnamed-chunk-7](README/README-fig-unnamed-chunk-7-.gif)
 
 Note that if there is a stat summarization (such as a `geom_smooth`) that you want to animate, you should also add a `group` aesthetic to that layer. Otherwise, the layer will be calculated once across all frames (and therefore be constant in the animation):
 
 
 ```r
-p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
+p5 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
   geom_point() +
   geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
-  facet_wrap(~ continent, scales = "free") +
+  facet_wrap(~continent, scales = "free") +
   scale_x_log10()
 
-gg_animate(p)
+gg_animate(p5)
 ```
 
-![unnamed-chunk-7](README/README-fig-unnamed-chunk-7-.gif)
+![unnamed-chunk-8](README/README-fig-unnamed-chunk-8-.gif)
 
-Finally, note that you can control your animation the same way you would in the animation package, using the [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options) function:
+Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
 
 ```r
-library(animation)
-ani.options(interval = .3)
-gg_animate(p, "output.mp4")
+# see below; this is necessary in knitr
+ani.options(interval = .2)
 ```
 
+
+```r
+gg_animate(p, interval = .2)
+```
+
+![unnamed-chunk-9](README/README-fig-unnamed-chunk-9-.gif)
+
+However, note that while this works for displaying a plot in RStudio or saving it, within a knitr document you'll need to add `interval = .2` to the chunk options. Other options can be added with `ani.options` run before the chunk in question.

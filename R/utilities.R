@@ -1,3 +1,18 @@
+#' Create a temporary file within the temporary directory
+#'
+#' This is necessary because the animation package often copies
+#' to the temporary directory, which leads to animation trying to
+#' copy a file to itself.
+#'
+#' @param pattern the initial part of the name
+#' @param fileext file extension
+gganimate_tempfile <- function(pattern = "file", fileext = "") {
+  outdir <- file.path(tempdir(), "gganimate")
+  dir.create(outdir, showWarnings = FALSE)
+  tempfile(pattern, outdir, fileext = fileext)
+}
+
+
 #' Plot a built ggplot object
 #'
 #' We needed a customized version of ggplot2's \code{print.ggplot2},
@@ -26,4 +41,19 @@ plot_ggplot_build <- function(b, newpage = is.null(vp), vp = NULL) {
     grid::grid.draw(gtable)
     grid::upViewport()
   }
+}
+
+
+#' Auto browse to a filename
+#'
+#' This utility function is adapted from the animation package
+#' \url{https://github.com/yihui/animation/blob/df12e57b3cb1a71a1935f5351e007d141af8ae2c/R/utils.R}
+#'
+#' @param output Open a file
+auto_browse = function(output){
+  if (.Platform$OS.type == 'windows') {
+    try(shell.exec(output))
+  } else if (Sys.info()['sysname'] == 'Darwin') {
+    system(paste('open ', shQuote(output)))
+  } else system(paste('xdg-open ', shQuote(output)))
 }
