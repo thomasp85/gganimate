@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r echo = FALSE}
+```{r echo = FALSE, cache = FALSE}
 library(knitr)
 
 # I want the README to have visible GIFs on GitHub, as
@@ -20,7 +20,7 @@ library(knitr)
 # I therefore hacked together a GIF animation hook for knitr.
 
 library(animation)
-ani.options(autobrowse = FALSE)
+ani.options(autobrowse = FALSE, interval = 1)
 
 opts_knit$set(animation.fun = function(x, options, format = "gif") {
   x = c(knitr:::sans_ext(x), knitr:::file_ext(x))
@@ -136,7 +136,7 @@ gg_animate(p5)
 
 Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
-```{r interval, dependson = "setup", cache = FALSE}
+```{r interval, echo = FALSE, cache = FALSE}
 # see below; this is necessary in knitr
 ani.options(interval = .2)
 ```

@@ -119,10 +119,6 @@ gg_animate(p5)
 Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
 
-```r
-# see below; this is necessary in knitr
-ani.options(interval = .2)
-```
 
 
 ```r
