@@ -80,6 +80,7 @@ You can also save the animation to a file, such as an GIF, video, or an animated
 ```{r eval = FALSE}
 gg_animate(p, "output.gif")
 gg_animate(p, "output.mp4")
+gg_animate(p, "output.mpeg")
 gg_animate(p, "output.swf")
 gg_animate(p, "output.html")
 ```
