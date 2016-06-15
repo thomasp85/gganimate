@@ -18,8 +18,8 @@ test_that("We can create an animated GIF", {
 })
 
 
-test_that("We can create an animated mp4 or avi", {
-  for (ext in c("mp4", "avi")) {
+test_that("We can create an animated mp4, avi or mpeg", {
+  for (ext in c("mp4", "avi", "mpeg")) {
     s <- gg_animate_save(gg_animate(p), saver = ext)
     expect_is(s, "gg_animate")
 
