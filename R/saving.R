@@ -63,6 +63,9 @@ animation_saver <- function(saver, filename, mime_type = NULL) {
                  mp4 = animation::saveVideo,
                  webm = animation::saveVideo,
                  avi = animation::saveVideo,
+                 mpeg = function(expr, filename, ...) {
+                   animation::saveVideo(expr, filename,
+                                        other.opts = ifelse(animation::ani.options('interval') >= 1/24, "-r 24", "-r 30")) },
                  html = function(expr, filename, ...) animation::saveHTML(expr, htmlfile = filename, ...),
                  tex = function(expr, filename, ...) animation::saveLatex(expr, latex.filename = filename, ...),
                  pdf = function(expr, filename, ...) animation::saveLatex(expr, latex.filename = gsub("pdf$", "tex", filename, perl = TRUE)),
@@ -75,6 +78,7 @@ animation_saver <- function(saver, filename, mime_type = NULL) {
   # for those that can be viewed in RStudio, save the mime_type
   mime_types <- list(gif = "image/gif",
                      mp4 = "video/mp4",
+                     mpeg = "video/mpeg",
                      webm = "video/webm",
                      avi = "video/avi")
 
