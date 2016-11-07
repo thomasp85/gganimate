@@ -57,3 +57,5 @@ auto_browse = function(output){
     system(paste('open ', shQuote(output)))
   } else system(paste('xdg-open ', shQuote(output)))
 }
+
+is.formula <- function(x) inherits(x, 'formula')

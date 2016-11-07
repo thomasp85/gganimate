@@ -116,10 +116,7 @@ gg_animate(p5)
 
 ![unnamed-chunk-8](README/README-fig-unnamed-chunk-8-.gif)
 
-Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
-
-
-
+You can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
 ```r
 gg_animate(p, interval = .2)
@@ -128,3 +125,21 @@ gg_animate(p, interval = .2)
 ![unnamed-chunk-9](README/README-fig-unnamed-chunk-9-.gif)
 
 However, note that while this works for displaying a plot in RStudio or saving it, within a knitr document you'll need to add `interval = .2` to the chunk options. Other options can be added with `ani.options` run before the chunk in question.
+
+In order to allow for finer control over the title of each frame, a formula may
+be passed as `title_frame`. For example, `~ paste0(., '!!!')` would append
+`'!!!'` to each frame's title. This idea and the use of `.` may look familiar to
+those of you working with the tidyverse. In this case, `.` is used to refer to
+the frame value of each title. In the following example, rather than display 
+YYYY-MM-DD as each frame title the title is trimmed, so only the year is
+displayed.
+
+```R
+p6 <- ggplot(economics, aes(pop, unemploy, frame = date)) +
+  geom_path(aes(cumulative = TRUE))
+  
+gg_animate(p6, title_frame = ~ substr(., 1, 4), interval = 0.1)
+```
+
+![unamed-chunk-10](README/README-fig-unnamed-chunk-10-.gif)
+
