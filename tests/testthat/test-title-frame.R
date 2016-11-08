@@ -13,6 +13,14 @@ test_that('formula must be one-sided', {
   expect_error(a <- gg_animate(p, title_frame = x ~ round(., 4)), 'one-sided')
 })
 
+test_that('if NULL, title is unchanged', {
+  p <- ggplot(iris, aes(Sepal.Length, Sepal.Width, frame = Species)) +
+    geom_point() +
+    labs(title = 'THIS TITLE')
+  a <- gg_animate(p, title_frame = NULL)
+  expect_true(all(extract_titles(a) == 'THIS TITLE'))
+})
+
 test_that('default concatenation', {
   mthammer <- mtcars
   mthammer$name <- rownames(mtcars)
