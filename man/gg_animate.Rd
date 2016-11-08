@@ -5,35 +5,46 @@
 \title{Show an animation of a ggplot2 object}
 \usage{
 gg_animate(p = last_plot(), filename = NULL, saver = NULL,
-  title_frame = TRUE, ...)
+  title_frame = ~paste(.title, .), ...)
 }
 \arguments{
-\item{p}{A ggplot2 object. If no plot is provided, use the last plot by default.}
+\item{p}{A ggplot2 object. If no plot is provided, use the last plot by
+default.}
 
 \item{filename}{Optionally, an output file to save to. If not given, will
 store as plots without (yet) saving to a file}
 
-\item{saver}{A string such as "mp4" or "gif" that specifies
-a function from the animation package such as \code{saveVideo}
-or \code{saveGIF} to use for saving. This can also be recognized from the
-filename extension.}
+\item{saver}{A string such as "mp4" or "gif" that specifies a function from
+the animation package such as \code{saveVideo} or \code{saveGIF} to use for
+saving. This can also be recognized from the filename extension.}
 
-\item{title_frame}{Whether to title each image with the current \code{frame} value.
-The value is appended on to any existing title.}
+\item{title_frame}{Whether to title each image with the current \code{frame}
+value. If \code{TRUE}, the value is appended to any existing title. A
+formula may be passed to format each frame title, see Details.}
 
-\item{...}{If saving to a file, extra arguments to pass along to the animation
-saving function (to \code{saveVideo}/\code{saveGIF}/etc).}
+\item{...}{If saving to a file, extra arguments to pass along to the
+animation saving function (to \code{saveVideo}/\code{saveGIF}/etc).}
 }
 \description{
-Show an animation of a ggplot2 object that contains a \code{frame} aesthetic. This
-\code{frame} aesthetic will determine which frame the animation is shown in. For
-example, you could add the aesthetic \code{frame = time} to a dataset including
-a \code{time} variable. Each distinct value of the frame aesthetic is rendered
-into one frame of the resulting animation, in sorted order.
+Show an animation of a ggplot2 object that contains a \code{frame} aesthetic.
+This \code{frame} aesthetic will determine which frame the animation is shown
+in. For example, you could add the aesthetic \code{frame = time} to a dataset
+including a \code{time} variable. Each distinct value of the frame aesthetic
+is rendered into one frame of the resulting animation, in sorted order.
 }
 \details{
-If \code{cumulative = TRUE} is set within a layer along with a \code{frame} aesthetic,
-the frames build cumulatively rather than each being generated with separate data.
+If \code{cumulative = TRUE} is set within a layer along with a \code{frame}
+aesthetic, the frames build cumulatively rather than each being generated
+with separate data.
+
+In order to more flexibly format the title of each frame \code{title_frame}
+may be a formula. The body of the formula is evaluated such that `.` refers
+to the current frame value and `.title` refers to the original plot title.
+For example, if \code{title_frame = ~ paste(\sQuote{***}, ., \sQuote{***})}
+and the current frame value were \code{2016} then the final frame title would
+be \code{*** 2016 ***}. The default \code{frame_title} value is \code{~
+paste(.title, .)}, each frame title the concatenation of the plot title and
+the current frame value.
 }
 \examples{
 
@@ -60,10 +71,18 @@ aq <- airquality
 aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
 
 p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
-  geom_line()
+  geom_line() +
+  labs(title = 'Weather Over Time')
 
-gg_animate(p2, pause = .5, title_frame = FALSE)
+gg_animate(p2)
 
+# If you wanted just the plot title, no frame component.
+
+gg_animate(p2, title_frame = ~ .title)
+
+# If you wanted to set the month as the frame title.
+
+gg_animate(p2, title_frame = ~ month.name[.])
 
 }
 
