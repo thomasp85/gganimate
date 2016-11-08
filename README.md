@@ -10,7 +10,7 @@
 **gganimate** wraps the [animation package](http://www.inside-r.org/packages/cran/animation/docs/animation) to create animated ggplot2 plots. It can be installed using [devtools](https://github.com/hadley/devtools):
 
 ```
-devtools::install_github("dgrtwo/gganimate")
+devtools::install_github("nteetor/gganimate")
 ```
 
 The core of the approach is to treat "frame" (as in, the time point within an animation) as another aesthetic, just like **x**, **y**, **size**, **color**, or so on. Thus, a variable in your data can be mapped to frame just as others are mapped to x or y.
@@ -116,7 +116,10 @@ gg_animate(p5)
 
 ![unnamed-chunk-8](README/README-fig-unnamed-chunk-8-.gif)
 
-You can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
+Note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
+
+
+
 
 ```r
 gg_animate(p, interval = .2)
@@ -126,20 +129,48 @@ gg_animate(p, interval = .2)
 
 However, note that while this works for displaying a plot in RStudio or saving it, within a knitr document you'll need to add `interval = .2` to the chunk options. Other options can be added with `ani.options` run before the chunk in question.
 
-In order to allow for finer control over the title of each frame, a formula may
-be passed as `title_frame`. For example, `~ paste0(., '!!!')` would append
-`'!!!'` to each frame's title. This idea and the use of `.` may look familiar to
-those of you working with the tidyverse. In this case, `.` is used to refer to
-the frame value of each title. In the following example, rather than display 
-YYYY-MM-DD as each frame title the title is trimmed, so only the year is
-displayed.
+You can pass a formula as `title_frame` for finer title control. The body of the 
+formula is evaluated such that `.` refers to the current frame value and
+`.title` refers to the plot title. The formula `~ paste0(., '!!!')`, for
+example, would append `'!!!'` to each frame value and set the frame title
+accordingly. This idea and the use of `.` may look familiar to those of you
+working within the tidyverse. The default value for `title_frame` is
+`paste(.title, .)`, each frame title the frame value appended to the plot title.
 
-```R
-p6 <- ggplot(economics, aes(pop, unemploy, frame = date)) +
-  geom_path(aes(cumulative = TRUE))
-  
-gg_animate(p6, title_frame = ~ substr(., 1, 4), interval = 0.1)
+
+
+
+```r
+aq <- airquality
+aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
+p6 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
+  geom_line() +
+  labs(title = 'Weather Over Time')
 ```
 
-![unamed-chunk-10](README/README-fig-unnamed-chunk-10-.gif)
+In the following animation only the plot title is displayed.
+
+```r
+gg_animate(p6, title_frame = ~ .title)
+```
+
+![unnamed-chunk-12](README/README-fig-unnamed-chunk-12-.gif)
+
+In this case only the frame value is displayed.
+
+```r
+gg_animate(p6, title_frame = ~ .)
+```
+
+![unnamed-chunk-13](README/README-fig-unnamed-chunk-13-.gif)
+
+Finally, the frame value (month number) is used to set the title as the English
+name of the month.
+
+```r
+gg_animate(p6, title_frame = ~ month.name[.])
+```
+
+![unnamed-chunk-14](README/README-fig-unnamed-chunk-14-.gif)
+
 
