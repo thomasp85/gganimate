@@ -27,12 +27,14 @@
 #' aesthetic, the frames build cumulatively rather than each being generated
 #' with separate data.
 #'
-#' In order to more flexibly format the title of each frame a formula may be
-#' passed as \code{title_frame}. In this case, the body of the formula is
-#' evaluated such that `.` refers to the current frame value. For example, if
-#' \code{title_frame = ~ paste(\sQuote{***}, ., \sQuote{***})} and the current
-#' frame value were \code{2016} then the final frame title would be
-#' \code{*** 2016 ***}.
+#' In order to more flexibly format the title of each frame \code{title_frame}
+#' may be a formula. The body of the formula is evaluated such that `.` refers
+#' to the current frame value and `.title` refers to the original plot title.
+#' For example, if \code{title_frame = ~ paste(\sQuote{***}, ., \sQuote{***})}
+#' and the current frame value were \code{2016} then the final frame title would
+#' be \code{*** 2016 ***}. The default \code{frame_title} value is \code{~
+#' paste(.title, .)}, each frame title the concatenation of the plot title and
+#' the current frame value.
 #'
 #' @examples
 #'
@@ -59,18 +61,22 @@
 #' aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
 #'
 #' p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
-#'   geom_line()
+#'   geom_line() +
+#'   labs(title = 'Weather Over Time')
 #'
-#' gg_animate(p2, title_frame = FALSE)
+#' gg_animate(p2)
 #'
-#' # If you wanted to set the month in as the frame title.
+#' # If you wanted just the plot title, no frame component.
 #'
-#' gg_animate(p2, title_frame = ~ month.abb[.])
+#' gg_animate(p2, title_frame = ~ .title)
 #'
+#' # If you wanted to set the month as the frame title.
+#'
+#' gg_animate(p2, title_frame = ~ month.name[.])
 #'
 #' @export
 gg_animate <- function(p = last_plot(), filename = NULL,
-                       saver = NULL, title_frame = TRUE, ...) {
+                       saver = NULL, title_frame = ~ paste(.title, .), ...) {
   if (is.null(p)) {
     stop("no plot to save")
   }
@@ -84,10 +90,16 @@ gg_animate <- function(p = last_plot(), filename = NULL,
     stop("No frame aesthetic found; cannot create animation")
   }
 
-  if (is.formula(title_frame) && length(title_frame) != 2) {
-    stop('formulas passed as `title_frame` must be one-sided')
-  } else if (is.function(title_frame) && length(formals(title_frame)) != 1) {
-    stop('function passed as `title_frame` must accept one argument')
+  if (is.logical(title_frame)) {
+    warning('passing TRUE/FALSE as `title_frame` is deprecated', call. = FALSE)
+
+    title_frame <- if (title_frame) {~ paste(.title, .)} else NULL
+  }
+
+  if (!is.formula(title_frame) && !is.null(title_frame)) {
+    stop('argument `title_frame` must be NULL or a formula')
+  } else if (is.formula(title_frame) && length(title_frame) != 2) {
+    stop('formula passed as `title_frame` must be one-sided')
   }
 
   if (is.factor(frames[[1]])) {
@@ -114,23 +126,19 @@ gg_animate <- function(p = last_plot(), filename = NULL,
     }
 
     # title plot according to frame
-    if (is.function(title_frame) || is.formula(title_frame) || title_frame) {
-      suffix <- f
+    if (is.formula(title_frame)) {
+      fenv <- new.env(parent = environment(title_frame))
+      fenv$`.` <- f
+      fenv$`.title` <- b$plot$labels$title %||% ''
+      fcall <- call('function', as.pairlist(NULL), title_frame[[2]])
 
-      if (is.formula(title_frame)) {
-        envf <- new.env(parent = environment(title_frame))
-        envf$`.` <- f
-        func <- call('function', as.pairlist(NULL), title_frame[[2]])
-        suffix <- (eval(func, envir = envf))()
-      } else if (is.function(title_frame)) {
-        suffix <- title_frame(f)
-      }
+      tryCatch(
+        ftitle <- (eval(fcall, envir = fenv))(),
+        error = function(e) {
+          stop('could not create frame title, ', e$message, call. = FALSE)
+        })
 
-      if (!is.null(b$plot$labels$title)) {
-        b$plot$labels$title <- paste(b$plot$labels$title, suffix)
-      } else {
-        b$plot$labels$title <- suffix
-      }
+      b$plot$labels$title <- trimws(ftitle)
     }
 
     b

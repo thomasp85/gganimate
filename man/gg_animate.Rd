@@ -5,7 +5,7 @@
 \title{Show an animation of a ggplot2 object}
 \usage{
 gg_animate(p = last_plot(), filename = NULL, saver = NULL,
-  title_frame = TRUE, ...)
+  title_frame = ~paste(.title, .), ...)
 }
 \arguments{
 \item{p}{A ggplot2 object. If no plot is provided, use the last plot by
@@ -37,12 +37,14 @@ If \code{cumulative = TRUE} is set within a layer along with a \code{frame}
 aesthetic, the frames build cumulatively rather than each being generated
 with separate data.
 
-In order to more flexibly format the title of each frame a formula may be
-passed as \code{title_frame}. In this case, the body of the formula is
-evaluated such that `.` refers to the current frame value. For example, if
-\code{title_frame = ~ paste(\sQuote{***}, ., \sQuote{***})} and the current
-frame value were \code{2016} then the final frame title would be
-\code{*** 2016 ***}.
+In order to more flexibly format the title of each frame \code{title_frame}
+may be a formula. The body of the formula is evaluated such that `.` refers
+to the current frame value and `.title` refers to the original plot title.
+For example, if \code{title_frame = ~ paste(\sQuote{***}, ., \sQuote{***})}
+and the current frame value were \code{2016} then the final frame title would
+be \code{*** 2016 ***}. The default \code{frame_title} value is \code{~
+paste(.title, .)}, each frame title the concatenation of the plot title and
+the current frame value.
 }
 \examples{
 
@@ -69,14 +71,18 @@ aq <- airquality
 aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
 
 p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
-  geom_line()
+  geom_line() +
+  labs(title = 'Weather Over Time')
 
-gg_animate(p2, title_frame = FALSE)
+gg_animate(p2)
 
-# If you wanted to set the month in as the frame title.
+# If you wanted just the plot title, no frame component.
 
-gg_animate(p2, title_frame = ~ month.abb[.])
+gg_animate(p2, title_frame = ~ .title)
 
+# If you wanted to set the month as the frame title.
+
+gg_animate(p2, title_frame = ~ month.name[.])
 
 }
 

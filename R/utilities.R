@@ -59,3 +59,5 @@ auto_browse = function(output){
 }
 
 is.formula <- function(x) inherits(x, 'formula')
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
