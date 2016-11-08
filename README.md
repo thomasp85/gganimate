@@ -135,20 +135,24 @@ formula is evaluated such that `.` refers to the current frame value and
 example, would append `'!!!'` to each frame value and set the frame title
 accordingly. This idea and the use of `.` may look familiar to those of you
 working within the tidyverse. The default value for `title_frame` is
-`paste(.title, .)`, each frame title the frame value appended to the plot title.
+`~ paste(.title, .)`, each frame title the frame value appended to the plot title.
 
 
+
+
+The following examples illustrate how you can begin to manipulate frame titles,
 
 
 ```r
 aq <- airquality
 aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
+
 p6 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
   geom_line() +
   labs(title = 'Weather Over Time')
 ```
 
-In the following animation only the plot title is displayed.
+In the below animation only the plot title is displayed.
 
 ```r
 gg_animate(p6, title_frame = ~ .title)
@@ -168,6 +172,7 @@ Finally, the frame value (month number) is used to set the title as the English
 name of the month.
 
 ```r
+# ?month.name
 gg_animate(p6, title_frame = ~ month.name[.])
 ```
 
