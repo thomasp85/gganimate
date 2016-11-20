@@ -9,6 +9,11 @@
 #' If \code{cumulative = TRUE} is set within a layer along with a \code{frame} aesthetic,
 #' the frames build cumulatively rather than each being generated with separate data.
 #'
+#' The \code{alpha_decay} aesthetic inside a layer that has been set to
+#' \code{cumulative = TRUE} can specify a function that takes the difference between
+#' the current frame and the values's frame and returns a number between 0 and 1,
+#' which will scale the alpha value of the geom.
+#'
 #' @param p A ggplot2 object. If no plot is provided, use the last plot by default.
 #' @param filename Optionally, an output file to save to. If not given, will
 #' store as plots without (yet) saving to a file
@@ -52,6 +57,16 @@
 #'
 #' gg_animate(p2, title_frame = FALSE)
 #'
+#' # By specifying an alpha_deacy function you can de-emphasize values from previous frames.
+#' aq <- airquality
+#' aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
+#'
+#' p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE,
+#'                      alpha_decay = function (x) exp(-x/2))) +
+#'   geom_line()
+#'
+#' gg_animate(p2, title_frame = FALSE)
+
 #'
 #' @export
 gg_animate <- function(p = last_plot(), filename = NULL,
@@ -60,7 +75,35 @@ gg_animate <- function(p = last_plot(), filename = NULL,
     stop("no plot to save")
   }
 
+  # Extract alpha_decay functions into a list, and replace with
+  # an integer because ggplot_build chokes on functions inside
+  # of aesthetic.
+  ##  Handle alpha_decay defined in main ggplot() function call
+  ad_default <- p$mapping$alpha_decay
+  if (!is.null(ad_default)) {
+    p$mapping$alpha_decay <- 1
+  } else {
+    ad_default <- list(NULL)
+  }
+
+  ## Handle layer specific alpha_decay functions
+  alpha_decay <- lapply(seq_along(p$layers), function(x) {
+    ad <- p$layers[[x]]$mapping$alpha_decay
+    # Replace with x + 1 because the layer specific ad's start at index 2
+    if (!is.null(ad)) p$layers[[x]]$mapping$alpha_decay <- x + 1
+    ad
+    })
+  alpha_decay <- c(ad_default, alpha_decay)
+
   built <- ggplot_build(p)
+
+  # If alpha decay functions exist and alpha was unspecified (ggplot data has all NAs),
+  # set alpha to 1 so that decay functions can scale them.
+  ignore <- lapply(seq_along(built$data), function(x) {
+    if (!is.null(built$data[[x]]$alpha_decay) && all(is.na(built$data[[x]]$alpha))) {
+      built$data[[x]]$alpha <<- 1
+    }
+  })
 
   # get frames
   frames <- plyr::compact(lapply(built$data, function(d) d$frame))
@@ -85,10 +128,18 @@ gg_animate <- function(p = last_plot(), filename = NULL,
       if (!is.null(frame_vec)) {
         sub <- (frame_vec == f | is.na(frame_vec))
         if (!is.null(b$data[[i]]$cumulative)) {
-          sub <- sub | (b$data[[i]]$cumulative & (frame_vec <= f))
+          sub <- sub | (b$data[[i]]$cumulative & (as.numeric(frame_vec) <= as.numeric(f)))
         }
 
         b$data[[i]] <- b$data[[i]][sub, ]
+
+        # Apply alpha decay functions
+        if (!is.null(b$data[[i]]$alpha_decay)) {
+          alpha_decay_func <- eval(alpha_decay[[b$data[[i]]$alpha_decay[1]]],
+                                   envir = b$plot$plot_env)
+          frame_diffs <- pmax((as.numeric(f) - as.numeric(frame_vec)[sub]), 0)
+          b$data[[i]]$alpha <- b$data[[i]]$alpha * alpha_decay_func(frame_diffs)
+        }
       }
     }
 
