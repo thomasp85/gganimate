@@ -134,6 +134,32 @@ p5 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
 gg_animate(p5)
 ```
 
+The `alpha_decay` aesthetic allows you to scale the alpha of older frames through a function 
+that takes the difference between the current frame and the frame the data is from and return 
+a scalar between 0 and 1.
+
+```{r}
+# Get more transparent exponentially
+p6 <- ggplot(gapminder, aes(gdpPercap, lifeExp, frame = as.factor(year))) +
+  geom_path(aes(cumulative = TRUE, group = country, 
+                alpha_decay = function(x) exp(-x/2))) +
+  scale_x_log10() +
+  facet_wrap(~continent)
+
+gg_animate(p6)
+```
+
+```{r}
+# Keep the last 3 frames only
+p7 <- ggplot(gapminder, aes(gdpPercap, lifeExp, frame = as.factor(year))) +
+  geom_path(aes(cumulative = TRUE, group = country, 
+                alpha_decay = function(x) x <= 3)) +
+  scale_x_log10() +
+  facet_wrap(~continent)
+
+gg_animate(p7)
+```
+
 Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
 ```{r interval, echo = FALSE, cache = FALSE}

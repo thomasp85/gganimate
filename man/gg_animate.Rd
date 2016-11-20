@@ -34,6 +34,11 @@ into one frame of the resulting animation, in sorted order.
 \details{
 If \code{cumulative = TRUE} is set within a layer along with a \code{frame} aesthetic,
 the frames build cumulatively rather than each being generated with separate data.
+
+The \code{alpha_decay} aesthetic inside a layer that has been set to
+\code{cumulative = TRUE} can specify a function that takes the difference between
+the current frame and the values's frame and returns a number between 0 and 1,
+which will scale the alpha value of the geom.
 }
 \examples{
 
@@ -62,8 +67,17 @@ aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
 p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
   geom_line()
 
-gg_animate(p2, pause = .5, title_frame = FALSE)
+gg_animate(p2, title_frame = FALSE)
 
+# By specifying an alpha_deacy function you can de-emphasize values from previous frames.
+aq <- airquality
+aq$date <- as.Date(paste(1973, aq$Month, aq$Day, sep = "-"))
+
+p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE,
+                     alpha_decay = function (x) exp(-x/2))) +
+  geom_line()
+
+gg_animate(p2, title_frame = FALSE)
 
 }
 
