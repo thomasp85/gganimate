@@ -85,7 +85,7 @@ gg_animate <- function(p = last_plot(), filename = NULL,
       if (!is.null(frame_vec)) {
         sub <- (frame_vec == f | is.na(frame_vec))
         if (!is.null(b$data[[i]]$cumulative)) {
-          sub <- sub | (b$data[[i]]$cumulative & (frame_vec <= f))
+          sub <- sub | (b$data[[i]]$cumulative & (as.numeric(frame_vec) <= as.numeric(f)))
         }
 
         b$data[[i]] <- b$data[[i]][sub, ]
