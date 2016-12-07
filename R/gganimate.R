@@ -34,11 +34,11 @@
 #'
 #' p
 #'
-#' gg_animate(p)
+#' gganimate(p)
 #'
 #' \dontrun{
-#' gg_animate(p, "output.gif")
-#' gg_animate(p, "output.mp4")
+#' gganimate(p, "output.gif")
+#' gganimate(p, "output.mp4")
 #' }
 #'
 #' # You can also create cumulative graphs by adding the `cumulative = TRUE` aesthetic.
@@ -50,14 +50,14 @@
 #' p2 <- ggplot(aq, aes(date, Temp, frame = Month, cumulative = TRUE)) +
 #'   geom_line()
 #'
-#' gg_animate(p2, title_frame = FALSE)
+#' gganimate(p2, title_frame = FALSE)
 #'
 #'
 #' @export
-gg_animate <- function(p = last_plot(), filename = NULL,
+gganimate <- function(p = last_plot(), filename = NULL,
                        saver = NULL, title_frame = TRUE, ...) {
   if (is.null(p)) {
-    stop("no plot to save")
+    stop("no plot to animate")
   }
 
   built <- ggplot_build(p)
@@ -105,11 +105,10 @@ gg_animate <- function(p = last_plot(), filename = NULL,
   })
 
   ret <- list(plots = plots, frames = frames)
-  class(ret) <- "gg_animate"
+  class(ret) <- "gganimate"
 
   if (!is.null(filename)) {
-    gg_animate_save(ret, filename, saver, ...)
-    ret$saved <- TRUE
+    ret <- gganimate_save(ret, filename, saver, ...)
   } else {
     ret$ani_opts <- list(...)
     ret$saved <- FALSE
@@ -126,18 +125,18 @@ gg_animate <- function(p = last_plot(), filename = NULL,
 #' images instead (you should use the \code{fig.show = "animate"} option
 #' in the chunk).
 #'
-#' @param x gg_animate object
+#' @param x gganimate object
 #' @param format What format to display in, such as "gif" (default),
 #' "mp4", or "avi".
 #' @param ... Extra arguments for the <img> or <video> tag, such
 #' as width or height
 #'
-#' This saves the plot to a file using \code{\link{gg_animate_save}}
+#' This saves the plot to a file using \code{\link{gganimate_save}}
 #' (and then loads the contents of that file into memory) if it has
 #' not already been saved.
 #'
 #' @export
-print.gg_animate <- function(x, format = "gif", ...) {
+print.gganimate <- function(x, format = "gif", ...) {
   # if knitr is running, use a special case. Print all figures
   if (!(is.null(getOption("knitr.in.progress")))) {
     # don't print if it has already been saved
@@ -151,7 +150,7 @@ print.gg_animate <- function(x, format = "gif", ...) {
 
   # if it has not yet been saved to a file, save now (to a temporary file)
   if (!x$saved) {
-    x <- do.call(gg_animate_save, c(list(x, saver = format), x$ani_opts))
+    x <- do.call(gganimate_save, c(list(x, saver = format), x$ani_opts))
   }
 
   # construct HTML
@@ -162,7 +161,7 @@ print.gg_animate <- function(x, format = "gif", ...) {
   } else if (!is.null(x$mime_type) && grepl("^image", x$mime_type)) {
     d <- htmltools::tags$img(src = x$src, ...)
   } else {
-    message("opening gganimate file stored at", x$filename)
+    message("opening gganimate file stored at ", x$filename)
     auto_browse(x$filename)
     return()
   }

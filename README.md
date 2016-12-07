@@ -31,13 +31,13 @@ p <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent, fr
   scale_x_log10()
 ```
 
-Notice we added `frame = year` and saved the plot as `p`. We then display it as an animation with the `gg_animate` function:
+Notice we added `frame = year` and saved the plot as `p`. We then display it as an animation with the `gganimate` function:
 
 
 ```r
 library(gganimate)
 
-gg_animate(p)
+gganimate(p)
 ```
 
 ![unnamed-chunk-3](README/README-fig-unnamed-chunk-3-.gif)
@@ -48,10 +48,10 @@ You can also save the animation to a file, such as an GIF, video, or an animated
 
 
 ```r
-gg_animate(p, "output.gif")
-gg_animate(p, "output.mp4")
-gg_animate(p, "output.swf")
-gg_animate(p, "output.html")
+gganimate(p, "output.gif")
+gganimate(p, "output.mp4")
+gganimate(p, "output.swf")
+gganimate(p, "output.html")
 ```
 
 (Each of these requires ffmpeg, ImageMagick, or other such drivers to be installed on your computer: see the [animation package](http://www.inside-r.org/packages/cran/animation/docs/animation) documentation for more).
@@ -69,7 +69,7 @@ p2 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop)) +
   geom_point(aes(frame = year), color = "red") +
   scale_x_log10()
 
-gg_animate(p2)
+gganimate(p2)
 ```
 
 ![unnamed-chunk-5](README/README-fig-unnamed-chunk-5-.gif)
@@ -83,7 +83,7 @@ p3 <- ggplot(gapminder, aes(gdpPercap, lifeExp, frame = year)) +
   scale_x_log10() +
   facet_wrap(~continent)
 
-gg_animate(p3)
+gganimate(p3)
 ```
 
 ![unnamed-chunk-6](README/README-fig-unnamed-chunk-6-.gif)
@@ -96,7 +96,7 @@ p4 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = continent)) 
   geom_point() +
   scale_x_log10()
 
-gg_animate(p4)
+gganimate(p4)
 ```
 
 ![unnamed-chunk-7](README/README-fig-unnamed-chunk-7-.gif)
@@ -111,18 +111,18 @@ p5 <- ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, frame = year)) +
   facet_wrap(~continent, scales = "free") +
   scale_x_log10()
 
-gg_animate(p5)
+gganimate(p5)
 ```
 
 ![unnamed-chunk-8](README/README-fig-unnamed-chunk-8-.gif)
 
-Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gg_animate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
+Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gganimate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
 
 
 
 ```r
-gg_animate(p, interval = .2)
+gganimate(p, interval = .2)
 ```
 
 ![unnamed-chunk-9](README/README-fig-unnamed-chunk-9-.gif)

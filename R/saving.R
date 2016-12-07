@@ -1,17 +1,20 @@
 #' Save a gganimate object to a file
 #'
-#' @param g A gg_animate object
+#' @param g A gganimate object
 #' @param filename File to write to
 #' @param saver A string such as "mp4" or "gif" that specifies
 #' a function from the animation package such as \code{saveVideo}
-#' or \code{saveGIF} to use for saving. This can also be recognized from the
-#' filename extension.
+#' to use for saving. GIFs are saved manually using ImageMagick.
 #' @param ... Additional arguments passed on to the saving function,
-#' such as \code{saveVideo} or \code{saveGIF} from the animation
-#' package.
+#' such as \code[pkg=ggplot2]{ggsave} for GIFs or
+#' \code[pkg=animate]{saveVideo} for MP4.
+#'
+#' @details If saving to a GIF, uses a custom method that takes advantage
+#' of redundant backgrounds (scales, static layers, etc).
 #'
 #' @export
-gg_animate_save <- function(g, filename = NULL, saver = NULL, ...) {
+gganimate_save <- function(g, filename = NULL, saver = NULL,
+                           fps = 1, loop = 0, ...) {
   # save to a temporary file if necessary
   if (is.null(filename)) {
     if (is.null(saver)) {
@@ -21,8 +24,6 @@ gg_animate_save <- function(g, filename = NULL, saver = NULL, ...) {
     }
   }
 
-  g$filename <- filename
-
   # figure out how it should be saved
   s <- animation_saver(saver, filename)
 
@@ -30,11 +31,16 @@ gg_animate_save <- function(g, filename = NULL, saver = NULL, ...) {
   # this helps with animation functions like saveGIF that work only in
   # current directory
   withr::with_dir(dirname(filename), {
-    s$func(for (pl in g$plots) {
-      plot_ggplot_build(pl)
-    }, basename(filename), autobrowse = FALSE, ...)
+    if (s$saver == "gif") {
+      save_gganimate_custom(g, filename = filename, ...)
+    } else {
+      s$func(for (pl in g$plots) {
+        plot_ggplot_build(pl)
+      }, basename(filename), autobrowse = FALSE, ...)
+    }
   })
 
+  g$filename <- filename
   if (!is.null(s$mime_type)) {
     # if it can be displayed in R, import it as an encoded string
     g$src <- base64enc::dataURI(file = filename, mime = s$mime_type)
@@ -80,3 +86,38 @@ animation_saver <- function(saver, filename, mime_type = NULL) {
 
   list(saver = saver, func = savers[[saver]], mime_type = mime_types[[saver]])
 }
+
+# utility:
+save_gganimate_custom <- function(g, filename, clean = TRUE, ...) {
+  blank <- g$plots[[1]]
+  blank$data <- lapply(blank$data, function(d) utils::head(d, 0))
+  blank$plot$labels$title <- " "
+  blank_gtable <- ggplot2::ggplot_gtable(blank)
+
+  # align all of the plots
+  gtables <- lapply(g$plots, function(p) {
+    p$plot$theme <- theme_void()
+    ggplot2::ggplot_gtable(p)
+  })
+  gtables_aligned <- cowplot::align_plots(
+    plotlist = c(list(blank_gtable), gtables),
+    align = "hv")
+
+  filenames <- paste0("plot", seq_along(gtables_aligned), ".png")
+  for (i in seq_along(gtables_aligned)) {
+    bg <- ifelse(i == 1, "white", "transparent")
+    suppressMessages(ggsave(gtables_aligned[[i]],
+                            filename = filenames[i],
+                            bg = bg, ...))
+  }
+
+  command <- paste("convert -dispose none -delay 0 %s",
+                   "-dispose previous -delay %d %s",
+                   "-loop 0 %s")
+
+  opts <- "-dispose none -delay 0 plot1.png -dispose previous"
+  animation::im.convert(filenames[-1], basename(filename), extra.opts = opts,
+                        clean = clean)
+  unlink(filenames[1])
+}
+

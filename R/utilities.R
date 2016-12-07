@@ -34,6 +34,7 @@ plot_ggplot_build <- function(b, newpage = is.null(vp), vp = NULL) {
   )
 
   gtable <- ggplot_gtable(b)
+  # browser()
   if (is.null(vp)) {
     grid::grid.draw(gtable)
   } else {
