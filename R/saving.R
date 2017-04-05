@@ -31,7 +31,7 @@ gganimate_save <- function(g, filename = NULL, saver = NULL,
   # this helps with animation functions like saveGIF that work only in
   # current directory
   withr::with_dir(dirname(filename), {
-    if (s$saver == "gif") {
+    if (s$saver == "gif" && FALSE) {
       save_gganimate_custom(g, filename = filename, ...)
     } else {
       s$func(for (pl in g$plots) {
