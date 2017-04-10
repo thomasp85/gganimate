@@ -86,6 +86,9 @@ gganimate <- function(p = last_plot(), filename = NULL,
         sub <- (frame_vec == f | is.na(frame_vec))
         if (!is.null(b$data[[i]]$cumulative)) {
           sub <- sub | (b$data[[i]]$cumulative & (frame_vec <= f))
+          if(!is.null(b$data[[i]]$tails)) {
+            sub <- sub & (frame_vec >= f - b$data[[i]]$tails[1])
+          }
         }
 
         b$data[[i]] <- b$data[[i]][sub, ]
