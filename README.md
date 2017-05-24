@@ -7,7 +7,7 @@
 
 
 
-**gganimate** wraps the [animation package](http://www.inside-r.org/packages/cran/animation/docs/animation) to create animated ggplot2 plots. It can be installed using [devtools](https://github.com/hadley/devtools):
+**gganimate** wraps the [animation package](https://mran.microsoft.com/package/animation/) to create animated ggplot2 plots. It can be installed using [devtools](https://github.com/hadley/devtools):
 
 ```
 devtools::install_github("dgrtwo/gganimate")
@@ -54,7 +54,7 @@ gganimate(p, "output.swf")
 gganimate(p, "output.html")
 ```
 
-(Each of these requires ffmpeg, ImageMagick, or other such drivers to be installed on your computer: see the [animation package](http://www.inside-r.org/packages/cran/animation/docs/animation) documentation for more).
+(Each of these requires ffmpeg, ImageMagick, or other such drivers to be installed on your computer: see the [animation package](https://mran.microsoft.com/package/animation/) documentation for more).
 
 Notice that the axis limits and legend stay fixed between animation frames, even though the points move. This is one of the advantages of the **gganimate** package as opposed to creating each ggplot separately and combining them with the **animation** package: the plot (with its axes and legend) is built only once but rendered for each frame.
 
@@ -116,7 +116,7 @@ gganimate(p5)
 
 ![unnamed-chunk-8](README/README-fig-unnamed-chunk-8-.gif)
 
-Finally, note that you can control your animation with the same options described in [ani.options](http://www.inside-r.org/packages/cran/animation/docs/ani.options), passed directly to `gganimate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
+Finally, note that you can control your animation with the same options described in [ani.options](https://www.rforge.net/doc/packages/animation/ani.options.html), passed directly to `gganimate` or to `ani.options` beforehand. For example, you could make the plot faster or slower with the `interval` argument:
 
 
 
