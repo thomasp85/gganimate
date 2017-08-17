@@ -16,8 +16,8 @@ a function from the animation package such as \code{saveVideo}
 to use for saving. GIFs are saved manually using ImageMagick.}
 
 \item{...}{Additional arguments passed on to the saving function,
-such as \code[pkg=ggplot2]{ggsave} for GIFs or
-\code[pkg=animate]{saveVideo} for MP4.}
+such as \link[ggplot2]{ggsave} for GIFs or
+\link[animate]{saveVideo} for MP4.}
 }
 \description{
 Save a gganimate object to a file
@@ -26,4 +26,3 @@ Save a gganimate object to a file
 If saving to a GIF, uses a custom method that takes advantage
 of redundant backgrounds (scales, static layers, etc).
 }
-
