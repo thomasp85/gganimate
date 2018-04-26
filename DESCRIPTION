@@ -12,13 +12,21 @@ Description: Create animations with ggplot2 by treating the "frame" as an
     aesthetic similar to x, y, or color. Compatible with presenting animations
     in knitr or saving to a video or animated image file.
 License: MIT + file LICENSE
+Encoding: UTF-8
 LazyData: TRUE
 VignetteBuilder: knitr
 Depends: ggplot2
 Suggests: knitr,
     rmarkdown,
     testthat
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues
+Remotes: tidyverse/ggplot2
+Imports: stringi,
+    tweenr,
+    transformr,
+    grid,
+    magick,
+    rlang

@@ -71,35 +71,3 @@ displays between a priori known states. On the other hand, a grammar of
 interactive graphics is concerned with how to describe human interactions with
 data displays. Often animations are a part of interactive graphics but we should
 not confuse the two distinct operations.
-
-Below follows an overview of my current thoughts on the grammar:
-
-### The Stack
-Central to the idea of animations is the stack of frames that makes it up. This
-is the stack of papers you would flip through in homemade cartoons of yore. In
-the old API the stack was defined as an aesthetic and could be seen as an 
-*invisible third position* scale that the animation would go through. In the new
-system it can more be seen as *facets through time* in the sense that while 
-facetting defines a spatial subdivision of data into panels, stacking defines a
-temporal subdivision of data into frames. Stacking will thus be a defined 
-first-class citizen of the API on the same level as facetting etc. and will be
-defined in the same way:
-
-```{r, eval=FALSE}
-# Example code - does not currently work
-p + 
-  stack_identity(~time_variable)
-```
-
-As with facets, there can be multiple different stacking approaches. 
-`stack_identity()` (needs a better name) simply shows the frames one by one as
-the old API whereas e.g. `stack_tween()` would interpolate between the different
-defined frames to create a smooth animation. Other possibilities can probably
-be thought off, but these two will be the main ones I think...
-
-### The Tween
-How each aesthetic should behave as it moves through time can be defined by the
-corresponding `tween_<scale_name>_<tween_type>()` function which can be seen as
-the animation cousin of the `scale_*()` functions
-
-More to come...
