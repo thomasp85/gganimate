@@ -6,6 +6,7 @@ as.gganim <- function(x) {
   x$transition <- transition_null()
   x$view <- view_static()
   x$transmuters <- transmuter_list()
+  x$ease <- ease_aes('cubic-in-out')
   x
 }
 is.gganim <- function(x) inherits(x, 'gganim')

@@ -1,12 +1,13 @@
 #' @importFrom ggplot2 ggproto
-create_scene <- function(transition, view, transmuters, nframes) {
+create_scene <- function(transition, view, ease, transmuters, nframes) {
   if (is.null(nframes)) nframes <- 100
-  ggproto(NULL, Scene, transition = transition, view = view, transmuters = transmuters, nframes = nframes)
+  ggproto(NULL, Scene, transition = transition, view = view, ease = ease, transmuters = transmuters, nframes = nframes)
 }
 #' @importFrom ggplot2 ggproto
 Scene <- ggproto('Scene', NULL,
   transition = NULL,
   view = NULL,
+  ease = NULL,
   transmuters = NULL,
   nframes = integer(),
   transition_params = list(),
@@ -14,7 +15,7 @@ Scene <- ggproto('Scene', NULL,
   layer_type = character(),
   tween_first = logical(),
 
-  setup = function(self, layer_data, tweens) {
+  setup = function(self, layer_data) {
     transition_params <- self$transition$params
     transition_params$nframes <- self$nframes
     self$transition_params <- self$transition$setup_params(layer_data, transition_params)
@@ -27,18 +28,20 @@ Scene <- ggproto('Scene', NULL,
     self$layer_type = self$get_layer_type(layer_data, layers)
     self$tween_first = self$is_early_tween(layers)
   },
-  before_stat = function(self, layer_data, tweens) {
+  before_stat = function(self, layer_data) {
     layer_data <- self$transition$map_data(layer_data, self$transition_params)
+    ease <- self$ease$get_ease(layer_data[self$tween_first])
     layer_data[self$tween_first] <- self$transition$expand_data(
       layer_data[self$tween_first],
       self$layer_type[self$tween_first],
+      ease,
       self$transmuters$enter_transmuters(self$tween_first),
       self$transmuters$exit_transmuters(self$tween_first),
       self$transition_params
     )
     layer_data
   },
-  after_stat = function(self, layer_data, tweens) {
+  after_stat = function(self, layer_data) {
     layer_data
   },
   before_position = function(self, layer_data) {
@@ -49,9 +52,11 @@ Scene <- ggproto('Scene', NULL,
   },
   after_defaults = function(self, layer_data) {
     tween_last <- !self$tween_first
+    ease <- self$ease$get_ease(layer_data[tween_last])
     layer_data[tween_last] <- self$transition$expand_data(
       layer_data[tween_last],
       self$layer_type[tween_last],
+      ease,
       self$transmuters$enter_transmuters(self$tween_last),
       self$transmuters$exit_transmuters(self$tween_last),
       self$transition_params
