@@ -1,12 +1,13 @@
 #' @importFrom ggplot2 ggproto
-create_scene <- function(transition, view, nframes) {
+create_scene <- function(transition, view, transmuters, nframes) {
   if (is.null(nframes)) nframes <- 100
-  ggproto(NULL, Scene, transition = transition, view = view, nframes = nframes)
+  ggproto(NULL, Scene, transition = transition, view = view, transmuters = transmuters, nframes = nframes)
 }
 #' @importFrom ggplot2 ggproto
 Scene <- ggproto('Scene', NULL,
   transition = NULL,
   view = NULL,
+  transmuters = NULL,
   nframes = integer(),
   transition_params = list(),
   view_params = list(),
@@ -22,6 +23,7 @@ Scene <- ggproto('Scene', NULL,
     self$view_params <- self$view$setup_params(layer_data, view_params)
   },
   identify_layers = function(self, layer_data, layers) {
+    self$transmuters$setup(layers)
     self$layer_type = self$get_layer_type(layer_data, layers)
     self$tween_first = self$is_early_tween(layers)
   },
@@ -30,6 +32,8 @@ Scene <- ggproto('Scene', NULL,
     layer_data[self$tween_first] <- self$transition$expand_data(
       layer_data[self$tween_first],
       self$layer_type[self$tween_first],
+      self$transmuters$enter_transmuters(self$tween_first),
+      self$transmuters$exit_transmuters(self$tween_first),
       self$transition_params
     )
     layer_data
@@ -41,11 +45,15 @@ Scene <- ggproto('Scene', NULL,
     self$transition$unmap_frames(layer_data, self$transition_params)
   },
   after_position = function(self, layer_data) {
-    layer_data <- self$transition$remap_frames(layer_data, self$transition_params)
+    self$transition$remap_frames(layer_data, self$transition_params)
+  },
+  after_defaults = function(self, layer_data) {
     tween_last <- !self$tween_first
     layer_data[tween_last] <- self$transition$expand_data(
       layer_data[tween_last],
       self$layer_type[tween_last],
+      self$transmuters$enter_transmuters(self$tween_last),
+      self$transmuters$exit_transmuters(self$tween_last),
       self$transition_params
     )
     layer_data

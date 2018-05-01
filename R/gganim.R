@@ -5,6 +5,7 @@ as.gganim <- function(x) {
   class(x) <- c('gganim', class(x))
   x$transition <- transition_null()
   x$view <- view_static()
+  x$transmuters <- transmuter_list()
   x
 }
 is.gganim <- function(x) inherits(x, 'gganim')

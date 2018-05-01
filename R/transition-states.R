@@ -62,8 +62,8 @@ TransitionStates <- ggproto('TransitionStates', Transition,
       d
     }, d = data, id = params$row_state)
   },
-  expand_data = function(self, data, type, params) {
-    Map(function(d, t) {
+  expand_data = function(self, data, type, enter, exit, params) {
+    Map(function(d, t, en, ex) {
       split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
       if (is.na(split_panel[1])) return(d)
       d$group <- as.integer(split_panel[, 2])
@@ -81,10 +81,10 @@ TransitionStates <- ggproto('TransitionStates', Transition,
           next_state <- if (i == length(all_states)) all_states[[1]] else all_states[[i + 1]]
           all_frames <- switch(
             t,
-            point = tween_state(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id),
-            path = tween_path(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id),
-            polygon = tween_polygon(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id),
-            sf = tween_sf(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id),
+            point = tween_state(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id, en, ex),
+            path = tween_path(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id, en, ex),
+            polygon = tween_polygon(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id, en, ex),
+            sf = tween_sf(all_frames, next_state, 'cubic-in-out', params$transition_length[i], id, en, ex),
             stop("Unknown layer type", call. = FALSE)
           )
         }
@@ -95,7 +95,7 @@ TransitionStates <- ggproto('TransitionStates', Transition,
       all_frames$group <- paste0(all_frames$group, '_', all_frames$.frame)
       all_frames$.frame <- NULL
       all_frames
-    }, d = data, t = type)
+    }, d = data, t = type, en = enter, ex = exit)
   },
   unmap_frames = function(self, data, params) {
     lapply(data, function(d) {

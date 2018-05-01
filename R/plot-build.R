@@ -5,7 +5,7 @@ ggplot_build.gganim <- function(plot) {
   if (length(plot$layers) == 0) {
     plot <- plot + geom_blank()
   }
-  scene <- create_scene(plot$transition, plot$view, plot$nframes)
+  scene <- create_scene(plot$transition, plot$view, plot$transmuters, plot$nframes)
   layers <- plot$layers
   layer_data <- lapply(layers, function(y) y$layer_data(plot$data))
 
@@ -86,6 +86,8 @@ ggplot_build.gganim <- function(plot) {
 
   # Fill in defaults etc.
   data <- by_layer(function(l, d) l$compute_geom_2(d))
+
+  data <- scene$after_defaults(data)
 
   # Let layer stat have a final say before rendering
   data <- by_layer(function(l, d) l$finish_statistics(d))

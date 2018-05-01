@@ -2,7 +2,7 @@
 plot_clone <- function(plot) {
   p <- plot
   p$scales <- plot$scales$clone()
-
+  p$transmuters <- plot$transmuters$clone()
   p
 }
 scales_transform_df <- function(scales, df) {
