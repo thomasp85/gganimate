@@ -15,6 +15,16 @@
 #' @param wrap Should the animation *wrap-around*? If `TRUE` the last state will
 #' be transitioned into the first.
 #'
+#' @section Label variables:
+#' `transition_states` makes the following variables available for string
+#' literal interpretation:
+#'
+#' - **transitioning** is a booloean indicating whether the frame is part of the
+#'   transitioning phase
+#' - **previous_state** The name of the last state the animation was at
+#' - **closest_state** The name of the state closest to this frame
+#' - **next_state** The name of the next state the animation will be part of
+#'
 #' @family transitions
 #'
 #' @export
@@ -52,6 +62,7 @@ TransitionStates <- ggproto('TransitionStates', Transition,
     params$row_state <- row_state
     params$state_length <- frames$state_length
     params$transition_length <- frames$transition_length
+    params$frame_info <- do.call(get_frame_info, params)
     params
   },
   map_data = function(self, data, params) {
@@ -125,6 +136,9 @@ TransitionStates <- ggproto('TransitionStates', Transition,
   },
   adjust_nframes = function(self, data, params) {
     length(data[[1]])
+  },
+  add_label_vars = function(self, var, i, params, plot) {
+    c(var, as.list(params$frame_info[i, ]))
   }
 )
 
@@ -154,4 +168,22 @@ distribute_frames <- function(states, transitions, frames) {
   state_frames[ind[state_numbers]] <- n[state_numbers]
   transition_frames[ind[!state_numbers] - length(states)] <- n[!state_numbers]
   list(state_length = state_frames, transition_length = transition_frames, mod = frames / total)
+}
+#' @importFrom tweenr tween_constant
+get_frame_info <- function(state_levels, state_lengths, transition_lengths, nframes, ...) {
+  frames <- as.vector(rbind(state_lengths, transition_lengths))
+  phase <- rep(rep(c('constant', 'transition'), length(state_lengths)), frames)[seq_len(nframes)]
+  states <- rep(state_levels, each = 2)
+  previous_state <- rep(states, frames)[seq_len(nframes)]
+  states2 <- c(states[-1], states[1])
+  next_state <- rep(states2, frames)[seq_len(nframes)]
+  frames[-1] <- frames[-1] + 1
+  closest_state <- tween_constant(as.list(states[c(seq_along(states), 1)]), frames)[[1]][seq_len(nframes)]
+  data.frame(
+    transitioning = phase == 'transition',
+    previous_state = previous_state,
+    closest_state = closest_state,
+    next_state = next_state,
+    stringsAsFactors = FALSE
+  )
 }

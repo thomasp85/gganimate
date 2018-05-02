@@ -1,4 +1,4 @@
-#' @importFrom ggplot2 ggplot_build geom_blank
+#' @importFrom ggplot2 ggplot_build geom_blank waiver
 #' @export
 ggplot_build.gganim <- function(plot) {
   plot <- plot_clone(plot)
@@ -10,6 +10,14 @@ ggplot_build.gganim <- function(plot) {
   layer_data <- lapply(layers, function(y) y$layer_data(plot$data))
 
   scales <- plot$scales
+
+  # Extract scale names and merge it with label list
+  scale_labels <- lapply(scales$scales, `[[`, 'name')
+  names(scale_labels) <- vapply(scales$scales, function(sc) sc$aesthetics[1], character(1))
+  lapply(scales$scales, function(sc) sc$name <- waiver())
+  scale_labels <- scale_labels[!vapply(scale_labels, is.waive, logical(1))]
+  plot$labels[names(scale_labels)] <- scale_labels
+
   # Apply function to layer and matching data
   by_layer <- function(f) {
     out <- vector("list", length(data))

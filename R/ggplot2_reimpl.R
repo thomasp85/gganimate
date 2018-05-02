@@ -1,4 +1,4 @@
-# copied from ggplot2
+# copied from (and modified) ggplot2
 plot_clone <- function(plot) {
   p <- plot
   p$scales <- plot$scales$clone()
@@ -54,3 +54,4 @@ scales_map_df <- function(scales, df) {
 `%||%` <- function(a, b) {
   if (!is.null(a)) a else b
 }
+is.waive <- function(x) inherits(x, 'waiver')

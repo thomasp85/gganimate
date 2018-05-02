@@ -15,15 +15,20 @@
 #'
 ease_aes <- function(default, ...) {
   aesthetics <- list(...)
-  if (is.null(names(aesthetics))) stop('Aesthetics must be named', call. = FALSE)
-  if ('x' %in% names(aesthetics)) {
-    aesthetics[x_aes] <- aesthetics['x']
+  if (length(aesthetics) > 0) {
+    if (is.null(names(aesthetics))) stop('Aesthetics must be named', call. = FALSE)
+    if ('x' %in% names(aesthetics)) {
+      aesthetics[x_aes] <- aesthetics['x']
+    }
+    if ('y' %in% names(aesthetics)) {
+      aesthetics[y_aes] <- aesthetics['y']
+    }
+    aes_names <- sub('color', 'colour', names(aesthetics))
+    aesthetics <- unlist(aesthetics)
+  } else {
+    aes_names <- character()
+    aesthetics <- character()
   }
-  if ('y' %in% names(aesthetics)) {
-    aesthetics[y_aes] <- aesthetics['y']
-  }
-  aes_names <- sub('color', 'colour', names(aesthetics))
-  aesthetics <- unlist(aesthetics) %||% character()
   ggproto(NULL, EaseAes, default = default, aesthetics = aesthetics, aes_names = aes_names)
 }
 

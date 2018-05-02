@@ -29,4 +29,5 @@ Imports: stringi,
     transformr,
     grid,
     magick,
-    rlang
+    rlang,
+    glue

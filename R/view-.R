@@ -25,6 +25,9 @@ View <- ggproto('View', NULL,
       y <- unlist(d[names(d) %in% y_aes])
       list(x = range(x), y = range(y))
     })
+  },
+  add_label_vars = function(self, var, i, params, plot) {
+    var
   }
 )
 #' @importFrom ggplot2 ggplot_add

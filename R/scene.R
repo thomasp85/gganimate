@@ -4,6 +4,7 @@ create_scene <- function(transition, view, ease, transmuters, nframes) {
   ggproto(NULL, Scene, transition = transition, view = view, ease = ease, transmuters = transmuters, nframes = nframes)
 }
 #' @importFrom ggplot2 ggproto
+#' @importFrom glue glue_data
 Scene <- ggproto('Scene', NULL,
   transition = NULL,
   view = NULL,
@@ -71,9 +72,18 @@ Scene <- ggproto('Scene', NULL,
     layer_data
   },
   get_frame = function(self, plot, i) {
-    plot$data <- lapply(plot$data, `[[`, i)
     class(plot) <- 'ggplot_built'
-    self$view$set_view(plot, self$view_params, i)
+    plot <- self$transition$set_data(plot, self$transition_params, i)
+    plot <- self$view$set_view(plot, self$view_params, i)
+    plot <- self$set_labels(plot, i)
+    plot
+  },
+  set_labels = function(self, plot, i) {
+    label_var <- list(frame = i, nframes = self$nframes, progress = i/self$nframes, data = plot$data)
+    label_var <- self$transition$add_label_vars(label_var, i, self$transition_params, plot)
+    label_var <- self$view$add_label_vars(label_var, i, self$view_params, plot)
+    plot$plot$labels <- lapply(plot$plot$labels, glue_data, .x = label_var, .envir = plot$plot$plot_env)
+    plot
   },
   get_layer_type = function(self, data, layers) {
     unlist(Map(function(l, d) {

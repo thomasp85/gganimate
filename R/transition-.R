@@ -23,8 +23,15 @@ Transition <- ggproto('Transition', NULL,
   finish_data = function(self, data, params) {
     data
   },
-  adjust_nframes = function(slef, data, params, nframes) {
+  adjust_nframes = function(self, data, params, nframes) {
     nframes
+  },
+  set_data = function(self, plot, params, i) {
+    plot$data <- lapply(plot$data, `[[`, i)
+    plot
+  },
+  add_label_vars = function(self, var, i, params, plot) {
+    var
   }
 )
 #' @importFrom ggplot2 ggplot_add
