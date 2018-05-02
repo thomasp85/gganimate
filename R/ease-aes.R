@@ -17,10 +17,10 @@ ease_aes <- function(default, ...) {
   aesthetics <- list(...)
   if (is.null(names(aesthetics))) stop('Aesthetics must be named', call. = FALSE)
   if ('x' %in% names(aesthetics)) {
-    aesthetics[c('xmin', 'xmax', 'xend')] <- aesthetics['x']
+    aesthetics[x_aes] <- aesthetics['x']
   }
   if ('y' %in% names(aesthetics)) {
-    aesthetics[c('ymin', 'ymax', 'yend')] <- aesthetics['y']
+    aesthetics[y_aes] <- aesthetics['y']
   }
   aes_names <- sub('color', 'colour', names(aesthetics))
   aesthetics <- unlist(aesthetics) %||% character()

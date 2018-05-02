@@ -21,8 +21,8 @@ View <- ggproto('View', NULL,
   },
   get_ranges = function(data) {
     lapply(data, function(d) {
-      x <- unlist(d[names(d) %in% c('x', 'xmin', 'xmax', 'xend')])
-      y <- unlist(d[names(d) %in% c('y', 'ymin', 'ymax', 'yend')])
+      x <- unlist(d[names(d) %in% x_aes])
+      y <- unlist(d[names(d) %in% y_aes])
       list(x = range(x), y = range(y))
     })
   }
