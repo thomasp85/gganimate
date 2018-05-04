@@ -26,9 +26,8 @@ Transition <- ggproto('Transition', NULL,
   adjust_nframes = function(self, data, params, nframes) {
     nframes
   },
-  set_data = function(self, plot, params, i) {
-    plot$data <- lapply(plot$data, `[[`, i)
-    plot
+  get_frame_data = function(self, data, params, i) {
+    lapply(data, `[`, i)
   },
   add_label_vars = function(self, var, i, params, plot) {
     var

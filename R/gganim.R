@@ -5,6 +5,7 @@ as.gganim <- function(x) {
   class(x) <- c('gganim', class(x))
   x$transition <- transition_null()
   x$view <- view_static()
+  x$shadow <- shadow_null()
   x$transmuters <- transmuter_list()
   x$ease <- ease_aes('cubic-in-out')
   x

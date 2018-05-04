@@ -5,7 +5,7 @@ ggplot_build.gganim <- function(plot) {
   if (length(plot$layers) == 0) {
     plot <- plot + geom_blank()
   }
-  scene <- create_scene(plot$transition, plot$view, plot$ease, plot$transmuters, plot$nframes)
+  scene <- create_scene(plot$transition, plot$view, plot$shadow, plot$ease, plot$transmuters, plot$nframes)
   layers <- plot$layers
   layer_data <- lapply(layers, function(y) y$layer_data(plot$data))
 

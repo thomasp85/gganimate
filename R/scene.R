@@ -1,18 +1,20 @@
 #' @importFrom ggplot2 ggproto
-create_scene <- function(transition, view, ease, transmuters, nframes) {
+create_scene <- function(transition, view, shadow, ease, transmuters, nframes) {
   if (is.null(nframes)) nframes <- 100
-  ggproto(NULL, Scene, transition = transition, view = view, ease = ease, transmuters = transmuters, nframes = nframes)
+  ggproto(NULL, Scene, transition = transition, view = view, shadow = shadow, ease = ease, transmuters = transmuters, nframes = nframes)
 }
 #' @importFrom ggplot2 ggproto
 #' @importFrom glue glue_data
 Scene <- ggproto('Scene', NULL,
   transition = NULL,
   view = NULL,
+  shadow = NULL,
   ease = NULL,
   transmuters = NULL,
   nframes = integer(),
   transition_params = list(),
   view_params = list(),
+  shadow_params = list(),
   layer_type = character(),
   tween_first = logical(),
 
@@ -23,6 +25,9 @@ Scene <- ggproto('Scene', NULL,
     view_params <- self$view$params
     view_params$nframes <- self$nframes
     self$view_params <- self$view$setup_params(layer_data, view_params)
+    shadow_params <- self$shadow$params
+    shadow_params$nframes <- self$nframes
+    self$shadow_params <- self$shadow$setup_params(layer_data, shadow_params)
   },
   identify_layers = function(self, layer_data, layers) {
     self$transmuters$setup(layers)
@@ -73,7 +78,10 @@ Scene <- ggproto('Scene', NULL,
   },
   get_frame = function(self, plot, i) {
     class(plot) <- 'ggplot_built'
-    plot <- self$transition$set_data(plot, self$transition_params, i)
+    data <- self$transition$get_frame_data(plot$data, self$transition_params, i)
+    shadow <- self$transition$get_frame_data(plot$data, self$transition_params, self$shadow$get_frames(self$shadow_params, i))
+    shadow <- self$shadow$prepare_shadow(shadow, self$shadow_params)
+    plot$data <- self$shadow$prepare_frame_data(data, shadow, self$shadow_params)
     plot <- self$view$set_view(plot, self$view_params, i)
     plot <- self$set_labels(plot, i)
     plot
