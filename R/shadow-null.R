@@ -1,3 +1,10 @@
+#' A non-existant shadow
+#'
+#' This is the default shadow that simply doesn't show anything other than the
+#' data for the current frame.
+#'
+#' @family shadows
+#'
 #' @export
 shadow_null <- function() {
   ggproto(NULL, ShadowNull)
