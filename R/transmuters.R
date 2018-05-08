@@ -60,14 +60,31 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       x
     },
     polygon = function(x) {
-      x$x <- mean(x$x)
-      x$y <- mean(x$y)
+      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
+      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
+      group <- match(x$group, names(mean_x))
+      x$x <- mean_x[group]
+      x$y <- mean_y[group]
       if (fade && !is.null(x$alpha)) x$alpha <- 0
+      x
+    },
+    violin = function(x) {
+      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
+      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
+      group <- match(x$group, names(mean_x))
+      x$x <- mean_x[group]
+      x$y <- mean_y[group]
+      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      x
     },
     path = function(x) {
-      x$x <- mean(x$x)
-      x$y <- mean(x$y)
+      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
+      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
+      group <- match(x$group, names(mean_x))
+      x$x <- mean_x[group]
+      x$y <- mean_y[group]
       if (fade && !is.null(x$alpha)) x$alpha <- 0
+      x
     },
     boxplot = function(x) {
       x$ymin <- x$middle
