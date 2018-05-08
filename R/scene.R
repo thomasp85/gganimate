@@ -43,7 +43,8 @@ Scene <- ggproto('Scene', NULL,
       ease,
       self$transmuters$enter_transmuters(self$tween_first),
       self$transmuters$exit_transmuters(self$tween_first),
-      self$transition_params
+      self$transition_params,
+      which(self$tween_first)
     )
     layer_data
   },
@@ -63,9 +64,10 @@ Scene <- ggproto('Scene', NULL,
       layer_data[tween_last],
       self$layer_type[tween_last],
       ease,
-      self$transmuters$enter_transmuters(self$tween_last),
-      self$transmuters$exit_transmuters(self$tween_last),
-      self$transition_params
+      self$transmuters$enter_transmuters(tween_last),
+      self$transmuters$exit_transmuters(tween_last),
+      self$transition_params,
+      which(tween_last)
     )
     layer_data
   },

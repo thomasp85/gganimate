@@ -73,7 +73,7 @@ TransitionStates <- ggproto('TransitionStates', Transition,
       d
     }, d = data, id = params$row_state)
   },
-  expand_data = function(self, data, type, ease, enter, exit, params) {
+  expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
     Map(function(d, t, en, ex, es) {
       split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
       if (is.na(split_panel[1])) return(d)
