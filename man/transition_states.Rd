@@ -40,6 +40,7 @@ transitioning phase
 }
 
 \seealso{
-Other transitions: \code{\link{transition_null}}
+Other transitions: \code{\link{transition_layers}},
+  \code{\link{transition_null}}
 }
 \concept{transitions}

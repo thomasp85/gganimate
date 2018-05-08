@@ -10,6 +10,7 @@ transition_null()
 Keep all data constant across the animation
 }
 \seealso{
-Other transitions: \code{\link{transition_states}}
+Other transitions: \code{\link{transition_layers}},
+  \code{\link{transition_states}}
 }
 \concept{transitions}
