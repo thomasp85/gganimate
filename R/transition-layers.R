@@ -1,4 +1,4 @@
-#' @include transition-states.R
+#' @include transition-manual.R
 NULL
 
 #' Build up a plot, layer by layer
@@ -51,7 +51,7 @@ transition_layers <- function(layer_length, transition_length, keep_layers = TRU
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
 #' @importFrom transformr tween_path tween_polygon tween_sf
-TransitionLayers <- ggproto('TransitionLayers', TransitionStates,
+TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
   setup_params = function(self, data, params) {
     layer_length <- rep(params$layer_length, length.out = length(data))
     transition_length <- rep(params$transition_length, length.out = length(data) + params$from_blank)
@@ -60,7 +60,7 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionStates,
       transition_length[length(transition_length)] <- 0
     }
     frames <- distribute_frames(layer_length, transition_length, params$nframes)
-    frames <- data.frame(layer = frames$state_length, exit = frames$transition_length)
+    frames <- data.frame(layer = frames$static_length, exit = frames$transition_length)
     frames$enter <- c(0, frames$exit[-nrow(frames)])
     if (params$from_blank) frames <- frames[-1, ]
     params$offset <- c(0, cumsum(frames$enter + frames$layer)[-nrow(frames)])

@@ -43,6 +43,31 @@ ggplot_add.Transition <- function(object, plot, objectname) {
 
 # HELPERS -----------------------------------------------------------------
 
+#' @importFrom rlang eval_tidy
+combine_levels <- function(data, var) {
+  values <- lapply(data, eval_tidy, expr = var)
+  values[lengths(values) != vapply(data, nrow, integer(1))] <- list(NULL)
+  levels <- lapply(values, function(v) levels(as.factor(v)))
+  levels <- Reduce(union, levels)
+  values <- lapply(values, as.character)
+  values <- split(match(unlist(values), levels), rep(seq_along(values), lengths(values)))
+  list(values = values, levels = levels)
+}
+
+distribute_frames <- function(statics, transitions, frames) {
+  total <- sum(c(statics, transitions))
+  static_frames <- ceiling(statics * frames / total)
+  transition_frames <- ceiling(transitions * frames / total)
+  all <- c(static_frames, transition_frames)
+  n <- rep(seq_along(all), all)
+  ind <- unlist(lapply(all, seq_len))
+  n <- table(n[order(ind)[seq_len(frames)]])
+  ind <- as.integer(names(n))
+  static_numbers <- ind <= length(statics)
+  static_frames[ind[static_numbers]] <- n[static_numbers]
+  transition_frames[ind[!static_numbers] - length(statics)] <- n[!static_numbers]
+  list(static_length = static_frames, transition_length = transition_frames, mod = frames / total)
+}
 
 #' @importFrom tweenr tween_constant
 get_frame_info <- function(static_levels, static_lengths, transition_lengths, nframes, static_first, static_name, ...) {

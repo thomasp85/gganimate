@@ -1,3 +1,6 @@
+#' @include transition-manual.R
+NULL
+
 #' Transition between several distinct stages of the data
 #'
 #' This transition splits your data into multiple states based on the levels in
@@ -49,7 +52,7 @@ transition_states <- function(states, transition_length, state_length, wrap = TR
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
 #' @importFrom transformr tween_path tween_polygon tween_sf
-TransitionStates <- ggproto('TransitionStates', Transition,
+TransitionStates <- ggproto('TransitionStates', TransitionManual,
   setup_params = function(self, data, params) {
     states <- combine_levels(data, params$states_quo)
     all_levels <- states$levels
@@ -60,7 +63,7 @@ TransitionStates <- ggproto('TransitionStates', Transition,
     frames <- distribute_frames(state_length, transition_length, params$nframes + if (params$wrap) 1 else 0)
     params$state_levels <- all_levels
     params$row_state <- row_state
-    params$state_length <- frames$state_length
+    params$state_length <- frames$static_length
     params$transition_length <- frames$transition_length
     params$frame_info <- get_states_info(
       static_levels = params$state_levels,
@@ -70,14 +73,6 @@ TransitionStates <- ggproto('TransitionStates', Transition,
       static_first = TRUE,
       static_name = 'state')
     params
-  },
-  map_data = function(self, data, params) {
-    Map(function(d, id) {
-      if (length(id) > 0) {
-        d$group <- paste0(d$group, '_', id)
-      }
-      d
-    }, d = data, id = params$row_state)
   },
   expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
     Map(function(d, t, en, ex, es) {
@@ -113,68 +108,5 @@ TransitionStates <- ggproto('TransitionStates', Transition,
       all_frames$.frame <- NULL
       all_frames
     }, d = data, t = type, en = enter, ex = exit, es = ease)
-  },
-  unmap_frames = function(self, data, params) {
-    lapply(data, function(d) {
-      split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
-      if (is.na(split_panel[1])) return(d)
-      d$group <- as.integer(split_panel[, 2])
-      d$PANEL <- paste0(d$PANEL, '_', split_panel[, 3])
-      d
-    })
-  },
-  remap_frames = function(self, data, params) {
-    lapply(data, function(d) {
-      split_panel <- stri_match(d$PANEL, regex = '^(.+)_(.+)$')
-      if (is.na(split_panel[1])) return(d)
-      d$PANEL <- as.integer(split_panel[, 2])
-      d$group <- paste0(d$group, '_', split_panel[, 3])
-      d
-    })
-  },
-  finish_data = function(self, data, params) {
-    lapply(data, function(d) {
-      split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
-      if (is.na(split_panel[1])) return(rep(list(d), params$nframes))
-      d$group <- match(d$group, unique(d$group))
-      d <- split(d, as.integer(split_panel[, 3]))
-      frames <- rep(list(NULL), params$nframes)
-      frames[as.integer(names(d))] <- d
-      frames
-    })
-  },
-  adjust_nframes = function(self, data, params) {
-    length(data[[1]])
-  },
-  add_label_vars = function(self, var, i, params, plot) {
-    c(var, as.list(params$frame_info[i, ]))
   }
 )
-
-
-# HELPERS -----------------------------------------------------------------
-
-#' @importFrom rlang eval_tidy
-combine_levels <- function(data, var) {
-  values <- lapply(data, eval_tidy, expr = var)
-  values[lengths(values) != vapply(data, nrow, integer(1))] <- list(NULL)
-  levels <- lapply(values, function(v) levels(as.factor(v)))
-  levels <- Reduce(union, levels)
-  values <- lapply(values, as.character)
-  values <- split(match(unlist(values), levels), rep(seq_along(values), lengths(values)))
-  list(values = values, levels = levels)
-}
-distribute_frames <- function(states, transitions, frames) {
-  total <- sum(c(states, transitions))
-  state_frames <- ceiling(states * frames / total)
-  transition_frames <- ceiling(transitions * frames / total)
-  all <- c(state_frames, transition_frames)
-  n <- rep(seq_along(all), all)
-  ind <- unlist(lapply(all, seq_len))
-  n <- table(n[order(ind)[seq_len(frames)]])
-  ind <- as.integer(names(n))
-  state_numbers <- ind <= length(states)
-  state_frames[ind[state_numbers]] <- n[state_numbers]
-  transition_frames[ind[!state_numbers] - length(states)] <- n[!state_numbers]
-  list(state_length = state_frames, transition_length = transition_frames, mod = frames / total)
-}
