@@ -43,7 +43,8 @@ transitioning phase
 }
 
 \seealso{
-Other transitions: \code{\link{transition_null}},
+Other transitions: \code{\link{transition_manual}},
+  \code{\link{transition_null}},
   \code{\link{transition_states}}
 }
 \concept{transitions}
