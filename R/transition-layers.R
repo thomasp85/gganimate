@@ -15,17 +15,31 @@ NULL
 #' or transition out when a new layer enters
 #' @param from_blank Should the first layer transition in or be present on the
 #' onset of the animation
+#' @param layer_names A character vector of names for each layers, to be used
+#' when interpreting label literals
+#'
+#' @section Label variables:
+#' `transition_layers` makes the following variables available for string
+#' literal interpretation:
+#'
+#' - **transitioning** is a booloean indicating whether the frame is part of the
+#'   transitioning phase
+#' - **previous_layer** The name of the last layer the animation was showing
+#' - **closest_layer** The name of the layer the animation is closest to showing
+#' - **next_layer** The name of the next layer the animation will show
+#' - **nlayers** The total number of layers
 #'
 #' @family transitions
 #'
 #' @export
-transition_layers <- function(layer_length, transition_length, keep_layers = TRUE, from_blank = TRUE) {
+transition_layers <- function(layer_length, transition_length, keep_layers = TRUE, from_blank = TRUE, layer_names = NULL) {
   ggproto(NULL, TransitionLayers,
     params = list(
       layer_length = layer_length,
       transition_length = transition_length,
       keep_layers = keep_layers,
-      from_blank = from_blank
+      from_blank = from_blank,
+      layer_names = layer_names
     )
   )
 }
@@ -53,6 +67,21 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionStates,
     params$enter_length <- frames$enter
     params$layer_length <- frames$layer
     params$exit_length <- frames$exit
+    if (is.null(params$layer_names)) {
+      params$layer_names <- as.character(seq_along(data))
+    } else {
+      if (length(params$layer_names) != length(data)) {
+        stop('When providing layer names the number of names must match the number of layers', call. = FALSE)
+      }
+    }
+    params$frame_info <- get_states_info(
+      static_levels = params$layer_names,
+      static_lengths = params$layer_length,
+      transition_lengths = params$enter_length,
+      nframes = params$nframes,
+      static_first = FALSE,
+      static_name = 'layer')
+    params$frame_info$nlayers <- length(data)
     params
   },
   map_data = function(self, data, params) {
