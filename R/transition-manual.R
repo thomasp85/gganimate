@@ -33,14 +33,15 @@ transition_manual <- function(frames) {
 TransitionManual <- ggproto('TransitionManual', Transition,
   setup_params = function(self, data, params) {
     frames <- combine_levels(data, params$frames_quo)
-    all_frames <- states$levels
-    row_state <- states$values
-    params$row_state <- row_state
+    all_frames <- frames$levels
+    row_id <- frames$values
+    params$row_id <- row_id
     params$frame_info <- data.frame(
       previous_frame = c('', all_frames[-length(all_frames)]),
       current_frame = all_frames,
       next_frame = c(all_frames[-1], '')
     )
+    params$nframes <- nrow(params$frame_info)
     params
   },
   map_data = function(self, data, params) {
@@ -49,7 +50,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
         d$group <- paste0(d$group, '_', id)
       }
       d
-    }, d = data, id = params$row_state)
+    }, d = data, id = params$row_id)
   },
   expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
     data

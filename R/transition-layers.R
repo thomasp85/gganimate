@@ -82,6 +82,7 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
       static_first = FALSE,
       static_name = 'layer')
     params$frame_info$nlayers <- length(data)
+    params$nframes <- nrow(params$frame_info)
     params
   },
   map_data = function(self, data, params) {

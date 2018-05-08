@@ -62,7 +62,7 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
     state_length <- rep(params$state_length, length.out = length(all_levels))
     frames <- distribute_frames(state_length, transition_length, params$nframes + if (params$wrap) 1 else 0)
     params$state_levels <- all_levels
-    params$row_state <- row_state
+    params$row_id <- row_state
     params$state_length <- frames$static_length
     params$transition_length <- frames$transition_length
     params$frame_info <- get_states_info(
@@ -72,6 +72,7 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
       nframes = params$nframes,
       static_first = TRUE,
       static_name = 'state')
+    params$nframes <- nrow(params$frame_info)
     params
   },
   expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
