@@ -62,7 +62,7 @@ TransmuteFactory <- ggproto('TransmuteFactory', NULL,
         if (length(best) == 0) {
           self$default
         } else {
-          self$classes[best[1]]
+          self$classes[[best[1]]]
         }
       })
     } else {
