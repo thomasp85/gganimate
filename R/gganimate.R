@@ -97,18 +97,20 @@ gganimate <- function(p = last_plot(), filename = NULL, ftext = NULL,
     # title plot according to frame
     if (title_frame) {
       if (!is.null(b$plot$labels$title)) {
-        b$plot$labels$title <- paste(b$plot$labels$title, f)
-      } else {
+        b$plot$labels$title <- paste(b$plot$labels$title,
+                                     f)
+      }
+      else if (!is.null(ftext)){
+        if (length(ftext) != length(seq_along(b$data))){
+          stop("Character vector length must equal number of unique frames")
+        } else {
+          b$plot$labels$title <- ftext[f]
+        }
+      }
+      else {
         b$plot$labels$title <- f
       }
     }
-    if (!is.null(ftext)){
-      if (length(ftext) != length(f)){
-        stop("Character vector length must equal number of unique frames")
-      }
-      b$plot$labels$title <- ftext[f]
-    }
-
     b
   })
 
