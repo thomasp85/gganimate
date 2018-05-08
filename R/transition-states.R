@@ -130,7 +130,11 @@ TransitionStates <- ggproto('TransitionStates', Transition,
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
       if (is.na(split_panel[1])) return(rep(list(d), params$nframes))
-      split(d, as.integer(split_panel[, 3]))
+      d$group <- match(d$group, unique(d$group))
+      d <- split(d, as.integer(split_panel[, 3]))
+      frames <- rep(list(NULL), params$nframes)
+      frames[as.integer(names(d))] <- d
+      frames
     })
   },
   adjust_nframes = function(self, data, params) {
