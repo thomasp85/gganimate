@@ -65,7 +65,7 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
     params$row_id <- row_state
     params$state_length <- frames$static_length
     params$transition_length <- frames$transition_length
-    params$frame_info <- get_states_info(
+    params$frame_info <- get_frame_info(
       static_levels = params$state_levels,
       static_lengths = params$state_length,
       transition_lengths = params$transition_length,

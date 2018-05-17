@@ -74,7 +74,7 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
         stop('When providing layer names the number of names must match the number of layers', call. = FALSE)
       }
     }
-    params$frame_info <- get_states_info(
+    params$frame_info <- get_frame_info(
       static_levels = params$layer_names,
       static_lengths = params$layer_length,
       transition_lengths = params$enter_length,
