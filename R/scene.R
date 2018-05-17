@@ -76,14 +76,17 @@ Scene <- ggproto('Scene', NULL,
     self$nframes <- self$transition$adjust_nframes(layer_data, self$transition_params)
     self$view_params$nframes <- self$nframes
     self$view_params <- self$view$train(layer_data, self$view_params)
+    self$shadow_params$nframes <- self$nframes
+    self$shadow_params <- self$shadow$train(layer_data, self$shadow_params)
     layer_data
   },
   get_frame = function(self, plot, i) {
     class(plot) <- 'ggplot_built'
     data <- self$transition$get_frame_data(plot$data, self$transition_params, i)
-    shadow <- self$transition$get_frame_data(plot$data, self$transition_params, self$shadow$get_frames(self$shadow_params, i))
+    shadow_i <- self$shadow$get_frames(self$shadow_params, i)
+    shadow <- self$transition$get_frame_data(plot$data, self$transition_params, shadow_i)
     shadow <- self$shadow$prepare_shadow(shadow, self$shadow_params)
-    plot$data <- self$shadow$prepare_frame_data(data, shadow, self$shadow_params)
+    plot$data <- self$shadow$prepare_frame_data(data, shadow, self$shadow_params, i, shadow_i)
     plot <- self$view$set_view(plot, self$view_params, i)
     plot <- self$set_labels(plot, i)
     plot

@@ -16,11 +16,15 @@
 #' @param wrap Should the shadow wrap around, so that the first frame will get
 #' shadows from the end of the animation.
 #' @param exclude_layer Indexes of layers that should be excluded.
+#' @param exclude_phase Element phases that should not get a shadow. Possible
+#' values are `'enter'`, `'exit'`, `'static'`, `'transition'`, and `'raw'`. If
+#' `NULL` all phases will be included. Defaults to `'enter'` and `'exit'`
 #'
 #' @family shadows
 #'
 #' @export
-shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL) {
+#' @importFrom ggplot2 ggproto
+shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_element = c('enter', 'exit')) {
   ggproto(NULL, ShadowWake,
     exclude_layer = exclude_layer,
     params = list(
@@ -28,7 +32,8 @@ shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic
       size = size,
       alpha = alpha,
       falloff = falloff,
-      wrap = wrap
+      wrap = wrap,
+      exclude_element = exclude_element
     )
   )
 }
@@ -63,5 +68,13 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
       if (!is.null(d$stroke)) d$stroke <- d$stroke * i
       d
     })
+  },
+  prepare_frame_data = function(self, data, shadow, params, frame_ind, shadow_ind) {
+    Map(function(d, s, e) {
+      if (e) return(d[[1]])
+      ids <- d[[1]]$.id[!d[[1]]$.phase %in% params$exclude_element]
+      s <- s[s$.id %in% ids, , drop = FALSE]
+      rbind(s, d[[1]])
+    }, d = data, s = shadow, e = seq_along(data) %in% self$exclude_layer)
   }
 )

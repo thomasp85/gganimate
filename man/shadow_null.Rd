@@ -11,6 +11,7 @@ This is the default shadow that simply doesn't show anything other than the
 data for the current frame.
 }
 \seealso{
-Other shadows: \code{\link{shadow_wake}}
+Other shadows: \code{\link{shadow_mark}},
+  \code{\link{shadow_wake}}
 }
 \concept{shadows}

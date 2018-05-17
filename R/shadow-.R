@@ -9,13 +9,16 @@ Shadow <- ggproto('Shadow', NULL,
   setup_params = function(self, data, params) {
     params
   },
+  train = function(self, data, params) {
+    params
+  },
   get_frames = function(self, params, i) {
     integer(0)
   },
   prepare_shadow = function(self, shadow, params) {
     lapply(shadow, do.call, what = rbind)
   },
-  prepare_frame_data = function(self, data, shadow, params) {
+  prepare_frame_data = function(self, data, shadow, params, frame_ind, shadow_ind) {
     Map(function(d, s, e) {
       if (e) return(d[[1]])
       rbind(s, d[[1]])

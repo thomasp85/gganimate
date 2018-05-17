@@ -5,7 +5,7 @@
 \title{Show preceeding frames with gradual falloff}
 \usage{
 shadow_wake(wake_length, size = TRUE, alpha = TRUE, falloff = "cubic-in",
-  wrap = TRUE, exclude_layer = NULL)
+  wrap = TRUE, exclude_layer = NULL, exclude_element = c("enter", "exit"))
 }
 \arguments{
 \item{wake_length}{A number between 0 and 1 giving the length of the wake,
@@ -22,6 +22,10 @@ change.}
 shadows from the end of the animation.}
 
 \item{exclude_layer}{Indexes of layers that should be excluded.}
+
+\item{exclude_phase}{Element phases that should not get a shadow. Possible
+values are \code{'enter'}, \code{'exit'}, \code{'static'}, \code{'transition'}, and \code{'raw'}. If
+\code{NULL} all phases will be included. Defaults to \code{'enter'} and \code{'exit'}}
 }
 \description{
 This shadow is meant to draw a small wake after data by showing the latest
@@ -32,6 +36,7 @@ framerate. Instead it is given as a proportion of the total length of the
 animation.
 }
 \seealso{
-Other shadows: \code{\link{shadow_null}}
+Other shadows: \code{\link{shadow_mark}},
+  \code{\link{shadow_null}}
 }
 \concept{shadows}

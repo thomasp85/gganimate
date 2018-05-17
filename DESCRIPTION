@@ -43,6 +43,7 @@ Collate:
     'scene.R'
     'shadow-.R'
     'shadow-null.R'
+    'shadow-stamp.R'
     'shadow-wake.R'
     'transition-.R'
     'transition-manual.R'
