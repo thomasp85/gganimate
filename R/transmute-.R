@@ -58,7 +58,8 @@ TransmuteFactory <- ggproto('TransmuteFactory', NULL,
       factories[as.integer(names(self$positions))] <- self$positions
     } else if (length(self$classes) != 0) {
       lapply(layers, function(l) {
-        best <- which(inherits(l$geom, names(self$classes), which = TRUE) == 1)
+        best <- inherits(l$geom, names(self$classes), which = TRUE)
+        best <- which(best != 0 & best == min(best[best != 0]))
         if (length(best) == 0) {
           self$default
         } else {
