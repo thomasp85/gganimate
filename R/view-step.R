@@ -16,6 +16,7 @@
 #' @param delay A relative length to switch the view back and forth relative to
 #' the actual frames. E.g. if delay is calculated to 5 frames, frame 6 will get
 #' the view intended for frame 1.
+#' @param include Should the steps include both the start and end frame range
 #' @param ease The easing function used for the step
 #' @param wrap As in [transition_states()]. Should the view wrap around and zoom
 #' back to the first state.
@@ -27,8 +28,8 @@
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
-view_step <- function(pause_length, step_length, nsteps = NULL, look_ahead = 0,
-                      delay = 0, ease = 'cubic-in-out', wrap = TRUE,
+view_step <- function(pause_length, step_length, nsteps = NULL, look_ahead = pause_length,
+                      delay = 0, include = TRUE, ease = 'cubic-in-out', wrap = TRUE,
                       pause_first = FALSE) {
   ggproto(NULL, ViewStep,
     params = list(
@@ -37,6 +38,7 @@ view_step <- function(pause_length, step_length, nsteps = NULL, look_ahead = 0,
       nsteps = nsteps,
       look_ahead = look_ahead,
       delay = delay,
+      include = include,
       ease = ease,
       wrap = wrap,
       pause_first = pause_first
@@ -74,7 +76,7 @@ ViewStep <- ggproto('ViewStep', View,
     if (params$wrap) nframes <- nframes + 1
     frames <- distribute_frames(params$pause_length, params$step_length, nframes)
     look_ahead <- round(params$look_ahead * frames$mod)
-    breaks <- cumsum(frames$state_length + frames$transition_length) + look_ahead
+    breaks <- cumsum(frames$static_length + frames$transition_length) + look_ahead
     if (params$wrap) {
       breaks <- breaks %% params$nframes
       breaks <- c(breaks[length(breaks)], breaks)
@@ -88,6 +90,18 @@ ViewStep <- ggproto('ViewStep', View,
       y_range <- range(unlist(lapply(ranges, `[[`, 'y')))
       data.frame(xmin = x_range[1], xmax = x_range[2], ymin = y_range[1], ymax = y_range[2])
     })
+    if (params$include) {
+      windows <- lapply(seq_along(windows), function(i) {
+        if (i == 1) {
+          if (!params$wrap) return(windows[[i]])
+          else i <- c(length(windows), i)
+        } else {
+          i <- c(i - 1, i)
+        }
+        range <- do.call(rbind, windows[i])
+        data.frame(xmin = min(range$xmin), xmax = max(range$xmax), ymin = min(range$ymin), ymax = max(range$ymax))
+      })
+    }
     if (params$wrap && !params$pause_first) {
       frame_ranges <- windows[[length(windows) - 1]]
     } else {
@@ -95,8 +109,8 @@ ViewStep <- ggproto('ViewStep', View,
     }
 
     for (i in seq_len(length(windows) - 1)) {
-      if (frames$state_length[i] != 0) {
-        frame_ranges <- keep_state(frame_ranges, frames$state_length[i])
+      if (frames$static_length[i] != 0) {
+        frame_ranges <- keep_state(frame_ranges, frames$static_length[i])
       }
       if (frames$transition_length[i] != 0) {
         frame_ranges <- tween_state(frame_ranges, windows[[i + 1]], params$ease, frames$transition_length[i])
