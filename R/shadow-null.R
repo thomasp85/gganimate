@@ -18,7 +18,7 @@ ShadowNull <- ggproto('ShadowNull', Shadow,
   prepare_shadow = function(self, shadow, params) {
     shadow
   },
-  prepare_frame_data = function(self, data, shadow, params) {
+  prepare_frame_data = function(self, data, shadow, params, frame_ind, shadow_ind) {
     lapply(data, `[[`, 1)
   }
 )
