@@ -88,6 +88,6 @@ TransitionManual <- ggproto('TransitionManual', Transition,
     length(data[[1]])
   },
   add_label_vars = function(self, var, i, params, plot) {
-    c(var, as.list(params$frame_info[i, ]))
+    c(var, as.list(params$frame_info[i, , drop = FALSE]))
   }
 )
