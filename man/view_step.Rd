@@ -4,8 +4,9 @@
 \alias{view_step}
 \title{Follow the data in steps}
 \usage{
-view_step(pause_length, step_length, nsteps = NULL, look_ahead = 0,
-  delay = 0, ease = "cubic-in-out", wrap = TRUE, pause_first = FALSE)
+view_step(pause_length, step_length, nsteps = NULL,
+  look_ahead = pause_length, delay = 0, include = TRUE,
+  ease = "cubic-in-out", wrap = TRUE, pause_first = FALSE)
 }
 \arguments{
 \item{pause_length}{The relative length the view will be kept static. Will
@@ -23,6 +24,8 @@ new zoom area. Allow the view to zoom to where the data will be}
 \item{delay}{A relative length to switch the view back and forth relative to
 the actual frames. E.g. if delay is calculated to 5 frames, frame 6 will get
 the view intended for frame 1.}
+
+\item{include}{Should the steps include both the start and end frame range}
 
 \item{ease}{The easing function used for the step}
 

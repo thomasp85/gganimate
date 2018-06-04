@@ -47,6 +47,7 @@ Collate:
     'shadow-wake.R'
     'transition-.R'
     'transition-manual.R'
+    'transition-components.R'
     'transition-layers.R'
     'transition-null.R'
     'transition-states.R'
