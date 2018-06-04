@@ -37,6 +37,7 @@ Collate:
     'ease-aes.R'
     'gganim.R'
     'gganimate-ggproto.R'
+    'gganimate-package.r'
     'ggplot2_reimpl.R'
     'layer_type.R'
     'plot-build.R'
