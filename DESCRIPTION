@@ -49,6 +49,7 @@ Collate:
     'transition-.R'
     'transition-manual.R'
     'transition-components.R'
+    'transition-events.R'
     'transition-layers.R'
     'transition-null.R'
     'transition-states.R'

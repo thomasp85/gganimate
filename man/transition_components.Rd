@@ -18,7 +18,7 @@ of the components}
 time plus enter and exit length}
 
 \item{enter_length, exit_length}{How long time should be spend on enter and
-exit transitions. Defaults to 5\% of the range}
+exit transitions. Defaults to 0}
 }
 \description{
 This transition allows individual visual components to define their own
@@ -36,7 +36,8 @@ literal interpretation:
 }
 
 \seealso{
-Other transitions: \code{\link{transition_layers}},
+Other transitions: \code{\link{transition_evetns}},
+  \code{\link{transition_layers}},
   \code{\link{transition_manual}},
   \code{\link{transition_null}},
   \code{\link{transition_states}}

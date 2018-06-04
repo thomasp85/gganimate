@@ -5,12 +5,8 @@ animate <- function(plot, nframes = NULL, fps = 10, length = NULL,
   if (sum(c(is.null(nframes), is.null(fps), is.null(length))) > 1) {
     stop("At least 2 of 'nframes', 'fps', and 'length' must be given", call. = FALSE)
   }
-  if (is.null(nframes)) {
-    nframes <- round(length * fps)
-  }
-  if (is.null(fps)) {
-    fps <- round(nframes / length)
-  }
+  nframes <- nframes %||% round(length * fps)
+  fps <- fps %||% round(nframes / length)
   plot <- set_nframes(plot, nframes)
   plot <- ggplot_build(plot)
   nframes_final <- get_nframes(plot)

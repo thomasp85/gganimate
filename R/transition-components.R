@@ -15,7 +15,7 @@ NULL
 #' @param range The range the animation should span. Defaults to the range of
 #' time plus enter and exit length
 #' @param enter_length,exit_length How long time should be spend on enter and
-#' exit transitions. Defaults to 5\% of the range
+#' exit transitions. Defaults to 0
 #'
 #' @section Label variables:
 #' `transition_components` makes the following variables available for string
@@ -56,7 +56,8 @@ TransitionComponents <- ggproto('TransitionComponents', TransitionManual,
     params$exit_length <- data_info$exit_length
     params$range <- data_info$range
     params$frame_time <- data_info$frame_time
-    params$row_id <- Map(function(t, i) paste0(t, '-', i), t = data_info$row_frame, i = data_info$row_id)
+    params$row_id <- Map(function(t, i, s) if (s) character() else paste0(t, '-', i),
+                         t = data_info$row_frame, i = data_info$row_id, s = data_info$static)
     params$frame_info <- data.frame(
       frame_time = data_info$frame_time
     )
@@ -97,7 +98,7 @@ component_info <- function(data, params) {
   }
   row_id[static_layer] <- list(character(0))
   row_time[static_layer] <- list(numeric(0))
-  standard_times <- standardise_times(row_time)
+  standard_times <- standardise_times(row_time, 'time')
   range <- if (is.null(params$range)) {
     range(unlist(standard_times$times))
   } else {
@@ -108,7 +109,7 @@ component_info <- function(data, params) {
   }
   full_length <- diff(range)
   enter_length <- if (is.null(params$enter_length)) {
-    full_length * 0.05
+    0
   } else {
     if (!inherits(params$enter_length, standard_times$class)) {
       stop('enter_length must be given in the same class as time', call. = FALSE)
@@ -116,16 +117,12 @@ component_info <- function(data, params) {
     as.numeric(params$enter_length)
   }
   exit_length <- if (is.null(params$exit_length)) {
-    full_length * 0.05
+    0
   } else {
     if (!inherits(params$exit_length, standard_times$class)) {
       stop('exit_length must be given in the same class as time', call. = FALSE)
     }
     as.numeric(params$exit_length)
-  }
-  if (is.null(params$range)) {
-    range <- range + c(-enter_length, exit_length)
-    full_length <- diff(range)
   }
   row_frame <- lapply(standard_times$times, function(x) {
     round((params$nframes - 1) * (x - range[1])/full_length) + 1
@@ -140,21 +137,24 @@ component_info <- function(data, params) {
     row_frame = row_frame,
     frame_time = frame_time,
     enter_length = enter_length * frame_length,
-    exit_length = exit_length * frame_length
+    exit_length = exit_length * frame_length,
+    static = static_layer
   )
 }
 
-standardise_times <- function(times) {
+standardise_times <- function(times, name, to_class = NULL) {
   possible_classes <- c('integer', 'numeric', 'POSIXct', 'Date')
   classes <- vapply(times[lengths(times) != 0], function(x) {
     cl <- inherits(x, possible_classes, which = TRUE)
     which(cl != 0 & cl == min(cl[cl != 0]))[1]
   }, integer(1))
-  if (anyNA(classes)) stop('time column must either be ', paste0(possible_classes[-length(possible_classes)], collapse = ', '), ', or', possible_classes[length(possible_classes)], call. = FALSE)
-  if (length(unique(classes)) != 1) stop('time column must be the same class in all layers', call. = FALSE)
+  if (anyNA(classes)) stop(name, ' data must either be ', paste0(possible_classes[-length(possible_classes)], collapse = ', '), ', or', possible_classes[length(possible_classes)], call. = FALSE)
+  if (length(unique(classes)) > 1) stop(name, ' data must be the same class in all layers', call. = FALSE)
+  cl <- possible_classes[unique(classes)]
+  if (!is.null(to_class) && length(cl) != 0) if (cl != to_class) stop(name, ' data must be ', to_class, call. = FALSE)
   list(
     times = lapply(times, as.numeric),
-    class = possible_classes[unique(classes)]
+    class = cl
   )
 }
 recast_times <- function(time, class) {
