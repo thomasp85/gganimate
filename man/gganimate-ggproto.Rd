@@ -3,7 +3,7 @@
 %   R/shadow-null.R, R/shadow-stamp.R, R/shadow-wake.R, R/transition-.R,
 %   R/transition-manual.R, R/transition-components.R, R/transition-events.R,
 %   R/transition-layers.R, R/transition-null.R, R/transition-states.R,
-%   R/view-.R, R/view-follow.R, R/view-step.R
+%   R/transition-time.R, R/view-.R, R/view-follow.R, R/view-step.R
 \docType{data}
 \name{gganimate-ggproto}
 \alias{gganimate-ggproto}
@@ -18,6 +18,7 @@
 \alias{TransitionLayers}
 \alias{TransitionNull}
 \alias{TransitionStates}
+\alias{TransitionTime}
 \alias{View}
 \alias{ViewFollow}
 \alias{ViewStep}

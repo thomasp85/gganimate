@@ -53,6 +53,7 @@ Collate:
     'transition-layers.R'
     'transition-null.R'
     'transition-states.R'
+    'transition-time.R'
     'transmute-.R'
     'transmute-enter.R'
     'transmute-exit.R'
