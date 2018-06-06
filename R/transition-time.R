@@ -89,7 +89,7 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
 # HELPERS -----------------------------------------------------------------
 
 get_times <- function(data, var, nframes, start_pause, end_pause) {
-  times <- lapply(data, eval_tidy, expr = var)
+  times <- lapply(data, safe_eval, expr = var)
   times <- standardise_times(times, 'time')
   time_class <- times$class
   times <- times$times

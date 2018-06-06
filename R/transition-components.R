@@ -86,10 +86,9 @@ TransitionComponents <- ggproto('TransitionComponents', TransitionManual,
   }
 )
 
-#' @importFrom rlang eval_tidy
 component_info <- function(data, params) {
-  row_id <- lapply(data, eval_tidy, expr = params$id_quo)
-  row_time <- lapply(data, eval_tidy, expr = params$time_quo)
+  row_id <- lapply(data, safe_eval, expr = params$id_quo)
+  row_time <- lapply(data, safe_eval, expr = params$time_quo)
   static_layer <- unlist(Map(function(data, id, time) {
     (length(id) != 1 && length(id) != nrow(data)) || (length(time) != 1 && length(time) != nrow(data))
   }, data = data, id = row_id, time = row_time))
@@ -131,19 +130,19 @@ component_info <- function(data, params) {
     seq(range[1], range[2], length.out = params$nframes),
     standard_times$class
   )
-  frame_length <- params$nframes / full_length
+  frame_length <- full_length / params$nframes
   list(
     row_id = row_id,
     row_frame = row_frame,
     frame_time = frame_time,
-    enter_length = enter_length * frame_length,
-    exit_length = exit_length * frame_length,
+    enter_length = round(enter_length / frame_length),
+    exit_length = round(exit_length / frame_length),
     static = static_layer
   )
 }
 
 standardise_times <- function(times, name, to_class = NULL) {
-  possible_classes <- c('integer', 'numeric', 'POSIXct', 'Date')
+  possible_classes <- c('integer', 'numeric', 'POSIXct', 'Date', 'difftime', 'hms')
   classes <- vapply(times[lengths(times) != 0], function(x) {
     cl <- inherits(x, possible_classes, which = TRUE)
     which(cl != 0 & cl == min(cl[cl != 0]))[1]
@@ -151,6 +150,17 @@ standardise_times <- function(times, name, to_class = NULL) {
   if (anyNA(classes)) stop(name, ' data must either be ', paste0(possible_classes[-length(possible_classes)], collapse = ', '), ', or', possible_classes[length(possible_classes)], call. = FALSE)
   if (length(unique(classes)) > 1) stop(name, ' data must be the same class in all layers', call. = FALSE)
   cl <- possible_classes[unique(classes)]
+  if (length(cl) == 1 && (cl == 'difftime' || cl == 'hms')) {
+    if (is.null(to_class)) {
+      lapply(times, `units<-`, 'secs')
+    } else if (to_class == 'POSIXct') {
+      cl <- to_class
+      lapply(times, `units<-`, 'secs')
+    } else if (to_class == 'Date') {
+      cl <- to_class
+      lapply(times, `units<-`, 'days')
+    }
+  }
   if (!is.null(to_class) && length(cl) != 0) if (cl != to_class) stop(name, ' data must be ', to_class, call. = FALSE)
   list(
     times = lapply(times, as.numeric),
@@ -163,6 +173,8 @@ recast_times <- function(time, class) {
     integer = as.integer(round(time)),
     numeric =  time,
     POSIXct = structure(time, class = c('POSIXct', 'POSIXt')),
-    Date = structure(time, class = 'Date')
+    Date = structure(time, class = 'Date'),
+    difftime = structure(time, units = 'secs', class = 'difftime'),
+    hms = structure(time, units = 'secs', class = c('hms','difftime'))
   )
 }

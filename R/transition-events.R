@@ -89,12 +89,11 @@ TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
   }
 )
 
-#' @importFrom rlang eval_tidy
 event_info <- function(data, params) {
-  row_start <- lapply(data, eval_tidy, expr = params$start_quo)
-  row_end <- lapply(data, eval_tidy, expr = params$end_quo)
-  row_enter_length <- lapply(data, eval_tidy, expr = params$enter_length_quo)
-  row_exit_length <- lapply(data, eval_tidy, expr = params$exit_length_quo)
+  row_start <- lapply(data, safe_eval, expr = params$start_quo)
+  row_end <- lapply(data, safe_eval, expr = params$end_quo)
+  row_enter_length <- lapply(data, safe_eval, expr = params$enter_length_quo)
+  row_exit_length <- lapply(data, safe_eval, expr = params$exit_length_quo)
 
   static_layer <- unlist(Map(function(data, start) {
     length(start) != 1 && length(start) != nrow(data)
@@ -132,7 +131,7 @@ event_info <- function(data, params) {
     seq(range[1], range[2], length.out = params$nframes),
     time_class
   )
-  frame_length <- params$nframes / full_length
+  frame_length <- full_length / params$nframes
   start_frame <- lapply(row_start, function(x) {
     round((params$nframes - 1) * (x - range[1])/full_length) + 1
   })
@@ -142,11 +141,11 @@ event_info <- function(data, params) {
   })
   enter_length <- lapply(row_enter_length, function(x) {
     if (length(x) == 0) return(numeric())
-    x * frame_length
+    round(x / frame_length)
   })
   exit_length <- lapply(row_exit_length, function(x) {
     if (length(x) == 0) return(numeric())
-    x * frame_length
+    round(x / frame_length)
   })
 
   list(

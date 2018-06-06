@@ -43,9 +43,8 @@ ggplot_add.Transition <- function(object, plot, objectname) {
 
 # HELPERS -----------------------------------------------------------------
 
-#' @importFrom rlang eval_tidy
 combine_levels <- function(data, var) {
-  values <- lapply(data, eval_tidy, expr = var)
+  values <- lapply(data, safe_eval, expr = var)
   values[lengths(values) != vapply(data, nrow, integer(1))] <- list(NULL)
   levels <- lapply(values, function(v) levels(as.factor(v)))
   levels <- Reduce(union, levels)
