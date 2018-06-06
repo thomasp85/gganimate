@@ -24,7 +24,7 @@ NULL
 #' @export
 #' @importFrom rlang enquo quo_is_null quo
 #' @importFrom ggplot2 ggproto
-transition_evetns <- function(start, end = NULL, range = NULL, enter_length = NULL, exit_length = NULL) {
+transition_events <- function(start, end = NULL, range = NULL, enter_length = NULL, exit_length = NULL) {
   start_quo <- enquo(start)
   end_quo <- enquo(end)
   enter_length_quo <- enquo(enter_length)

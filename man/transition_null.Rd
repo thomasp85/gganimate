@@ -11,7 +11,7 @@ Keep all data constant across the animation
 }
 \seealso{
 Other transitions: \code{\link{transition_components}},
-  \code{\link{transition_evetns}},
+  \code{\link{transition_events}},
   \code{\link{transition_layers}},
   \code{\link{transition_manual}},
   \code{\link{transition_states}},
