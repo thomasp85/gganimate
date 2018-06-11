@@ -70,7 +70,7 @@ TransitionComponents <- ggproto('TransitionComponents', TransitionManual,
       if (is.na(split_panel[1])) return(d)
       d$group <- as.integer(split_panel[, 2])
       time <- as.integer(split_panel[, 3])
-      id <- as.integer(split_panel[, 4])
+      id <- split_panel[, 4]
       all_frames <- switch(
         t,
         point = tween_components(d, es, params$nframes, !!time, !!id, params$range, en, ex, params$enter_length, params$exit_length),
