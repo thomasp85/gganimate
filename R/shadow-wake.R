@@ -24,7 +24,7 @@
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
-shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_element = c('enter', 'exit')) {
+shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_phase = c('enter', 'exit')) {
   ggproto(NULL, ShadowWake,
     exclude_layer = exclude_layer,
     params = list(
@@ -33,7 +33,7 @@ shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic
       alpha = alpha,
       falloff = falloff,
       wrap = wrap,
-      exclude_element = exclude_element
+      exclude_phase = exclude_phase
     )
   )
 }
@@ -72,7 +72,7 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
   prepare_frame_data = function(self, data, shadow, params, frame_ind, shadow_ind) {
     Map(function(d, s, e) {
       if (e) return(d[[1]])
-      ids <- d[[1]]$.id[!d[[1]]$.phase %in% params$exclude_element]
+      ids <- d[[1]]$.id[!d[[1]]$.phase %in% params$exclude_phase]
       s <- s[s$.id %in% ids, , drop = FALSE]
       rbind(s, d[[1]])
     }, d = data, s = shadow, e = seq_along(data) %in% self$exclude_layer)
