@@ -9,13 +9,15 @@
 #' bounds of the dimension. For the latter, an `NA` value will be substituted
 #' for whatever is calculated by the view (e.g. `fixed_x = c(0, NA)`) will fix
 #' the minimum x value to 0 and let the view calculate the upper bound.
+#' @param aspect_ratio If the coord is fixed, ensure that the view matches the
+#' given aspect ratio. Will override anything given in `fixed_x`/`fixed_y`
 #'
 #' @family views
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
-view_follow <- function(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL) {
-  ggproto(NULL, ViewFollow, exclude_layer = exclude_layer,
+view_follow <- function(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1) {
+  ggproto(NULL, ViewFollow, exclude_layer = exclude_layer, aspect_ratio = aspect_ratio,
           fixed_lim = list(x = fixed_x, y = fixed_y))
 }
 

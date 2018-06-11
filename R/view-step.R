@@ -32,10 +32,11 @@
 view_step <- function(pause_length, step_length, nsteps = NULL, look_ahead = pause_length,
                       delay = 0, include = TRUE, ease = 'cubic-in-out', wrap = TRUE,
                       pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
-                      exclude_layer = NULL) {
+                      exclude_layer = NULL, aspect_ratio = 1) {
   ggproto(NULL, ViewStep,
     fixed_lim = list(x = fixed_x, y = fixed_y),
     exclude_layer = exclude_layer,
+    aspect_ratio = aspect_ratio,
     params = list(
       pause_length = pause_length,
       step_length = step_length,

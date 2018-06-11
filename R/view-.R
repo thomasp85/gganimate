@@ -6,6 +6,7 @@
 View <- ggproto('View', NULL,
   exclude_layer = numeric(0),
   fixed_lim = list(x = FALSE, y = FALSE),
+  aspect_ratio = 1,
   setup_params = function(self, data, params) {
     params
   },
@@ -25,6 +26,20 @@ View <- ggproto('View', NULL,
       if (self$fixed_lim$y) ylim <- plot$layout$coord$limits$y
     } else {
       ylim[!is.na(self$fixed_lim$y)] <- self$fixed_lim$y[!is.na(self$fixed_lim$y)]
+    }
+    if (!plot$layout$coord$is_free()) {
+      width <- diff(xlim)
+      height <- diff(ylim)
+      current_asp <- width / height
+      if (current_asp > self$aspect_ratio) {
+        new_height <- width / self$aspect_ratio
+        pad <- (new_height - height) / 2
+        ylim <- ylim + c(-pad, pad)
+      } else if (current_asp < self$aspect_ratio) {
+        new_width <- height * self$aspect_ratio
+        pad <- (new_width - width) / 2
+        xlim <- xlim + c(-pad, pad)
+      }
     }
     plot$layout$coord$limits$x <- xlim
     plot$layout$coord$limits$y <- ylim
