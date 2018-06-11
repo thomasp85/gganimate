@@ -14,8 +14,8 @@ View <- ggproto('View', NULL,
     plot
   },
   reset_limits = function(plot, xlim, ylim) {
-    plot$layout$coord$limits$x <- xlim
-    plot$layout$coord$limits$y <- ylim
+    if (is.null(plot$layout$coord$limits$x)) plot$layout$coord$limits$x <- xlim
+    if (is.null(plot$layout$coord$limits$y)) plot$layout$coord$limits$y <- ylim
     plot$layout$setup_panel_params()
     plot
   },
