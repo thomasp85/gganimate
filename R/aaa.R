@@ -5,7 +5,7 @@ y_aes <- scale_y_continuous()$aesthetics
 
 #' @importFrom rlang eval_tidy
 safe_eval <- function(expr, data) {
-  value <- eval_tidy(expr, data)
+  value <- tryCatch(eval_tidy(expr, data), error = function(e) numeric())
   if (!is.function(value) &&
       !is.environment(value) &&
       !is.symbol(value) &&
