@@ -62,6 +62,6 @@ ShadowTrail <- ggproto('ShadowTrail', Shadow,
       }
       s$.frame <- NULL
       rbind(s, d[[1]])
-    }, d = data, s = params$raw, e = seq_along(data) %in% self$exclude_layer)
+    }, d = data, s = params$raw, e = seq_along(data) %in% params$excluded_layers)
   }
 )

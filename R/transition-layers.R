@@ -114,5 +114,8 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
       layer$.frame <- NULL
       layer
     }, d = data, t = type, en = enter, ex = exit, es = ease, en_l = params$enter_length[layer_index], ex_l = params$exit_length[layer_index], ke_l = params$layer_length[layer_index], offset = params$offset[layer_index])
+  },
+  static_layers = function(self, params) {
+    numeric(0)
   }
 )

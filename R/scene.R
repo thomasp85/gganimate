@@ -74,9 +74,12 @@ Scene <- ggproto('Scene', NULL,
   finish_data = function(self, layer_data) {
     layer_data <- self$transition$finish_data(layer_data, self$transition_params)
     self$nframes <- self$transition$adjust_nframes(layer_data, self$transition_params)
+    static_layers <- self$transition$static_layers(self$transition_params)
     self$view_params$nframes <- self$nframes
+    self$view_params$excluded_layers <- union(self$view$exclude_layer, static_layers)
     self$view_params <- self$view$train(layer_data, self$view_params)
     self$shadow_params$nframes <- self$nframes
+    self$shadow_params$excluded_layers <- union(self$shadow$exclude_layer, static_layers)
     self$shadow_params <- self$shadow$train(layer_data, self$shadow_params)
     layer_data
   },

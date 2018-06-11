@@ -22,7 +22,7 @@ Shadow <- ggproto('Shadow', NULL,
     Map(function(d, s, e) {
       if (e) return(d[[1]])
       rbind(s, d[[1]])
-    }, d = data, s = shadow, e = seq_along(data) %in% self$exclude_layer)
+    }, d = data, s = shadow, e = seq_along(data) %in% params$excluded_layers)
   }
 )
 #' @importFrom ggplot2 ggplot_add

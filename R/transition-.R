@@ -31,6 +31,9 @@ Transition <- ggproto('Transition', NULL,
   },
   add_label_vars = function(self, var, i, params, plot) {
     var
+  },
+  static_layers = function(self, params) {
+    numeric(0)
   }
 )
 #' @importFrom ggplot2 ggplot_add

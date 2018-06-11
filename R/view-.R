@@ -31,8 +31,8 @@ View <- ggproto('View', NULL,
     plot$layout$setup_panel_params()
     plot
   },
-  get_ranges = function(self, data) {
-    lapply(data[!seq_along(data) %in% self$exclude_layer], function(d) {
+  get_ranges = function(self, data, params) {
+    lapply(data[!seq_along(data) %in% params$excluded_layers], function(d) {
       if ('geometry' %in% names(d)) {
         bbox <- sf::st_bbox(d$geometry)
         list(x = c(bbox$xmin, bbox$xmax), y = c(bbox$ymin, bbox$ymax))
