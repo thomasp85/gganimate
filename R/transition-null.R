@@ -12,7 +12,9 @@ transition_null <- function() {
 #' @export
 #' @importFrom ggplot2 ggproto
 TransitionNull <- ggproto('TransitionNull', Transition,
-  finish_data = function(self, data, params) {
-    rep(list(data), params$nframes)
+  finish_data = function(self, data, params, nframes) {
+    lapply(data, function(d) {
+      rep(list(d), params$nframes)
+    })
   }
 )

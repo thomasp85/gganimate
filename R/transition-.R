@@ -23,8 +23,8 @@ Transition <- ggproto('Transition', NULL,
   finish_data = function(self, data, params) {
     data
   },
-  adjust_nframes = function(self, data, params, nframes) {
-    nframes
+  adjust_nframes = function(self, data, params) {
+    params$nframes
   },
   get_frame_data = function(self, data, params, i) {
     lapply(data, `[`, i)
