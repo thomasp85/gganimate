@@ -4,6 +4,8 @@
 #' @export
 #' @importFrom ggplot2 ggproto
 View <- ggproto('View', NULL,
+  exclude_layer = numeric(0),
+  fixed_lim = list(x = FALSE, y = FALSE),
   setup_params = function(self, data, params) {
     params
   },
@@ -13,14 +15,24 @@ View <- ggproto('View', NULL,
   set_view = function(self, plot, params, i) {
     plot
   },
-  reset_limits = function(plot, xlim, ylim) {
-    if (is.null(plot$layout$coord$limits$x)) plot$layout$coord$limits$x <- xlim
-    if (is.null(plot$layout$coord$limits$y)) plot$layout$coord$limits$y <- ylim
+  reset_limits = function(self, plot, xlim, ylim) {
+    if (is.logical(self$fixed_lim$x)) {
+      if (self$fixed_lim$x) xlim <- plot$layout$coord$limits$x
+    } else {
+      xlim[!is.na(self$fixed_lim$x)] <- self$fixed_lim$x[!is.na(self$fixed_lim$x)]
+    }
+    if (is.logical(self$fixed_lim$y)) {
+      if (self$fixed_lim$y) ylim <- plot$layout$coord$limits$y
+    } else {
+      ylim[!is.na(self$fixed_lim$y)] <- self$fixed_lim$y[!is.na(self$fixed_lim$y)]
+    }
+    plot$layout$coord$limits$x <- xlim
+    plot$layout$coord$limits$y <- ylim
     plot$layout$setup_panel_params()
     plot
   },
-  get_ranges = function(data) {
-    lapply(data, function(d) {
+  get_ranges = function(self, data) {
+    lapply(data[!seq_along(data) %in% self$exclude_layer], function(d) {
       if ('geometry' %in% names(d)) {
         bbox <- sf::st_bbox(d$geometry)
         list(x = c(bbox$xmin, bbox$xmax), y = c(bbox$ymin, bbox$ymax))

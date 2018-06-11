@@ -4,7 +4,17 @@
 \alias{view_follow}
 \title{Let the view follow the data in each frame}
 \usage{
-view_follow()
+view_follow(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL)
+}
+\arguments{
+\item{fixed_x, fixed_y}{Either a logical indicating if the dimension should
+not be modified by the view, or a numeric vector giving the lower and upper
+bounds of the dimension. For the latter, an \code{NA} value will be substituted
+for whatever is calculated by the view (e.g. \code{fixed_x = c(0, NA)}) will fix
+the minimum x value to 0 and let the view calculate the upper bound.}
+
+\item{exclude_layer}{Integer vector of layer indices that should be ignored
+when calculating the view}
 }
 \description{
 This view will set the panels to include the data present in the frame.
