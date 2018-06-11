@@ -30,8 +30,9 @@ Imports: stringi,
     grid,
     magick,
     rlang,
-    glue
-Collate: 
+    glue,
+    sf
+Collate:
     'aaa.R'
     'animate.R'
     'ease-aes.R'
@@ -64,3 +65,6 @@ Collate:
     'view-follow.R'
     'view-static.R'
     'view-step.R'
+    'view-step-manual.R'
+    'view-zoom.R'
+    'view-zoom-manual.R'

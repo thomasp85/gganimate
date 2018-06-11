@@ -51,7 +51,7 @@ view_step <- function(pause_length, step_length, nsteps = NULL, look_ahead = pau
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 ggproto
-#' @importFrom tweenr tween_state
+#' @importFrom tweenr keep_state tween_state
 ViewStep <- ggproto('ViewStep', View,
   setup_params = function(self, data, params) {
     nsteps <- params$nstep %||% max(length(params$step_length), length(params$pause_length))
@@ -113,7 +113,7 @@ ViewStep <- ggproto('ViewStep', View,
         frame_ranges <- keep_state(frame_ranges, frames$static_length[i])
       }
       if (frames$transition_length[i] != 0) {
-        frame_ranges <- tween_state(frame_ranges, windows[[i + 1]], params$ease, frames$transition_length[i])
+        frame_ranges <- self$window_transition(frame_ranges, windows[[i + 1]], frames$transition_length[i], params)
       }
     }
     frame_ranges <- frame_ranges[frame_ranges$.frame <= params$nframes, ]
@@ -125,5 +125,8 @@ ViewStep <- ggproto('ViewStep', View,
   set_view = function(self, plot, params, i) {
     range <- params$frame_ranges[i, ]
     self$reset_limits(plot, c(range$xmin, range$xmax), c(range$ymin, range$ymax))
+  },
+  window_transition = function(windows, next_window, n, params) {
+    tween_state(windows, next_window, params$ease, n)
   }
 )

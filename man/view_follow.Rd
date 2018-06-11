@@ -11,6 +11,6 @@ This view will set the panels to include the data present in the frame.
 }
 \seealso{
 Other views: \code{\link{view_static}},
-  \code{\link{view_step}}
+  \code{\link{view_step}}, \code{\link{view_zoom}}
 }
 \concept{views}

@@ -12,6 +12,6 @@ data for the current frame.
 }
 \seealso{
 Other shadows: \code{\link{shadow_mark}},
-  \code{\link{shadow_wake}}
+  \code{\link{shadow_trail}}, \code{\link{shadow_wake}}
 }
 \concept{shadows}

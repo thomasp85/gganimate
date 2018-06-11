@@ -21,9 +21,14 @@ View <- ggproto('View', NULL,
   },
   get_ranges = function(data) {
     lapply(data, function(d) {
-      x <- unlist(d[names(d) %in% x_aes])
-      y <- unlist(d[names(d) %in% y_aes])
-      list(x = range(x), y = range(y))
+      if ('geometry' %in% names(d)) {
+        bbox <- sf::st_bbox(d$geometry)
+        list(x = c(bbox$xmin, bbox$xmax), y = c(bbox$ymin, bbox$ymax))
+      } else {
+        x <- unlist(d[names(d) %in% x_aes])
+        y <- unlist(d[names(d) %in% y_aes])
+        list(x = range(x), y = range(y))
+      }
     })
   },
   add_label_vars = function(self, var, i, params, plot) {
