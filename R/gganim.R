@@ -12,9 +12,10 @@ as.gganim <- function(x) {
 }
 is.gganim <- function(x) inherits(x, 'gganim')
 
+#' @rdname animate
 #' @export
 print.gganim <- function(x, ...) {
-  cat('A gganim object\n')
+  animate(x, ...)
 }
 
 # HELPERS -----------------------------------------------------------------

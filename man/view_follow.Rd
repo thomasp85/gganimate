@@ -4,7 +4,8 @@
 \alias{view_follow}
 \title{Let the view follow the data in each frame}
 \usage{
-view_follow(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL)
+view_follow(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
+  aspect_ratio = 1)
 }
 \arguments{
 \item{fixed_x, fixed_y}{Either a logical indicating if the dimension should
@@ -15,6 +16,9 @@ the minimum x value to 0 and let the view calculate the upper bound.}
 
 \item{exclude_layer}{Integer vector of layer indices that should be ignored
 when calculating the view}
+
+\item{aspect_ratio}{If the coord is fixed, ensure that the view matches the
+given aspect ratio. Will override anything given in \code{fixed_x}/\code{fixed_y}}
 }
 \description{
 This view will set the panels to include the data present in the frame.

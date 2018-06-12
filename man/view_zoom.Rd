@@ -8,11 +8,11 @@
 view_zoom(pause_length, step_length, nsteps = NULL,
   look_ahead = pause_length, delay = 0, include = FALSE, wrap = TRUE,
   pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
-  exclude_layer = NULL)
+  exclude_layer = NULL, aspect_ratio = 1)
 
 view_zoom_manual(pause_length, step_length, xmin, xmax, ymin, ymax, delay = 0,
   wrap = TRUE, pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
-  exclude_layer = NULL)
+  exclude_layer = NULL, aspect_ratio = 1)
 }
 \arguments{
 \item{pause_length}{The relative length the view will be kept static. Will
@@ -54,6 +54,9 @@ the minimum x value to 0 and let the view calculate the upper bound.}
 
 \item{exclude_layer}{Integer vector of layer indices that should be ignored
 when calculating the view}
+
+\item{aspect_ratio}{If the coord is fixed, ensure that the view matches the
+given aspect ratio. Will override anything given in \code{fixed_x}/\code{fixed_y}}
 
 \item{xmin, xmax, ymin, ymax}{Vectors of even length defining the boundaries of
 the different views to go through}
