@@ -78,8 +78,9 @@ TransitionManual <- ggproto('TransitionManual', Transition,
       split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
       if (is.na(split_panel[1])) return(rep(list(d), params$nframes))
       d$group <- match(d$group, unique(d$group))
+      empty_d <- d[0, , drop = FALSE]
       d <- split(d, as.integer(split_panel[, 3]))
-      frames <- rep(list(NULL), params$nframes)
+      frames <- rep(list(empty_d), params$nframes)
       frames[as.integer(names(d))] <- d
       frames
     })
