@@ -12,7 +12,7 @@
 #' resulting number of frames will get calculated, but only `nframes` evenly
 #' spaced frames are rendered.
 #'
-#' @param plot A `gganim` object
+#' @param plot,x A `gganim` object
 #' @param nframes The number of frames to render
 #' @param fps The framerate of the animation in frames/sec
 #' @param length The length of the animation in seconds
@@ -28,8 +28,11 @@
 #'
 #' @return The return value of the `renderer` function
 #'
-#' @note `print.gganim`()  is an alias for `animate()` in the same way as
-#' `print.ggplot()` is an alias for `plot.ggplot()`
+#' @details  `print.gganim`()  is an alias for `animate()` in the same way as
+#' `print.ggplot()` is an alias for `plot.ggplot()`. This ensures that gganimate
+#' behaves ggplot2-like and produces the animation when the object is printed.
+#' The `plot()` method is different and produces an ensemble of frames to give
+#' a static overview of the animation. The default is to produce a 3x3 grid.
 #'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
 #' @importFrom grDevices png jpeg tiff bmp

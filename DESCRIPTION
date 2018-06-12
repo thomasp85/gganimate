@@ -32,7 +32,8 @@ Imports: stringi,
     rlang,
     glue,
     sf,
-    progress
+    progress,
+    patchwork
 Collate:
     'aaa.R'
     'animate.R'

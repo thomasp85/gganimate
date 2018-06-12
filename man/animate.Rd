@@ -3,15 +3,18 @@
 \name{animate}
 \alias{animate}
 \alias{print.gganim}
+\alias{plot.gganim}
 \title{Render a gganim object}
 \usage{
 animate(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
   renderer = default_renderer, device = "png", ref_frame = 1, ...)
 
 \method{print}{gganim}(x, ...)
+
+\method{plot}{gganim}(x, nframes = 9, detail = 10, ...)
 }
 \arguments{
-\item{plot}{A \code{gganim} object}
+\item{plot, x}{A \code{gganim} object}
 
 \item{nframes}{The number of frames to render}
 
@@ -49,7 +52,10 @@ possible when only rendering few frames. To avoid this you can increase the
 resulting number of frames will get calculated, but only \code{nframes} evenly
 spaced frames are rendered.
 }
-\note{
+\details{
 \code{print.gganim}()  is an alias for \code{animate()} in the same way as
-\code{print.ggplot()} is an alias for \code{plot.ggplot()}
+\code{print.ggplot()} is an alias for \code{plot.ggplot()}. This ensures that gganimate
+behaves ggplot2-like and produces the animation when the object is printed.
+The \code{plot()} method is different and produces an ensemble of frames to give
+a static overview of the animation. The default is to produce a 3x3 grid.
 }
