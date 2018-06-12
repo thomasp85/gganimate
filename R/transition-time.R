@@ -10,6 +10,8 @@ NULL
 #'
 #' @param time An unquoted expression giving the time, and thus state
 #' membership, of each observation.
+#' @param range The time range to animate. If `NULL` it will be set to the range
+#' of `time`
 #'
 #' @section Label variables:
 #' `transition_time` makes the following variables available for string

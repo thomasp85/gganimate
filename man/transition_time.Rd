@@ -4,11 +4,14 @@
 \alias{transition_time}
 \title{Transition through distinct states in time}
 \usage{
-transition_time(time)
+transition_time(time, range = NULL)
 }
 \arguments{
 \item{time}{An unquoted expression giving the time, and thus state
 membership, of each observation.}
+
+\item{range}{The time range to animate. If \code{NULL} it will be set to the range
+of \code{time}}
 }
 \description{
 This is a variant of \code{\link[=transition_states]{transition_states()}} that is intended for data where

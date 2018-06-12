@@ -6,7 +6,7 @@
 \title{Render a gganim object}
 \usage{
 animate(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
-  renderer = default_renderer, device = "png", ...)
+  renderer = default_renderer, device = "png", ref_frame = 1, ...)
 
 \method{print}{gganim}(x, ...)
 }
@@ -26,6 +26,10 @@ animation. Gets a vector of paths to images along with the framerate.}
 
 \item{device}{The device to use for rendering the single frames. Possible
 values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, and \code{'bmp'}. Defaults to \code{'png'}.}
+
+\item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
+space available for axis text. Defaults to the first frame. Negative values
+counts backwards (-1 is the last frame)}
 
 \item{...}{Arguments passed on to the device}
 }
