@@ -23,9 +23,9 @@ RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues
-Remotes: tidyverse/ggplot2
-    thomasp85/tweenr
-    thomasp85/transformr
+Remotes: tidyverse/ggplot2,
+    thomasp85/tweenr,
+    thomasp85/transformr,
     thomasp85/patchwork
 Imports: stringi,
     tweenr,
