@@ -56,14 +56,14 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
       nframes[1] <- nframes[1] + 1
       id <- if (d$group[1] == -1) NULL else 'group'
 
-      if (times[1] == 1) {
+      if (times[1] <= 1) {
         all_frames <- states[[1]]
         states <- states[-1]
       } else {
         all_frames <- d[0, , drop = FALSE]
         nframes <- c(times[1] - 1, nframes)
       }
-      if (times[length(times)] != params$nframes) {
+      if (times[length(times)] < params$nframes) {
         states <- c(states, list(d[0, , drop = FALSE]))
         nframes <- c(nframes, params$nframes - times[length(times)])
       }
@@ -78,6 +78,9 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
           stop("Unknown layer type", call. = FALSE)
         )
       }
+      true_frame <- seq(times[1], times[length(times)])
+      all_frames <- all_frames[all_frames$.frame %in% which(true_frame > 0 & true_frame <= params$nframes), , drop = FALSE]
+      all_frames$.frame <- all_frames$.frame - min(all_frames$.frame) + 1
       all_frames$group <- paste0(all_frames$group, '_', all_frames$.frame)
       all_frames$.frame <- NULL
       all_frames
