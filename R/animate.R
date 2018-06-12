@@ -21,6 +21,9 @@
 #' animation. Gets a vector of paths to images along with the framerate.
 #' @param device The device to use for rendering the single frames. Possible
 #' values are `'png'`, `'jpeg'`, `'tiff'`, and `'bmp'`. Defaults to `'png'`.
+#' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
+#' space available for axis text. Defaults to the first frame. Negative values
+#' counts backwards (-1 is the last frame)
 #' @param ... Arguments passed on to the device
 #'
 #' @return The return value of the `renderer` function
@@ -30,18 +33,22 @@
 #'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
 #' @importFrom grDevices png jpeg tiff bmp
+#' @importFrom progress progress_bar
 #' @export
 animate <- function(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
-                    renderer = default_renderer, device = 'png', ...) {
+                    renderer = default_renderer, device = 'png', ref_frame = 1,
+                    ...) {
   if (sum(c(is.null(nframes), is.null(fps), is.null(length))) > 1) {
     stop("At least 2 of 'nframes', 'fps', and 'length' must be given", call. = FALSE)
   }
   nframes <- nframes %||% round(length * fps)
   fps <- fps %||% round(nframes / length)
-  plot <- set_nframes(plot, nframes)
+  nframes_total <- (nframes - 1) * detail + 1
+  plot <- set_nframes(plot, nframes_total)
   plot <- ggplot_build(plot)
   nframes_final <- get_nframes(plot)
-  if (nframes != nframes_final) message('nframes adjusted to match plot')
+  frame_ind <- unique(round(seq(1, nframes_final, length.out = nframes)))
+  if (nframes != length(frame_ind)) message('nframes adjusted to match plot')
   dir <- tempfile(pattern = '')
   dir.create(dir, showWarnings = FALSE)
   switch(
@@ -52,7 +59,8 @@ animate <- function(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
     tiff = tiff(file.path(dir, 'gganim_plot%04d.jpg'), ...),
     bmp = bmp(file.path(dir, 'gganim_plot%04d.jpg'), ...)
   )
-  frame <- plot$scene$get_frame(plot, 1)
+  if (ref_frame < 0) ref_frame <- nframes_final + 1 + ref_frame
+  frame <- plot$scene$get_frame(plot, ref_frame)
   frame <- ggplot_gtable(frame)
   widths_rel <- frame$widths
   widths <- convertWidth(widths_rel, 'mm')
@@ -62,14 +70,20 @@ animate <- function(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
   heights <- convertHeight(heights_rel, 'mm')
   null_heights <- as.numeric(heights) == 0
   heights[null_heights] <- heights_rel[null_heights]
-  grid.draw(frame)
-  for (i in seq_len(nframes_final)[-1]) {
-    grid.newpage()
+
+  pb <- progress_bar$new(
+    'Rendering [:bar] at :rate fps - eta: :eta',
+    total = length(frame_ind)
+  )
+  pb$tick(0)
+  for (i in frame_ind) {
+    if (i != frame_ind[1]) grid.newpage()
     frame <- plot$scene$get_frame(plot, i)
     frame <- ggplot_gtable(frame)
     frame$widths <- widths
     frame$heights <- heights
     grid.draw(frame)
+    pb$tick(1)
   }
   dev.off()
   frames <- list.files(dir, 'gganim_plot', full.names = TRUE)

@@ -31,7 +31,8 @@ Imports: stringi,
     magick,
     rlang,
     glue,
-    sf
+    sf,
+    progress
 Collate:
     'aaa.R'
     'animate.R'
