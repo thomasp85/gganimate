@@ -20,13 +20,12 @@ NULL
 #' @family transitions
 #'
 #' @export
-transition_time <- function(time) {
+transition_time <- function(time, range = NULL) {
   time_quo <- enquo(time)
   ggproto(NULL, TransitionTime,
           params = list(
             time_quo = time_quo,
-            start_pause = start_pause,
-            end_pause = end_pause
+            range = range
           )
   )
 }
@@ -40,7 +39,7 @@ transition_time <- function(time) {
 #' @importFrom transformr tween_path tween_polygon tween_sf
 TransitionTime <- ggproto('TransitionTime', TransitionManual,
   setup_params = function(self, data, params) {
-    times <- get_times(data, params$time_quo, params$nframes, params$end_pause)
+    times <- get_times(data, params$time_quo, params$nframes, params$range)
     params$row_id <- times$values
     params$frame_info <- data.frame(frame_time = times$frame_time)
     params
@@ -54,6 +53,7 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
       states <- split(d, time)
       times <- as.integer(names(states))
       nframes <- diff(times)
+      nframes[1] <- nframes[1] + 1
       id <- if (d$group[1] == -1) NULL else 'group'
 
       if (times[1] == 1) {
@@ -88,22 +88,26 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
 
 # HELPERS -----------------------------------------------------------------
 
-get_times <- function(data, var, nframes, start_pause, end_pause) {
+get_times <- function(data, var, nframes, range) {
   times <- lapply(data, safe_eval, expr = var)
   times <- standardise_times(times, 'time')
   time_class <- times$class
   times <- times$times
-  time_range <- range(unlist(times))
-  start <- time_range[1]
-  end <- time_range[2]
-  midpoints <- seq(start, end, length.out = 100)
-  breaks <- c(-Inf, midpoints[-1] - diff(midpoints)/2, Inf)
-  times[lengths(times) != vapply(data, nrow, integer(1))] <- list(NULL)
+  if (is.null(range)) {
+    range <- range(unlist(times))
+  } else {
+    if (!inherits(range, time_class)) {
+      if (!inherits(range, time_class)) {
+        stop('range must be given in the same class as time', call. = FALSE)
+      }
+      range <- as.numeric(range)
+    }
+  }
   times <- lapply(times, function(v) {
     if (is.null(v)) return(integer())
-    cut(v, breaks, labels = FALSE)
+    round(1 + (nframes - 1) * (v - range[1]) / diff(range))
   })
-  frame_time <- seq(start, end, length.out = nframes)
+  frame_time <- seq(range[1], range[2], length.out = nframes)
   frame_time <- recast_times(frame_time, time_class)
   list(values = times, frame_time = frame_time)
 }
