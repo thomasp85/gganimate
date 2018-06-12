@@ -75,18 +75,22 @@ animate <- function(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
   heights[null_heights] <- heights_rel[null_heights]
 
   pb <- progress_bar$new(
-    'Rendering [:bar] at :rate fps - eta: :eta',
+    'Rendering [:bar] at :fps fps - eta: :eta',
     total = length(frame_ind)
   )
+  start <- Sys.time()
   pb$tick(0)
-  for (i in frame_ind) {
-    if (i != frame_ind[1]) grid.newpage()
-    frame <- plot$scene$get_frame(plot, i)
+  for (i in seq_along(frame_ind)) {
+    if (i != 1) grid.newpage()
+    frame <- plot$scene$get_frame(plot, frame_ind(i))
     frame <- ggplot_gtable(frame)
     frame$widths <- widths
     frame$heights <- heights
     grid.draw(frame)
-    pb$tick(1)
+    rate <- i/as.double(Sys.time() - start, units = 'secs')
+    if (is.nan(rate)) rate <- 0
+    rate <- format(rate, digits = 2)
+    pb$tick(tokens = list(fps = rate))
   }
   dev.off()
   frames <- list.files(dir, 'gganim_plot', full.names = TRUE)
@@ -96,5 +100,7 @@ animate <- function(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
 #' @export
 default_renderer <- function(frames, fps) {
   anim <- image_read(frames)
-  image_animate(anim, fps)
+  anim <- image_animate(anim, fps)
+  print(anim, info = FALSE)
+  invisible(anim)
 }
