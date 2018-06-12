@@ -39,7 +39,7 @@
 #' @importFrom progress progress_bar
 #' @export
 animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
-                    renderer = magick_renderer, device = 'png', ref_frame = 1,
+                    renderer = magick_renderer(), device = 'png', ref_frame = 1,
                     ...) {
   if (sum(c(is.null(nframes), is.null(fps), is.null(length))) > 1) {
     stop("At least 2 of 'nframes', 'fps', and 'length' must be given", call. = FALSE)
@@ -95,12 +95,4 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   dev.off()
   frames <- list.files(dir, 'gganim_plot', full.names = TRUE)
   renderer(frames, fps)
-}
-#' @importFrom magick image_read image_animate
-#' @export
-magick_renderer <- function(frames, fps) {
-  anim <- image_read(frames)
-  anim <- image_animate(anim, fps)
-  print(anim, info = FALSE)
-  invisible(anim)
 }

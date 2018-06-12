@@ -47,6 +47,7 @@ Collate:
     'ggplot2_reimpl.R'
     'layer_type.R'
     'plot-build.R'
+    'renderers.R'
     'scene.R'
     'shadow-.R'
     'shadow-mark.R'
