@@ -61,6 +61,7 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
   },
   prepare_shadow = function(self, shadow, params) {
     lapply(shadow, function(d) {
+      if (length(d) == 0) return(NULL)
       i <- rep(params$falloff, vapply(d, nrow, integer(1)))
       d <- do.call(rbind, d)
       if (!is.null(d$alpha)) d$alpha <- d$alpha * i
