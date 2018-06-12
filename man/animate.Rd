@@ -6,8 +6,8 @@
 \alias{plot.gganim}
 \title{Render a gganim object}
 \usage{
-animate(plot, nframes = NULL, fps = 10, length = NULL, detail = 1,
-  renderer = default_renderer, device = "png", ref_frame = 1, ...)
+animate(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
+  renderer = magick_renderer, device = "png", ref_frame = 1, ...)
 
 \method{print}{gganim}(x, ...)
 
