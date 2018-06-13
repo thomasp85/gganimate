@@ -35,8 +35,9 @@
 #' a static overview of the animation. The default is to produce a 3x3 grid.
 #'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
-#' @importFrom grDevices png jpeg tiff bmp
+#' @importFrom grDevices png jpeg tiff bmp dev.off
 #' @importFrom progress progress_bar
+#' @importFrom ggplot2 ggplot_gtable ggplot_build
 #' @export
 animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
                     renderer = magick_renderer(), device = 'png', ref_frame = 1,

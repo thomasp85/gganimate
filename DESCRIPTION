@@ -38,7 +38,8 @@ Imports: stringi,
     glue,
     sf,
     progress,
-    patchwork
+    patchwork,
+    plyr
 Collate:
     'aaa.R'
     'animate.R'

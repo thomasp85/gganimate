@@ -18,7 +18,7 @@ print.gganim <- function(x, ...) {
   animate(x, ...)
 }
 #' @rdname animate
-#' @importFrom ggplot2 ggplot
+#' @importFrom ggplot2 ggplot ggplot_build ggplot_gtable
 #' @importFrom patchwork wrap_ggplot_grob wrap_plots
 plot.gganim <- function(x, nframes = 9, detail = 10, ...) {
   nframes_total <- (nframes - 1) * detail + 1

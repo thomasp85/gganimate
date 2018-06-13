@@ -27,7 +27,7 @@ Shadow <- ggproto('Shadow', NULL,
 )
 #' @importFrom ggplot2 ggplot_add
 #' @export
-ggplot_add.Shadow <- function(object, plot, objectname) {
+ggplot_add.Shadow <- function(object, plot, object_name) {
   plot <- as.gganim(plot)
   plot$shadow <- object
   plot

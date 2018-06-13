@@ -30,15 +30,7 @@ ggplot_build.gganim <- function(plot) {
   # Initialise panels, add extra data for margins & missing faceting
   # variables, and add on a PANEL variable to data
 
-  layout <- ggproto(NULL, ggplot2:::create_layout(plot$facet, plot$coordinates), get_scales = function(self, i) {
-    if (is.character(i)) i <- as.integer(strsplit(i, '_')[[1]][1])
-    this_panel <- self$layout[self$layout$PANEL == i, ]
-
-    list(
-      x = self$panel_scales_x[[this_panel$SCALE_X]],
-      y = self$panel_scales_y[[this_panel$SCALE_Y]]
-    )
-  })
+  layout <- create_layout(plot$facet, plot$coordinates)
   data <- layout$setup(layer_data, plot$data, plot$plot_env)
   scene$setup(data)
   # Compute aesthetics to produce data with generalised variable names
@@ -109,14 +101,4 @@ ggplot_build.gganim <- function(plot) {
     list(data = data, layout = layout, plot = plot, scene = scene),
     class = "gganim_built"
   )
-}
-#' @importFrom ggplot2 ggplot_gtable
-#' @export
-ggplot_gtable.gganim_built <- function(data) {
-  plots <- lapply(round(seq(1, get_nframes(data), length.out = 9)), function(i) {
-    data <- data$scene$get_frame(data, i)
-    plot <- ggplot_gtable(data)
-    wrap_elements(full = plot)
-  })
-  wrap_plots(plots, nrow = 3)
 }

@@ -51,7 +51,23 @@ scales_map_df <- function(scales, df) {
 
   plyr::quickdf(c(mapped, df[setdiff(names(df), names(mapped))]))
 }
-`%||%` <- function(a, b) {
-  if (!is.null(a)) a else b
-}
 is.waive <- function(x) inherits(x, 'waiver')
+
+# Reimplement get_scales in Layout to allow panels with frame info to get the
+# correct scales
+#' @importFrom ggplot2 FacetNull CoordCartesian Layout ggproto
+create_layout <- function(facet = FacetNull, coord = CoordCartesian) {
+  ggproto(NULL, Layout,
+    facet = facet,
+    coord = coord,
+    get_scales = function(self, i) {
+      if (is.character(i)) i <- as.integer(strsplit(i, '_')[[1]][1])
+      this_panel <- self$layout[self$layout$PANEL == i, ]
+
+      list(
+        x = self$panel_scales_x[[this_panel$SCALE_X]],
+        y = self$panel_scales_y[[this_panel$SCALE_Y]]
+      )
+    }
+  )
+}
