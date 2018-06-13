@@ -94,5 +94,10 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   }
   dev.off()
   frames <- list.files(dir, 'gganim_plot', full.names = TRUE)
-  renderer(frames, fps)
+  frame_vars <- plot$scene$frame_vars
+  frame_vars$frame_source <- frames
+  animation <- renderer(frames, fps)
+  attr(animation, 'frame_vars') <- frame_vars
+  set_last_animation(animation)
+  animation
 }
