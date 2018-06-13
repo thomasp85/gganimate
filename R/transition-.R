@@ -29,8 +29,8 @@ Transition <- ggproto('Transition', NULL,
   get_frame_data = function(self, data, params, i) {
     lapply(data, `[`, i)
   },
-  add_label_vars = function(self, var, i, params, plot) {
-    var
+  get_frame_vars = function(self, params) {
+    NULL
   },
   static_layers = function(self, params) {
     numeric(0)

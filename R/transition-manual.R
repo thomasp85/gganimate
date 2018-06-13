@@ -88,8 +88,8 @@ TransitionManual <- ggproto('TransitionManual', Transition,
   adjust_nframes = function(self, data, params) {
     length(data[[1]])
   },
-  add_label_vars = function(self, var, i, params, plot) {
-    c(var, as.list(params$frame_info[i, , drop = FALSE]))
+  get_frame_vars = function(self, params) {
+    params$frame_info
   },
   static_layers = function(self, params) {
     which(lengths(params$row_id) == 0)

@@ -58,8 +58,8 @@ View <- ggproto('View', NULL,
       }
     })
   },
-  add_label_vars = function(self, var, i, params, plot) {
-    var
+  get_frame_vars = function(self, params) {
+    NULL
   }
 )
 #' @importFrom ggplot2 ggplot_add

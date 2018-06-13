@@ -81,6 +81,12 @@ Scene <- ggproto('Scene', NULL,
     self$shadow_params$nframes <- self$nframes
     self$shadow_params$excluded_layers <- union(self$shadow$exclude_layer, static_layers)
     self$shadow_params <- self$shadow$train(layer_data, self$shadow_params)
+    frame_vars <- list(
+      data.frame(frame = seq_len(self$nframes), nframes = self$nframes, progress = seq_len(self$nframes)/self$nframes),
+      self$transition$get_frame_vars(self$transition_params),
+      self$view$get_frame_vars(self$view_params)
+    )
+    self$frame_vars <- do.call(cbind, frame_vars[!vapply(frame_vars, is.null, logical(1))])
     layer_data
   },
   get_frame = function(self, plot, i) {
@@ -95,9 +101,8 @@ Scene <- ggproto('Scene', NULL,
     plot
   },
   set_labels = function(self, plot, i) {
-    label_var <- list(frame = i, nframes = self$nframes, progress = i/self$nframes, data = plot$data)
-    label_var <- self$transition$add_label_vars(label_var, i, self$transition_params, plot)
-    label_var <- self$view$add_label_vars(label_var, i, self$view_params, plot)
+    label_var <- as.list(self$frame_vars[i, ])
+    label_var$data <- plot$data
     plot$plot$labels <- lapply(plot$plot$labels, glue_data, .x = label_var, .envir = plot$plot$plot_env)
     plot
   },
