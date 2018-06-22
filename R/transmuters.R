@@ -39,13 +39,12 @@ transmute_appear <- function(type, early = FALSE, ...) {
   }
   create_factory(type, default = f, ...)
 }
+#' @importFrom scales alpha
 transmute_fade <- function(type, ...) {
   create_factory(type, default = function(x) {
-    if (is.null(x$alpha)) {
-      warning('Alpha not set on data', call. = FALSE)
-    } else {
-      x$alpha <- 0
-    }
+    if (!is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+    if (!is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+    if (!is.null(x$fill)) x$fill <- alpha(x$fill, 0)
     x
   }, ...)
 }
