@@ -39,7 +39,9 @@ Imports: stringi,
     sf,
     progress,
     patchwork,
-    plyr
+    plyr,
+    svglite,
+    scales
 Collate:
     'aaa.R'
     'animate.R'

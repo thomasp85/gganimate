@@ -38,6 +38,7 @@
 #' @importFrom grDevices png jpeg tiff bmp dev.off
 #' @importFrom progress progress_bar
 #' @importFrom ggplot2 ggplot_gtable ggplot_build
+#' @importFrom svglite svglite
 #' @export
 animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
                     renderer = magick_renderer(), device = 'png', ref_frame = 1,
@@ -53,16 +54,7 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   nframes_final <- get_nframes(plot)
   frame_ind <- unique(round(seq(1, nframes_final, length.out = nframes)))
   if (nframes != length(frame_ind)) message('nframes adjusted to match plot')
-  dir <- tempfile(pattern = '')
-  dir.create(dir, showWarnings = FALSE)
-  switch(
-    device,
-    png = png(file.path(dir, 'gganim_plot%04d.png'), ...),
-    jpg =,
-    jpeg = jpeg(file.path(dir, 'gganim_plot%04d.jpg'), ...),
-    tiff = tiff(file.path(dir, 'gganim_plot%04d.jpg'), ...),
-    bmp = bmp(file.path(dir, 'gganim_plot%04d.jpg'), ...)
-  )
+
   if (ref_frame < 0) ref_frame <- nframes_final + 1 + ref_frame
   frame <- plot$scene$get_frame(plot, ref_frame)
   frame <- ggplot_gtable(frame)
@@ -75,14 +67,28 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   null_heights <- as.numeric(heights) == 0
   heights[null_heights] <- heights_rel[null_heights]
 
+  dir <- tempfile(pattern = '')
+  dir.create(dir, showWarnings = FALSE)
   pb <- progress_bar$new(
-    'Rendering [:bar] at :fps fps - eta: :eta',
+    'Rendering [:bar] at :fps fps ~ eta: :eta',
     total = length(frame_ind)
+  )
+  switch(
+    device,
+    png = png(file.path(dir, 'gganim_plot%04d.png'), ...),
+    jpg =,
+    jpeg = jpeg(file.path(dir, 'gganim_plot%04d.jpg'), ...),
+    tiff = tiff(file.path(dir, 'gganim_plot%04d.jpg'), ...),
+    bmp = bmp(file.path(dir, 'gganim_plot%04d.jpg'), ...)
   )
   start <- Sys.time()
   pb$tick(0)
   for (i in seq_along(frame_ind)) {
-    if (i != 1) grid.newpage()
+    if (device == 'svg') {
+      svglite(file.path(dir, sprintf('gganim_plot%04d.svg', i)), ...)
+    } else if (i != 1) {
+      grid.newpage()
+    }
     frame <- plot$scene$get_frame(plot, frame_ind[i])
     frame <- ggplot_gtable(frame)
     frame$widths <- widths
@@ -92,8 +98,9 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
     if (is.nan(rate)) rate <- 0
     rate <- format(rate, digits = 2)
     pb$tick(tokens = list(fps = rate))
+    if (device == 'svg') dev.off()
   }
-  dev.off()
+  if (device != 'svg') dev.off()
   frames <- list.files(dir, 'gganim_plot', full.names = TRUE)
   frame_vars <- plot$scene$frame_vars
   frame_vars$frame_source <- frames

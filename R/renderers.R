@@ -30,12 +30,16 @@
 NULL
 
 #' @rdname renderers
-#' @importFrom magick image_read image_animate
+#' @importFrom magick image_read image_animate image_read_svg
 #' @export
-magick_renderer <- function() {
+magick_renderer <- function(loop = TRUE) {
   function(frames, fps) {
-    anim <- image_read(frames)
-    anim <- image_animate(anim, fps)
+    anim <- if (grepl('.svg$', frames[1])) {
+      image_read_svg(frames)
+    } else {
+      image_read(frames)
+    }
+    anim <- image_animate(anim, fps, loop = if (loop) 0 else 1)
     print(anim, info = FALSE)
     invisible(anim)
   }
