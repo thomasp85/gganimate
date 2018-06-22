@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# gganimate
+# gganimate <img src="man/figures/logo.png" align="right" />
 
 [![Travis-CI Build Status](https://travis-ci.org/thomasp85/gganimate.svg?branch=master)](https://travis-ci.org/thomasp85/gganimate)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/thomasp85/gganimate?branch=master&svg=true)](https://ci.appveyor.com/project/thomasp85/gganimate)
