@@ -6,6 +6,8 @@
 \alias{gganimate-package}
 \title{gganimate: A Grammar of Animated Graphics}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 The grammar of graphics as implemented in the 'ggplot2' package has
 been successful in providing a powerful API for creating static
 visualisation. In order to extend the API for animated graphics this package

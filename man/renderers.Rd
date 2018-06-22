@@ -6,7 +6,7 @@
 \alias{file_renderer}
 \title{Renderers provided by gganimate}
 \usage{
-magick_renderer()
+magick_renderer(loop = TRUE)
 
 file_renderer(dir = "~", prefix = "gganim_plot")
 }
