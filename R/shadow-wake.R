@@ -55,14 +55,14 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
       frames <- frames %% params$nframes
       frames[frames == 0] <- params$nframes
     } else {
-      frames <- frames[frames > 0 && frames <= params$nframes]
+      frames <- frames[frames > 0 & frames <= params$nframes]
     }
     frames
   },
   prepare_shadow = function(self, shadow, params) {
     lapply(shadow, function(d) {
       if (length(d) == 0) return(NULL)
-      i <- rep(params$falloff, vapply(d, nrow, integer(1)))
+      i <- rep(params$falloff[seq_along(d)], vapply(d, nrow, integer(1)))
       d <- do.call(rbind, d)
       if (!is.null(d$alpha)) d$alpha <- d$alpha * i
       if (!is.null(d$size)) d$size <- d$size * i
