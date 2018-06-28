@@ -75,7 +75,8 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
       if (e) return(d[[1]])
       ids <- d[[1]]$.id[!d[[1]]$.phase %in% params$exclude_phase]
       s <- s[s$.id %in% ids, , drop = FALSE]
-      rbind(s, d[[1]])
+      d <- rbind(s, d[[1]])
+      d[order(match(d$.id, unique(d$.id))), , drop = FALSE]
     }, d = data, s = shadow, e = seq_along(data) %in% params$excluded_layers)
   }
 )
