@@ -50,6 +50,7 @@ magick_renderer <- function(loop = TRUE) {
 #' @export
 file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) {
   function(frames, fps) {
+    if (!dir.exists(dir)) dir.create(dir, showWarnings = FALSE, recursive = TRUE)
     new_names <- file.path(dir, sub('gganim_plot', prefix, basename(frames)))
     file.copy(frames, new_names, overwrite = overwrite)
     invisible(new_names)
