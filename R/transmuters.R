@@ -41,12 +41,7 @@ transmute_appear <- function(type, early = FALSE, ...) {
 }
 #' @importFrom scales alpha
 transmute_fade <- function(type, ...) {
-  create_factory(type, default = function(x) {
-    if (!is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-    if (!is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-    if (!is.null(x$fill)) x$fill <- alpha(x$fill, 0)
-    x
-  }, ...)
+  create_factory(type, default = fade_elements, ...)
 }
 transmute_grow <- function(type, fade = FALSE, ...) {
   create_factory(
@@ -55,9 +50,9 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       if (!is.null(x$size)) x$size <- 0
       if (!is.null(x$width)) x$width <- 0
       if (!is.null(x$stroke)) x$stroke <- 0
-      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
+      if (!is.null(x$edge_size)) x$edge_size <- 0
+      if (!is.null(x$edge_width)) x$edge_width <- 0
+      if (fade) x <- fade_elements(x)
       x
     },
     polygon = function(x) {
@@ -66,9 +61,7 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       group <- match(x$group, names(mean_x))
       x$x <- mean_x[group]
       x$y <- mean_y[group]
-      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
+      if (fade) x <- fade_elements(x)
       x
     },
     violin = function(x) {
@@ -77,9 +70,7 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       group <- match(x$group, names(mean_x))
       x$x <- mean_x[group]
       x$y <- mean_y[group]
-      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
+      if (fade) x <- fade_elements(x)
       x
     },
     path = function(x) {
@@ -88,9 +79,7 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       group <- match(x$group, names(mean_x))
       x$x <- mean_x[group]
       x$y <- mean_y[group]
-      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
+      if (fade) x <- fade_elements(x)
       x
     },
     boxplot = function(x) {
@@ -100,18 +89,31 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       x$notchupper <- x$middle
       x$upper <- x$middle
       x$ymax <- x$middle
-      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
+      if (fade) x <- fade_elements(x)
       x
     },
     bar = function(x) {
       x$y <- 0
-      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
-      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
-      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
+      if (fade) x <- fade_elements(x)
       x
     },
     ...
   )
+}
+
+fade_elements <- function(x) {
+  if (!is.null(x$edge_alpha)) {
+    no_alpha <- is.na(x$edge_alpha)
+    x$edge_alpha[!no_alpha] <- 0
+  } else if (!is.null(x$alpha)) {
+    no_alpha <- is.na(x$alpha)
+    x$alpha[!no_alpha] <- 0
+  } else {
+    no_alpha <- TRUE
+  }
+  if (!is.null(x$colour)) x$colour[no_alpha] <- alpha(x$colour[no_alpha], 0)
+  if (!is.null(x$fill)) x$fill[no_alpha] <- alpha(x$fill[no_alpha], 0)
+  if (!is.null(x$edge_colour)) x$edge_colour[no_alpha] <- alpha(x$edge_colour[no_alpha], 0)
+  if (!is.null(x$edge_fill)) x$edge_fill[no_alpha] <- alpha(x$edge_fill[no_alpha], 0)
+  x
 }
