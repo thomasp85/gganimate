@@ -16,6 +16,7 @@
 #' value of your provided function will be the return value ultimately given by
 #' [animate()]
 #'
+#' @param loop Logical. Should the produced gif loop
 #' @param dir The directory to copy the frames to
 #' @param prefix The filename prefix to use for the image files
 #' @param overwrite Logical. If TRUE, existing files will be overwritten.

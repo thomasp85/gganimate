@@ -8,12 +8,16 @@
 \usage{
 magick_renderer(loop = TRUE)
 
-file_renderer(dir = "~", prefix = "gganim_plot")
+file_renderer(dir = "~", prefix = "gganim_plot", overwrite = FALSE)
 }
 \arguments{
+\item{loop}{Logical. Should the produced gif loop}
+
 \item{dir}{The directory to copy the frames to}
 
 \item{prefix}{The filename prefix to use for the image files}
+
+\item{overwrite}{Logical. If TRUE, existing files will be overwritten.}
 }
 \value{
 The provided renderers are factory functions that returns a new function
