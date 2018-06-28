@@ -18,6 +18,7 @@
 #'
 #' @param dir The directory to copy the frames to
 #' @param prefix The filename prefix to use for the image files
+#' @param overwrite Logical. If TRUE, existing files will be overwritten.
 #'
 #' @return The provided renderers are factory functions that returns a new function
 #' that take `frames` and `fps` as arguments, the former being a character
@@ -46,10 +47,10 @@ magick_renderer <- function(loop = TRUE) {
 }
 #' @rdname renderers
 #' @export
-file_renderer <- function(dir = '~', prefix = 'gganim_plot') {
+file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) {
   function(frames, fps) {
     new_names <- file.path(dir, sub('gganim_plot', prefix, basename(frames)))
-    file.copy(frames, new_names)
+    file.copy(frames, new_names, overwrite = overwrite)
     invisible(new_names)
   }
 }
