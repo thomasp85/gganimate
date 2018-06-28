@@ -7,8 +7,8 @@ context("Saving animations into files")
 
 # test that we can create a GIF and that it exists
 test_that("We can create an animated GIF", {
-  s <- gg_animate_save(gg_animate(p))
-  expect_is(s, "gg_animate")
+  s <- gganimate_save(gganimate(p))
+  expect_is(s, "gganimate")
 
   # check the file exists
   check_image_file(s$filename)
@@ -20,8 +20,8 @@ test_that("We can create an animated GIF", {
 
 test_that("We can create an animated mp4 or avi", {
   for (ext in c("mp4", "avi")) {
-    s <- gg_animate_save(gg_animate(p), saver = ext)
-    expect_is(s, "gg_animate")
+    s <- gganimate_save(gganimate(p), saver = ext)
+    expect_is(s, "gganimate")
 
     # check the file exists
     check_image_file(s$filename)
