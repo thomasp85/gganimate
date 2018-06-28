@@ -55,7 +55,9 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       if (!is.null(x$size)) x$size <- 0
       if (!is.null(x$width)) x$width <- 0
       if (!is.null(x$stroke)) x$stroke <- 0
-      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
       x
     },
     polygon = function(x) {
@@ -64,7 +66,9 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       group <- match(x$group, names(mean_x))
       x$x <- mean_x[group]
       x$y <- mean_y[group]
-      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
       x
     },
     violin = function(x) {
@@ -73,7 +77,9 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       group <- match(x$group, names(mean_x))
       x$x <- mean_x[group]
       x$y <- mean_y[group]
-      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
       x
     },
     path = function(x) {
@@ -82,7 +88,9 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       group <- match(x$group, names(mean_x))
       x$x <- mean_x[group]
       x$y <- mean_y[group]
-      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
       x
     },
     boxplot = function(x) {
@@ -92,12 +100,16 @@ transmute_grow <- function(type, fade = FALSE, ...) {
       x$notchupper <- x$middle
       x$upper <- x$middle
       x$ymax <- x$middle
-      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
       x
     },
     bar = function(x) {
       x$y <- 0
-      if (fade && !is.null(x$alpha)) x$alpha <- 0
+      if (fade && !is.null(x$alpha)) x$alpha[!is.na(x$alpha)] <- 0
+      if (fade && !is.null(x$colour)) x$colour <- alpha(x$colour, 0)
+      if (fade && !is.null(x$fill)) x$fill <- alpha(x$fill, 0)
       x
     },
     ...
