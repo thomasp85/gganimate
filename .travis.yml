@@ -1,34 +1,30 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-
 language: R
-sudo: false
 cache: packages
+sudo: true
+dist: trusty
 
 addons:
   apt:
-    sources:
-      - sourceline: 'ppa:opencpu/jq'
-      - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
-      - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main'
-        key_url: 'https://www.postgresql.org/media/keys/ACCC4CF8.asc'
     packages:
-      - libprotobuf-dev
-      - protobuf-compiler
-      - libv8-3.14-dev
-      - libjq-dev
-      - libudunits2-dev
-      - libproj-dev
-      - libgeos-dev
-      - libspatialite-dev
-      - libgdal-dev
-      - libjson-c-dev
-      - postgresql-server-dev-9.6
+      - libfreetype6
       - libmagick++-dev
-      - librsvg2-dev
-      - libwebp-dev
-      - libpoppler-cpp-dev
-      - libtesseract-dev
-      - libleptonica-dev
-      - tesseract-ocr-eng
-      - r-cran-rgdal
-      - libfftw3-dev
+
+r:
+- 3.1
+- 3.2
+- oldrel
+- release
+- devel
+
+# work around temporary travis + R 3.5 bug
+r_packages: devtools
+
+env:
+  global:
+  - _R_CHECK_FORCE_SUGGESTS_=false
+
+before_install:
+  - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
+  - sudo apt-get --yes --force-yes update -qq
+  - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
+  - Rscript -e 'update.packages(ask = FALSE)'
