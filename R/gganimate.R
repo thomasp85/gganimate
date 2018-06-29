@@ -157,9 +157,10 @@ print.gganimate <- function(x, format = "gif", ...) {
   if (!is.null(x$mime_type) && grepl("^video", x$mime_type)) {
     d <- htmltools::tags$video(htmltools::tags$source(src = x$src),
                                autoplay = TRUE,
-                               loop = TRUE, ...)
+                               loop = TRUE,
+                               style="max-width: 100%;",...)
   } else if (!is.null(x$mime_type) && grepl("^image", x$mime_type)) {
-    d <- htmltools::tags$img(src = x$src, ...)
+    d <- htmltools::tags$img(src = x$src, style="max-width: 100%;", ...)
   } else {
     message("opening gganimate file stored at ", x$filename)
     auto_browse(x$filename)

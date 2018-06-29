@@ -111,13 +111,12 @@ save_gganimate_custom <- function(g, filename, clean = TRUE, ...) {
                             bg = bg, ...))
   }
 
-  command <- paste("convert -dispose none -delay 0 %s",
-                   "-dispose previous -delay %d %s",
-                   "-loop 0 %s")
-
-  opts <- "-dispose none -delay 0 plot1.png -dispose previous"
-  animation::im.convert(filenames[-1], basename(filename), extra.opts = opts,
-                        clean = clean)
-  unlink(filenames[1])
+  n_frames = length(filenames) - 1
+  imgs <- magick::image_read(filenames)
+  anim <- magick::image_animate(imgs,
+                                delay = c(0, rep(0.1, n_frames)),
+                                dispose=c("none", rep("previous", n_frames)))
+  magick::image_write(anim, basename(filename))
+  unlink(filenames)
 }
 

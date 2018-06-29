@@ -25,6 +25,9 @@ Imports: plyr,
     animation,
     base64enc,
     htmltools,
-    withr
+    withr,
+    magick
+Remotes:
+    ropensci/magick#39
 URL: http://github.com/dgrtwo/gganimate
 BugReports: http://github.com/dgrtwo/gganimate/issues
