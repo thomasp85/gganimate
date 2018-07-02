@@ -18,6 +18,8 @@
 #' filename extension.
 #' @param title_frame Whether to title each image with the current \code{frame} value.
 #' The value is appended on to any existing title.
+#' @param ftext Specify a character vector of frame titles to be mapped to unique frame
+#' values.
 #' @param ... If saving to a file, extra arguments to pass along to the animation
 #' saving function (to \code{saveVideo}/\code{saveGIF}/etc).
 #'
@@ -54,7 +56,7 @@
 #'
 #'
 #' @export
-gganimate <- function(p = last_plot(), filename = NULL,
+gganimate <- function(p = last_plot(), filename = NULL, ftext = NULL,
                        saver = NULL, title_frame = TRUE, ...) {
   if (is.null(p)) {
     stop("no plot to animate")
@@ -95,12 +97,20 @@ gganimate <- function(p = last_plot(), filename = NULL,
     # title plot according to frame
     if (title_frame) {
       if (!is.null(b$plot$labels$title)) {
-        b$plot$labels$title <- paste(b$plot$labels$title, f)
-      } else {
+        b$plot$labels$title <- paste(b$plot$labels$title,
+                                     f)
+      }
+      else if (!is.null(ftext)){
+        if (length(ftext) != length(seq_along(b$data))){
+          stop("Character vector length must equal number of unique frames")
+        } else {
+          b$plot$labels$title <- ftext[f]
+        }
+      }
+      else {
         b$plot$labels$title <- f
       }
     }
-
     b
   })
 
