@@ -95,8 +95,8 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
           all_frames <- switch(
             t,
             point = tween_state(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-            path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-            polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+            path = tween_path(all_frames, next_state, es, params$transition_length[i], 'group', en, ex),
+            polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], 'group', en, ex),
             sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
             stop("Unknown layer type", call. = FALSE)
           )

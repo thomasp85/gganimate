@@ -74,8 +74,8 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
         all_frames <- switch(
           t,
           point = tween_state(all_frames, states[[i]], es, nframes[i], id, en, ex),
-          path = tween_path(all_frames, states[[i]], es, nframes[i], id, en, ex),
-          polygon = tween_polygon(all_frames, states[[i]], es, nframes[i], id, en, ex),
+          path = tween_path(all_frames, states[[i]], es, nframes[i], 'group', en, ex),
+          polygon = tween_polygon(all_frames, states[[i]], es, nframes[i], 'group', en, ex),
           sf = tween_sf(all_frames, states[[i]], es, nframes[i], id, en, ex),
           stop("Unknown layer type", call. = FALSE)
         )
