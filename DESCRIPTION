@@ -1,30 +1,83 @@
 Package: gganimate
 Type: Package
-Title: Create easy animations with ggplot2
-Version: 0.1.1
-Date: 2018-06-28
-Author: c(person("David", "Robinson", email = "admiral.david@gmail.com",
-    role = c("aut", "cre")))
-Maintainer: David Robinson <admiral.david@gmail.com>
-Description: Create animations with ggplot2 by treating the "frame" as an
-    aesthetic similar to x, y, or color. Compatible with presenting animations
-    in knitr or saving to a video or animated image file. This version is now
-    deprecated.
-License: GPL-2
+Title: A Grammar of Animated Graphics
+Version: 0.9.9.9999
+Date: 2017-10-29
+Authors@R: c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",
+    role = c("aut", "cre")),
+    person("David", "Robinson", email = "admiral.david@gmail.com",
+    role = c("aut")))
+Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
+Description: The grammar of graphics as implemented in the 'ggplot2' package has
+    been successful in providing a powerful API for creating static 
+    visualisation. In order to extend the API for animated graphics this package
+    provides a completely new set of grammar, fully compatible with 'ggplot2' 
+    for specifying transitions and animations in a flexible and extensible way.
+License: MIT + file LICENSE
+Encoding: UTF-8
 LazyData: TRUE
 VignetteBuilder: knitr
-Suggests: 
-    knitr,
+Depends: ggplot2
+Suggests: knitr,
     rmarkdown,
-    gapminder,
     testthat
-RoxygenNote: 5.0.1
-Imports: plyr,
-    ggplot2,
+RoxygenNote: 6.0.1.9000
+Roxygen: list(markdown = TRUE)
+URL: http://github.com/thomasp85/gganimate
+BugReports: http://github.com/thomasp85/gganimate/issues
+Remotes: tidyverse/ggplot2,
+    thomasp85/tweenr,
+    thomasp85/transformr,
+    thomasp85/patchwork
+Imports: stringi,
+    tweenr,
+    transformr,
     grid,
-    animation,
-    base64enc,
-    htmltools,
-    withr
-URL: http://github.com/dgrtwo/gganimate
-BugReports: http://github.com/dgrtwo/gganimate/issues
+    magick,
+    rlang,
+    glue,
+    sf,
+    progress,
+    patchwork,
+    plyr,
+    svglite,
+    scales
+Collate:
+    'aaa.R'
+    'animate.R'
+    'animation_store.R'
+    'ease-aes.R'
+    'gganim.R'
+    'gganimate-ggproto.R'
+    'gganimate-package.r'
+    'ggplot2_reimpl.R'
+    'layer_type.R'
+    'plot-build.R'
+    'post_process.R'
+    'renderers.R'
+    'scene.R'
+    'shadow-.R'
+    'shadow-mark.R'
+    'shadow-null.R'
+    'shadow-trail.R'
+    'shadow-wake.R'
+    'transition-.R'
+    'transition-manual.R'
+    'transition-components.R'
+    'transition-events.R'
+    'transition-layers.R'
+    'transition-null.R'
+    'transition-states.R'
+    'transition-time.R'
+    'transmute-.R'
+    'transmute-enter.R'
+    'transmute-exit.R'
+    'transmuters.R'
+    'tween_before_stat.R'
+    'view-.R'
+    'view-follow.R'
+    'view-static.R'
+    'view-step.R'
+    'view-step-manual.R'
+    'view-zoom.R'
+    'view-zoom-manual.R'

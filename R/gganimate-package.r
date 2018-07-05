@@ -1,0 +1,2 @@
+#' @importFrom rlang %||%
+'_PACKAGE'
