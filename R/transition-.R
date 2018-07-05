@@ -48,11 +48,11 @@ ggplot_add.Transition <- function(object, plot, object_name) {
 
 combine_levels <- function(data, var) {
   values <- lapply(data, safe_eval, expr = var)
-  values[lengths(values) != vapply(data, nrow, integer(1))] <- list(NULL)
+  values[lengths(values) != vapply(data, nrow, integer(1))] <- list(numeric())
   levels <- lapply(values, function(v) levels(as.factor(v)))
   levels <- Reduce(union, levels)
   values <- lapply(values, as.character)
-  values <- split(match(unlist(values), levels), rep(seq_along(values), lengths(values)))
+  values <- split(match(unlist(values), levels), rep(factor(seq_along(values)), lengths(values)))
   list(values = values, levels = levels)
 }
 
