@@ -16,6 +16,7 @@
 #' @importFrom rlang quos
 shadow_mark <- function(past = TRUE, future = FALSE, ..., exclude_layer = NULL) {
   dots <- quos(...)
+  names(dots) <- sub('color', 'colour', names(dots))
   ggproto(NULL, ShadowMark,
     exclude_layer = exclude_layer,
     params = list(
