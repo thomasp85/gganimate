@@ -21,6 +21,7 @@
 #' @importFrom rlang quos
 shadow_trail <- function(distance = 0.05, max_frames = Inf, ..., exclude_layer = NULL) {
   dots <- quos(...)
+  names(dots) <- sub('color', 'colour', names(dots))
   ggproto(NULL, ShadowTrail,
           exclude_layer = exclude_layer,
           params = list(
