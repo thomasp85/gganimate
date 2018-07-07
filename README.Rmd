@@ -20,54 +20,111 @@ knitr::opts_chunk$set(
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
 [![Coverage Status](https://img.shields.io/codecov/c/github/thomasp85/gganimate/master.svg)](https://codecov.io/github/thomasp85/gganimate?branch=master)
 
-This is the home of the development version of gganimate. It is destined to 
-deviate completely from the prior version and will be a complete rewrite. It
-goes without saying that this is a **Work in Progress**.
+`gganimate` extends the grammar of graphics as implemented by
+[`ggplot2`](https://github.com/tidyverse/ggplot2) to include the description of
+animation. It does this by providing a range of new grammar classes that can be
+added to the plot object in order to customise how it should change with time. 
 
-When I get the time I will outline my thoughts and ideas in this readme so it
-can serve as a whitepaper for what I have in mind - I haven't got the time 
-now...
+- `transition_*()` defines how the data should be spread out and how it relates
+  to itself across time.
+- `view_*()` defines how the positional scales should change along the 
+  animation.
+- `shadow_*()` defines how data from other points in time should be presented in
+  the given point in time.
+- `enter_*()`/`exit_*()` defines how new data should appear and how old data 
+  should disappear during the course of the animation.
+- `ease_aes()` defines how different aesthetics should be eased during 
+  transitions.
+
+## An Example
+All of the above might seem a bit abstract. Let's try with a contrieved example:
+
+```{r, message=FALSE}
+library(ggplot2)
+library(gganimate)
+
+ggplot(mtcars, aes(factor(cyl), mpg)) + 
+  geom_boxplot() + 
+  # Here comes the gganimate code
+  transition_states(
+    gear,
+    transition_length = 2,
+    state_length = 1
+  ) +
+  enter_fade() + 
+  exit_shrink() +
+  ease_aes('sine-in-out')
+```
+
+Here we take a simple boxplot of fuel consumption as a function of cylinders and
+lets it transition between the number of gears available in the cars. As this is
+a discrete split (`gear` being best described as an ordered factor) we use 
+`transition_states` and provides a relative length to use for transition and 
+state view. As not all combinations of data is present there are states missing
+a box. We define that when a box appears it should fade into view, whereas at 
+should shrink away when it disappear. Lastly we decide to use a sinusoidal 
+easing for all our aesthetics (here, only `y` is changing)
+
+## Installation
+`gganimate` is currently GitHub-only, but will be released on CRAN once ready. 
+In the meantime, install it using the `devtools` package
+
+```{r, eval=FALSE}
+# install.packages('devtools')
+devtools::install_github('thomasp85/gganimate')
+```
+
+## Yet Another Example
+It is impossible to cover everything possible with `gganimate` in a README, but
+animations are fun, so let's at least have one more:
+
+```{r}
+library(gapminder)
+
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  # Here comes the gganimate specific bits
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear')
+```
+
+In this example we see the use of `transition_time()` which can be used with 
+continuous variables such as `year`. With this transition it is not necessary to 
+provide transition and state length as the "transition variable" provides this
+directly (e.g. it should take twice as long to transition between 1980 and 1990
+compared to 2000 to 2005). We also see the use of string literal interpolation 
+in titles. `gganimate` lets you specify variables to evaluate inside titles and
+different transitions provide different type of information to use.
 
 ## Old API
-I'll start by briefly describe the old API that this version plans to deprecate.
-The center of this API was the ability to quickly make animations out of `ggplot2`
-plots by adding a `frame` aesthetic to the layers that should be animated. When
-the plot was processed by the `gganimate` function the different levels in 
-`frame` would then make up the different frames in the animation. Layers without
-a `frame` aesthetic would be kept constant. The actual animation was created 
-with the `gganimate` function which took rendering specific arguments such as 
-the framerate, file format etc.
+This is the second iteration of the gganimate package. The first, developed by
+[David Robinson](https://github.com/dgrtwo) had a very different API, and relied
+on specifying animation frame membership inside `aes()` blocks in the `geom_*()`
+calls. This approach was easy to grasp, but essentially limited in capabilities
+and has thus been abandoned for a more thorough grammar. 
 
-While this approach seems natural to `ggplot2` --- defining aesthetic mappings are
-second hand to users of `ggplot2` after all --- it has some drawbacks. Chief of 
-these is lack of control with how the animation should proceed. There is no 
-equivalent to the `scale_*_*()` functions to determine how the different 
-aesthetics should transition to new values and the user was left with 
-preprocessing their data with `tweenr` if smooth animations were needed. Another
-smaller annoyance was that `frame` is an unrecognized aesthetic and `ggplot2` 
-would throw warnings.
+Code written for the old API will not work with this `gganimate` version and 
+there will not come a future support for it. If you wish to continue using the 
+old API then avoid upgrading `gganimate`. If you've already upgraded and wish to 
+downgrade, the latest version of the old API is available as a 
+[GitHub release](https://github.com/thomasp85/gganimate/releases/tag/v0.1.1).
 
-The biggest problem in my eyes though, is that the approach felt wrong on a 
-theoretical level. In order to fit into `ggplot2` `gganimate` adopted the most
-obvious grammar element - the aesthetic - but animations can not be seen 
-solemnly as akin to colour or size. It needs a grammar of its own...
+If you wish to convert your old animations to the new API, the closest you get
+is probably with `transition_manual`, even though it is not completely 
+substitutable:
 
-*The above may seem harsh on the original implementation. It is not. gganimate
-has been very successful and I feel I need to justify why I want to break it
-completely. Thus a survey of its shortcomings are needed.*
+```{r, eval=FALSE}
+# Old code
+ggplot(mtcars) + 
+  geom_boxplot(aes(factor(cyl), mpg, frame = gear))
 
-## A Grammar of Animated Graphics
-So what do I mean when animations needs a grammar of its own? I mean that we
-need to break down the act of animating a data display into distinct parts and
-define verbs that denote the different operations. In the end we need functions
-that fits naturally into the `ggplot2` API that can augment our visualisations
-with animations while giving us the control we have come to expect from working
-with `ggplot2`.
-
-It may seem that this is all related to `ggvis`/`vega` and the quest for a 
-grammar of *interactive* graphics --- it is not. The grammar of animated 
-graphics will concern itself solemnly with describing transitions of data
-displays between a priori known states. On the other hand, a grammar of 
-interactive graphics is concerned with how to describe human interactions with
-data displays. Often animations are a part of interactive graphics but we should
-not confuse the two distinct operations.
+# New code
+ggplot(mtcars) + 
+  geom_boxplot(aes(factor(cyl), mpg)) + 
+  transition_manual(gear)
+```

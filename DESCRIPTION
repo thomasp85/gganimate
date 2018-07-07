@@ -17,7 +17,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 VignetteBuilder: knitr
-Depends: ggplot2
+Depends: ggplot2 (>= 3.0.0)
 Suggests: knitr,
     rmarkdown,
     testthat
@@ -25,8 +25,7 @@ RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues
-Remotes: tidyverse/ggplot2,
-    thomasp85/tweenr,
+Remotes: thomasp85/tweenr,
     thomasp85/transformr,
     thomasp85/patchwork
 Imports: stringi,
