@@ -23,6 +23,17 @@ given aspect ratio. Will override anything given in \code{fixed_x}/\code{fixed_y
 \description{
 This view will set the panels to include the data present in the frame.
 }
+\examples{
+
+# ```view_follow()``` can be combined with ```transition_states()``` to follow transitions in each frame.
+
+ggplot(aes(Sepal.Length, Sepal.Width)) +
+ geom_point() +
+ labs(title = "{closest_state}") +
+ transition_states(Species, transition_length = 4, state_length = 1) +
+ view_follow()
+
+}
 \seealso{
 Other views: \code{\link{view_static}},
   \code{\link{view_step}}, \code{\link{view_zoom}}

@@ -27,6 +27,13 @@
 #'
 #' @family views
 #'
+#' @examples
+#'
+#' ggplot(mtcars, aes(factor(am), mpg)) +
+#'   geom_violin() +
+#'   transition_states(cyl, transition_length = 4, state_length = 1) +
+#'   view_step(pause_length = 3, step_length = 2)
+#'
 #' @export
 #' @importFrom ggplot2 ggproto
 view_step <- function(pause_length, step_length, nsteps = NULL, look_ahead = pause_length,

@@ -71,6 +71,14 @@ frame. Instead it will switch between being static and zoom to the range of
 the data. It is a great pairing with \code{\link[=transition_states]{transition_states()}} as it can move the
 view while the data is static and then be static while the data moves.
 }
+\examples{
+
+ggplot(mtcars, aes(factor(am), mpg)) +
+  geom_violin() +
+  transition_states(cyl, transition_length = 4, state_length = 1) +
+  view_step(pause_length = 3, step_length = 2)
+
+}
 \seealso{
 Other views: \code{\link{view_follow}},
   \code{\link{view_static}}, \code{\link{view_zoom}}

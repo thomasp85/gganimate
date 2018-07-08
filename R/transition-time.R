@@ -21,6 +21,12 @@ NULL
 #'
 #' @family transitions
 #'
+#' @examples
+#'
+#' ggplot(airquality, aes(Day, Temp)) +
+#'   geom_line(color = 'red', size = 1) +
+#'   transition_time(Month)
+#'
 #' @export
 transition_time <- function(time, range = NULL) {
   time_quo <- enquo(time)

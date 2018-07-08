@@ -11,7 +11,7 @@ transition_layers(layer_length, transition_length, keep_layers = TRUE,
 \item{layer_length}{The proportional time to pause at each layer before a new
 one enters}
 
-\item{transition_length}{The proportional time to usse for the entrance of a
+\item{transition_length}{The proportional time to use for the entrance of a
 new layer}
 
 \item{keep_layers}{Should layers be kept on screen after they have appeeared
