@@ -42,8 +42,7 @@ magick_renderer <- function(loop = TRUE) {
       image_read(frames)
     }
     anim <- image_animate(anim, fps, loop = if (loop) 0 else 1)
-    print(anim, info = FALSE)
-    invisible(anim)
+    anim
   }
 }
 #' @rdname renderers
