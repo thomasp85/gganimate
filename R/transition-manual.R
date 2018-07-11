@@ -76,7 +76,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
   finish_data = function(self, data, params) {
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
-      if (is.na(split_panel[1])) return(rep(list(d), params$nframes))
+      if (is.na(split_panel[1])) return(d)
       d$group <- match(d$group, unique(d$group))
       empty_d <- d[0, , drop = FALSE]
       d <- split(d, as.integer(split_panel[, 3]))
@@ -86,7 +86,13 @@ TransitionManual <- ggproto('TransitionManual', Transition,
     })
   },
   adjust_nframes = function(self, data, params) {
-    length(data[[1]])
+    statics <- self$static_layers(params)
+    dynamics <- setdiff(seq_along(data), statics)
+    if (length(dynamics) == 0) {
+      params$nframes
+    } else {
+      length(data[[dynamics[1]]])
+    }
   },
   get_frame_vars = function(self, params) {
     params$frame_info

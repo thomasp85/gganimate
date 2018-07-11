@@ -27,7 +27,10 @@ Transition <- ggproto('Transition', NULL,
     params$nframes
   },
   get_frame_data = function(self, data, params, i) {
-    lapply(data, `[`, i)
+    statics <- seq_along(data) %in% self$static_layers(params)
+    Map(function(d, s) {
+      if (s) list(d) else d[i]
+    }, d = data, s = statics)
   },
   get_frame_vars = function(self, params) {
     NULL
