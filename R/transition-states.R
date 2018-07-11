@@ -32,10 +32,12 @@ NULL
 #'
 #' @examples
 #'
-#' ggplot(iris, aes(Sepal.Width, Petal.Width)) +
+#' p <- ggplot(iris, aes(Sepal.Width, Petal.Width)) +
 #'   geom_point() +
 #'   labs(title = "{closest_state}") +
 #'   transition_states(Species, transition_length = 3, state_length = 1)
+#'
+#' # animate(p)
 #'
 #' @export
 #' @importFrom rlang enquo

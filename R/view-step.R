@@ -29,10 +29,12 @@
 #'
 #' @examples
 #'
-#' ggplot(mtcars, aes(factor(am), mpg)) +
+#' p <- ggplot(mtcars, aes(factor(am), mpg)) +
 #'   geom_violin() +
 #'   transition_states(cyl, transition_length = 4, state_length = 1) +
 #'   view_step(pause_length = 3, step_length = 2)
+#'
+#' # animate(p)
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
