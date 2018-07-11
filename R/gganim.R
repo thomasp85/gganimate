@@ -15,7 +15,8 @@ is.gganim <- function(x) inherits(x, 'gganim')
 #' @rdname animate
 #' @export
 print.gganim <- function(x, ...) {
-  animate(x, ...)
+  anim <- animate(x, ...)
+  print(anim, info = FALSE)
 }
 #' @rdname animate
 #' @importFrom ggplot2 ggplot ggplot_build ggplot_gtable
