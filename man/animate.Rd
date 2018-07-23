@@ -28,7 +28,8 @@ animate(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
 animation. Gets a vector of paths to images along with the framerate.}
 
 \item{device}{The device to use for rendering the single frames. Possible
-values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, and \code{'bmp'}. Defaults to \code{'png'}.}
+values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'}.
+Defaults to \code{'png'}. (\code{'svglite'} requires the svglite package).}
 
 \item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
 space available for axis text. Defaults to the first frame. Negative values

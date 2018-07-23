@@ -20,7 +20,8 @@
 #' @param renderer The function used to render the generated frames into an
 #' animation. Gets a vector of paths to images along with the framerate.
 #' @param device The device to use for rendering the single frames. Possible
-#' values are `'png'`, `'jpeg'`, `'tiff'`, and `'bmp'`. Defaults to `'png'`.
+#' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`.
+#' Defaults to `'png'`. (`'svglite'` requires the svglite package).
 #' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
 #' space available for axis text. Defaults to the first frame. Negative values
 #' counts backwards (-1 is the last frame)
@@ -35,16 +36,18 @@
 #' a static overview of the animation. The default is to produce a 3x3 grid.
 #'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
-#' @importFrom grDevices png jpeg tiff bmp dev.off
+#' @importFrom grDevices png jpeg tiff bmp svg dev.off
 #' @importFrom progress progress_bar
 #' @importFrom ggplot2 ggplot_gtable ggplot_build
-#' @importFrom svglite svglite
 #' @export
 animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
                     renderer = gifski_renderer(), device = 'png', ref_frame = 1,
                     ...) {
   if (sum(c(is.null(nframes), is.null(fps), is.null(length))) > 1) {
     stop("At least 2 of 'nframes', 'fps', and 'length' must be given", call. = FALSE)
+  }
+  if (device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
+    stop('The svglite package is required to use this device', call. = FALSE)
   }
   nframes <- nframes %||% round(length * fps)
   fps <- fps %||% round(nframes / length)
@@ -79,13 +82,14 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
     jpg =,
     jpeg = jpeg(file.path(dir, 'gganim_plot%04d.jpg'), ...),
     tiff = tiff(file.path(dir, 'gganim_plot%04d.jpg'), ...),
-    bmp = bmp(file.path(dir, 'gganim_plot%04d.jpg'), ...)
+    bmp = bmp(file.path(dir, 'gganim_plot%04d.jpg'), ...),
+    svg = svg(file.path(dir, 'gganim_plot%04d.svg'), ...)
   )
   start <- Sys.time()
   pb$tick(0)
   for (i in seq_along(frame_ind)) {
-    if (device == 'svg') {
-      svglite(file.path(dir, sprintf('gganim_plot%04d.svg', i)), ...)
+    if (device == 'svglite') {
+      svglite::svglite(file.path(dir, sprintf('gganim_plot%04d.svg', i)), ...)
     } else if (i != 1) {
       grid.newpage()
     }
@@ -98,9 +102,9 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
     if (is.nan(rate)) rate <- 0
     rate <- format(rate, digits = 2)
     pb$tick(tokens = list(fps = rate))
-    if (device == 'svg') dev.off()
+    if (device == 'svglite') dev.off()
   }
-  if (device != 'svg') dev.off()
+  if (device != 'svglite') dev.off()
   frames <- list.files(dir, 'gganim_plot', full.names = TRUE)
   frame_vars <- plot$scene$frame_vars[frame_ind, , drop = FALSE]
   frame_vars$frame_source <- frames

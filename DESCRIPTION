@@ -19,6 +19,7 @@ LazyData: TRUE
 VignetteBuilder: knitr
 Depends: ggplot2 (>= 3.0.0)
 Suggests: magick,
+    svglite,
     knitr,
     rmarkdown,
     testthat
@@ -39,7 +40,6 @@ Imports: stringi,
     progress,
     patchwork,
     plyr,
-    svglite,
     scales,
     png,
     gifski,
