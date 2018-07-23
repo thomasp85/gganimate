@@ -73,6 +73,11 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
 
 In this example we see the use of `transition_time()` which can be used with continuous variables such as `year`. With this transition it is not necessary to provide transition and state length as the "transition variable" provides this directly (e.g. it should take twice as long to transition between 1980 and 1990 compared to 2000 to 2005). We also see the use of string literal interpolation in titles. `gganimate` lets you specify variables to evaluate inside titles and different transitions provide different type of information to use.
 
+Where is my animation?
+----------------------
+
+`gganimate` mimicks the way `ggplot2` renders its output, in that the rendering is done automatically when the `gganim` object is printed. Under the hood, the `animate()` function is called which renders the frame and passes the frames to a renderer functions which takes care of combining them to the final animation. The default renderer is `gifski_renderer()` which returns a `gif_image` object which is a simple wrapper around a path to a gif file. If `animate()` has been called implicetly as part of `print` the `gif_image` object is available using the `last_animation()` function (analogous to `ggplot2::last_plot()`). In order to save the animation to a specific location, you can use the `anim_save()` function which, like `ggplot2::ggsave`, defaults to taking the last rendered animation and writes it to a file.
+
 Old API
 -------
 

@@ -46,6 +46,7 @@ Imports: stringi,
     grDevices
 Collate:
     'aaa.R'
+    'anim_save.R'
     'animate.R'
     'animation_store.R'
     'ease-aes.R'
