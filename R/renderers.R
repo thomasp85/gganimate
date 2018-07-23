@@ -48,7 +48,7 @@ gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, widt
       height <- height %||% dims[1]
       width <- width %||% dims[2]
     }
-    progress <- isFALSE(getOption("knitr.in.progress"))
+    progress <- !isTRUE(getOption("knitr.in.progress"))
     if (progress) message('')
     gif <- gifski(frames, file, width, height, delay = 1/fps, loop, progress)
     gif_file(gif)
