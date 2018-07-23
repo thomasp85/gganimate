@@ -59,10 +59,10 @@ TransmuteFactory <- ggproto('TransmuteFactory', NULL,
     } else if (length(self$classes) != 0) {
       lapply(layers, function(l) {
         best <- inherits(l$geom, names(self$classes), which = TRUE)
-        best <- which(best != 0 & best == min(best[best != 0]))
-        if (length(best) == 0) {
+        if (all(best == 0)) {
           self$default
         } else {
+          best <- which(best != 0 & best == min(best[best != 0]))
           self$classes[[best[1]]]
         }
       })
