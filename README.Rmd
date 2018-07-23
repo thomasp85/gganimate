@@ -37,7 +37,7 @@ added to the plot object in order to customise how it should change with time.
   transitions.
 
 ## An Example
-All of the above might seem a bit abstract. Let's try with a contrieved example:
+All of the above might seem a bit abstract. Let's try with a contrived example:
 
 ```{r, message=FALSE}
 library(ggplot2)

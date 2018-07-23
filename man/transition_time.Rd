@@ -28,6 +28,13 @@ literal interpretation:
 }
 }
 
+\examples{
+
+ggplot(airquality, aes(Day, Temp)) +
+  geom_line(color = 'red', size = 1) +
+  transition_time(Month)
+
+}
 \seealso{
 Other transitions: \code{\link{transition_components}},
   \code{\link{transition_events}},

@@ -20,6 +20,25 @@ shadow_mark(past = TRUE, future = FALSE, ..., exclude_layer = NULL)
 This shadow lets you show the raw data behind the current frame. Both past
 and/or future raw data can be shown and styled as you want.
 }
+\examples{
+
+# Use any of the aesthetics to add a style to either the past or the future raw data.
+# Adding a grouping variable in a transition call prior to calling ```shadow_mark()``` will
+# allow transitioning through different states in time.
+
+ggplot(airquality, aes(Day, Time)) +
+  geom_line(color = 'red', size = 1) +
+  transition_time(Month) +
+  shadow_mark(colour = 'black', size = 0.75)
+
+# Add a future = TRUE argument to show data later in the animation.
+
+ggplot(airquality, aes(Day, Time)) +
+  geom_line(color = 'red', size = 1) +
+  transition_time(Month) +
+  shadow_mark(color = 'black', size = 0.75, past = FALSE, future = TRUE)
+
+}
 \seealso{
 Other shadows: \code{\link{shadow_null}},
   \code{\link{shadow_trail}}, \code{\link{shadow_wake}}

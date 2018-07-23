@@ -9,7 +9,7 @@ NULL
 #'
 #' @param layer_length The proportional time to pause at each layer before a new
 #' one enters
-#' @param transition_length The proportional time to usse for the entrance of a
+#' @param transition_length The proportional time to use for the entrance of a
 #' new layer
 #' @param keep_layers Should layers be kept on screen after they have appeeared
 #' or transition out when a new layer enters
