@@ -2,9 +2,10 @@
 % Please edit documentation in R/gganimate-ggproto.R, R/shadow-.R,
 %   R/shadow-mark.R, R/shadow-null.R, R/shadow-trail.R, R/shadow-wake.R,
 %   R/transition-.R, R/transition-manual.R, R/transition-components.R,
-%   R/transition-events.R, R/transition-layers.R, R/transition-null.R,
-%   R/transition-states.R, R/transition-time.R, R/view-.R, R/view-follow.R,
-%   R/view-step.R, R/view-step-manual.R, R/view-zoom.R, R/view-zoom-manual.R
+%   R/transition-events.R, R/transition-filter.R, R/transition-layers.R,
+%   R/transition-null.R, R/transition-states.R, R/transition-time.R, R/view-.R,
+%   R/view-follow.R, R/view-step.R, R/view-step-manual.R, R/view-zoom.R,
+%   R/view-zoom-manual.R
 \docType{data}
 \name{gganimate-ggproto}
 \alias{gganimate-ggproto}
@@ -17,6 +18,7 @@
 \alias{TransitionManual}
 \alias{TransitionComponents}
 \alias{TransitionEvents}
+\alias{TransitionFilter}
 \alias{TransitionLayers}
 \alias{TransitionNull}
 \alias{TransitionStates}
