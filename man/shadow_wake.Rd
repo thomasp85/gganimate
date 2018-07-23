@@ -37,14 +37,16 @@ animation.
 }
 \examples{
 
-# ```shadow_wake``` can be combined with ```transition_states``` to show
+# `shadow_wake` can be combined with `transition_states` to show
 # motion of geoms as they are in transition with respect to the selected state.
 
-ggplot(iris, aes(Petal.Length, Sepal.Length)) +
+p <- ggplot(iris, aes(Petal.Length, Sepal.Length)) +
   geom_point() +
   labs(title = "{closest_state}") +
   transition_states(Species, transition_length = 4, state_length = 1) +
   shadow_wake(wake_length = 0.05)
+
+# animate(p)
 
 }
 \seealso{

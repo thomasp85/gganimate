@@ -16,9 +16,10 @@
 #'
 #' @examples
 #'
-#' # ```view_follow()``` can be combined with ```transition_states()``` to follow transitions in each frame.
+#' # `view_follow()` can be combined with `transition_states()` to follow
+#' # transitions in each frame.
 #'
-#' p <- ggplot(aes(Sepal.Length, Sepal.Width)) +
+#' p <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
 #'  geom_point() +
 #'  labs(title = "{closest_state}") +
 #'  transition_states(Species, transition_length = 4, state_length = 1) +

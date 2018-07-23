@@ -13,7 +13,7 @@
 #' @examples
 #'
 #' # Use any of the aesthetics to add a style to either the past or the future raw data.
-#' # Adding a grouping variable in a transition call prior to calling ```shadow_mark()``` will
+#' # Adding a grouping variable in a transition call prior to calling `shadow_mark()` will
 #' # allow transitioning through different states in time.
 #'
 #' p1 <- ggplot(airquality, aes(Day, Time)) +

@@ -24,7 +24,7 @@
 #'
 #' @examples
 #'
-#' # ```shadow_wake``` can be combined with ```transition_states``` to show
+#' # `shadow_wake` can be combined with `transition_states` to show
 #' # motion of geoms as they are in transition with respect to the selected state.
 #'
 #' p <- ggplot(iris, aes(Petal.Length, Sepal.Length)) +
@@ -111,6 +111,7 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
 )
 
 #' @importFrom scales alpha
+#' @importFrom grDevices col2rgb
 mod_alpha <- function(col, i) {
   alpha_mod <- col2rgb(col, TRUE)[4,] * i / 255
   alpha(col, alpha_mod)
