@@ -2,16 +2,25 @@
 % Please edit documentation in R/renderers.R
 \name{renderers}
 \alias{renderers}
-\alias{magick_renderer}
+\alias{gifski_renderer}
 \alias{file_renderer}
+\alias{magick_renderer}
 \title{Renderers provided by gganimate}
 \usage{
-magick_renderer(loop = TRUE)
+gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
+  width = NULL, height = NULL)
 
 file_renderer(dir = "~", prefix = "gganim_plot", overwrite = FALSE)
+
+magick_renderer(loop = TRUE)
 }
 \arguments{
+\item{file}{The animation file}
+
 \item{loop}{Logical. Should the produced gif loop}
+
+\item{width, height}{Dimensions of the animation in pixels. If \code{NULL} will
+tale the dimensions from the frame, otherwise it will rescale it.}
 
 \item{dir}{The directory to copy the frames to}
 

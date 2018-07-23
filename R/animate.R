@@ -41,7 +41,7 @@
 #' @importFrom svglite svglite
 #' @export
 animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
-                    renderer = magick_renderer(), device = 'png', ref_frame = 1,
+                    renderer = gifski_renderer(), device = 'png', ref_frame = 1,
                     ...) {
   if (sum(c(is.null(nframes), is.null(fps), is.null(length))) > 1) {
     stop("At least 2 of 'nframes', 'fps', and 'length' must be given", call. = FALSE)

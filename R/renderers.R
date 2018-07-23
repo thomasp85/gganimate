@@ -17,9 +17,12 @@
 #' [animate()]
 #'
 #' @param loop Logical. Should the produced gif loop
+#' @param file The animation file
 #' @param dir The directory to copy the frames to
 #' @param prefix The filename prefix to use for the image files
 #' @param overwrite Logical. If TRUE, existing files will be overwritten.
+#' @param width,height Dimensions of the animation in pixels. If `NULL` will
+#' tale the dimensions from the frame, otherwise it will rescale it.
 #'
 #' @return The provided renderers are factory functions that returns a new function
 #' that take `frames` and `fps` as arguments, the former being a character
@@ -32,17 +35,23 @@
 NULL
 
 #' @rdname renderers
-#' @importFrom magick image_read image_animate image_read_svg
+#' @importFrom png readPNG
+#' @importFrom gifski gifski
 #' @export
-magick_renderer <- function(loop = TRUE) {
+gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, width = NULL, height = NULL) {
   function(frames, fps) {
-    anim <- if (grepl('.svg$', frames[1])) {
-      image_read_svg(frames)
-    } else {
-      image_read(frames)
+    if (!all(grepl('.png$', frames))) {
+      stop('gifski only supports png files', call. = FALSE)
     }
-    anim <- image_animate(anim, fps, loop = if (loop) 0 else 1)
-    anim
+    if (is.null(width) || is.null(height)) {
+      dims <- dim(readPNG(frames[1], native = TRUE))
+      height <- height %||% dims[1]
+      width <- width %||% dims[2]
+    }
+    progress <- isFALSE(getOption("knitr.in.progress"))
+    if (progress) message('')
+    gif <- gifski(frames, file, width, height, delay = 1/fps, loop, progress)
+    gif_file(gif)
   }
 }
 #' @rdname renderers
@@ -54,4 +63,72 @@ file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) 
     file.copy(frames, new_names, overwrite = overwrite)
     invisible(new_names)
   }
+}
+#' @rdname renderers
+#' @export
+magick_renderer <- function(loop = TRUE) {
+  if (!requireNamespace('magick', quietly = TRUE)) {
+    stop('The magick package is required to use this renderer', call. = FALSE)
+  }
+  function(frames, fps) {
+    anim <- if (grepl('.svg$', frames[1])) {
+      magick::image_read_svg(frames)
+    } else {
+      magick::image_read(frames)
+    }
+    anim <- magick::image_animate(anim, fps, loop = if (loop) 0 else 1)
+    anim
+  }
+}
+
+
+# HELPERS -----------------------------------------------------------------
+
+#' Wrap a gif file for easy handling
+#'
+#' This is a simple class for gif files that takes care printing the file
+#' correctly in different environment (e.g. knitr, RStudio, etc.). If your
+#' renderer produces a gif file you can wrap the final output in `gif_file` to
+#' get all of these benefits for free.
+#'
+#' @param file The gif file to be wrapped
+#' @param x A `gif_image` object
+#' @inheritParams base::split
+#'
+#' @return `gif_file` returns a `gif_image` object. `split` returns a list of
+#' `magick-image` objects and requires magick to work.
+#'
+#' @keywords internal
+#' @export
+#'
+gif_file <- function(file) {
+  stopifnot(length(file) == 1)
+  if (!grepl('.gif$', file)) stop('file must be a gif', call. = FALSE)
+  class(file) <- 'gif_image'
+  file
+}
+#' @rdname gif_file
+#' @export
+print.gif_image <- function(x, ...) {
+  viewer <- getOption("viewer")
+  viewer_supported <- c("bmp", "png", "jpeg", "jpg", "svg",
+                        "gif", "webp")
+  if (isTRUE(getOption("knitr.in.progress"))) {
+    knitr_path <- knitr::fig_path('.gif')
+    file.copy(x, knitr_path, overwrite = TRUE)
+    knitr::include_graphics(knitr_path)
+  } else if (is.function(viewer) && length(x)) {
+    viewer(x)
+  } else {
+    invisible()
+  }
+}
+#' @rdname gif_file
+#' @export
+split.gif_file <- function(x, f, drop = FALSE, ...) {
+  if (!requireNamespace('magick', quietly = TRUE)) {
+    stop('Splitting gifs require the magick package', call. = FALSE)
+  }
+  gif <- magick::image_read(x)
+  split(gif, f, drop = drop, ...)
 }
