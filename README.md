@@ -16,7 +16,7 @@ gganimate <img src="man/figures/logo.png" align="right" />
 An Example
 ----------
 
-All of the above might seem a bit abstract. Let's try with a contrieved example:
+All of the above might seem a bit abstract. Let's try with a contrived example:
 
 ``` r
 library(ggplot2)
