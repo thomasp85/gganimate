@@ -19,6 +19,12 @@ print.gganim <- function(x, ...) {
   print(anim, info = FALSE)
 }
 #' @rdname animate
+#' @export
+knit_print.gganim <- function(x, ...) {
+  anim <- animate(x)
+  knitr::knit_print(anim)
+}
+#' @rdname animate
 #' @importFrom ggplot2 ggplot ggplot_build ggplot_gtable
 #' @importFrom patchwork wrap_ggplot_grob wrap_plots
 plot.gganim <- function(x, nframes = 9, detail = 10, ...) {

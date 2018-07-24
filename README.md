@@ -35,6 +35,8 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
   ease_aes('sine-in-out')
 ```
 
+![](man/figures/README-unnamed-chunk-2-1.gif)
+
 Here we take a simple boxplot of fuel consumption as a function of cylinders and lets it transition between the number of gears available in the cars. As this is a discrete split (`gear` being best described as an ordered factor) we use `transition_states` and provides a relative length to use for transition and state view. As not all combinations of data is present there are states missing a box. We define that when a box appears it should fade into view, whereas at should shrink away when it disappear. Lastly we decide to use a sinusoidal easing for all our aesthetics (here, only `y` is changing)
 
 Installation
@@ -66,6 +68,8 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   transition_time(year) +
   ease_aes('linear')
 ```
+
+![](man/figures/README-unnamed-chunk-4-1.gif)
 
 In this example we see the use of `transition_time()` which can be used with continuous variables such as `year`. With this transition it is not necessary to provide transition and state length as the "transition variable" provides this directly (e.g. it should take twice as long to transition between 1980 and 1990 compared to 2000 to 2005). We also see the use of string literal interpolation in titles. `gganimate` lets you specify variables to evaluate inside titles and different transitions provide different type of information to use.
 

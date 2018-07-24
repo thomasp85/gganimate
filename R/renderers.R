@@ -171,11 +171,11 @@ print.gif_image <- function(x, ...) {
 knit_print.gif_image <- function(x, ...) {
   knitr_path <- knitr::fig_path('.gif')
   file.copy(x, knitr_path, overwrite = TRUE)
-  knitr::include_graphics(knitr_path)
+  knitr::knit_print(knitr::include_graphics(knitr_path))
 }
 #' @rdname gif_file
 #' @export
-split.gif_file <- function(x, f, drop = FALSE, ...) {
+split.gif_image <- function(x, f, drop = FALSE, ...) {
   if (!requireNamespace('magick', quietly = TRUE)) {
     stop('Splitting gifs require the magick package', call. = FALSE)
   }

@@ -3,6 +3,7 @@
 \name{animate}
 \alias{animate}
 \alias{print.gganim}
+\alias{knit_print.gganim}
 \alias{plot.gganim}
 \title{Render a gganim object}
 \usage{
@@ -10,6 +11,8 @@ animate(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   renderer = gifski_renderer(), device = "png", ref_frame = 1, ...)
 
 \method{print}{gganim}(x, ...)
+
+knit_print.gganim(x, ...)
 
 \method{plot}{gganim}(x, nframes = 9, detail = 10, ...)
 }
