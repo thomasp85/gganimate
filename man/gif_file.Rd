@@ -5,7 +5,7 @@
 \alias{gif_image}
 \alias{print.gif_image}
 \alias{knit_print.gif_image}
-\alias{split.gif_file}
+\alias{split.gif_image}
 \title{Wrap a gif file for easy handling}
 \usage{
 gif_file(file)
@@ -14,7 +14,7 @@ gif_file(file)
 
 knit_print.gif_image(x, ...)
 
-\method{split}{gif_file}(x, f, drop = FALSE, ...)
+\method{split}{gif_image}(x, f, drop = FALSE, ...)
 }
 \arguments{
 \item{file}{The gif file to be wrapped}
