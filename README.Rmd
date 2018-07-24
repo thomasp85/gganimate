@@ -114,6 +114,23 @@ to save the animation to a specific location, you can use the `anim_save()`
 function which, like `ggplot2::ggsave`, defaults to taking the last rendered 
 animation and writes it to a file.
 
+## I don't like gifs. Pro's use a proper video format
+gif is a fantastic format for animations due to its wide support, but sometimes
+another format is required. `gganimate` is agnostic to the renderer and while 
+the default is to use [gifski](https://github.com/r-rust/gifski) to combines the
+frames into a gif, it doesn't have to be so. By passing an alternate renderer to
+the `animate()` function you can control the animation format, and `gganimate` 
+comes with a bunch (and you can write your own). To create video files you can
+e.g. use the `ffmpeg_renderer()`:
+
+```{r}
+p <- ggplot(airquality, aes(Day, Temp)) + 
+  geom_line(size = 2, colour = 'steelblue') + 
+  transition_states(Month, 4, 1) + 
+  shadow_mark(size = 1, colour = 'grey')
+animate(p, renderer = ffmpeg_renderer())
+```
+
 ## Old API
 This is the second iteration of the gganimate package. The first, developed by
 [David Robinson](https://github.com/dgrtwo) had a very different API, and relied

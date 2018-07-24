@@ -3,11 +3,14 @@
 \name{video_file}
 \alias{video_file}
 \alias{print.video_file}
+\alias{knit_print.video_file}
 \title{Wrap a video file for easy handling}
 \usage{
 video_file(file)
 
 \method{print}{video_file}(x, ...)
+
+knit_print.video_file(x, ...)
 }
 \arguments{
 \item{file}{A video file}

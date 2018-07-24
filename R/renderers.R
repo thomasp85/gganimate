@@ -210,30 +210,39 @@ video_file <- function(file) {
 #' @export
 print.video_file <- function(x, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
-    if (!requireNamespace("base64enc", quietly = TRUE)) {
-      stop('The base64enc package is required for showing video')
-    }
-    if (!requireNamespace("base64enc", quietly = TRUE)) {
-      stop('The base64enc package is required for showing video')
-    }
-    format <- tolower(sub('^.*\\.(.+)$', '\\1', x))
-    html <- paste0(
-      '<video controls autoplay><source src="data:video/',
-      format,
-      ';base64,',
-      base64enc::base64encode(x),
-      '" type="video/mp4"></video>'
-    )
-    if (isTRUE(getOption("knitr.in.progress"))) {
-      knitr::knit_print()
-    }
-    print(htmltools::browsable(htmltools::HTML(html)))
+    print(htmltools::browsable(as_html_video(x)))
   } else {
     viewer <- getOption("viewer")
     viewer(x)
   }
 }
+#' @rdname video_file
+#' @export
+knit_print.video_file <- function(x, ...) {
+  if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
+    knitr::knit_print(htmltools::browsable(as_html_video(x)))
+  } else {
+    warning('The video format doesn\'t support HTML', call. = FALSE)
+    invisible(NULL)
+  }
+}
 #' @export
 split.video_file <- function(x, f, drop = FALSE, ...) {
   stop('video_file objects does not support splitting', call. = FALSE)
+}
+as_html_video <- function(x) {
+  if (!requireNamespace("base64enc", quietly = TRUE)) {
+    stop('The base64enc package is required for showing video')
+  }
+  if (!requireNamespace("htmltools", quietly = TRUE)) {
+    stop('The htmltools package is required for showing video')
+  }
+  format <- tolower(sub('^.*\\.(.+)$', '\\1', x))
+  htmltools::HTML(paste0(
+    '<video controls autoplay><source src="data:video/',
+    format,
+    ';base64,',
+    base64enc::base64encode(x),
+    '" type="video/mp4"></video>'
+  ))
 }
