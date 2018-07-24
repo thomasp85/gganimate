@@ -10,8 +10,6 @@ addons:
       - libmagick++-dev
 
 r:
-- 3.1
-- 3.2
 - oldrel
 - release
 - devel
