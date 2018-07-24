@@ -8,6 +8,7 @@ addons:
     packages:
       - libfreetype6
       - libmagick++-dev
+      - cargo
 
 r:
 - oldrel
