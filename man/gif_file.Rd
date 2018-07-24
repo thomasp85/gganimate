@@ -4,12 +4,15 @@
 \alias{gif_file}
 \alias{gif_image}
 \alias{print.gif_image}
+\alias{knit_print.gif_image}
 \alias{split.gif_file}
 \title{Wrap a gif file for easy handling}
 \usage{
 gif_file(file)
 
 \method{print}{gif_image}(x, ...)
+
+knit_print.gif_image(x, ...)
 
 \method{split}{gif_file}(x, f, drop = FALSE, ...)
 }

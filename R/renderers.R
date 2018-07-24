@@ -159,16 +159,19 @@ gif_file <- function(file) {
 #' @rdname gif_file
 #' @export
 print.gif_image <- function(x, ...) {
-  if (isTRUE(getOption("knitr.in.progress"))) {
-    knitr_path <- knitr::fig_path('.gif')
-    file.copy(x, knitr_path, overwrite = TRUE)
-    knitr::include_graphics(knitr_path)
-  } else if (is.function(viewer) && length(x)) {
-    viewer <- getOption("viewer")
+  viewer <- getOption("viewer")
+  if (is.function(viewer) && length(x)) {
     viewer(x)
   } else {
     invisible()
   }
+}
+#' @rdname gif_file
+#' @export
+knit_print.gif_image <- function(x, ...) {
+  knitr_path <- knitr::fig_path('.gif')
+  file.copy(x, knitr_path, overwrite = TRUE)
+  knitr::include_graphics(knitr_path)
 }
 #' @rdname gif_file
 #' @export
@@ -206,7 +209,6 @@ video_file <- function(file) {
 #' @rdname video_file
 #' @export
 print.video_file <- function(x, ...) {
-
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
     if (!requireNamespace("base64enc", quietly = TRUE)) {
       stop('The base64enc package is required for showing video')
@@ -222,6 +224,9 @@ print.video_file <- function(x, ...) {
       base64enc::base64encode(x),
       '" type="video/mp4"></video>'
     )
+    if (isTRUE(getOption("knitr.in.progress"))) {
+      knitr::knit_print()
+    }
     print(htmltools::browsable(htmltools::HTML(html)))
   } else {
     viewer <- getOption("viewer")
