@@ -4,6 +4,7 @@
 \alias{renderers}
 \alias{gifski_renderer}
 \alias{file_renderer}
+\alias{ffmpeg_renderer}
 \alias{magick_renderer}
 \title{Renderers provided by gganimate}
 \usage{
@@ -11,6 +12,9 @@ gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
   width = NULL, height = NULL)
 
 file_renderer(dir = "~", prefix = "gganim_plot", overwrite = FALSE)
+
+ffmpeg_renderer(format = "mp4", ffmpeg = NULL, options = list(pix_fmt =
+  "yuv420p"))
 
 magick_renderer(loop = TRUE)
 }
@@ -20,13 +24,22 @@ magick_renderer(loop = TRUE)
 \item{loop}{Logical. Should the produced gif loop}
 
 \item{width, height}{Dimensions of the animation in pixels. If \code{NULL} will
-tale the dimensions from the frame, otherwise it will rescale it.}
+take the dimensions from the frame, otherwise it will rescale it.}
 
 \item{dir}{The directory to copy the frames to}
 
 \item{prefix}{The filename prefix to use for the image files}
 
 \item{overwrite}{Logical. If TRUE, existing files will be overwritten.}
+
+\item{format}{The video format to encode the animation into}
+
+\item{ffmpeg}{The location of the \code{ffmpeg} executable. If \code{NULL} it will be
+assumed to be on the search path}
+
+\item{options}{Either a character vector of command line options for ffmpeg
+or a named list of option-value pairs that will be converted to command line
+options automatically}
 }
 \value{
 The provided renderers are factory functions that returns a new function
@@ -34,6 +47,14 @@ that take \code{frames} and \code{fps} as arguments, the former being a characte
 vector with file paths to the images holding the separate frames, in the
 order they should appear, and the latter being the framerate to use for the
 animation in frames-per-second.
+
+The return type of the different returned renderers are:
+\itemize{
+\item \strong{\code{gifski_renderer}}: Returns a \link{gif_image} object
+\item \strong{\code{file_renderer}}: Returns a vector of file paths
+\item \strong{\code{ffmpeg_renderer}}: Returns a \link{video_file} object
+\item \strong{\code{magick_renderer}}: Returns a \code{magick-image} object
+}
 }
 \description{
 The purpose of the renderer function is to take a list of image files and
@@ -43,11 +64,6 @@ in any way. A renderer is given as argument to \code{\link[=animate]{animate()}}
 recieves the paths to the individual frames once they have been created.
 }
 \details{
-The return value of a rendering is dependent on the specific
-renderer. \code{magick_renderer()} returns a \code{magick-image} invisibly and displays
-the animation in the viewer. \code{file_renderer()} returns the path to the image
-files invisibly and does not display anything.
-
 It is possible to provide your own renderer function providing that it
 matches the required signature (\code{frames} and \code{fps} argument). The return
 value of your provided function will be the return value ultimately given by

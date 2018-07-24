@@ -2,6 +2,7 @@
 % Please edit documentation in R/renderers.R
 \name{gif_file}
 \alias{gif_file}
+\alias{gif_image}
 \alias{print.gif_image}
 \alias{split.gif_file}
 \title{Wrap a gif file for easy handling}

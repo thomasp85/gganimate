@@ -42,6 +42,8 @@ save_animation.gif_image <- function(animation, file) {
   invisible(NULL)
 }
 #' @export
+save_animation.video_file <- save_animation.gif_image
+#' @export
 `save_animation.magick-image` <- function(animation, file) {
   if (!requireNamespace('magick', quietly = TRUE)) {
     stop('The magick package is required for this functionality', call. = FALSE)
