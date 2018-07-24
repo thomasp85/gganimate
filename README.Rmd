@@ -123,13 +123,15 @@ the `animate()` function you can control the animation format, and `gganimate`
 comes with a bunch (and you can write your own). To create video files you can
 e.g. use the `ffmpeg_renderer()`:
 
-```{r}
+```{r, eval=FALSE}
 p <- ggplot(airquality, aes(Day, Temp)) + 
   geom_line(size = 2, colour = 'steelblue') + 
   transition_states(Month, 4, 1) + 
   shadow_mark(size = 1, colour = 'grey')
 animate(p, renderer = ffmpeg_renderer())
 ```
+
+*Video output are automatically embedded in RMarkdown documents, but GitHub strips video when renderering READMEs so you can't see it here*
 
 ## Old API
 This is the second iteration of the gganimate package. The first, developed by
