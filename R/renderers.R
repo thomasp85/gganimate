@@ -220,7 +220,7 @@ print.video_file <- function(x, ...) {
       format,
       ';base64,',
       base64enc::base64encode(x),
-      ' type="video/mp4"></video>'
+      '" type="video/mp4"></video>'
     )
     print(htmltools::browsable(htmltools::HTML(html)))
   } else {
