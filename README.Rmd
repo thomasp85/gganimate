@@ -114,7 +114,7 @@ to save the animation to a specific location, you can use the `anim_save()`
 function which, like `ggplot2::ggsave`, defaults to taking the last rendered 
 animation and writes it to a file.
 
-## I don't like gifs. Pro's use a proper video format
+## I don't like gifs...
 gif is a fantastic format for animations due to its wide support, but sometimes
 another format is required. `gganimate` is agnostic to the renderer and while 
 the default is to use [gifski](https://github.com/r-rust/gifski) to combines the
