@@ -22,7 +22,9 @@ Suggests: magick,
     svglite,
     knitr,
     rmarkdown,
-    testthat
+    testthat,
+    base64enc,
+    htmltools
 RoxygenNote: 6.0.1.9000
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
