@@ -62,11 +62,11 @@ TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
     params$nframes <- nrow(params$frame_info)
     params
   },
-  expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)_(.+?)-(.*?)-(.*?)-(.*?)$')
+  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    Map(function(d, t, id, match, en, ex, es) {
+      split_panel <- stri_match(d$group, regex = '^(.+)<(.+?)-(.*?)-(.*?)-(.*?)>(.*)$')
       if (is.na(split_panel[1])) return(d)
-      d$group <- as.integer(split_panel[, 2])
+      d$group <- paste0(split_panel[, 2], split_panel[, 7])
       start <- as.integer(split_panel[, 3])
       end <- as.integer(split_panel[, 4])
       if (is.na(end[1])) end <- NULL
@@ -82,10 +82,10 @@ TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
         #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
         stop("Unknown layer type", call. = FALSE)
       )
-      all_frames$group <- paste0(all_frames$group, '_', all_frames$.frame)
+      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
       all_frames$.frame <- NULL
       all_frames
-    }, d = data, t = type, en = enter, ex = exit, es = ease)
+    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
   }
 )
 

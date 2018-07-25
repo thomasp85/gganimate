@@ -17,6 +17,8 @@ Scene <- ggproto('Scene', NULL,
   shadow_params = list(),
   layer_type = character(),
   tween_first = logical(),
+  group_column = character(),
+  match_shape = logical(),
 
   setup = function(self, layer_data) {
     transition_params <- self$transition$params
@@ -31,8 +33,10 @@ Scene <- ggproto('Scene', NULL,
   },
   identify_layers = function(self, layer_data, layers) {
     self$transmuters$setup(layers)
-    self$layer_type = self$get_layer_type(layer_data, layers)
-    self$tween_first = self$is_early_tween(layers)
+    self$layer_type <- self$get_layer_type(layer_data, layers)
+    self$tween_first <- self$is_early_tween(layers)
+    self$group_column <- self$get_group_column(layers)
+    self$match_shape <- self$get_shape_match(layers)
   },
   before_stat = function(self, layer_data) {
     layer_data <- self$transition$map_data(layer_data, self$transition_params)
@@ -40,6 +44,8 @@ Scene <- ggproto('Scene', NULL,
     layer_data[self$tween_first] <- self$transition$expand_data(
       layer_data[self$tween_first],
       self$layer_type[self$tween_first],
+      self$group_column[self$tween_first],
+      self$match_shape[self$tween_first],
       ease,
       self$transmuters$enter_transmuters(self$tween_first),
       self$transmuters$exit_transmuters(self$tween_first),
@@ -63,6 +69,8 @@ Scene <- ggproto('Scene', NULL,
     layer_data[tween_last] <- self$transition$expand_data(
       layer_data[tween_last],
       self$layer_type[tween_last],
+      self$group_column[tween_last],
+      self$match_shape[tween_last],
       ease,
       self$transmuters$enter_transmuters(tween_last),
       self$transmuters$exit_transmuters(tween_last),
@@ -106,10 +114,20 @@ Scene <- ggproto('Scene', NULL,
     plot$plot$labels <- lapply(plot$plot$labels, glue_data, .x = label_var, .envir = plot$plot$plot_env)
     plot
   },
+  get_group_column = function(self, layers) {
+    vapply(layers, function(l) {
+      group_column(l$stat) %||% group_column(l$geom) %||% 'group'
+    }, character(1))
+  },
   get_layer_type = function(self, data, layers) {
     unlist(Map(function(l, d) {
       layer_type(l$stat) %||% layer_type(l$geom) %||% layer_type(d)
     }, l = layers, d = data))
+  },
+  get_shape_match = function(self, layers) {
+    vapply(layers, function(l) {
+      match_shapes(l$stat) %||% match_shapes(l$geom) %||% TRUE
+    }, logical(1))
   },
   is_early_tween = function(self, layers) {
     vapply(layers, tween_before_stat, logical(1))

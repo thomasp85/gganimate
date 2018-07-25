@@ -88,8 +88,8 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
   map_data = function(self, data, params) {
     data
   },
-  expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, en, ex, es, en_l, ex_l, ke_l, offset) {
+  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    Map(function(d, t, id, match, en, ex, es, en_l, ex_l, ke_l, offset) {
       if (params$keep_layers) ke_l <- params$nframes - offset - en_l
       layer <- switch(
         t,
@@ -110,10 +110,10 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
           stop("Unknown layer type", call. = FALSE)
         )
       }
-      layer$group <- paste0(layer$group, '_', layer$.frame + offset)
+      layer$group <- paste0(layer$group, '<', layer$.frame + offset, '>')
       layer$.frame <- NULL
       layer
-    }, d = data, t = type, en = enter, ex = exit, es = ease, en_l = params$enter_length[layer_index], ex_l = params$exit_length[layer_index], ke_l = params$layer_length[layer_index], offset = params$offset[layer_index])
+    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease, en_l = params$enter_length[layer_index], ex_l = params$exit_length[layer_index], ke_l = params$layer_length[layer_index], offset = params$offset[layer_index])
   },
   static_layers = function(self, params) {
     numeric(0)

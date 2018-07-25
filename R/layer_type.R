@@ -16,3 +16,5 @@ layer_type.GeomPolygon <- function(x) 'polygon'
 layer_type.GeomSf <- function(x) 'sf'
 #' @export
 layer_type.Stat <- function(x) NULL
+#' @export
+layer_type.StatContour <- function(x) 'path'

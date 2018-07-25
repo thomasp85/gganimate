@@ -47,35 +47,35 @@ TransitionManual <- ggproto('TransitionManual', Transition,
   map_data = function(self, data, params) {
     Map(function(d, id) {
       if (length(id) > 0) {
-        d$group <- paste0(d$group, '_', id)
+        d$group <- paste0(d$group, '<', id, '>')
       }
       d
     }, d = data, id = params$row_id)
   },
-  expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
+  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     data
   },
   unmap_frames = function(self, data, params) {
     lapply(data, function(d) {
-      split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
+      split_panel <- stri_match(d$group, regex = '^(.*)(<.*>)(.*)$')
       if (is.na(split_panel[1])) return(d)
-      d$group <- as.integer(split_panel[, 2])
-      d$PANEL <- paste0(d$PANEL, '_', split_panel[, 3])
+      d$group <- paste0(split_panel[, 2], split_panel[, 4])
+      d$PANEL <- paste0(d$PANEL, split_panel[, 3])
       d
     })
   },
   remap_frames = function(self, data, params) {
     lapply(data, function(d) {
-      split_panel <- stri_match(d$PANEL, regex = '^(.+)_(.+)$')
+      split_panel <- stri_match(d$PANEL, regex = '^(.*)(<.*>)(.*)$')
       if (is.na(split_panel[1])) return(d)
       d$PANEL <- as.integer(split_panel[, 2])
-      d$group <- paste0(d$group, '_', split_panel[, 3])
+      d$group <- paste0(d$group, split_panel[, 3])
       d
     })
   },
   finish_data = function(self, data, params) {
     lapply(data, function(d) {
-      split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
+      split_panel <- stri_match(d$group, regex = '^(.+)<(.*)>$')
       if (is.na(split_panel[1])) return(d)
       d$group <- match(d$group, unique(d$group))
       empty_d <- d[0, , drop = FALSE]

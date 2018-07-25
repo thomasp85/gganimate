@@ -84,17 +84,16 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
     params$nframes <- nrow(params$frame_info)
     params
   },
-  expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)_(.+)$')
+  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    Map(function(d, t, id, match, en, ex, es) {
+      split_panel <- stri_match(d$group, regex = '^(.+)<(.+)>(.*)$')
       if (is.na(split_panel[1])) return(d)
-      d$group <- as.integer(split_panel[, 2])
+      d$group <- paste0(split_panel[, 2], split_panel[, 4])
       state <- as.integer(split_panel[, 3])
       states <- split(d, state)
       all_states <- rep(list(d[0, ]), length(params$state_levels))
       all_states[as.integer(names(states))] <- states
       all_frames <- all_states[[1]]
-      id <- if (d$group[1] == -1) NULL else 'group'
       for (i in seq_along(all_states)) {
         if (params$state_length[i] != 0) {
           all_frames <- keep_state(all_frames, params$state_length[i])
@@ -104,8 +103,8 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
           all_frames <- switch(
             t,
             point = tween_state(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-            path = tween_path(all_frames, next_state, es, params$transition_length[i], 'group', en, ex),
-            polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], 'group', en, ex),
+            path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex, match),
+            polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex, match),
             sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
             stop("Unknown layer type", call. = FALSE)
           )
@@ -114,9 +113,9 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
       if (params$wrap) {
         all_frames <- all_frames[all_frames$.frame <= params$nframes, ]
       }
-      all_frames$group <- paste0(all_frames$group, '_', all_frames$.frame)
+      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
       all_frames$.frame <- NULL
       all_frames
-    }, d = data, t = type, en = enter, ex = exit, es = ease)
+    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
   }
 )

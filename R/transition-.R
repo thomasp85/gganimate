@@ -11,7 +11,7 @@ Transition <- ggproto('Transition', NULL,
   map_data = function(self, data, params) {
     data
   },
-  expand_data = function(self, data, type, ease, enter, exit, params, layer_index) {
+  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     data
   },
   unmap_frames = function(self, data, params) {
