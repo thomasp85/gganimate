@@ -111,7 +111,9 @@ Scene <- ggproto('Scene', NULL,
   set_labels = function(self, plot, i) {
     label_var <- as.list(self$frame_vars[i, ])
     label_var$data <- plot$data
-    plot$plot$labels <- lapply(plot$plot$labels, glue_data, .x = label_var, .envir = plot$plot$plot_env)
+    plot$plot$labels <- lapply(plot$plot$labels, function(label) {
+      vapply(label, glue_data, character(1), .x = label_var, .envir = plot$plot$plot_env)
+    })
     plot
   },
   get_group_column = function(self, layers) {
