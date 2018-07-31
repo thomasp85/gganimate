@@ -61,7 +61,7 @@ create_layout <- function(facet = FacetNull, coord = CoordCartesian) {
     facet = facet,
     coord = coord,
     get_scales = function(self, i) {
-      if (is.character(i)) i <- as.integer(strsplit(i, '_')[[1]][1])
+      if (is.character(i)) i <- as.integer(strsplit(i, '<')[[1]][1])
       this_panel <- self$layout[self$layout$PANEL == i, ]
 
       list(
