@@ -1,3 +1,5 @@
+#' @rdname layer_type
+#'
 #' @export
 match_shapes <- function(x) {
   UseMethod('match_shapes')
