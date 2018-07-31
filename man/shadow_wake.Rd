@@ -4,8 +4,9 @@
 \alias{shadow_wake}
 \title{Show preceeding frames with gradual falloff}
 \usage{
-shadow_wake(wake_length, size = TRUE, alpha = TRUE, falloff = "cubic-in",
-  wrap = TRUE, exclude_layer = NULL, exclude_phase = c("enter", "exit"))
+shadow_wake(wake_length, size = TRUE, alpha = TRUE,
+  falloff = "cubic-in", wrap = TRUE, exclude_layer = NULL,
+  exclude_phase = c("enter", "exit"))
 }
 \arguments{
 \item{wake_length}{A number between 0 and 1 giving the length of the wake,

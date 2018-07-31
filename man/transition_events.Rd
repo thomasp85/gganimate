@@ -4,8 +4,8 @@
 \alias{transition_events}
 \title{Transition individual events in and out}
 \usage{
-transition_events(start, end = NULL, range = NULL, enter_length = NULL,
-  exit_length = NULL)
+transition_events(start, end = NULL, range = NULL,
+  enter_length = NULL, exit_length = NULL)
 }
 \arguments{
 \item{start, end}{The unquoted expression giving the start and end time of

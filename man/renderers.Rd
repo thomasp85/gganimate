@@ -13,8 +13,8 @@ gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
 
 file_renderer(dir = "~", prefix = "gganim_plot", overwrite = FALSE)
 
-ffmpeg_renderer(format = "mp4", ffmpeg = NULL, options = list(pix_fmt =
-  "yuv420p"))
+ffmpeg_renderer(format = "mp4", ffmpeg = NULL, options = list(pix_fmt
+  = "yuv420p"))
 
 magick_renderer(loop = TRUE)
 }

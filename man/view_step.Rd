@@ -11,10 +11,10 @@ view_step(pause_length, step_length, nsteps = NULL,
   fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
   aspect_ratio = 1)
 
-view_step_manual(pause_length, step_length, xmin, xmax, ymin, ymax, delay = 0,
-  ease = "cubic-in-out", wrap = TRUE, pause_first = FALSE,
-  fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
-  aspect_ratio = 1)
+view_step_manual(pause_length, step_length, xmin, xmax, ymin, ymax,
+  delay = 0, ease = "cubic-in-out", wrap = TRUE,
+  pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
+  exclude_layer = NULL, aspect_ratio = 1)
 }
 \arguments{
 \item{pause_length}{The relative length the view will be kept static. Will

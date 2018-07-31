@@ -6,13 +6,13 @@
 \title{Pan and zoom smoothly between different states}
 \usage{
 view_zoom(pause_length, step_length, nsteps = NULL,
-  look_ahead = pause_length, delay = 0, include = FALSE, wrap = TRUE,
-  pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
-  exclude_layer = NULL, aspect_ratio = 1)
+  look_ahead = pause_length, delay = 0, include = FALSE,
+  wrap = TRUE, pause_first = FALSE, fixed_x = FALSE,
+  fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1)
 
-view_zoom_manual(pause_length, step_length, xmin, xmax, ymin, ymax, delay = 0,
-  wrap = TRUE, pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
-  exclude_layer = NULL, aspect_ratio = 1)
+view_zoom_manual(pause_length, step_length, xmin, xmax, ymin, ymax,
+  delay = 0, wrap = TRUE, pause_first = FALSE, fixed_x = FALSE,
+  fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1)
 }
 \arguments{
 \item{pause_length}{The relative length the view will be kept static. Will

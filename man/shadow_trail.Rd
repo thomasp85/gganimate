@@ -4,7 +4,8 @@
 \alias{shadow_trail}
 \title{A trail of evenly spaced old frames}
 \usage{
-shadow_trail(distance = 0.05, max_frames = Inf, ..., exclude_layer = NULL)
+shadow_trail(distance = 0.05, max_frames = Inf, ...,
+  exclude_layer = NULL)
 }
 \arguments{
 \item{distance}{The temporal distance between the frames to show, as a
