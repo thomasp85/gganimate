@@ -59,7 +59,9 @@ TransitionManual <- ggproto('TransitionManual', Transition,
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.*)(<.*>)(.*)$')
       if (is.na(split_panel[1])) return(d)
-      d$group <- paste0(split_panel[, 2], split_panel[, 4])
+      groups <- paste0(split_panel[, 2], split_panel[, 4])
+      groups_int <- suppressWarnings(as.integer(groups))
+      d$group <- if (anyNA(groups_int)) groups else groups_int
       d$PANEL <- paste0(d$PANEL, split_panel[, 3])
       d
     })
