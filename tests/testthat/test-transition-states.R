@@ -11,7 +11,7 @@ test_that("area works", {
   expect_silent(prerender(p, 50))
 })
 
-test_that('bar works' {
+test_that('bar works', {
   set.seed(1)
   df <- data.frame(
     x = sample(letters[1:5], 20, replace = TRUE),
