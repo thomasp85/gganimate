@@ -20,3 +20,40 @@ test_that('bar works', {
   p <- ggplot(df) + geom_bar(aes(x)) + transition_states(f, 2, 1)
   expect_silent(prerender(p, 50))
 })
+
+test_that('bin2d works', {
+  set.seed(1)
+  df <- data.frame(
+    x = c(rnorm(100), runif(100)),
+    y = c(rnorm(100), runif(100)),
+    f = rep(c('a', 'b'), each = 100)
+  )
+  p <- ggplot(df) + geom_bin2d(aes(x, y), drop = FALSE) + transition_states(f, 2, 1)
+  expect_silent(prerender(p, 50))
+})
+
+test_that('boxplot works', {
+  p <- ggplot(mtcars) + geom_boxplot(aes(factor(cyl), mpg)) + transition_states(gear, 2, 1)
+  expect_silent(prerender(p, 50))
+})
+
+test_that('col works', {
+  df <- data.frame(
+    x = c(1:5, 1:5),
+    y = c(1:5, 5:1),
+    f = rep(c('a', 'b'), each = 5)
+  )
+  p <- ggplot(df) + geom_col(aes(x, y)) + transition_states(f, 2, 1)
+  expect_silent(prerender(p, 50))
+})
+
+test_that('contour works', {
+  df <- data.frame(
+    x = rep(rep(1:10, each = 10), 2),
+    y = rep(rep(1:10, 10), 2),
+    z = c(volcano[1:10, 1:10], volcano[21:30, 21:30]),
+    f = rep(c('a', 'b'), each = 100)
+  )
+  p <- ggplot(df) + geom_contour(aes(x, y, z = z)) + transition_states(f, 2, 1)
+  expect_silent(prerender(p, 50))
+})

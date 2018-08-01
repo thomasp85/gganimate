@@ -4,10 +4,12 @@
 \alias{transition_manual}
 \title{Create an animation by specifying the frame membership directly}
 \usage{
-transition_manual(frames)
+transition_manual(frames, ...)
 }
 \arguments{
 \item{frames}{The unquoted name of the column holding the frame membership.}
+
+\item{...}{Additional variables}
 }
 \description{
 This transition allows you to map a variable in your data to a specific frame
