@@ -38,7 +38,7 @@ save_animation.default <- function(animation, file) {
 }
 #' @export
 save_animation.gif_image <- function(animation, file) {
-  file.copy(animation, file)
+  file.copy(animation, file, overwrite = TRUE)
   invisible(NULL)
 }
 #' @export
