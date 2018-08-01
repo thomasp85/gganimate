@@ -64,25 +64,23 @@ TransitionComponents <- ggproto('TransitionComponents', TransitionManual,
     params$nframes <- nrow(params$frame_info)
     params
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, id, match, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)<(.+?)-(.+)>(.*)$')
-      if (is.na(split_panel[1])) return(d)
-      d$group <- paste0(split_panel[, 2], split_panel[, 5])
-      time <- as.integer(split_panel[, 3])
-      id <- split_panel[, 4]
-      all_frames <- switch(
-        t,
-        point = tween_components(d, es, params$nframes, !!time, !!id, params$range, en, ex, params$enter_length, params$exit_length),
-        #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-        #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-        #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-        stop("Unknown layer type", call. = FALSE)
-      )
-      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
-      all_frames$.frame <- NULL
-      all_frames
-    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    split_panel <- stri_match(data$group, regex = '^(.+)<(.+?)-(.+)>(.*)$')
+    if (is.na(split_panel[1])) return(data)
+    data$group <- paste0(split_panel[, 2], split_panel[, 5])
+    time <- as.integer(split_panel[, 3])
+    id <- split_panel[, 4]
+    all_frames <- switch(
+      type,
+      point = tween_components(data, ease, params$nframes, !!time, !!id, params$range, enter, exit, params$enter_length, params$exit_length),
+      #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+      #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+      #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+      stop("Unsupported layer type", call. = FALSE)
+    )
+    all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
+    all_frames$.frame <- NULL
+    all_frames
   }
 )
 

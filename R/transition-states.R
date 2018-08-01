@@ -84,38 +84,36 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
     params$nframes <- nrow(params$frame_info)
     params
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, id, match, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)<(.+)>(.*)$')
-      if (is.na(split_panel[1])) return(d)
-      d$group <- paste0(split_panel[, 2], split_panel[, 4])
-      state <- as.integer(split_panel[, 3])
-      states <- split(d, state)
-      all_states <- rep(list(d[0, ]), length(params$state_levels))
-      all_states[as.integer(names(states))] <- states
-      all_frames <- all_states[[1]]
-      for (i in seq_along(all_states)) {
-        if (params$state_length[i] != 0) {
-          all_frames <- keep_state(all_frames, params$state_length[i])
-        }
-        if (params$transition_length[i] != 0) {
-          next_state <- if (i == length(all_states)) all_states[[1]] else all_states[[i + 1]]
-          all_frames <- switch(
-            t,
-            point = tween_state(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-            path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex, match),
-            polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex, match),
-            sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-            stop("Unknown layer type", call. = FALSE)
-          )
-        }
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    split_panel <- stri_match(data$group, regex = '^(.+)<(.+)>(.*)$')
+    if (is.na(split_panel[1])) return(data)
+    data$group <- paste0(split_panel[, 2], split_panel[, 4])
+    state <- as.integer(split_panel[, 3])
+    states <- split(data, state)
+    all_states <- rep(list(data[0, ]), length(params$state_levels))
+    all_states[as.integer(names(states))] <- states
+    all_frames <- all_states[[1]]
+    for (i in seq_along(all_states)) {
+      if (params$state_length[i] != 0) {
+        all_frames <- keep_state(all_frames, params$state_length[i])
       }
-      if (params$wrap) {
-        all_frames <- all_frames[all_frames$.frame <= params$nframes, ]
+      if (params$transition_length[i] != 0) {
+        next_state <- if (i == length(all_states)) all_states[[1]] else all_states[[i + 1]]
+        all_frames <- switch(
+          type,
+          point = tween_state(all_frames, next_state, ease, params$transition_length[i], id, enter, exit),
+          path = tween_path(all_frames, next_state, ease, params$transition_length[i], id, enter, exit, match),
+          polygon = tween_polygon(all_frames, next_state, ease, params$transition_length[i], id, enter, exit, match),
+          sf = tween_sf(all_frames, next_state, ease, params$transition_length[i], id, enter, exit),
+          stop("Unknown layer type", call. = FALSE)
+        )
       }
-      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
-      all_frames$.frame <- NULL
-      all_frames
-    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
+    }
+    if (params$wrap) {
+      all_frames <- all_frames[all_frames$.frame <= params$nframes, ]
+    }
+    all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
+    all_frames$.frame <- NULL
+    all_frames
   }
 )

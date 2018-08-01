@@ -12,7 +12,18 @@ Transition <- ggproto('Transition', NULL,
     data
   },
   expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    data
+    Map(function(data, type, id, match, ease, enter, exit, layer_index) {
+      self$expand_layer(data, type, id, match, ease, enter, exit, params, layer_index)
+    }, data = data, type = type, id = id, match = match, ease = ease, enter = enter, exit = exit, layer_index = layer_index)
+  },
+  expand_layer = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    expanded <- lapply(split(data, data$PANEL), function(data) {
+      self$expand_panel(data, type, id, match, ease, enter, exit, params, layer_index)
+    })
+    do.call(rbind, expanded)
+  },
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    stop('The transition has not implemented any data expansion', call. = FALSE)
   },
   unmap_frames = function(self, data, params) {
     data

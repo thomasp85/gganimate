@@ -88,32 +88,34 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
   map_data = function(self, data, params) {
     data
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, id, match, en, ex, es, en_l, ex_l, ke_l, offset) {
-      if (params$keep_layers) ke_l <- params$nframes - offset - en_l
+  expand_layer = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    offset <- params$offset[layer_index]
+    enter_length <- params$enter_length[layer_index]
+    exit_length <- params$exit_length[layer_index]
+    layer_length <- params$layer_length[layer_index]
+    if (params$keep_layers) ke_l <- params$nframes - offset - enter_length
+    layer <- switch(
+      type,
+      point = tween_state(data[0,], data, ease, enter_length, NULL, enter, exit),
+      path = tween_path(data[0,], data, ease, enter_length, NULL, enter, exit),
+      polygon = tween_polygon(data[0,], data, ease, enter_length, NULL, enter, exit),
+      sf = tween_sf(data[0,], data, ease, enter_length, NULL, enter, exit),
+      stop("Unknown layer type", call. = FALSE)
+    )
+    layer <- keep_state(layer, layer_length)
+    if (!params$keep_layers) {
       layer <- switch(
-        t,
-        point = tween_state(d[0,], d, es, en_l, NULL, en, ex),
-        path = tween_path(d[0,], d, es, en_l, NULL, en, ex),
-        polygon = tween_polygon(d[0,], d, es, en_l, NULL, en, ex),
-        sf = tween_sf(d[0,], d, es, en_l, NULL, en, ex),
+        type,
+        point = tween_state(layer, data[0,], ease, exit_length, NULL, enter, exit),
+        path = tween_path(layer, data[0,], ease, exit_length, NULL, enter, exit),
+        polygon = tween_polygon(layer, data[0,], ease, exit_length, NULL, enter, exit),
+        sf = tween_sf(layer, data[0,], ease, exit_length, NULL, enter, exit),
         stop("Unknown layer type", call. = FALSE)
       )
-      layer <- keep_state(layer, ke_l)
-      if (!params$keep_layers) {
-        layer <- switch(
-          t,
-          point = tween_state(layer, d[0,], es, en_l, NULL, en, ex),
-          path = tween_path(layer, d[0,], es, en_l, NULL, en, ex),
-          polygon = tween_polygon(layer, d[0,], es, en_l, NULL, en, ex),
-          sf = tween_sf(layer, d[0,], es, en_l, NULL, en, ex),
-          stop("Unknown layer type", call. = FALSE)
-        )
-      }
-      layer$group <- paste0(layer$group, '<', layer$.frame + offset, '>')
-      layer$.frame <- NULL
-      layer
-    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease, en_l = params$enter_length[layer_index], ex_l = params$exit_length[layer_index], ke_l = params$layer_length[layer_index], offset = params$offset[layer_index])
+    }
+    layer$group <- paste0(layer$group, '<', layer$.frame + offset, '>')
+    layer$.frame <- NULL
+    layer
   },
   static_layers = function(self, params) {
     numeric(0)

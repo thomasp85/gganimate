@@ -54,46 +54,44 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
     params$frame_info <- data.frame(frame_time = times$frame_time)
     params
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, id, match, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)<(.+)>(.*)$')
-      if (is.na(split_panel[1])) return(d)
-      d$group <- paste0(split_panel[, 2], split_panel[, 4])
-      time <- as.integer(split_panel[, 3])
-      states <- split(d, time)
-      times <- as.integer(names(states))
-      nframes <- diff(times)
-      nframes[1] <- nframes[1] + 1
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    split_panel <- stri_match(data$group, regex = '^(.+)<(.+)>(.*)$')
+    if (is.na(split_panel[1])) return(data)
+    data$group <- paste0(split_panel[, 2], split_panel[, 4])
+    time <- as.integer(split_panel[, 3])
+    states <- split(data, time)
+    times <- as.integer(names(states))
+    nframes <- diff(times)
+    nframes[1] <- nframes[1] + 1
 
-      if (times[1] <= 1) {
-        all_frames <- states[[1]]
-        states <- states[-1]
-      } else {
-        all_frames <- d[0, , drop = FALSE]
-        nframes <- c(times[1] - 1, nframes)
-      }
-      if (times[length(times)] < params$nframes) {
-        states <- c(states, list(d[0, , drop = FALSE]))
-        nframes <- c(nframes, params$nframes - times[length(times)])
-      }
+    if (times[1] <= 1) {
+      all_frames <- states[[1]]
+      states <- states[-1]
+    } else {
+      all_frames <- data[0, , drop = FALSE]
+      nframes <- c(times[1] - 1, nframes)
+    }
+    if (times[length(times)] < params$nframes) {
+      states <- c(states, list(data[0, , drop = FALSE]))
+      nframes <- c(nframes, params$nframes - times[length(times)])
+    }
 
-      for (i in seq_along(states)) {
-        all_frames <- switch(
-          t,
-          point = tween_state(all_frames, states[[i]], es, nframes[i], id, en, ex),
-          path = tween_path(all_frames, states[[i]], es, nframes[i], id, en, ex, match),
-          polygon = tween_polygon(all_frames, states[[i]], es, nframes[i], id, en, ex, match),
-          sf = tween_sf(all_frames, states[[i]], es, nframes[i], id, en, ex),
-          stop("Unknown layer type", call. = FALSE)
-        )
-      }
-      true_frame <- seq(times[1], times[length(times)])
-      all_frames <- all_frames[all_frames$.frame %in% which(true_frame > 0 & true_frame <= params$nframes), , drop = FALSE]
-      all_frames$.frame <- all_frames$.frame - min(all_frames$.frame) + 1
-      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
-      all_frames$.frame <- NULL
-      all_frames
-    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
+    for (i in seq_along(states)) {
+      all_frames <- switch(
+        type,
+        point = tween_state(all_frames, states[[i]], ease, nframes[i], id, enter, exit),
+        path = tween_path(all_frames, states[[i]], ease, nframes[i], id, enter, exit, match),
+        polygon = tween_polygon(all_frames, states[[i]], ease, nframes[i], id, enter, exit, match),
+        sf = tween_sf(all_frames, states[[i]], ease, nframes[i], id, enter, exit),
+        stop("Unknown layer type", call. = FALSE)
+      )
+    }
+    true_frame <- seq(times[1], times[length(times)])
+    all_frames <- all_frames[all_frames$.frame %in% which(true_frame > 0 & true_frame <= params$nframes), , drop = FALSE]
+    all_frames$.frame <- all_frames$.frame - min(all_frames$.frame) + 1
+    all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
+    all_frames$.frame <- NULL
+    all_frames
   }
 )
 

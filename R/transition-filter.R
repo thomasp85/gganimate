@@ -95,61 +95,59 @@ TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
     params$nframes <- nrow(params$frame_info)
     params
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, id, match, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)<(.+)>(.*)$')
-      if (is.na(split_panel[1])) return(d)
-      d$group <- paste0(split_panel[, 2], split_panel[, 4])
-      if (length(unique(d[[id]])) == 1 && t %in% c('point', 'sf')) {
-        d[[id]] <- seq_len(nrow(d))
-      }
-      filter <- strsplit(split_panel[, 3], '-')
-      row <- rep(seq_along(filter), lengths(filter))
-      filter <- as.integer(unlist(filter))
-      present <- filter != 0
-      row <- row[present]
-      filter <- filter[present]
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    split_panel <- stri_match(data$group, regex = '^(.+)<(.+)>(.*)$')
+    if (is.na(split_panel[1])) return(data)
+    data$group <- paste0(split_panel[, 2], split_panel[, 4])
+    if (length(unique(data[[id]])) == 1 && type %in% c('point', 'sf')) {
+      data[[id]] <- seq_len(nrow(data))
+    }
+    filter <- strsplit(split_panel[, 3], '-')
+    row <- rep(seq_along(filter), lengths(filter))
+    filter <- as.integer(unlist(filter))
+    present <- filter != 0
+    row <- row[present]
+    filter <- filter[present]
 
-      filtered_data <- lapply(seq_along(params$filter_quos), function(i) {
-        include <- row[filter == i]
-        exclude <- setdiff(seq_len(nrow(d)), include)
-        d_f <- d
-        if (params$keep) {
-          exit_data <- ex(d_f[exclude, , drop = FALSE])
-          if (is.null(exit_data)) {
-            d_f <- d_f[include, , drop = FALSE]
-          } else {
-            d_f[exclude, ] <- exit_data
-          }
-        } else {
+    filtered_data <- lapply(seq_along(params$filter_quos), function(i) {
+      include <- row[filter == i]
+      exclude <- setdiff(seq_len(nrow(data)), include)
+      d_f <- data
+      if (params$keep) {
+        exit_data <- exit(d_f[exclude, , drop = FALSE])
+        if (is.null(exit_data)) {
           d_f <- d_f[include, , drop = FALSE]
+        } else {
+          d_f[exclude, ] <- exit_data
         }
-        d_f
-      })
-      all_frames <- filtered_data[[1]]
-      for (i in seq_along(filtered_data)) {
-        if (params$state_length[i] != 0) {
-          all_frames <- keep_state(all_frames, params$state_length[i])
-        }
-        if (params$transition_length[i] != 0) {
-          next_filter <- if (i == length(filtered_data)) filtered_data[[1]] else filtered_data[[i + 1]]
-          all_frames <- switch(
-            t,
-            point = tween_state(all_frames, next_filter, es, params$transition_length[i], id, en, ex),
-            path = tween_path(all_frames, next_filter, es, params$transition_length[i], id, en, ex, match),
-            polygon = tween_polygon(all_frames, next_filter, es, params$transition_length[i], id, en, ex, match),
-            sf = tween_sf(all_frames, next_filter, es, params$transition_length[i], id, en, ex),
-            stop("Unknown layer type", call. = FALSE)
-          )
-        }
+      } else {
+        d_f <- d_f[include, , drop = FALSE]
       }
-      if (params$wrap) {
-        all_frames <- all_frames[all_frames$.frame <= params$nframes, ]
+      d_f
+    })
+    all_frames <- filtered_data[[1]]
+    for (i in seq_along(filtered_data)) {
+      if (params$state_length[i] != 0) {
+        all_frames <- keep_state(all_frames, params$state_length[i])
       }
-      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
-      all_frames$.frame <- NULL
-      all_frames
-    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
+      if (params$transition_length[i] != 0) {
+        next_filter <- if (i == length(filtered_data)) filtered_data[[1]] else filtered_data[[i + 1]]
+        all_frames <- switch(
+          type,
+          point = tween_state(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit),
+          path = tween_path(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit, match),
+          polygon = tween_polygon(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit, match),
+          sf = tween_sf(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit),
+          stop("Unknown layer type", call. = FALSE)
+        )
+      }
+    }
+    if (params$wrap) {
+      all_frames <- all_frames[all_frames$.frame <= params$nframes, ]
+    }
+    all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
+    all_frames$.frame <- NULL
+    all_frames
   }
 )
 

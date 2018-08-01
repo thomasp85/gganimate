@@ -6,6 +6,7 @@
 #' variable.
 #'
 #' @param frames The unquoted name of the column holding the frame membership.
+#' @param ... Additional variables
 #'
 #' @family transitions
 #'
@@ -20,9 +21,10 @@
 #' @export
 #' @importFrom rlang enquo
 #' @importFrom ggplot2 ggproto
-transition_manual <- function(frames) {
+transition_manual <- function(frames, ...) {
   frames_quo <- enquo(frames)
-  ggproto(NULL, TransitionManual, params = list(frames_quo = frames_quo))
+  frame_vars <- data.frame(..., stringsAsFactors = FALSE, check.names = FALSE)
+  ggproto(NULL, TransitionManual, params = list(frames_quo = frames_quo, frame_vars = frame_vars))
 }
 #' @rdname gganimate-ggproto
 #' @format NULL
@@ -41,6 +43,10 @@ TransitionManual <- ggproto('TransitionManual', Transition,
       current_frame = all_frames,
       next_frame = c(all_frames[-1], '')
     )
+    if (nrow(params$frame_info) != nrow(params$frame_vars)) {
+      stop('Additional frame variables must have the same length as the number of frames', call. = FALSE)
+    }
+    params$frame_info <- cbind(params$frame_info, params$frame_vars)
     params$nframes <- nrow(params$frame_info)
     params
   },
@@ -52,7 +58,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
       d
     }, d = data, id = params$row_id)
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     data
   },
   unmap_frames = function(self, data, params) {

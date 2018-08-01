@@ -30,13 +30,13 @@ transition_events <- function(start, end = NULL, range = NULL, enter_length = NU
   enter_length_quo <- enquo(enter_length)
   exit_length_quo <- enquo(exit_length)
   ggproto(NULL, TransitionEvents,
-          params = list(
-            start_quo = start_quo,
-            end_quo = end_quo,
-            range = range,
-            enter_length_quo = enter_length_quo,
-            exit_length_quo = exit_length_quo
-          )
+    params = list(
+      start_quo = start_quo,
+      end_quo = end_quo,
+      range = range,
+      enter_length_quo = enter_length_quo,
+      exit_length_quo = exit_length_quo
+    )
   )
 }
 #' @rdname gganimate-ggproto
@@ -62,30 +62,28 @@ TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
     params$nframes <- nrow(params$frame_info)
     params
   },
-  expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    Map(function(d, t, id, match, en, ex, es) {
-      split_panel <- stri_match(d$group, regex = '^(.+)<(.+?)-(.*?)-(.*?)-(.*?)>(.*)$')
-      if (is.na(split_panel[1])) return(d)
-      d$group <- paste0(split_panel[, 2], split_panel[, 7])
-      start <- as.integer(split_panel[, 3])
-      end <- as.integer(split_panel[, 4])
-      if (is.na(end[1])) end <- NULL
-      enter_length <- as.integer(split_panel[, 5])
-      if (is.na(enter_length[1])) enter_length <- NULL
-      exit_length <- as.integer(split_panel[, 6])
-      if (is.na(exit_length[1])) exit_length <- NULL
-      all_frames <- switch(
-        t,
-        point = tween_events(d, es, params$nframes, !!start, !!end, params$range, en, ex, !!enter_length, !!exit_length),
-        #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-        #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-        #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-        stop("Unknown layer type", call. = FALSE)
-      )
-      all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
-      all_frames$.frame <- NULL
-      all_frames
-    }, d = data, t = type, id = id, match = match, en = enter, ex = exit, es = ease)
+  expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    split_panel <- stri_match(data$group, regex = '^(.+)<(.+?)-(.*?)-(.*?)-(.*?)>(.*)$')
+    if (is.na(split_panel[1])) return(data)
+    data$group <- paste0(split_panel[, 2], split_panel[, 7])
+    start <- as.integer(split_panel[, 3])
+    end <- as.integer(split_panel[, 4])
+    if (is.na(end[1])) end <- NULL
+    enter_length <- as.integer(split_panel[, 5])
+    if (is.na(enter_length[1])) enter_length <- NULL
+    exit_length <- as.integer(split_panel[, 6])
+    if (is.na(exit_length[1])) exit_length <- NULL
+    all_frames <- switch(
+      type,
+      point = tween_events(data, ease, params$nframes, !!start, !!end, params$range, enter, exit, !!enter_length, !!exit_length),
+      #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+      #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+      #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
+      stop("Unknown layer type", call. = FALSE)
+    )
+    all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
+    all_frames$.frame <- NULL
+    all_frames
   }
 )
 
