@@ -159,7 +159,7 @@ gif_file <- function(file) {
 #' @rdname gif_file
 #' @export
 print.gif_image <- function(x, ...) {
-  viewer <- getOption("viewer")
+  viewer <- getOption("viewer", utils::browseURL)
   if (is.function(viewer) && length(x)) {
     viewer(x)
   } else {
@@ -212,7 +212,7 @@ print.video_file <- function(x, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
     print(htmltools::browsable(as_html_video(x)))
   } else {
-    viewer <- getOption("viewer")
+    viewer <- getOption("viewer", utils::browseURL)
     viewer(x)
   }
 }
