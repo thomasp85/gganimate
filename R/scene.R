@@ -106,6 +106,11 @@ Scene <- ggproto('Scene', NULL,
     plot$data <- self$shadow$prepare_frame_data(data, shadow, self$shadow_params, i, shadow_i)
     plot <- self$view$set_view(plot, self$view_params, i)
     plot <- self$set_labels(plot, i)
+    PANEL_levels <- plot$layout$layout$PANEL
+    plot$data <- lapply(plot$data, function(d) {
+      d$PANEL <- factor(d$PANEL, PANEL_levels)
+      d
+    })
     plot
   },
   set_labels = function(self, plot, i) {
