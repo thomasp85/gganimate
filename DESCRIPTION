@@ -24,7 +24,8 @@ Suggests: magick,
     rmarkdown,
     testthat,
     base64enc,
-    htmltools
+    htmltools,
+    covr
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
