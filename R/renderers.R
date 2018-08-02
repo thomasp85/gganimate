@@ -297,8 +297,16 @@ sprite_file <- function(file, fps, width, full_width, height) {
 }
 #' @rdname sprite_file
 #' @export
-#' @importFrom glue glue
 print.sprite_image <- function(x, ...) {
+  print(htmltools::browsable(as_sprite_html(x)))
+}
+#' @rdname sprite_file
+#' @export
+knit_print.sprite_image <- function(x, ...) {
+  knitr::knit_print(htmltools::browsable(as_sprite_html(x)))
+}
+#' @importFrom glue glue
+as_sprite_html <- function(x, ...) {
   if (!requireNamespace("base64enc", quietly = TRUE)) {
     stop('The base64enc package is required for showing video')
   }
@@ -366,7 +374,7 @@ print.sprite_image <- function(x, ...) {
     .close = '%'
   )
   full <- paste0(css, '\n', html, '\n', js)
-  print(htmltools::browsable(htmltools::HTML(full)))
+  htmltools::HTML(full)
 }
 #' @export
 split.sprite_image <- function(x, f, drop = FALSE, ...) {

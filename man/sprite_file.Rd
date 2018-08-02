@@ -3,11 +3,14 @@
 \name{sprite_file}
 \alias{sprite_file}
 \alias{print.sprite_image}
+\alias{knit_print.sprite_image}
 \title{Wrap an image sprite for easy handling}
 \usage{
 sprite_file(file, fps, width, full_width, height)
 
 \method{print}{sprite_image}(x, ...)
+
+knit_print.sprite_image(x, ...)
 }
 \arguments{
 \item{file}{A png file with frames placed horizontally}
