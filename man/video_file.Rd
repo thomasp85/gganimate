@@ -16,6 +16,8 @@ knit_print.video_file(x, ...)
 \item{file}{A video file}
 
 \item{x}{A \code{video_file} object}
+
+\item{...}{Arguments passed on}
 }
 \value{
 \code{video_file} returns a \code{video_file} object which is a shallow wrapper

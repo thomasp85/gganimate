@@ -128,7 +128,26 @@ magick_renderer <- function(loop = TRUE) {
     anim
   }
 }
-
+#' @rdname renderers
+#' @export
+sprite_renderer <- function() {
+  if (!requireNamespace('magick', quietly = TRUE)) {
+    stop('The magick package is required to use this renderer', call. = FALSE)
+  }
+  function(frames, fps) {
+    sprite <- if (grepl('.svg$', frames[1])) {
+      magick::image_read_svg(frames)
+    } else {
+      magick::image_read(frames)
+    }
+    single_dim <- magick::image_info(sprite[1])
+    sprite <- magick::image_append(sprite)
+    full_dim <- magick::image_info(sprite)
+    file <- tempfile(fileext = '.png')
+    magick::image_write(sprite, file, 'png')
+    sprite_file(file, fps, width = single_dim$width, full_width = full_dim$width, height = single_dim$height)
+  }
+}
 
 # HELPERS -----------------------------------------------------------------
 
@@ -142,6 +161,7 @@ magick_renderer <- function(loop = TRUE) {
 #' @param file The gif file to be wrapped
 #' @param x A `gif_image` object
 #' @inheritParams base::split
+#' @param ... Arguments passed on
 #'
 #' @return `gif_file` returns a `gif_image` object. `split` returns a list of
 #' `magick-image` objects and requires magick to work.
@@ -194,6 +214,7 @@ split.gif_image <- function(x, f, drop = FALSE, ...) {
 #'
 #' @param file A video file
 #' @param x A `video_file` object
+#' @param ... Arguments passed on
 #'
 #' @return `video_file` returns a `video_file` object which is a shallow wrapper
 #' around the file path text string.
@@ -245,4 +266,109 @@ as_html_video <- function(x) {
     base64enc::base64encode(x),
     '" type="video/mp4"></video>'
   ))
+}
+#' Wrap an image sprite for easy handling
+#'
+#' This function is equivalent to [gif_file()] but works for animations encoded
+#' as a sprite. A sprite is a single image file where each frame of the
+#' animation is stacked next to each other. The animation then happens by
+#' changing what slice of the image is shown. The implementation used allow
+#' users to click on the animation in order to toggle pause/play.
+#'
+#' @param file A png file with frames placed horizontally
+#' @param fps The framerate for the sprite animation
+#' @param width,height The dimension of a single frame
+#' @param full_width The width of the whole image
+#' @param x A `sprite_image` object
+#' @param ... Arguments passed on
+#'
+#' @return `sprite_file` returns a `sprite_image` object which is a shallow wrapper
+#' around the file path text string along with dimensions and fps used for
+#' animating the sprite when printing.
+#'
+#' @keywords internal
+#' @export
+#'
+sprite_file <- function(file, fps, width, full_width, height) {
+  stopifnot(length(file) == 1)
+  attributes(file) <- list(fps = fps, single_width = width, full_width = full_width, height = height)
+  class(file) <- 'sprite_image'
+  file
+}
+#' @rdname sprite_file
+#' @export
+#' @importFrom glue glue
+print.sprite_image <- function(x, ...) {
+  if (!requireNamespace("base64enc", quietly = TRUE)) {
+    stop('The base64enc package is required for showing video')
+  }
+  if (!requireNamespace("htmltools", quietly = TRUE)) {
+    stop('The htmltools package is required for showing video')
+  }
+  # Sprite animation code inspired by https://medium.com/dailyjs/how-to-build-a-simple-sprite-animation-in-javascript-b764644244aa
+  sprite_id <- sample(1e6, 1)
+  css <- glue(
+    '
+    <style>
+    #sprite-%sprite_id% {
+      height: %height%px;
+      width: %width%px;
+      background: url(data:image/png;base64,%img_encode%) 0px 0px;
+    }
+    </style>
+    ',
+    height = attr(x, 'height'),
+    width = attr(x, 'single_width'),
+    img_encode = base64enc::base64encode(x),
+    .open = '%',
+    .close = '%'
+  )
+  html <- glue('<div class="gganimate-sprite"><p id="sprite-{sprite_id}" onclick="toggleAnimation_{sprite_id}()"></p></div>')
+  js <- glue(
+    '
+    <script>
+    var tID_%sprite_id%;
+    var running_%sprite_id% = true;
+    var position_%sprite_id% = %width%;
+
+    function toggleAnimation_%sprite_id%() {
+      if (running_%sprite_id%) {
+        clearInterval(tID_%sprite_id%);
+      } else {
+        animateScript_%sprite_id%();
+      }
+      running_%sprite_id% = !running_%sprite_id%;
+    }
+
+    function animateScript_%sprite_id%() {
+      const interval = 1/%fps% * 1000; //100 ms of interval for the setInterval()
+      const diff = %width%; //diff as a variable for position offset
+
+      tID_%sprite_id% = setInterval(() => {
+        document.getElementById("sprite-%sprite_id%").style.backgroundPosition = `-${position_%sprite_id%}px 0px`;
+
+        if (position_%sprite_id% < %full_width%) {
+          position_%sprite_id% = position_%sprite_id% + diff;
+        } else {
+          position_%sprite_id% = %width%;
+        }
+
+      }, interval);
+    }
+
+    animateScript_%sprite_id%()
+    </script>
+    ',
+    width = attr(x, 'single_width'),
+    full_width = attr(x, 'full_width'),
+    fps = attr(x, 'fps'),
+    .open = '%',
+    .close = '%'
+  )
+  full <- paste0(css, '\n', html, '\n', js)
+  print(htmltools::browsable(htmltools::HTML(full)))
+}
+#' @export
+split.sprite_image <- function(x, f, drop = FALSE, ...) {
+  stop('sprite_image objects does not support splitting', call. = FALSE)
 }

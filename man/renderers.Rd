@@ -6,6 +6,7 @@
 \alias{file_renderer}
 \alias{ffmpeg_renderer}
 \alias{magick_renderer}
+\alias{sprite_renderer}
 \title{Renderers provided by gganimate}
 \usage{
 gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
@@ -17,6 +18,8 @@ ffmpeg_renderer(format = "mp4", ffmpeg = NULL, options = list(pix_fmt
   = "yuv420p"))
 
 magick_renderer(loop = TRUE)
+
+sprite_renderer()
 }
 \arguments{
 \item{file}{The animation file}

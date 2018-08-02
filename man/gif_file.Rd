@@ -21,7 +21,7 @@ knit_print.gif_image(x, ...)
 
 \item{x}{A \code{gif_image} object}
 
-\item{...}{further potential arguments passed to methods.}
+\item{...}{Arguments passed on}
 
 \item{f}{a \sQuote{factor} in the sense that \code{\link{as.factor}(f)}
     defines the grouping, or a list of such factors in which case their
