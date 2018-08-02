@@ -93,6 +93,8 @@ animate(p, renderer = ffmpeg_renderer())
 
 *Video output are automatically embedded in RMarkdown documents, but GitHub strips video when renderering READMEs so you can't see it here*
 
+Further there's support for rendering to sprite sheets if that is your vice.
+
 Old API
 -------
 

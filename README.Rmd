@@ -39,7 +39,7 @@ added to the plot object in order to customise how it should change with time.
 ## An Example
 All of the above might seem a bit abstract. Let's try with a contrived example:
 
-```{r, message=FALSE}
+```{r, message=FALSE, cache=TRUE}
 library(ggplot2)
 library(gganimate)
 
@@ -78,7 +78,7 @@ devtools::install_github('thomasp85/gganimate')
 It is impossible to cover everything possible with `gganimate` in a README, but
 animations are fun, so let's at least have one more:
 
-```{r}
+```{r, cache=TRUE}
 library(gapminder)
 
 ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
@@ -132,6 +132,8 @@ animate(p, renderer = ffmpeg_renderer())
 ```
 
 *Video output are automatically embedded in RMarkdown documents, but GitHub strips video when renderering READMEs so you can't see it here*
+
+Further there's support for rendering to sprite sheets if that is your vice.
 
 ## Old API
 This is the second iteration of the gganimate package. The first, developed by
