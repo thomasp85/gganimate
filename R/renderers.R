@@ -190,6 +190,7 @@ print.gif_image <- function(x, ...) {
 #' @export
 knit_print.gif_image <- function(x, ...) {
   knitr_path <- knitr::fig_path('.gif')
+  dir.create(dirname(knitr_path), showWarnings = FALSE, recursive = TRUE)
   file.copy(x, knitr_path, overwrite = TRUE)
   knitr::knit_print(knitr::include_graphics(knitr_path))
 }
