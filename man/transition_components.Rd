@@ -22,7 +22,7 @@ exit transitions. Defaults to 0}
 }
 \description{
 This transition allows individual visual components to define their own
-"life-cycle". This means that the final animation will not have any commen
+"life-cycle". This means that the final animation will not have any common
 "state" and "transition" phase as any component can be moving or static at
 any point in time.
 }

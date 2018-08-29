@@ -6,7 +6,7 @@
 #' time and can be any two combination of `nframes`, `fps`, and `length`.
 #' Rendering is happening in discrete time units. This means that any event in
 #' the animation is rounded of to the nearest frame (e.g. entering will always
-#' take a whole number of frames). This means that rounding artefacts are
+#' take a whole number of frames). This means that rounding artifacts are
 #' possible when only rendering few frames. To avoid this you can increase the
 #' `detail` argument. `detail` will get multiplied to `nframes` and the
 #' resulting number of frames will get calculated, but only `nframes` evenly

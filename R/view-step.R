@@ -7,7 +7,7 @@
 #'
 #' @param pause_length The relative length the view will be kept static. Will
 #' be recycled to match the number of steps
-#' @param step_length The relative length the view will use to transtion to the
+#' @param step_length The relative length the view will use to transition to the
 #' new position. Will be recycled to match the number of steps
 #' @param nsteps The number of steps. If `NULL` it will be set to the max length
 #' of `pause_length` or `step_length`
