@@ -1,4 +1,4 @@
-#' Show preceeding frames with gradual falloff
+#' Show preceding frames with gradual falloff
 #'
 #' This shadow is meant to draw a small wake after data by showing the latest
 #' frames up to the current. You can choose to gradually diminish the size

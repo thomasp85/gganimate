@@ -26,7 +26,7 @@ NULL
 #' `transition_filter` makes the following variables available for string
 #' literal interpretation:
 #'
-#' - **transitioning** is a booloean indicating whether the frame is part of the
+#' - **transitioning** is a boolean indicating whether the frame is part of the
 #'   transitioning phase
 #' - **previous_filter** The name of the last filter the animation was at
 #' - **closest_filter** The name of the filter closest to this frame

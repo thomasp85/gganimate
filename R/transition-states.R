@@ -22,7 +22,7 @@ NULL
 #' `transition_states` makes the following variables available for string
 #' literal interpretation:
 #'
-#' - **transitioning** is a booloean indicating whether the frame is part of the
+#' - **transitioning** is a boolean indicating whether the frame is part of the
 #'   transitioning phase
 #' - **previous_state** The name of the last state the animation was at
 #' - **closest_state** The name of the state closest to this frame

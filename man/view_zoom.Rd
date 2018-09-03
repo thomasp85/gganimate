@@ -18,7 +18,7 @@ view_zoom_manual(pause_length, step_length, xmin, xmax, ymin, ymax,
 \item{pause_length}{The relative length the view will be kept static. Will
 be recycled to match the number of steps}
 
-\item{step_length}{The relative length the view will use to transtion to the
+\item{step_length}{The relative length the view will use to transition to the
 new position. Will be recycled to match the number of steps}
 
 \item{nsteps}{The number of steps. If \code{NULL} it will be set to the max length

@@ -64,7 +64,7 @@ The purpose of the renderer function is to take a list of image files and
 assemble them into an animation. \code{gganimate} provide a range of renderers
 but it is also possible to provide your own, if the supplied ones are lacking
 in any way. A renderer is given as argument to \code{\link[=animate]{animate()}}/print() and
-recieves the paths to the individual frames once they have been created.
+receives the paths to the individual frames once they have been created.
 }
 \details{
 It is possible to provide your own renderer function providing that it

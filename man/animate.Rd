@@ -50,7 +50,7 @@ nature of the animation is dependent on the renderer, but defaults to using
 time and can be any two combination of \code{nframes}, \code{fps}, and \code{length}.
 Rendering is happening in discrete time units. This means that any event in
 the animation is rounded of to the nearest frame (e.g. entering will always
-take a whole number of frames). This means that rounding artefacts are
+take a whole number of frames). This means that rounding artifacts are
 possible when only rendering few frames. To avoid this you can increase the
 \code{detail} argument. \code{detail} will get multiplied to \code{nframes} and the
 resulting number of frames will get calculated, but only \code{nframes} evenly

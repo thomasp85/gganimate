@@ -14,7 +14,7 @@ one enters}
 \item{transition_length}{The proportional time to use for the entrance of a
 new layer}
 
-\item{keep_layers}{Should layers be kept on screen after they have appeeared
+\item{keep_layers}{Should layers be kept on screen after they have appeared
 or transition out when a new layer enters}
 
 \item{from_blank}{Should the first layer transition in or be present on the
@@ -33,7 +33,7 @@ but they can also be set to be removed as the next layer enters.
 \code{transition_layers} makes the following variables available for string
 literal interpretation:
 \itemize{
-\item \strong{transitioning} is a booloean indicating whether the frame is part of the
+\item \strong{transitioning} is a boolean indicating whether the frame is part of the
 transitioning phase
 \item \strong{previous_layer} The name of the last layer the animation was showing
 \item \strong{closest_layer} The name of the layer the animation is closest to showing

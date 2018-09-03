@@ -31,7 +31,7 @@ during the animation (again, mimicking \code{facet_wrap}).
 \code{transition_states} makes the following variables available for string
 literal interpretation:
 \itemize{
-\item \strong{transitioning} is a booloean indicating whether the frame is part of the
+\item \strong{transitioning} is a boolean indicating whether the frame is part of the
 transitioning phase
 \item \strong{previous_state} The name of the last state the animation was at
 \item \strong{closest_state} The name of the state closest to this frame

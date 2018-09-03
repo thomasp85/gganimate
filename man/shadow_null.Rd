@@ -2,7 +2,7 @@
 % Please edit documentation in R/shadow-null.R
 \name{shadow_null}
 \alias{shadow_null}
-\title{A non-existant shadow}
+\title{A non-existent shadow}
 \usage{
 shadow_null()
 }
