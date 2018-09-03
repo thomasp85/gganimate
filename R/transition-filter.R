@@ -99,8 +99,9 @@ TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
     split_panel <- stri_match(data$group, regex = '^(.+)<(.+)>(.*)$')
     if (is.na(split_panel[1])) return(data)
     data$group <- paste0(split_panel[, 2], split_panel[, 4])
-    if (length(unique(data[[id]])) == 1 && type %in% c('point', 'sf')) {
-      data[[id]] <- seq_len(nrow(data))
+    if (length(unique(eval_tidy(id, data))) == 1 && type %in% c('point', 'sf')) {
+      data$.id_temp <- seq_len(nrow(data))
+      id <- quo(.id_temp)
     }
     filter <- strsplit(split_panel[, 3], '-')
     row <- rep(seq_along(filter), lengths(filter))
@@ -134,10 +135,10 @@ TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
         next_filter <- if (i == length(filtered_data)) filtered_data[[1]] else filtered_data[[i + 1]]
         all_frames <- switch(
           type,
-          point = tween_state(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit),
-          path = tween_path(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit, match),
-          polygon = tween_polygon(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit, match),
-          sf = tween_sf(all_frames, next_filter, ease, params$transition_length[i], id, enter, exit),
+          point = tween_state(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
+          path = tween_path(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
+          polygon = tween_polygon(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
+          sf = tween_sf(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
           stop("Unknown layer type", call. = FALSE)
         )
       }

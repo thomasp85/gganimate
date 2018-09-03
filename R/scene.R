@@ -122,9 +122,9 @@ Scene <- ggproto('Scene', NULL,
     plot
   },
   get_group_column = function(self, layers) {
-    vapply(layers, function(l) {
-      group_column(l$stat) %||% group_column(l$geom) %||% 'group'
-    }, character(1))
+    lapply(layers, function(l) {
+      group_column(l$stat) %||% group_column(l$geom) %||% quo(group)
+    })
   },
   get_layer_type = function(self, data, layers) {
     unlist(Map(function(l, d) {
