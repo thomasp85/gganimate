@@ -91,9 +91,10 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
   expand_layer = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     offset <- params$offset[layer_index]
     enter_length <- params$enter_length[layer_index]
+    if (enter_length < 1) enter_length <- 1
     exit_length <- params$exit_length[layer_index]
     layer_length <- params$layer_length[layer_index]
-    if (params$keep_layers) ke_l <- params$nframes - offset - enter_length
+    if (params$keep_layers) layer_length <- params$nframes - offset - enter_length
     layer <- switch(
       type,
       point = tween_state(data[0,], data, ease, enter_length, NULL, enter, exit),

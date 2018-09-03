@@ -105,8 +105,7 @@ get_frame_info <- function(static_levels, static_lengths, transition_lengths, nf
     previous_static <- rep(statics2, frames)[seq_len(nframes)]
   }
 
-  frames[-1] <- frames[-1] + 1
-  closest_static <- tween_constant(as.list(statics[c(seq_along(statics), 1)]), frames)[[1]][seq_len(nframes)]
+  closest_static <- tween_constant(as.list(statics[c(seq_along(statics), 1)]), frames + 1)[[1]][seq_len(nframes)]
   info <- data.frame(
     transitioning = phase == 'transition',
     previous_ = previous_static,
