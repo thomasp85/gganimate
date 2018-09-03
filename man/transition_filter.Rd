@@ -37,7 +37,7 @@ kept the enter function will have no effect.
 \code{transition_filter} makes the following variables available for string
 literal interpretation:
 \itemize{
-\item \strong{transitioning} is a booloean indicating whether the frame is part of the
+\item \strong{transitioning} is a boolean indicating whether the frame is part of the
 transitioning phase
 \item \strong{previous_filter} The name of the last filter the animation was at
 \item \strong{closest_filter} The name of the filter closest to this frame

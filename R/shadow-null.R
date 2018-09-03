@@ -1,4 +1,4 @@
-#' A non-existant shadow
+#' A non-existent shadow
 #'
 #' This is the default shadow that simply doesn't show anything other than the
 #' data for the current frame.

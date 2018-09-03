@@ -62,7 +62,7 @@ start or end of the transition.
 in/out during the transition.
 
 \strong{grow}/\strong{shrink} will set the elements to zero size making them gradually
-grow into / shrink out of existance. Zero size depends on the type of layer,
+grow into / shrink out of existence. Zero size depends on the type of layer,
 e.g. polygons/paths will have all their points set to the mean, while points
 will have size/stroke set to zero.
 }

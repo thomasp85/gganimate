@@ -2,7 +2,7 @@
 % Please edit documentation in R/shadow-wake.R
 \name{shadow_wake}
 \alias{shadow_wake}
-\title{Show preceeding frames with gradual falloff}
+\title{Show preceding frames with gradual falloff}
 \usage{
 shadow_wake(wake_length, size = TRUE, alpha = TRUE,
   falloff = "cubic-in", wrap = TRUE, exclude_layer = NULL,
