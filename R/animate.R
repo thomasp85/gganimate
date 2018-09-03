@@ -64,7 +64,7 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   frames_vars <- draw_frames(plot, frame_ind, device, ref_frame, ...)
 
   animation <- renderer(frames_vars$frame_source, fps)
-  attr(animation, 'frame_vars') <- frame_vars
+  attr(animation, 'frame_vars') <- frames_vars
   set_last_animation(animation)
   animation
 }
