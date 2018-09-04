@@ -78,6 +78,7 @@ Collate:
     'transition-null.R'
     'transition-states.R'
     'transition-time.R'
+    'transition_reveal.R'
     'transmute-.R'
     'transmute-enter.R'
     'transmute-exit.R'
