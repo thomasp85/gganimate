@@ -134,6 +134,8 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
 }
 # Get dimensions of plot based on a reference frame
 plot_dims <- function(plot, ref_frame) {
+  tmpf <- tempfile()
+  png(tmpf)
   frame <- plot$scene$get_frame(plot, ref_frame)
   frame <- ggplot_gtable(frame)
   widths_rel <- frame$widths
@@ -144,5 +146,7 @@ plot_dims <- function(plot, ref_frame) {
   heights <- convertHeight(heights_rel, 'mm')
   null_heights <- as.numeric(heights) == 0
   heights[null_heights] <- heights_rel[null_heights]
+  dev.off()
+  unlink(tmpf)
   list(widths = widths, heights = heights)
 }
