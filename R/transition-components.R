@@ -73,9 +73,6 @@ TransitionComponents <- ggproto('TransitionComponents', TransitionManual,
     all_frames <- switch(
       type,
       point = tween_components(data, ease, params$nframes, !!time, !!id, c(1, params$nframes), enter, exit, params$enter_length, params$exit_length),
-      #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-      #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-      #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
       stop("Unsupported layer type", call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')

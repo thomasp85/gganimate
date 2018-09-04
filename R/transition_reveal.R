@@ -78,7 +78,6 @@ TransitionReveal <- ggproto('TransitionReveal', TransitionManual,
       point = tween_along(data, ease, params$nframes, !!time, !!id, c(0, 1), FALSE, params$keep_last),
       path = tween_along(data, ease, params$nframes, !!time, !!id, c(0, 1), TRUE, params$keep_last),
       polygon = tween_along(data, ease, params$nframes, !!time, !!id, c(0, 1), TRUE, params$keep_last),
-      #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
       stop("Unsupported layer type", call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')

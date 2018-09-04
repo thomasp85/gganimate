@@ -50,7 +50,6 @@ transition_layers <- function(layer_length, transition_length, keep_layers = TRU
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
-#' @importFrom transformr tween_path tween_polygon tween_sf
 TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
   setup_params = function(self, data, params) {
     layer_length <- rep(params$layer_length, length.out = length(data))
@@ -98,9 +97,9 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
     layer <- switch(
       type,
       point = tween_state(data[0,], data, ease, enter_length, NULL, enter, exit),
-      path = tween_path(data[0,], data, ease, enter_length, NULL, enter, exit),
-      polygon = tween_polygon(data[0,], data, ease, enter_length, NULL, enter, exit),
-      sf = tween_sf(data[0,], data, ease, enter_length, NULL, enter, exit),
+      path = transform_path(data[0,], data, ease, enter_length, NULL, enter, exit),
+      polygon = transform_polygon(data[0,], data, ease, enter_length, NULL, enter, exit),
+      sf = transform_sf(data[0,], data, ease, enter_length, NULL, enter, exit),
       stop("Unknown layer type", call. = FALSE)
     )
     layer <- keep_state(layer, layer_length)
@@ -108,9 +107,9 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
       layer <- switch(
         type,
         point = tween_state(layer, data[0,], ease, exit_length, NULL, enter, exit),
-        path = tween_path(layer, data[0,], ease, exit_length, NULL, enter, exit),
-        polygon = tween_polygon(layer, data[0,], ease, exit_length, NULL, enter, exit),
-        sf = tween_sf(layer, data[0,], ease, exit_length, NULL, enter, exit),
+        path = transform_path(layer, data[0,], ease, exit_length, NULL, enter, exit),
+        polygon = transform_polygon(layer, data[0,], ease, exit_length, NULL, enter, exit),
+        sf = transform_sf(layer, data[0,], ease, exit_length, NULL, enter, exit),
         stop("Unknown layer type", call. = FALSE)
       )
     }

@@ -25,23 +25,19 @@ Suggests: magick,
     testthat,
     base64enc,
     htmltools,
-    covr
+    covr,
+    transformr
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues
-Remotes: thomasp85/tweenr,
-    thomasp85/transformr,
-    thomasp85/patchwork
+Remotes: thomasp85/tweenr
 Imports: stringi,
     tweenr,
-    transformr,
     grid,
     rlang,
     glue,
-    sf,
     progress,
-    patchwork,
     plyr,
     scales,
     png,
@@ -69,6 +65,7 @@ Collate:
     'shadow-null.R'
     'shadow-trail.R'
     'shadow-wake.R'
+    'transformr.R'
     'transition-.R'
     'transition-manual.R'
     'transition-components.R'

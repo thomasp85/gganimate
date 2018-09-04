@@ -60,7 +60,6 @@ transition_states <- function(states, transition_length, state_length, wrap = TR
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
-#' @importFrom transformr tween_path tween_polygon tween_sf
 TransitionStates <- ggproto('TransitionStates', TransitionManual,
   setup_params = function(self, data, params) {
     states <- combine_levels(data, params$states_quo)
@@ -102,9 +101,9 @@ TransitionStates <- ggproto('TransitionStates', TransitionManual,
         all_frames <- switch(
           type,
           point = tween_state(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit),
-          path = tween_path(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit, match),
-          polygon = tween_polygon(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit, match),
-          sf = tween_sf(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit),
+          path = transform_path(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit, match),
+          polygon = transform_polygon(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit, match),
+          sf = transform_sf(all_frames, next_state, ease, params$transition_length[i], !!id, enter, exit),
           stop("Unknown layer type", call. = FALSE)
         )
       }

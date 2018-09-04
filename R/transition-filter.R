@@ -62,7 +62,6 @@ transition_filter <- function(transition_length, filter_length, ..., wrap = TRUE
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
-#' @importFrom transformr tween_path tween_polygon tween_sf
 #' @importFrom rlang quo_name
 TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
   setup_params = function(self, data, params) {
@@ -136,9 +135,9 @@ TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
         all_frames <- switch(
           type,
           point = tween_state(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
-          path = tween_path(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
-          polygon = tween_polygon(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
-          sf = tween_sf(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
+          path = transform_path(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
+          polygon = transform_polygon(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
+          sf = transform_sf(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
           stop("Unknown layer type", call. = FALSE)
         )
       }

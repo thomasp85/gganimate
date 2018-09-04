@@ -46,7 +46,6 @@ transition_time <- function(time, range = NULL) {
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
-#' @importFrom transformr tween_path tween_polygon tween_sf
 TransitionTime <- ggproto('TransitionTime', TransitionManual,
   setup_params = function(self, data, params) {
     times <- get_times(data, params$time_quo, params$nframes, params$range)
@@ -80,9 +79,9 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
       all_frames <- switch(
         type,
         point = tween_state(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit),
-        path = tween_path(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
-        polygon = tween_polygon(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
-        sf = tween_sf(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit),
+        path = transform_path(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
+        polygon = transform_polygon(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
+        sf = transform_sf(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit),
         stop("Unknown layer type", call. = FALSE)
       )
     }

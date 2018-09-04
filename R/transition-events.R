@@ -76,9 +76,6 @@ TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
     all_frames <- switch(
       type,
       point = tween_events(data, ease, params$nframes, !!start, !!end, params$range, enter, exit, !!enter_length, !!exit_length),
-      #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-      #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
-      #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
       stop("Unknown layer type", call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
