@@ -5,7 +5,7 @@
 #' @export
 layer_type <- function(x) UseMethod('layer_type')
 #' @export
-layer_type.default <- function(x) 'point'
+layer_type.default <- function(x) NULL
 #' @export
 layer_type.GeomPath <- function(x) 'path'
 #' @export

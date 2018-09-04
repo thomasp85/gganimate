@@ -128,7 +128,7 @@ Scene <- ggproto('Scene', NULL,
   },
   get_layer_type = function(self, data, layers) {
     unlist(Map(function(l, d) {
-      layer_type(l$stat) %||% layer_type(l$geom) %||% layer_type(d)
+      layer_type(l$stat) %||% layer_type(l$geom) %||% layer_type(d) %||% 'point'
     }, l = layers, d = data))
   },
   get_shape_match = function(self, layers) {
