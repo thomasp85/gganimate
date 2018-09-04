@@ -107,11 +107,9 @@ get_times <- function(data, var, nframes, range) {
     range <- range(unlist(times))
   } else {
     if (!inherits(range, time_class)) {
-      if (!inherits(range, time_class)) {
-        stop('range must be given in the same class as time', call. = FALSE)
-      }
-      range <- as.numeric(range)
+      stop('range must be given in the same class as time', call. = FALSE)
     }
+    range <- as.numeric(range)
   }
   times <- lapply(times, function(v) {
     if (is.null(v)) return(integer())
