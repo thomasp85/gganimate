@@ -72,7 +72,7 @@ TransitionComponents <- ggproto('TransitionComponents', TransitionManual,
     id <- split_panel[, 4]
     all_frames <- switch(
       type,
-      point = tween_components(data, ease, params$nframes, !!time, !!id, params$range, enter, exit, params$enter_length, params$exit_length),
+      point = tween_components(data, ease, params$nframes, !!time, !!id, c(1, params$nframes), enter, exit, params$enter_length, params$exit_length),
       #path = tween_path(all_frames, next_state, es, params$transition_length[i], id, en, ex),
       #polygon = tween_polygon(all_frames, next_state, es, params$transition_length[i], id, en, ex),
       #sf = tween_sf(all_frames, next_state, es, params$transition_length[i], id, en, ex),
