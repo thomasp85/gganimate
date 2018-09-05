@@ -57,7 +57,10 @@ animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
   nframes_final <- get_nframes(plot)
 
   frame_ind <- unique(round(seq(1, nframes_final, length.out = nframes)))
-  if (nframes != length(frame_ind)) message('nframes adjusted to match plot')
+  if (nframes != length(frame_ind)) {
+    message('nframes and fps adjusted to match transition')
+    fps <- fps * length(frame_ind) / nframes
+  }
 
   if (ref_frame < 0) ref_frame <- nframes_final + 1 + ref_frame
 
