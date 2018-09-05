@@ -55,7 +55,9 @@ shadow_mark <- function(past = TRUE, future = FALSE, ..., exclude_layer = NULL) 
 #' @importFrom rlang eval_tidy
 ShadowMark <- ggproto('ShadowMark', Shadow,
   train = function(self, data, params) {
-    params$raw <- lapply(data, function(d) {
+    params$raw <- lapply(seq_along(data), function(i) {
+      d <- data[[i]]
+      if (i %in% params$excluded_layers) return(d[0, , drop = FALSE])
       d <- lapply(d, function(dd) {
         dd[dd$.phase == 'raw', , drop = FALSE]
       })
