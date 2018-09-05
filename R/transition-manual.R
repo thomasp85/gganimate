@@ -86,7 +86,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
   finish_data = function(self, data, params) {
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.+)<(.*)>$')
-      if (is.na(split_panel[1])) return(d)
+      if (is.na(split_panel[1])) return(list(d))
       d$group <- match(d$group, unique(d$group))
       empty_d <- d[0, , drop = FALSE]
       d <- split(d, as.integer(split_panel[, 3]))

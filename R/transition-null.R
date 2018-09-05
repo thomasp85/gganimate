@@ -12,7 +12,13 @@ transition_null <- function() {
 #' @export
 #' @importFrom ggplot2 ggproto
 TransitionNull <- ggproto('TransitionNull', Transition,
+  setup_params = function(self, data, params) {
+    params$n_layers <- length(data)
+  },
   expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     data
+  },
+  static_layers = function(self, params) {
+    seq_len(params$n_layers)
   }
 )

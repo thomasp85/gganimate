@@ -57,7 +57,9 @@ ShadowMark <- ggproto('ShadowMark', Shadow,
   train = function(self, data, params) {
     params$raw <- lapply(seq_along(data), function(i) {
       d <- data[[i]]
-      if (i %in% params$excluded_layers) return(d[0, , drop = FALSE])
+      if (i %in% params$excluded_layers) {
+        return(d[[1]][0, , drop = FALSE])
+      }
       d <- lapply(d, function(dd) {
         dd[dd$.phase == 'raw', , drop = FALSE]
       })
