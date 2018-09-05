@@ -41,7 +41,11 @@ ShadowTrail <- ggproto('ShadowTrail', Shadow,
   train = function(self, data, params) {
     params$distance <- round(params$nframes * params$distance)
     params$shadow_frames <- seq(1, params$nframes, by = params$distance)
-    params$raw <- lapply(data, function(d) {
+    params$raw <- lapply(seq_along(data), function(i) {
+      d <- data[[i]]
+      if (i %in% params$excluded_layers) {
+        return(d[[1]][0, , drop = FALSE])
+      }
       d <- d[params$shadow_frames]
       frames <- rep(params$shadow_frames, vapply(d, nrow, integer(1)))
       d <- do.call(rbind, d)
