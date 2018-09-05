@@ -43,10 +43,12 @@ TransitionManual <- ggproto('TransitionManual', Transition,
       current_frame = all_frames,
       next_frame = c(all_frames[-1], '')
     )
-    if (nrow(params$frame_info) != nrow(params$frame_vars)) {
-      stop('Additional frame variables must have the same length as the number of frames', call. = FALSE)
+    if (nrow(params$frame_vars) != 0) {
+      if (nrow(params$frame_info) != nrow(params$frame_vars)) {
+        stop('Additional frame variables must have the same length as the number of frames', call. = FALSE)
+      }
+      params$frame_info <- cbind(params$frame_info, params$frame_vars)
     }
-    params$frame_info <- cbind(params$frame_info, params$frame_vars)
     params$nframes <- nrow(params$frame_info)
     params
   },
