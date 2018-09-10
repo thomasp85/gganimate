@@ -26,6 +26,7 @@ transition_events <- function(start, end = NULL, range = NULL, enter_length = NU
   end_quo <- enquo(end)
   enter_length_quo <- enquo(enter_length)
   exit_length_quo <- enquo(exit_length)
+  require_quo(start_quo, 'start')
   ggproto(NULL, TransitionEvents,
     params = list(
       start_quo = start_quo,

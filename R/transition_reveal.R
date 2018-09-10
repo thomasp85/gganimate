@@ -39,6 +39,8 @@
 transition_reveal <- function(id, along, range = NULL, keep_last = TRUE) {
   id_quo <- enquo(id)
   along_quo <- enquo(along)
+  require_quo(id_quo, 'id')
+  require_quo(along_quo, 'along')
   ggproto(NULL, TransitionReveal,
           params = list(
             id_quo = id_quo,

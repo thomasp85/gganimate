@@ -23,6 +23,7 @@
 #' @importFrom ggplot2 ggproto
 transition_manual <- function(frames, ...) {
   frames_quo <- enquo(frames)
+  require_quo(frames_quo, 'frames')
   frame_vars <- data.frame(..., stringsAsFactors = FALSE, check.names = FALSE)
   ggproto(NULL, TransitionManual, params = list(frames_quo = frames_quo, frame_vars = frame_vars))
 }

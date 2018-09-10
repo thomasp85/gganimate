@@ -29,6 +29,7 @@
 #' @export
 transition_time <- function(time, range = NULL) {
   time_quo <- enquo(time)
+  require_quo(time_quo, 'time')
   ggproto(NULL, TransitionTime,
           params = list(
             time_quo = time_quo,

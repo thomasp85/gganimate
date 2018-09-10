@@ -28,6 +28,8 @@
 transition_components <- function(id, time, range = NULL, enter_length = NULL, exit_length = NULL) {
   id_quo <- enquo(id)
   time_quo <- enquo(time)
+  require_quo(id_quo, 'id')
+  require_quo(time_quo, 'time')
   ggproto(NULL, TransitionComponents,
           params = list(
             id_quo = id_quo,

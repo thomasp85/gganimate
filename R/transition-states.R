@@ -41,6 +41,7 @@
 #' @importFrom ggplot2 ggproto
 transition_states <- function(states, transition_length, state_length, wrap = TRUE) {
   states_quo <- enquo(states)
+  require_quo(states_quo, 'states')
   ggproto(NULL, TransitionStates,
     params = list(
       states_quo = states_quo,
