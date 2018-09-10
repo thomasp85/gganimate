@@ -3,13 +3,29 @@
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 ggproto
+#' @importFrom stringi stri_replace stri_match
 Transition <- ggproto('Transition', NULL,
   params = NULL,
+  mapping = '',
+  var_names = '',
   setup_params = function(self, data, params) {
     params
   },
-  map_data = function(self, data, params) {
-    data
+  setup_params2 = function(self, data, params, row_vars) {
+    params
+  },
+  map_data = function(self, data, params, replace = FALSE) {
+    if (is.null(params$row_id)) return (data)
+    Map(function(d, id) {
+      if (length(id) > 0) {
+        d$group <- if (replace) {
+          stri_replace(d$group, paste0('<', id, '>'), regex = '<.*>')
+        } else {
+          paste0(d$group, '<', id, '>')
+        }
+      }
+      d
+    }, d = data, id = params$row_id)
   },
   expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     Map(function(data, type, id, match, ease, enter, exit, layer_index) {
@@ -26,16 +42,45 @@ Transition <- ggproto('Transition', NULL,
     stop('The transition has not implemented any data expansion', call. = FALSE)
   },
   unmap_frames = function(self, data, params) {
-    data
+    lapply(data, function(d) {
+      split_panel <- stri_match(d$group, regex = '^(.*)(<.*>)(.*)$')
+      if (is.na(split_panel[1])) return(d)
+      groups <- paste0(split_panel[, 2], split_panel[, 4])
+      groups_int <- suppressWarnings(as.integer(groups))
+      d$group <- if (anyNA(groups_int)) groups else groups_int
+      d$PANEL <- paste0(d$PANEL, split_panel[, 3])
+      d
+    })
   },
   remap_frames = function(self, data, params) {
-    data
+    lapply(data, function(d) {
+      split_panel <- stri_match(d$PANEL, regex = '^(.*)(<.*>)(.*)$')
+      if (is.na(split_panel[1])) return(d)
+      d$PANEL <- as.integer(split_panel[, 2])
+      d$group <- paste0(d$group, split_panel[, 3])
+      d
+    })
   },
   finish_data = function(self, data, params) {
-    lapply(data, function(d) list(d))
+    lapply(data, function(d) {
+      split_panel <- stri_match(d$group, regex = '^(.+)<(.*)>$')
+      if (is.na(split_panel[1])) return(list(d))
+      d$group <- match(d$group, unique(d$group))
+      empty_d <- d[0, , drop = FALSE]
+      d <- split(d, as.integer(split_panel[, 3]))
+      frames <- rep(list(empty_d), params$nframes)
+      frames[as.integer(names(d))] <- d
+      frames
+    })
   },
   adjust_nframes = function(self, data, params) {
-    params$nframes
+    statics <- self$static_layers(params)
+    dynamics <- setdiff(seq_along(data), statics)
+    if (length(dynamics) == 0) {
+      params$nframes
+    } else {
+      length(data[[dynamics[1]]])
+    }
   },
   get_frame_data = function(self, data, params, i) {
     statics <- seq_along(data) %in% self$static_layers(params)
@@ -44,10 +89,25 @@ Transition <- ggproto('Transition', NULL,
     }, d = data, s = statics)
   },
   get_frame_vars = function(self, params) {
-    NULL
+    params$frame_info
   },
   static_layers = function(self, params) {
-    numeric(0)
+    which(lengths(params$row_id) == 0)
+  },
+  require_late_tween = function(self, params) {
+    FALSE
+  },
+  get_row_vars = function(self, data) {
+    vars <- stri_match(data$group, regex = paste0('(.*)<', self$mapping, '>(.*)'))[, -1, drop = FALSE]
+    if (is.na(vars[1])) return(NULL)
+    var_names <- c('before', self$var_names, 'after')
+    structure(lapply(seq_along(var_names), function(i) vars[,i]), names = var_names)
+  },
+  get_all_row_vars = function(self, data) {
+    all_vars <- lapply(data, self$get_row_vars)
+    structure(lapply(names(all_vars[[1]]), function(var) {
+      lapply(all_vars, `[[`, var)
+    }), names = names(all_vars[[1]]))
   }
 )
 #' @importFrom ggplot2 ggplot_add
@@ -116,3 +176,44 @@ get_frame_info <- function(static_levels, static_lengths, transition_lengths, nf
   names(info)[2:4] <- paste0(names(info)[2:4], static_name)
   info
 }
+standardise_times <- function(times, name, to_class = NULL) {
+  possible_classes <- c('integer', 'numeric', 'POSIXct', 'Date', 'difftime', 'hms')
+  classes <- vapply(times[lengths(times) != 0], function(x) {
+    cl <- inherits(x, possible_classes, which = TRUE)
+    which(cl != 0 & cl == min(cl[cl != 0]))[1]
+  }, integer(1))
+  if (anyNA(classes)) stop(name, ' data must either be ', paste0(possible_classes[-length(possible_classes)], collapse = ', '), ', or', possible_classes[length(possible_classes)], call. = FALSE)
+  if (length(unique(classes)) > 1) stop(name, ' data must be the same class in all layers', call. = FALSE)
+  cl <- possible_classes[unique(classes)]
+  if (length(cl) == 1 && (cl == 'difftime' || cl == 'hms')) {
+    if (is.null(to_class)) {
+      lapply(times, `units<-`, 'secs')
+    } else if (to_class == 'POSIXct') {
+      cl <- to_class
+      lapply(times, `units<-`, 'secs')
+    } else if (to_class == 'Date') {
+      cl <- to_class
+      lapply(times, `units<-`, 'days')
+    }
+  }
+  if (!is.null(to_class) && length(cl) != 0) if (cl != to_class) stop(name, ' data must be ', to_class, call. = FALSE)
+  list(
+    times = lapply(times, as.numeric),
+    class = cl
+  )
+}
+recast_times <- function(time, class) {
+  switch(
+    class,
+    integer = as.integer(round(time)),
+    numeric =  time,
+    POSIXct = structure(time, class = c('POSIXct', 'POSIXt')),
+    Date = structure(time, class = 'Date'),
+    difftime = structure(time, units = 'secs', class = 'difftime'),
+    hms = structure(time, units = 'secs', class = c('hms','difftime'))
+  )
+}
+eval_placeholder <- function(data) {
+  structure(list(values = lapply(data, function(d) rep('*', nrow(d)))), class = 'placeholder')
+}
+is_placeholder <- function(x) inherits(x, 'placeholder')

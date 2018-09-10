@@ -1,6 +1,3 @@
-#' @include transition-manual.R
-NULL
-
 #' Transition between different filters
 #'
 #' This transition allows you to transition between a range of filtering
@@ -63,14 +60,19 @@ transition_filter <- function(transition_length, filter_length, ..., wrap = TRUE
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
 #' @importFrom rlang quo_name
-TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
+TransitionFilter <- ggproto('TransitionFilter', Transition,
+  mapping = '(.+)',
+  var_names = 'filter',
   setup_params = function(self, data, params) {
-    filters <- assign_filters(data, params$filter_quos)
+    params$row_id <- assign_filters(data, params$filter_quos)
+    params
+  },
+  setup_params2 = function(self, data, params, row_vars) {
+    params$row_id <- assign_filters(data, params$filter_quos, TRUE, row_vars)
     transition_length <- rep(params$transition_length, length.out = length(params$filter_quos))
     if (!params$wrap) transition_length[length(transition_length)] <- 0
     filter_length <- rep(params$filter_length, length.out = length(params$filter_quos))
     frames <- distribute_frames(filter_length, transition_length, params$nframes + if (params$wrap) 1 else 0)
-    params$row_id <- filters
     params$state_length <- frames$static_length
     params$transition_length <- frames$transition_length
     params$frame_info <- cbind(
@@ -95,17 +97,17 @@ TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    split_panel <- stri_match(data$group, regex = '^(.+)<(.+)>(.*)$')
-    if (is.na(split_panel[1])) return(data)
-    data$group <- paste0(split_panel[, 2], split_panel[, 4])
+    row_vars <- self$get_row_vars(data)
+    if (is.null(row_vars)) return(data)
+    data$group <- paste0(row_vars$before, row_vars$after)
     if (length(unique(eval_tidy(id, data))) == 1 && type %in% c('point', 'sf')) {
       data$.id_temp <- seq_len(nrow(data))
       id <- quo(.id_temp)
     }
-    filter <- strsplit(split_panel[, 3], '-')
+    filter <- strsplit(row_vars$filter, '-')
     row <- rep(seq_along(filter), lengths(filter))
     filter <- as.integer(unlist(filter))
-    present <- filter != 0
+    present <- filter != 0 & !is.na(filter)
     row <- row[present]
     filter <- filter[present]
 
@@ -151,10 +153,12 @@ TransitionFilter <- ggproto('TransitionFilter', TransitionManual,
   }
 )
 
-assign_filters <- function(data, filters) {
-  lapply(data, function(d) {
-    row_filter <- do.call(rbind, lapply(filters, function(f) {
-      filter <- safe_eval(f, d)
+assign_filters <- function(data, filters, after = FALSE, row_vars = NULL) {
+  do_filter <- vapply(filters, function(f) require_stat(f[[2]]), logical(1)) == after
+  row_filters <- lapply(data, function(d) {
+    row_filter <- do.call(rbind, lapply(seq_along(filters), function(i) {
+      if (!do_filter[i]) return(rep(FALSE, nrow(d)))
+      filter <- safe_eval(filters[[i]], d)
       filter <- filter %||% rep(TRUE, nrow(d))
       if (!is.logical(filter)) stop('Filters must return a logical vector', call. = FALSE)
       filter
@@ -162,4 +166,9 @@ assign_filters <- function(data, filters) {
     if (all(row_filter)) return(numeric(0))
     apply(row_filter, 2, function(x) if (!any(x)) '0' else paste(which(x), collapse = '-'))
   })
+  if (after) {
+    Map(function(new_f, old_f) paste0(old_f, '-', new_f), new_f = row_filters, old_f = row_vars$filter)
+  } else {
+    row_filters
+  }
 }

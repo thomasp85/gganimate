@@ -20,5 +20,20 @@ TransitionNull <- ggproto('TransitionNull', Transition,
   },
   static_layers = function(self, params) {
     seq_len(params$n_layers)
+  },
+  unmap_frames = function(self, data, params) {
+    data
+  },
+  remap_frames = function(self, data, params) {
+    data
+  },
+  finish_data = function(self, data, params) {
+    lapply(data, list)
+  },
+  adjust_nframes = function(self, data, params) {
+    params$nframes
+  },
+  get_frame_vars = function(self, params) {
+    NULL
   }
 )

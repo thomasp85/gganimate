@@ -1,6 +1,3 @@
-#' @include transition-manual.R
-NULL
-
 #' Reveal data along a given dimension
 #'
 #' This transition allows you to let data gradually appear, based on a given
@@ -58,12 +55,30 @@ transition_reveal <- function(id, along, range = NULL, keep_last = TRUE) {
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_along
-TransitionReveal <- ggproto('TransitionReveal', TransitionManual,
+TransitionReveal <- ggproto('TransitionReveal', Transition,
+  mapping = '(.+?)_(.+)',
+  var_names = c('id', 'along'),
   setup_params = function(self, data, params) {
-    times <- get_reveal_times(data, params$along_quo, params$id_quo, params$nframes, params$range)
+    params$id <- get_row_id(data, params$id_quo)
+    params$along <- get_row_along(data, params$along_quo, params$nframes, params$range)
     params$row_id <- Map(function(t, i) if (length(t) == 0 || length(i) == 0) character() else paste0(i, '_', format(t)),
-                         t = times$row_time, i = times$row_id)
-    params$frame_info <- data.frame(frame_time = times$frame_time)
+                         t = params$along$values, i = params$id$values)
+    params
+  },
+  setup_params2 = function(self, data, params, row_vars) {
+    if (is_placeholder(params$id)) {
+      params$id <- get_row_id(data, params$id_quo, after = TRUE)
+    } else {
+      params$id$values <- row_vars$id
+    }
+    if (is_placeholder(params$along)) {
+      params$along <- get_row_along(data, params$along_quo, params$nframes, params$range, after = TRUE)
+    } else {
+      params$along$values <- row_vars$along
+    }
+    params$row_id <- Map(function(t, i) if (length(t) == 0 || length(i) == 0) character() else paste0(i, '_', format(t)),
+                         t = params$along$values, i = params$id$values)
+    params$frame_info <- data.frame(frame_along = params$along$frame_time)
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
@@ -89,9 +104,11 @@ TransitionReveal <- ggproto('TransitionReveal', TransitionManual,
 
 # HELPERS -----------------------------------------------------------------
 
-get_reveal_times <- function(data, time, id, nframes, range) {
-  times <- lapply(data, safe_eval, expr = time)
-  ids <- lapply(data, safe_eval, expr = id)
+get_row_along <- function(data, quo, nframes, range, after = FALSE) {
+  if (!after && require_stat(quo[[2]])) {
+    return(eval_placeholder(data))
+  }
+  times <- lapply(data, safe_eval, expr = quo)
   times <- standardise_times(times, 'along')
   time_class <- times$class
   times <- times$times
@@ -109,5 +126,5 @@ get_reveal_times <- function(data, time, id, nframes, range) {
   })
   frame_time <- seq(range[1], range[2], length.out = nframes)
   frame_time <- recast_times(frame_time, time_class)
-  list(row_time = times, row_id = ids, frame_time = frame_time)
+  list(values = times, frame_time = frame_time)
 }

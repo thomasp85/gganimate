@@ -1,6 +1,3 @@
-#' @include transition-manual.R
-NULL
-
 #' Transition individual events in and out
 #'
 #' This transition treats each visual element as an event in time and allows you
@@ -46,36 +43,108 @@ transition_events <- function(start, end = NULL, range = NULL, enter_length = NU
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_events
-TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
+TransitionEvents <- ggproto('TransitionEvents', Transition,
+  mapping = '(.+?)-(.*?)-(.*?)-(.*?)',
+  var_names = c('start', 'end', 'enter_length', 'exit_length'),
   setup_params = function(self, data, params) {
-    data_info <- event_info(data, params)
-
-    params$range <- data_info$range
-    params$frame_time <- data_info$frame_time
+    params$start <- get_row_event(data, params$start_quo, 'start')
+    time_class <- if (is_placeholder(params$start)) NULL else params$start$class
+    params$end <- get_row_event(data, params$end_quo, 'end', time_class)
+    params$enter_length <- get_row_event(data, params$enter_length_quo, 'enter_length', time_class)
+    params$exit_length <- get_row_event(data, params$exit_length_quo, 'exit_length', time_class)
+    static = lengths(params$start$values) == 0
     params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '-'),
-                         st = data_info$start_frame, end = data_info$end_frame,
-                         en = data_info$enter_length, ex = data_info$exit_length,
-                         s = data_info$static)
+                         st = params$start$values, end = params$end$values, en = params$enter_length$values, ex = params$exit_length$values, s = static)
+    params
+  },
+  setup_params2 = function(self, data, params, row_vars) {
+    late_start <- FALSE
+    if (is_placeholder(params$start)) {
+      params$start <- get_row_event(data, params$start_quo, 'start', after = TRUE)
+      late_start <- TRUE
+    } else {
+      params$start$values <- lapply(row_vars$start, as.numeric)
+    }
+    time_class <- params$start$class
+    if (is_placeholder(params$end)) {
+      params$end <- get_row_event(data, params$end_quo, 'end', time_class, after = TRUE)
+    } else {
+      params$end$values <- lapply(row_vars$end, as.numeric)
+    }
+    if (is_placeholder(params$enter_length)) {
+      params$enter_length <- get_row_event(data, params$enter_length_quo, 'enter_length', time_class, after = TRUE)
+    } else {
+      params$enter_length$values <- lapply(row_vars$enter_length, as.numeric)
+    }
+    if (is_placeholder(params$exit_length)) {
+      params$exit_length <- get_row_event(data, params$exit_length_quo, 'exit_length', time_class, after = TRUE)
+    } else {
+      params$exit_length$values <- lapply(row_vars$exit_length, as.numeric)
+    }
+    times <- recast_event_times(params$start, params$end, params$enter_length, params$exit_length)
+
+    range <- if (is.null(params$range)) {
+      low <- min(unlist(Map(function(start, enter) {
+        start - (if (length(enter) == 0) 0 else enter)
+      }, start = times$start$values, enter = times$enter_length$values)))
+      high <- max(unlist(Map(function(start, end, exit) {
+        (if (length(end) == 0) start else end) + (if (length(exit) == 0) 0 else exit)
+      }, start = times$start$values, end = times$end$values, exit = times$exit_length$values)))
+      range  <- c(low, high)
+    } else {
+      if (!inherits(params$range, time_class)) {
+        stop('range must be given in the same class as time', call. = FALSE)
+      }
+      as.numeric(params$range)
+    }
+    full_length <- diff(range)
+    frame_time <- recast_times(
+      seq(range[1], range[2], length.out = params$nframes),
+      time_class
+    )
+
+    frame_length <- full_length / params$nframes
+    start <- lapply(times$start$values, function(x) {
+      round((params$nframes - 1) * (x - range[1])/full_length) + 1
+    })
+    end <- lapply(times$end$values, function(x) {
+      if (length(x) == 0) return(numeric())
+      round((params$nframes - 1) * (x - range[1])/full_length) + 1
+    })
+    enter_length <- lapply(times$enter_length$values, function(x) {
+      if (length(x) == 0) return(numeric())
+      round(x / frame_length)
+    })
+    exit_length <- lapply(times$exit_length$values, function(x) {
+      if (length(x) == 0) return(numeric())
+      round(x / frame_length)
+    })
+
+    params$range <- range
+    params$frame_time <- frame_time
+    static = lengths(start) == 0
+    params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '-'),
+                         st = start, end = end, en = enter_length, ex = exit_length, s = static)
     params$frame_info <- data.frame(
-      frame_time = data_info$frame_time
+      frame_time = frame_time
     )
     params$nframes <- nrow(params$frame_info)
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    split_panel <- stri_match(data$group, regex = '^(.+)<(.+?)-(.*?)-(.*?)-(.*?)>(.*)$')
-    if (is.na(split_panel[1])) return(data)
-    data$group <- paste0(split_panel[, 2], split_panel[, 7])
-    start <- as.integer(split_panel[, 3])
-    end <- as.integer(split_panel[, 4])
+    row_vars <- self$get_row_vars(data)
+    if (is.null(row_vars)) return(data)
+    data$group <- paste0(row_vars$before, row_vars$after)
+    start <- as.integer(row_vars$start)
+    end <- as.integer(row_vars$end)
     if (is.na(end[1])) end <- NULL
-    enter_length <- as.integer(split_panel[, 5])
+    enter_length <- as.integer(row_vars$enter_length)
     if (is.na(enter_length[1])) enter_length <- NULL
-    exit_length <- as.integer(split_panel[, 6])
+    exit_length <- as.integer(row_vars$exit_length)
     if (is.na(exit_length[1])) exit_length <- NULL
     all_frames <- switch(
       type,
-      point = tween_events(data, ease, params$nframes, !!start, !!end, params$range, enter, exit, !!enter_length, !!exit_length),
+      point = tween_events(data, ease, params$nframes, !!start, !!end, c(1, params$nframes), enter, exit, !!enter_length, !!exit_length),
       stop("Unknown layer type", call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
@@ -83,72 +152,49 @@ TransitionEvents <- ggproto('TransitionEvents', TransitionManual,
     all_frames
   }
 )
-
-event_info <- function(data, params) {
-  row_start <- lapply(data, safe_eval, expr = params$start_quo)
-  row_end <- lapply(data, safe_eval, expr = params$end_quo)
-  row_enter_length <- lapply(data, safe_eval, expr = params$enter_length_quo)
-  row_exit_length <- lapply(data, safe_eval, expr = params$exit_length_quo)
-
-  static_layer <- unlist(Map(function(data, start) {
-    length(start) != 1 && length(start) != nrow(data)
-  }, data = data, start = row_start))
-  if (all(static_layer)) {
-    stop('At least one layer must be in transition', call. = FALSE)
+get_row_event <- function(data, quo, name, to_class = NULL, after = FALSE) {
+  if (!after && require_stat(quo[[2]])) {
+    return(eval_placeholder(data))
   }
-  row_start[static_layer] <- list(numeric(0))
-  row_end[static_layer] <- list(numeric(0))
-  row_enter_length[static_layer] <- list(numeric(0))
-  row_exit_length[static_layer] <- list(numeric(0))
-  row_start <- standardise_times(row_start, 'start')
-  time_class <- row_start$class
-  row_start <- row_start$times
-  row_end <- standardise_times(row_end, 'end', time_class)$times
-  row_enter_length <- standardise_times(row_enter_length, 'enter_length', time_class)$times
-  row_exit_length <- standardise_times(row_exit_length, 'exit_length', time_class)$times
-
-  range <- if (is.null(params$range)) {
-    low <- min(unlist(Map(function(start, enter) {
-      start - (if (length(enter) == 0) 0 else enter)
-    }, start = row_start, enter = row_enter_length)))
-    high <- max(unlist(Map(function(start, end, exit) {
-      (if (length(end) == 0) start else end) + (if (length(exit) == 0) 0 else exit)
-    }, start = row_start, end = row_end, exit = row_exit_length)))
-    range  <- c(low, high)
-  } else {
-    if (!inherits(params$range, time_class)) {
-      stop('range must be given in the same class as time', call. = FALSE)
+  row_event <- lapply(data, safe_eval, expr = quo)
+  row_event <- standardise_times(row_event, name, to_class)
+  names(row_event)[names(row_event) == 'times'] <- 'values'
+  if (length(row_event$class) != 0) {
+    row_event$range <- range(unlist(row_event$values))
+    if (diff(row_event$range) != 0) {
+      row_event$values <- lapply(row_event$values, function(t) (t - row_event$range[1])/diff(row_event$range))
     }
-    as.numeric(params$range)
   }
-  full_length <- diff(range)
-  frame_time <- recast_times(
-    seq(range[1], range[2], length.out = params$nframes),
-    time_class
-  )
-  frame_length <- full_length / params$nframes
-  start_frame <- lapply(row_start, function(x) {
-    round((params$nframes - 1) * (x - range[1])/full_length) + 1
-  })
-  end_frame <- lapply(row_end, function(x) {
-    if (length(x) == 0) return(numeric())
-    round((params$nframes - 1) * (x - range[1])/full_length) + 1
-  })
-  enter_length <- lapply(row_enter_length, function(x) {
-    if (length(x) == 0) return(numeric())
-    round(x / frame_length)
-  })
-  exit_length <- lapply(row_exit_length, function(x) {
-    if (length(x) == 0) return(numeric())
-    round(x / frame_length)
-  })
-
+  row_event
+}
+recast_event_times <- function(start, end, enter_length, exit_length, late_start) {
+  start$values <- lapply(start$values, rescale_to, range = start$range)
+  end$values <- lapply(end$values, rescale_to, range = end$range)
+  enter_length$values <- lapply(enter_length$values, rescale_to, range = enter_length$range)
+  exit_length$values <- lapply(exit_length$values, rescale_to, range = exit_length$range)
+  real_class <- start$class
+  if (real_class != 'difftime' && real_class != 'hms') {
+    if (enter_length$class == 'difftime' || enter_length$class == 'hms') {
+      enter_length <- standardise_times(lapply(enter_length$values, recast_times, enter_length$class), 'enter_length', real_class)
+      names(enter_length)[names(enter_length) == 'times'] <- 'values'
+    }
+    if (exit_length$class == 'difftime' || exit_length$class == 'hms') {
+      exit_length <- standardise_times(lapply(exit_length$values, recast_times, exit_length$class), 'exit_length', real_class)
+      names(exit_length)[names(exit_length) == 'times'] <- 'values'
+    }
+  }
+  if (length(unique(c(start$class, end$class, enter_length$class, exit_length$class))) != 1) {
+    stop('start, end, enter_length, and exit_length must have the same class')
+  }
   list(
-    start_frame = start_frame,
-    end_frame = end_frame,
+    start = start,
+    end = end,
     enter_length = enter_length,
-    exit_length = exit_length,
-    frame_time = frame_time,
-    static = static_layer
+    exit_length = exit_length
   )
+}
+rescale_to <- function(x, range) {
+  if (is.null(range)) return(NULL)
+  if (diff(range) == 0) return(rep(range[1], length(x)))
+  (x * diff(range)) + range[1]
 }

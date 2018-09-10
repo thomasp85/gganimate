@@ -1,6 +1,3 @@
-#' @include transition-manual.R
-NULL
-
 #' Transition through distinct states in time
 #'
 #' This is a variant of [transition_states()] that is intended for data where
@@ -46,18 +43,29 @@ transition_time <- function(time, range = NULL) {
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
-TransitionTime <- ggproto('TransitionTime', TransitionManual,
+TransitionTime <- ggproto('TransitionTime', Transition,
+  mapping = '(.+)',
+  var_names = 'time',
   setup_params = function(self, data, params) {
-    times <- get_times(data, params$time_quo, params$nframes, params$range)
-    params$row_id <- times$values
-    params$frame_info <- data.frame(frame_time = times$frame_time)
+    params$time <- get_row_time(data, params$time_quo, params$nframes, params$range)
+    params$row_id <- params$time$values
+    params
+  },
+  setup_params2 = function(self, data, params, row_vars) {
+    if (is_placeholder(params$time)) {
+      params$time <- get_row_time(data, params$time_quo, params$nframes, params$range, after = TRUE)
+    } else {
+      params$time$values <- lapply(row_vars$time, as.integer)
+    }
+    params$row_id <- params$time$values
+    params$frame_info <- data.frame(frame_time = params$time$frame_time)
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    split_panel <- stri_match(data$group, regex = '^(.+)<(.+)>(.*)$')
-    if (is.na(split_panel[1])) return(data)
-    data$group <- paste0(split_panel[, 2], split_panel[, 4])
-    time <- as.integer(split_panel[, 3])
+    row_time <- self$get_row_vars(data)
+    if (is.null(row_time)) return(data)
+    data$group <- paste0(row_time$before, row_time$after)
+    time <- as.integer(row_time$time)
     states <- split(data, time)
     times <- as.integer(names(states))
     nframes <- diff(times)
@@ -97,6 +105,13 @@ TransitionTime <- ggproto('TransitionTime', TransitionManual,
 
 # HELPERS -----------------------------------------------------------------
 
+get_row_time <- function(data, quo, nframes, range, after = FALSE) {
+  if (after || !require_stat(quo[[2]])) {
+    get_times(data, quo, nframes, range)
+  } else {
+    eval_placeholder(data)
+  }
+}
 get_times <- function(data, var, nframes, range) {
   times <- lapply(data, safe_eval, expr = var)
   times <- standardise_times(times, 'time')

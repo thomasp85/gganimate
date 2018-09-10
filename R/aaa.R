@@ -16,3 +16,14 @@ safe_eval <- function(expr, data) {
     NULL
   }
 }
+require_stat <- function(x) {
+  if (is.call(x)) {
+    if (identical(x[[1]], quote(stat))) {
+      TRUE
+    } else {
+      any(vapply(x, require_stat, logical(1)))
+    }
+  } else {
+    FALSE
+  }
+}

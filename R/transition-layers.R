@@ -50,7 +50,7 @@ transition_layers <- function(layer_length, transition_length, keep_layers = TRU
 #' @importFrom ggplot2 ggproto
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_state keep_state
-TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
+TransitionLayers <- ggproto('TransitionLayers', Transition,
   setup_params = function(self, data, params) {
     layer_length <- rep(params$layer_length, length.out = length(data))
     transition_length <- rep(params$transition_length, length.out = length(data) + params$from_blank)
@@ -83,9 +83,6 @@ TransitionLayers <- ggproto('TransitionLayers', TransitionManual,
     params$frame_info$nlayers <- length(data)
     params$nframes <- nrow(params$frame_info)
     params
-  },
-  map_data = function(self, data, params) {
-    data
   },
   expand_layer = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     offset <- params$offset[layer_index]

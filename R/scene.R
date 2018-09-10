@@ -35,6 +35,7 @@ Scene <- ggproto('Scene', NULL,
     self$transmuters$setup(layers)
     self$layer_type <- self$get_layer_type(layer_data, layers)
     self$tween_first <- self$is_early_tween(layers)
+    if (self$transition$require_late_tween(self$transition_params)) self$tween_first[] <- FALSE
     self$group_column <- self$get_group_column(layers)
     self$match_shape <- self$get_shape_match(layers)
   },
@@ -55,6 +56,9 @@ Scene <- ggproto('Scene', NULL,
     layer_data
   },
   after_stat = function(self, layer_data) {
+    row_vars <- self$transition$get_all_row_vars(layer_data)
+    self$transition_params <- self$transition$setup_params2(layer_data, self$transition_params, row_vars)
+    layer_data <- self$transition$map_data(layer_data, self$transition_params, replace = TRUE)
     layer_data
   },
   before_position = function(self, layer_data) {
