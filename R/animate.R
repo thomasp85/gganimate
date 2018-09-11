@@ -103,6 +103,7 @@ animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_
   set_last_animation(animation)
   animation
 }
+#' @importFrom utils modifyList
 prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, ...) {
   args <- list()
   args$nframes <- nframes %?% getOption('gganimate.nframes', 100)

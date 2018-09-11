@@ -42,7 +42,8 @@ Imports: stringi,
     scales,
     png,
     gifski,
-    grDevices
+    grDevices,
+    utils
 Collate:
     'aaa.R'
     'anim_save.R'

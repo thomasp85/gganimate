@@ -6,7 +6,7 @@
 \alias{knit_print.gganim}
 \title{Render a gganim object}
 \usage{
-animate(plot, nframes, fps, length, detail, renderer, device, ref_frame,
+animate(plot, nframes, fps, duration, detail, renderer, device, ref_frame,
   ...)
 
 \method{print}{gganim}(x, ...)
@@ -20,7 +20,7 @@ knit_print.gganim(x, options, ...)
 
 \item{fps}{The framerate of the animation in frames/sec (default \code{10})}
 
-\item{length}{The length of the animation in seconds (unset by default)}
+\item{duration}{The length of the animation in seconds (unset by default)}
 
 \item{detail}{The number of additional frames to calculate, per frame (default \code{1})}
 
@@ -36,6 +36,8 @@ space available for axis text. Defaults to the first frame. Negative values
 counts backwards (-1 is the last frame) (default \code{1})}
 
 \item{...}{Arguments passed on to the device}
+
+\item{options}{chunk options for the currently executing chunk}
 }
 \value{
 The return value of the \code{renderer} function

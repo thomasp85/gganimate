@@ -19,6 +19,7 @@ print.gganim <- function(x, ...) {
   print(anim, info = FALSE)
 }
 #' @rdname animate
+#' @param options chunk options for the currently executing chunk
 #' @export
 knit_print.gganim <- function(x, options, ...) {
   knitr_options <- get_knitr_options(options)

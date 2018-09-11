@@ -12,7 +12,7 @@ gif_file(file)
 
 \method{print}{gif_image}(x, ...)
 
-knit_print.gif_image(x, ...)
+knit_print.gif_image(x, options, ...)
 
 \method{split}{gif_image}(x, f, drop = FALSE, ...)
 }

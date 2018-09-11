@@ -10,7 +10,7 @@ sprite_file(file, fps, width, full_width, height)
 
 \method{print}{sprite_image}(x, ...)
 
-knit_print.sprite_image(x, ...)
+knit_print.sprite_image(x, options, ...)
 }
 \arguments{
 \item{file}{A png file with frames placed horizontally}

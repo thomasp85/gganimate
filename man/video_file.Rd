@@ -10,7 +10,7 @@ video_file(file)
 
 \method{print}{video_file}(x, ...)
 
-knit_print.video_file(x, ...)
+knit_print.video_file(x, options, ...)
 }
 \arguments{
 \item{file}{A video file}
