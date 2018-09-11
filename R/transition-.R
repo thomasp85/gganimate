@@ -143,6 +143,9 @@ distribute_frames <- function(statics, transitions, frames) {
   static_numbers <- ind <= length(statics)
   static_frames[ind[static_numbers]] <- n[static_numbers]
   transition_frames[ind[!static_numbers] - length(statics)] <- n[!static_numbers]
+  zero_trans <- which(transition_frames == 0 & static_frames[which(transition_frames == 0) + 1] != 0)
+  transition_frames[zero_trans] <- 1
+  static_frames[zero_trans + 1] <- static_frames[zero_trans + 1] - 1
   list(static_length = static_frames, transition_length = transition_frames, mod = frames / total)
 }
 
