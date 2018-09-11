@@ -188,11 +188,11 @@ print.gif_image <- function(x, ...) {
 }
 #' @rdname gif_file
 #' @export
-knit_print.gif_image <- function(x, ...) {
+knit_print.gif_image <- function(x, options, ...) {
   knitr_path <- knitr::fig_path('.gif')
   dir.create(dirname(knitr_path), showWarnings = FALSE, recursive = TRUE)
   file.copy(x, knitr_path, overwrite = TRUE)
-  knitr::knit_print(knitr::include_graphics(knitr_path))
+  knitr::knit_print(knitr::include_graphics(knitr_path), options, ...)
 }
 #' @rdname gif_file
 #' @export
@@ -240,9 +240,9 @@ print.video_file <- function(x, ...) {
 }
 #' @rdname video_file
 #' @export
-knit_print.video_file <- function(x, ...) {
+knit_print.video_file <- function(x, options, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
-    knitr::knit_print(htmltools::browsable(as_html_video(x)))
+    knitr::knit_print(htmltools::browsable(as_html_video(x)), options, ...)
   } else {
     warning('The video format doesn\'t support HTML', call. = FALSE)
     invisible(NULL)
@@ -303,8 +303,8 @@ print.sprite_image <- function(x, ...) {
 }
 #' @rdname sprite_file
 #' @export
-knit_print.sprite_image <- function(x, ...) {
-  knitr::knit_print(htmltools::browsable(as_sprite_html(x)))
+knit_print.sprite_image <- function(x, options, ...) {
+  knitr::knit_print(htmltools::browsable(as_sprite_html(x)), options, ...)
 }
 #' @importFrom glue glue
 as_sprite_html <- function(x, ...) {
