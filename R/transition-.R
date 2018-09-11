@@ -15,7 +15,7 @@ Transition <- ggproto('Transition', NULL,
     params
   },
   map_data = function(self, data, params, replace = FALSE) {
-    if (is.null(params$row_id)) return (data)
+    if (is.null(params$row_id)) return(data)
     Map(function(d, id) {
       if (length(id) > 0) {
         d$group <- if (replace) {
@@ -105,9 +105,10 @@ Transition <- ggproto('Transition', NULL,
   },
   get_all_row_vars = function(self, data) {
     all_vars <- lapply(data, self$get_row_vars)
-    structure(lapply(names(all_vars[[1]]), function(var) {
+    var_names <- unique(unlist(lapply(all_vars, names)))
+    structure(lapply(var_names, function(var) {
       lapply(all_vars, `[[`, var)
-    }), names = names(all_vars[[1]]))
+    }), names = var_names)
   }
 )
 #' @importFrom ggplot2 ggplot_add
