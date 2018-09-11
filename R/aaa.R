@@ -33,3 +33,4 @@ require_stat <- function(x) {
     FALSE
   }
 }
+`%?%` <- function(l, r) if (missing(l)) r else l

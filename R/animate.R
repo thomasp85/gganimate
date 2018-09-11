@@ -13,18 +13,18 @@
 #' spaced frames are rendered.
 #'
 #' @param plot,x A `gganim` object
-#' @param nframes The number of frames to render
-#' @param fps The framerate of the animation in frames/sec
-#' @param length The length of the animation in seconds
-#' @param detail The number of additional frames to calculate, per frame
+#' @param nframes The number of frames to render (default `100`)
+#' @param fps The framerate of the animation in frames/sec (default `10`)
+#' @param duration The length of the animation in seconds (unset by default)
+#' @param detail The number of additional frames to calculate, per frame (default `1`)
 #' @param renderer The function used to render the generated frames into an
-#' animation. Gets a vector of paths to images along with the framerate.
+#' animation. Gets a vector of paths to images along with the framerate. (default [gifski_renderer()])
 #' @param device The device to use for rendering the single frames. Possible
-#' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`.
-#' Defaults to `'png'`. (`'svglite'` requires the svglite package).
+#' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`
+#' (requires the svglite package). (default `'png'`)
 #' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
 #' space available for axis text. Defaults to the first frame. Negative values
-#' counts backwards (-1 is the last frame)
+#' counts backwards (-1 is the last frame) (default `1`)
 #' @param ... Arguments passed on to the device
 #'
 #' @return The return value of the `renderer` function
@@ -35,41 +35,99 @@
 #' The `plot()` method is different and produces an ensemble of frames to give
 #' a static overview of the animation. The default is to produce a 3x3 grid.
 #'
+#' @section Changing Defaults:
+#' It is possible to overwrite the defaults used by gganimate for the animation
+#' by setting them with [options()] (prefixed with `gganimate.`. As an example,
+#' if you would like to change the default nframes to 50 you would call
+#' `options(gganimate.nframes = 50)`. In order to set default device arguments
+#' (those you would normally pass through with `...`) you should use the
+#' `gganimate.dev_args` options and provide a list of arguments e.g.
+#' `options(gganimate.dev_args = list(width = 800, height = 600))` Defaults set
+#' this way can still be overridden by giving arguments directly to `animate()`.
+#'
+#' @section knitr Support:
+#' It is possible to specify the arguments to `animate()` in the chunk options
+#' when using `gganimate` with `knitr`. Arguments specified in this way will
+#' have precedence over defaults, but not over arguments specified directly in
+#' `animate()`. The arguments should be provided as a list to the `gganimate`
+#' chunk option, e.g. `{r, gganimate = list(nframes = 50, fps = 20)}`. A few
+#' build-in knitr options have relevance for animation and will be used unless
+#' given specifically in the `gganimate` list option. The native knitr options
+#' supported are:
+#'
+#' - `interval`: will set fps to `1/interval`
+#' - `dev`: will set `device`
+#' - `dev.args`: will set additional arguments to the device (`...`)
+#' - `fig.width`, `fig.height`, `fig.asp`, `fig.dim`: will set `width` and
+#' `height` of the device.
+#'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
 #' @importFrom grDevices png jpeg tiff bmp svg dev.off
 #' @importFrom progress progress_bar
 #' @importFrom ggplot2 ggplot_gtable ggplot_build
 #' @export
-animate <- function(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
-                    renderer = gifski_renderer(), device = 'png', ref_frame = 1,
-                    ...) {
-  if (sum(c(is.null(nframes), is.null(fps), is.null(length))) > 1) {
-    stop("At least 2 of 'nframes', 'fps', and 'length' must be given", call. = FALSE)
-  }
-  if (device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
-    stop('The svglite package is required to use this device', call. = FALSE)
-  }
-
-  nframes <- nframes %||% round(length * fps)
-  fps <- fps %||% round(nframes / length)
-  nframes_total <- (nframes - 1) * detail + 1
+animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, ...) {
+  args <- prepare_args(
+    nframes = nframes,
+    fps = fps,
+    duration = duration,
+    detail = detail,
+    renderer = renderer,
+    device = device,
+    ref_frame = ref_frame,
+    ...
+  )
+  nframes_total <- (args$nframes - 1) * args$detail + 1
   plot <- prerender(plot, nframes_total)
   nframes_final <- get_nframes(plot)
 
-  frame_ind <- unique(round(seq(1, nframes_final, length.out = nframes)))
-  if (nframes != length(frame_ind)) {
+  frame_ind <- unique(round(seq(1, nframes_final, length.out = args$nframes)))
+  if (args$nframes != length(frame_ind)) {
     message('nframes and fps adjusted to match transition')
-    fps <- fps * length(frame_ind) / nframes
+    args$fps <- args$fps * length(frame_ind) / args$nframes
   }
 
-  if (ref_frame < 0) ref_frame <- nframes_final + 1 + ref_frame
+  if (args$ref_frame < 0) args$ref_frame <- nframes_final + 1 + args$ref_frame
 
-  frames_vars <- draw_frames(plot, frame_ind, device, ref_frame, ...)
+  frames_vars <- do.call(
+    draw_frames,
+    c(list(plot = plot,
+           frames = frame_ind,
+           device = args$device,
+           ref_frame = args$ref_frame),
+      args$dev_args)
+  )
 
-  animation <- renderer(frames_vars$frame_source, fps)
+  animation <- args$renderer(frames_vars$frame_source, args$fps)
   attr(animation, 'frame_vars') <- frames_vars
   set_last_animation(animation)
   animation
+}
+prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, ...) {
+  args <- list()
+  args$nframes <- nframes %?% getOption('gganimate.nframes', 100)
+  args$fps <- fps %?% getOption('gganimate.fps', 10)
+  duration <- duration %?% getOption('gganimate.duration', NULL)
+  if (!is.null(duration)) {
+    if (
+      !missing(fps) ||
+      is.null(args$nframes) ||
+      (!is.null(getOption('gganimate.fps')) && is.null(getOption('gganimate.nframes')))
+    ) args$nframes <- duration * args$fps
+    else args$fps <- args$nframes / duration
+  }
+  if (is.null(args$nframes) || is.null(args$fps)) {
+    stop("At least 2 of 'nframes', 'fps', and 'duration' must be given", call. = FALSE)
+  }
+  args$detail <- detail %?% getOption('gganimate.detail', 1)
+  args$renderer <- renderer %?% getOption('gganimate.renderer', gifski_renderer())
+  args$device <- device %?% getOption('gganimate.device', 'png')
+  if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
+    stop('The svglite package is required to use this device', call. = FALSE)
+  }
+  args$ref_frame <- ref_frame %?% getOption('gganimate.ref_frame', 1)
+  args$dev_args <- modifyList(getOption('gganimate.dev_args', list()), list(...))
+  args
 }
 # Build plot for a specific number of frames
 prerender <- function(plot, nframes) {

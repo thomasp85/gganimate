@@ -6,34 +6,34 @@
 \alias{knit_print.gganim}
 \title{Render a gganim object}
 \usage{
-animate(plot, nframes = 100, fps = 10, length = NULL, detail = 1,
-  renderer = gifski_renderer(), device = "png", ref_frame = 1, ...)
+animate(plot, nframes, fps, length, detail, renderer, device, ref_frame,
+  ...)
 
 \method{print}{gganim}(x, ...)
 
-knit_print.gganim(x, ...)
+knit_print.gganim(x, options, ...)
 }
 \arguments{
 \item{plot, x}{A \code{gganim} object}
 
-\item{nframes}{The number of frames to render}
+\item{nframes}{The number of frames to render (default \code{100})}
 
-\item{fps}{The framerate of the animation in frames/sec}
+\item{fps}{The framerate of the animation in frames/sec (default \code{10})}
 
-\item{length}{The length of the animation in seconds}
+\item{length}{The length of the animation in seconds (unset by default)}
 
-\item{detail}{The number of additional frames to calculate, per frame}
+\item{detail}{The number of additional frames to calculate, per frame (default \code{1})}
 
 \item{renderer}{The function used to render the generated frames into an
-animation. Gets a vector of paths to images along with the framerate.}
+animation. Gets a vector of paths to images along with the framerate. (default \code{\link[=gifski_renderer]{gifski_renderer()}})}
 
 \item{device}{The device to use for rendering the single frames. Possible
-values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'}.
-Defaults to \code{'png'}. (\code{'svglite'} requires the svglite package).}
+values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'}
+(requires the svglite package). (default \code{'png'})}
 
 \item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
 space available for axis text. Defaults to the first frame. Negative values
-counts backwards (-1 is the last frame)}
+counts backwards (-1 is the last frame) (default \code{1})}
 
 \item{...}{Arguments passed on to the device}
 }
@@ -60,3 +60,34 @@ behaves ggplot2-like and produces the animation when the object is printed.
 The \code{plot()} method is different and produces an ensemble of frames to give
 a static overview of the animation. The default is to produce a 3x3 grid.
 }
+\section{Changing Defaults}{
+
+It is possible to overwrite the defaults used by gganimate for the animation
+by setting them with \code{\link[=options]{options()}} (prefixed with \code{gganimate.}. As an example,
+if you would like to change the default nframes to 50 you would call
+\code{options(gganimate.nframes = 50)}. In order to set default device arguments
+(those you would normally pass through with \code{...}) you should use the
+\code{gganimate.dev_args} options and provide a list of arguments e.g.
+\code{options(gganimate.dev_args = list(width = 800, height = 600))} Defaults set
+this way can still be overridden by giving arguments directly to \code{animate()}.
+}
+
+\section{knitr Support}{
+
+It is possible to specify the arguments to \code{animate()} in the chunk options
+when using \code{gganimate} with \code{knitr}. Arguments specified in this way will
+have precedence over defaults, but not over arguments specified directly in
+\code{animate()}. The arguments should be provided as a list to the \code{gganimate}
+chunk option, e.g. \code{{r, gganimate = list(nframes = 50, fps = 20)}}. A few
+build-in knitr options have relevance for animation and will be used unless
+given specifically in the \code{gganimate} list option. The native knitr options
+supported are:
+\itemize{
+\item \code{interval}: will set fps to \code{1/interval}
+\item \code{dev}: will set \code{device}
+\item \code{dev.args}: will set additional arguments to the device (\code{...})
+\item \code{fig.width}, \code{fig.height}, \code{fig.asp}, \code{fig.dim}: will set \code{width} and
+\code{height} of the device.
+}
+}
+
