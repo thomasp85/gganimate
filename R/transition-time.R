@@ -49,6 +49,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
   var_names = 'time',
   setup_params = function(self, data, params) {
     params$time <- get_row_time(data, params$time_quo, params$nframes, params$range)
+    params$require_stat <- is_placeholder(params$time)
     params$row_id <- params$time$values
     params
   },

@@ -53,6 +53,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
     params$end <- get_row_event(data, params$end_quo, 'end', time_class)
     params$enter_length <- get_row_event(data, params$enter_length_quo, 'enter_length', time_class)
     params$exit_length <- get_row_event(data, params$exit_length_quo, 'exit_length', time_class)
+    params$require_stat <- is_placeholder(params$start) || is_placeholder(params$end) || is_placeholder(params$enter_length) || is_placeholder(params$exit_length)
     static = lengths(params$start$values) == 0
     params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '-'),
                          st = params$start$values, end = params$end$values, en = params$enter_length$values, ex = params$exit_length$values, s = static)

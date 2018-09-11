@@ -53,6 +53,7 @@ TransitionComponents <- ggproto('TransitionComponents', Transition,
   setup_params = function(self, data, params) {
     params$id <- get_row_id(data, params$id_quo)
     params$time <- get_row_comp_time(data, params$time_quo, params)
+    params$require_stat <- is_placeholder(params$id) || is_placeholder(params$time)
     static <- lengths(params$id$values) == 0 || lengths(params$time$values) == 0
     params$row_id <- Map(function(t, i, s) if (s) character() else paste0(t, '-', i),
                          t = params$time$values, i = params$id$values, s = static)

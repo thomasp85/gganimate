@@ -38,6 +38,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
   var_names = 'frames',
   setup_params = function(self, data, params) {
     params$frames <- get_row_frames(data, params$frames_quo)
+    params$reuire_stat <- is_placeholder(params$frames)
     params$row_id <- params$frames$values
     params
   },

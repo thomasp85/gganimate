@@ -95,7 +95,7 @@ Transition <- ggproto('Transition', NULL,
     which(lengths(params$row_id) == 0)
   },
   require_late_tween = function(self, params) {
-    FALSE
+    isTRUE(params$require_stat)
   },
   get_row_vars = function(self, data) {
     vars <- stri_match(data$group, regex = paste0('(.*)<', self$mapping, '>(.*)'))[, -1, drop = FALSE]

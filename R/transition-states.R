@@ -63,6 +63,7 @@ TransitionStates <- ggproto('TransitionStates', Transition,
   var_names = 'states',
   setup_params = function(self, data, params) {
     params$states <- get_row_frames(data, params$states_quo, after = FALSE)
+    params$require_stat <- is_placeholder(params$states)
     params$row_id <- params$states$values
     params
   },

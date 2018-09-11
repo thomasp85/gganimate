@@ -63,6 +63,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
   setup_params = function(self, data, params) {
     params$id <- get_row_id(data, params$id_quo)
     params$along <- get_row_along(data, params$along_quo, params$nframes, params$range)
+    params$require_stat <- is_placeholder(params$id) || is_placeholder(params$along)
     params$row_id <- Map(function(t, i) if (length(t) == 0 || length(i) == 0) character() else paste0(i, '_', format(t)),
                          t = params$along$values, i = params$id$values)
     params
