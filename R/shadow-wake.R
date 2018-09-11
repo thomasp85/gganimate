@@ -78,24 +78,27 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
       i <- rep(params$falloff[seq_along(d)], vapply(d, nrow, integer(1)))
       d <- do.call(rbind, d)
 
-      if (!is.null(d$edge_alpha)) {
-        no_alpha <- is.na(d$edge_alpha)
-        d$edge_alpha[!no_alpha] <- d$edge_alpha[!no_alpha] * i
-      } else if (!is.null(d$alpha)) {
-        no_alpha <- is.na(d$alpha)
-        d$alpha[!no_alpha] <- d$alpha[!no_alpha] * i
-      } else {
-        no_alpha <- TRUE
+      if (params$alpha) {
+        if (!is.null(d$edge_alpha)) {
+          no_alpha <- is.na(d$edge_alpha)
+          d$edge_alpha[!no_alpha] <- d$edge_alpha[!no_alpha] * i
+        } else if (!is.null(d$alpha)) {
+          no_alpha <- is.na(d$alpha)
+          d$alpha[!no_alpha] <- d$alpha[!no_alpha] * i
+        } else {
+          no_alpha <- TRUE
+        }
+        if (!is.null(d$colour)) d$colour[no_alpha] <- mod_alpha(d$colour[no_alpha], i)
+        if (!is.null(d$fill)) d$fill[no_alpha] <- mod_alpha(d$fill[no_alpha], i)
+        if (!is.null(d$edge_colour)) d$edge_colour[no_alpha] <- mod_alpha(d$edge_colour[no_alpha], i)
+        if (!is.null(d$edge_fill)) d$edge_fill[no_alpha] <- mod_alpha(d$edge_fill[no_alpha], i)
       }
-      if (!is.null(d$colour)) d$colour[no_alpha] <- mod_alpha(d$colour[no_alpha], i)
-      if (!is.null(d$fill)) d$fill[no_alpha] <- mod_alpha(d$fill[no_alpha], i)
-      if (!is.null(d$edge_colour)) d$edge_colour[no_alpha] <- mod_alpha(d$edge_colour[no_alpha], i)
-      if (!is.null(d$edge_fill)) d$edge_fill[no_alpha] <- mod_alpha(d$edge_fill[no_alpha], i)
-
-      if (!is.null(d$size)) d$size <- d$size * i
-      if (!is.null(d$edge_size)) d$edge_size <- d$edge_size * i
-      if (!is.null(d$edge_width)) d$edge_width <- d$edge_width * i
-      if (!is.null(d$stroke)) d$stroke <- d$stroke * i
+      if (params$size) {
+        if (!is.null(d$size)) d$size <- d$size * i
+        if (!is.null(d$edge_size)) d$edge_size <- d$edge_size * i
+        if (!is.null(d$edge_width)) d$edge_width <- d$edge_width * i
+        if (!is.null(d$stroke)) d$stroke <- d$stroke * i
+      }
       d
     })
   },
