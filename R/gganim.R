@@ -12,6 +12,12 @@ as.gganim <- function(x) {
 }
 is.gganim <- function(x) inherits(x, 'gganim')
 
+#' @export
+plot.gganim <- function(x, frame = 50, total = 100, detail = 1, newpage = is.null(vp), vp = NULL, ...) {
+  plot <- prerender(x, total * detail)
+  plot$scene$plot_frame(plot, frame * detail, newpage = newpage, vp = vp)
+  invisible(x)
+}
 #' @rdname animate
 #' @export
 print.gganim <- function(x, ...) {

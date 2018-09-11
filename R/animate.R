@@ -176,11 +176,7 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   for (i in seq_along(frames)) {
     device(files[i], ...)
 
-    frame <- plot$scene$get_frame(plot, frames[i])
-    frame <- ggplot_gtable(frame)
-    frame$widths <- dims$widths
-    frame$heights <- dims$heights
-    grid.draw(frame)
+    plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights)
 
     rate <- i/as.double(Sys.time() - start, units = 'secs')
     if (is.nan(rate)) rate <- 0

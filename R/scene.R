@@ -3,8 +3,9 @@ create_scene <- function(transition, view, shadow, ease, transmuters, nframes) {
   if (is.null(nframes)) nframes <- 100
   ggproto(NULL, Scene, transition = transition, view = view, shadow = shadow, ease = ease, transmuters = transmuters, nframes = nframes)
 }
-#' @importFrom ggplot2 ggproto
+#' @importFrom ggplot2 ggproto ggplot_gtable
 #' @importFrom glue glue_data
+#' @importFrom grid grid.newpage grid.draw seekViewport pushViewport upViewport
 Scene <- ggproto('Scene', NULL,
   transition = NULL,
   view = NULL,
@@ -116,6 +117,27 @@ Scene <- ggproto('Scene', NULL,
       d
     })
     plot
+  },
+  plot_frame = function(self, plot, i, newpage = is.null(vp), vp = NULL, widths = NULL, heights = NULL, ...) {
+    plot <- self$get_frame(plot, i)
+    plot <- ggplot_gtable(plot)
+    if (!is.null(widths)) plot$widths <- widths
+    if (!is.null(heights)) plot$heights <- heights
+    if (newpage) grid.newpage()
+    grDevices::recordGraphics(
+      requireNamespace("gganimate", quietly = TRUE),
+      list(),
+      getNamespace("gganimate")
+    )
+    if (is.null(vp)) {
+      grid.draw(plot)
+    } else {
+      if (is.character(vp)) seekViewport(vp)
+      else pushViewport(vp)
+      grid.draw(plot)
+      upViewport()
+    }
+    invisible(NULL)
   },
   set_labels = function(self, plot, i) {
     label_var <- as.list(self$frame_vars[i, ])
