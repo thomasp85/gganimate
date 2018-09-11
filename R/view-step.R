@@ -97,6 +97,7 @@ ViewStep <- ggproto('ViewStep', View,
     } else {
       breaks <- c(1, pmin(breaks, params$nframes))
     }
+    data <- data[!seq_along(data) %in% params$excluded_layers]
     windows <- lapply(breaks, function(i) {
       data <- lapply(data, `[[`, i)
       ranges <- self$get_ranges(data, params)
