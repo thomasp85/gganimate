@@ -102,7 +102,12 @@ TransitionComponents <- ggproto('TransitionComponents', Transition,
 )
 get_row_id <- function(data, quo, after = FALSE) {
   if (after || !require_stat(quo[[2]])) {
-    list(values = lapply(data, safe_eval, expr = quo))
+    list(values = lapply(data, function(d) {
+      id <- safe_eval(d, expr = quo)
+      if (is.null(id)) return(id)
+      id <- as.character(id)
+      match(id, unique(id))
+    }))
   } else {
     eval_placeholder(data)
   }
