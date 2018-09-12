@@ -183,7 +183,12 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   for (i in seq_along(frames)) {
     if (!stream) device(files[i], ...)
 
-    plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights)
+    tryCatch(
+      plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights),
+      error = function(e) {
+        warning(conditionMessage(e), call. = FALSE)
+      }
+    )
 
     rate <- i/as.double(Sys.time() - start, units = 'secs')
     if (is.nan(rate)) rate <- 0
