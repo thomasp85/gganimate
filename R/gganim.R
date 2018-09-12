@@ -29,8 +29,13 @@ print.gganim <- function(x, ...) {
 #' @export
 knit_print.gganim <- function(x, options, ...) {
   knitr_options <- get_knitr_options(options)
-  anim <- do.call(animate, c(list(plot = x), knitr_options))
-  knitr::knit_print(anim, options, ...)
+  if (knitr::is_latex_output()) {
+    knitr_options$device <- 'current'
+    do.call(animate, c(list(plot = x), knitr_options))
+  } else {
+    anim <- do.call(animate, c(list(plot = x), knitr_options))
+    knitr::knit_print(anim, options, ...)
+  }
 }
 get_knitr_options <- function(options) {
   opt <- options$gganimate

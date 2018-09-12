@@ -98,6 +98,8 @@ animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_
       args$dev_args)
   )
 
+  if (args$device == 'current') return(invisible(frames_vars))
+
   animation <- args$renderer(frames_vars$frame_source, args$fps)
   attr(animation, 'frame_vars') <- frames_vars
   set_last_animation(animation)
@@ -122,7 +124,7 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
   }
   args$detail <- detail %?% getOption('gganimate.detail', 1)
   args$renderer <- renderer %?% getOption('gganimate.renderer', gifski_renderer())
-  args$device <- device %?% getOption('gganimate.device', 'png')
+  args$device <- tolower(device %?% getOption('gganimate.device', 'png'))
   if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
     stop('The svglite package is required to use this device', call. = FALSE)
   }
@@ -139,6 +141,8 @@ prerender <- function(plot, nframes) {
 # Returns a data.frame of frame metadata with image location in frame_source
 # column
 draw_frames <- function(plot, frames, device, ref_frame, ...) {
+  stream <- device == 'current'
+
   dims <- plot_dims(plot, ref_frame)
 
   dir <- tempfile(pattern = '')
@@ -149,10 +153,12 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
     png = paste0(files, '.png'),
     jpg =,
     jpeg = paste0(files, '.jpg'),
+    tif =,
     tiff = paste0(files, '.tif'),
     bmp = paste0(files, '.bmp'),
     svglite =,
     svg = paste0(files, '.svg'),
+    current = files,
     stop('Unsupported device', call. = FALSE)
   )
   device <- switch(
@@ -160,6 +166,7 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
     png = png,
     jpg =,
     jpeg = jpeg,
+    tif =,
     tiff = tiff,
     bmp = bmp,
     svg = svg,
@@ -174,7 +181,7 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   pb$tick(0)
 
   for (i in seq_along(frames)) {
-    device(files[i], ...)
+    if (!stream) device(files[i], ...)
 
     plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights)
 
@@ -183,11 +190,11 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
     rate <- format(rate, digits = 2)
     pb$tick(tokens = list(fps = rate))
 
-    dev.off()
+    if (!stream) dev.off()
   }
 
   frame_vars <- plot$scene$frame_vars[frames, , drop = FALSE]
-  frame_vars$frame_source <- files
+  if (!stream) frame_vars$frame_source <- files
   frame_vars
 }
 # Get dimensions of plot based on a reference frame
