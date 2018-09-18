@@ -9,8 +9,12 @@
 #'
 #' @param wake_length A number between 0 and 1 giving the length of the wake,
 #' in relation to the total number of frames.
-#' @param size Boolean indicating whether the size of the geom should shrink
-#' @param alpha Boolean indicating whether geoms should get more translucent
+#' @param size Numeric indicating the size the wake should end on. If `NULL`
+#' then size is not modified. Can also be a boolean with `TRUE` beeing equal `0`
+#' and `FALSE` beeing equal to `NULL`
+#' @param alpha as `size` but for alpha modification of the wake
+#' @param colour,fill colour or fill the wake should end on. If `NULL` they are
+#' not modified.
 #' @param falloff An easing function that control how size and/or alpha should
 #' change.
 #' @param wrap Should the shadow wrap around, so that the first frame will get
@@ -37,11 +41,16 @@
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
-shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_phase = c('enter', 'exit')) {
+shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, colour = NULL, fill = NULL, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_phase = c('enter', 'exit')) {
+  if (is.logical(size)) size <- if (size) 0 else NULL
+  if (is.logical(alpha)) alpha <- if (alpha) 0 else NULL
+
   ggproto(NULL, ShadowWake,
     exclude_layer = exclude_layer,
     params = list(
       wake_length = wake_length,
+      colour = colour,
+      fill = fill,
       size = size,
       alpha = alpha,
       falloff = falloff,
@@ -55,11 +64,11 @@ shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, falloff = 'cubic
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 ggproto
-#' @importFrom tweenr tween_numeric
+#' @importFrom tweenr tween_at
 ShadowWake <- ggproto('ShadowWake', Shadow,
   setup_params = function(self, data, params) {
     params$wake_length <- round(params$nframes * params$wake_length)
-    params$falloff <- tween_numeric(c(0, 1), params$wake_length + 2, params$falloff)[[1]][1 + seq_len(params$wake_length)]
+    params$at <- seq(0, 1, length = params$wake_length + 1)[seq_len(params$wake_length)]
     params
   },
   get_frames = function(self, params, i) {
@@ -75,29 +84,37 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
   prepare_shadow = function(self, shadow, params) {
     lapply(shadow, function(d) {
       if (length(d) == 0) return(NULL)
-      i <- rep(params$falloff[seq_along(d)], vapply(d, nrow, integer(1)))
+      i <- rep(params$at[seq_along(d)], vapply(d, nrow, integer(1)))
       d <- do.call(rbind, d)
 
-      if (params$alpha) {
+      if (!is.null(params$colour)) {
+        if (!is.null(d$colour)) d$colour <- tween_at(params$colour, d$colour, i, params$falloff)
+        if (!is.null(d$edge_colour)) d$edge_colour <- tween_at(params$colour, d$edge_colour, i, params$falloff)
+      }
+      if (!is.null(params$fill)) {
+        if (!is.null(d$fill)) d$colour <- tween_at(params$fill, d$fill, i, params$falloff)
+        if (!is.null(d$edge_fill)) d$edge_fill <- tween_at(params$fill, d$edge_fill, i, params$falloff)
+      }
+      if (!is.null(params$alpha)) {
         if (!is.null(d$edge_alpha)) {
           no_alpha <- is.na(d$edge_alpha)
-          d$edge_alpha[!no_alpha] <- d$edge_alpha[!no_alpha] * i
+          d$edge_alpha[!no_alpha] <- tween_at(params$alpha, d$edge_alpha[!no_alpha], i, params$falloff)
         } else if (!is.null(d$alpha)) {
           no_alpha <- is.na(d$alpha)
-          d$alpha[!no_alpha] <- d$alpha[!no_alpha] * i
+          d$alpha[!no_alpha] <- tween_at(params$alpha, d$alpha[!no_alpha], i, params$falloff)
         } else {
           no_alpha <- TRUE
         }
-        if (!is.null(d$colour)) d$colour[no_alpha] <- mod_alpha(d$colour[no_alpha], i)
-        if (!is.null(d$fill)) d$fill[no_alpha] <- mod_alpha(d$fill[no_alpha], i)
-        if (!is.null(d$edge_colour)) d$edge_colour[no_alpha] <- mod_alpha(d$edge_colour[no_alpha], i)
-        if (!is.null(d$edge_fill)) d$edge_fill[no_alpha] <- mod_alpha(d$edge_fill[no_alpha], i)
+        if (!is.null(d$colour)) d$colour[no_alpha] <- mod_alpha(d$colour[no_alpha], i, params$alpha, params$falloff)
+        if (!is.null(d$fill)) d$fill[no_alpha] <- mod_alpha(d$fill[no_alpha], i, params$alpha, params$falloff)
+        if (!is.null(d$edge_colour)) d$edge_colour[no_alpha] <- mod_alpha(d$edge_colour[no_alpha], i, params$alpha, params$falloff)
+        if (!is.null(d$edge_fill)) d$edge_fill[no_alpha] <- mod_alpha(d$edge_fill[no_alpha], i, params$alpha, params$falloff)
       }
-      if (params$size) {
-        if (!is.null(d$size)) d$size <- d$size * i
-        if (!is.null(d$edge_size)) d$edge_size <- d$edge_size * i
-        if (!is.null(d$edge_width)) d$edge_width <- d$edge_width * i
-        if (!is.null(d$stroke)) d$stroke <- d$stroke * i
+      if (!is.null(params$size)) {
+        if (!is.null(d$size)) d$size <- tween_at(params$size, d$size, i, params$falloff)
+        if (!is.null(d$edge_size)) d$edge_size <- tween_at(params$size, d$edge_size, i, params$falloff)
+        if (!is.null(d$edge_width)) d$edge_width <- tween_at(params$size, d$edge_width, i, params$falloff)
+        if (!is.null(d$stroke)) d$stroke <- tween_at(params$size, d$stroke, i, params$falloff)
       }
       d
     })
@@ -115,7 +132,7 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
 
 #' @importFrom scales alpha
 #' @importFrom grDevices col2rgb
-mod_alpha <- function(col, i) {
-  alpha_mod <- col2rgb(col, TRUE)[4,] * i / 255
-  alpha(col, alpha_mod)
+mod_alpha <- function(col, i, end, ease) {
+  alpha <- col2rgb(col, TRUE)[4,] / 255
+  alpha(col, tween_at(end, alpha, i, ease))
 }

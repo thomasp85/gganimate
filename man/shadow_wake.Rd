@@ -4,17 +4,22 @@
 \alias{shadow_wake}
 \title{Show preceding frames with gradual falloff}
 \usage{
-shadow_wake(wake_length, size = TRUE, alpha = TRUE,
-  falloff = "cubic-in", wrap = TRUE, exclude_layer = NULL,
-  exclude_phase = c("enter", "exit"))
+shadow_wake(wake_length, size = TRUE, alpha = TRUE, colour = NULL,
+  fill = NULL, falloff = "cubic-in", wrap = TRUE,
+  exclude_layer = NULL, exclude_phase = c("enter", "exit"))
 }
 \arguments{
 \item{wake_length}{A number between 0 and 1 giving the length of the wake,
 in relation to the total number of frames.}
 
-\item{size}{Boolean indicating whether the size of the geom should shrink}
+\item{size}{Numeric indicating the size the wake should end on. If \code{NULL}
+then size is not modified. Can also be a boolean with \code{TRUE} beeing equal \code{0}
+and \code{FALSE} beeing equal to \code{NULL}}
 
-\item{alpha}{Boolean indicating whether geoms should get more translucent}
+\item{alpha}{as \code{size} but for alpha modification of the wake}
+
+\item{colour, fill}{colour or fill the wake should end on. If \code{NULL} they are
+not modified.}
 
 \item{falloff}{An easing function that control how size and/or alpha should
 change.}
