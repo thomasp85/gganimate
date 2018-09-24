@@ -18,6 +18,12 @@
 #' @param overwrite Logical. If TRUE, existing files will be overwritten.
 #' @param width,height Dimensions of the animation in pixels. If `NULL` will
 #' take the dimensions from the frame, otherwise it will rescale it.
+#' @param vfilter A string defining an ffmpeg filter graph. This is the same
+#' parameter as the `-vf` argument in the `ffmpeg` command line utility.
+#' @param codec The name of the video codec. The default is `libx264` for most
+#' formats, which usually the best choice. See the `av` documentation for more
+#' information.
+#' @param audio An optional file with sounds to add to the video
 #' @param format The video format to encode the animation into
 #' @param ffmpeg The location of the `ffmpeg` executable. If `NULL` it will be
 #' assumed to be on the search path
@@ -69,6 +75,20 @@ file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) 
     new_names <- file.path(dir, sub('gganim_plot', prefix, basename(frames)))
     file.copy(frames, new_names, overwrite = overwrite)
     invisible(new_names)
+  }
+}
+#' @rdname renderers
+#' @export
+av_renderer <- function(file = tempfile(fileext = '.mp4'), vfilter = "null", codec = NULL, audio = NULL) {
+  if (!requireNamespace('av', quietly = TRUE)) {
+    stop('The av package is required to use this renderer', call. = FALSE)
+  }
+  function(frames, fps) {
+    progress <- !isTRUE(getOption("knitr.in.progress"))
+    av::av_encode_video(input = frames, output = file, framerate = fps,
+                        vfilter = vfilter, codec = codec, audio = audio,
+                        verbose = progress)
+    video_file(file)
   }
 }
 #' @rdname renderers

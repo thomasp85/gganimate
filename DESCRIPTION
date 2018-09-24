@@ -26,7 +26,8 @@ Suggests: magick,
     base64enc,
     htmltools,
     covr,
-    transformr
+    transformr,
+    av
 RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate

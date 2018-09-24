@@ -4,6 +4,7 @@
 \alias{renderers}
 \alias{gifski_renderer}
 \alias{file_renderer}
+\alias{av_renderer}
 \alias{ffmpeg_renderer}
 \alias{magick_renderer}
 \alias{sprite_renderer}
@@ -13,6 +14,9 @@ gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
   width = NULL, height = NULL)
 
 file_renderer(dir = "~", prefix = "gganim_plot", overwrite = FALSE)
+
+av_renderer(file = tempfile(fileext = ".mp4"), vfilter = "null",
+  codec = NULL, audio = NULL)
 
 ffmpeg_renderer(format = "mp4", ffmpeg = NULL, options = list(pix_fmt
   = "yuv420p"))
@@ -34,6 +38,15 @@ take the dimensions from the frame, otherwise it will rescale it.}
 \item{prefix}{The filename prefix to use for the image files}
 
 \item{overwrite}{Logical. If TRUE, existing files will be overwritten.}
+
+\item{vfilter}{A string defining an ffmpeg filter graph. This is the same
+parameter as the \code{-vf} argument in the \code{ffmpeg} command line utility.}
+
+\item{codec}{The name of the video codec. The default is \code{libx264} for most
+formats, which usually the best choice. See the \code{av} documentation for more
+information.}
+
+\item{audio}{An optional file with sounds to add to the video}
 
 \item{format}{The video format to encode the animation into}
 
