@@ -40,6 +40,7 @@
 #' The return type of the different returned renderers are:
 #' - **`gifski_renderer`**: Returns a [gif_image] object
 #' - **`file_renderer`**: Returns a vector of file paths
+#' - **`av_renderer`**: Returns a [video_file] object
 #' - **`ffmpeg_renderer`**: Returns a [video_file] object
 #' - **`magick_renderer`**: Returns a `magick-image` object
 #'

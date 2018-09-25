@@ -68,6 +68,7 @@ The return type of the different returned renderers are:
 \itemize{
 \item \strong{\code{gifski_renderer}}: Returns a \link{gif_image} object
 \item \strong{\code{file_renderer}}: Returns a vector of file paths
+\item \strong{\code{av_renderer}}: Returns a \link{video_file} object
 \item \strong{\code{ffmpeg_renderer}}: Returns a \link{video_file} object
 \item \strong{\code{magick_renderer}}: Returns a \code{magick-image} object
 }
