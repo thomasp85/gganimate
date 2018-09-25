@@ -32,7 +32,7 @@ RoxygenNote: 6.1.0
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues
-Remotes: thomasp85/tweenr
+Remotes: thomasp85/tweenr,
     ropensci/av
 Imports: stringi,
     tweenr,
