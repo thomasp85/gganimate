@@ -11,7 +11,7 @@
 #' recycled to match the number of states in the data
 #' @param filter_length The relative length of the pause at the states. Will be
 #' recycled to match the number of states in the data
-#' @param ... A number of expression to be evaluated in the context of the layer
+#' @param ... A number of expressions to be evaluated in the context of the layer
 #' data, returning a logical vector. If the expressions are named, the name will
 #' be available as a frame variable.
 #' @param wrap Should the animation *wrap-around*? If `TRUE` the last filter will
