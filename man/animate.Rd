@@ -46,7 +46,7 @@ The return value of the \code{renderer} function
 This function takes a gganim object and renders it into an animation. The
 nature of the animation is dependent on the renderer, but defaults to using
 \code{magick} to render it to a gif. The length and framerate is decided on render
-time and can be any two combination of \code{nframes}, \code{fps}, and \code{length}.
+time and can be any two combination of \code{nframes}, \code{fps}, and \code{duration}.
 Rendering is happening in discrete time units. This means that any event in
 the animation is rounded of to the nearest frame (e.g. entering will always
 take a whole number of frames). This means that rounding artifacts are
