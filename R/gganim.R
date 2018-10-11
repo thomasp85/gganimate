@@ -39,7 +39,6 @@ knit_print.gganim <- function(x, options, ...) {
 }
 get_knitr_options <- function(options) {
   opt <- options$gganimate
-  opt$fps <- opt$fps %||% if (!is.null(options$interval)) 1/options$interval else NULL
   opt$device <- opt$device %||% options$dev
   if (is.null(opt$width) || is.null(opt$height)) {
     opt$width <- options$fig.width
