@@ -102,8 +102,9 @@ TransitionFilter <- ggproto('TransitionFilter', Transition,
     if (is.null(row_vars)) return(data)
     data$group <- paste0(row_vars$before, row_vars$after)
     if (length(unique(eval_tidy(id, data))) == 1 && type %in% c('point', 'sf')) {
-      data$.id_temp <- seq_len(nrow(data))
-      id <- quo(.id_temp)
+      data$.temp_id <- seq_len(nrow(data))
+      id <- quo(.temp_id)
+      ease <- c(ease, 'linear')
     }
     filter <- strsplit(row_vars$filter, '-')
     row <- rep(seq_along(filter), lengths(filter))

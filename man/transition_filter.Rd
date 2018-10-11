@@ -14,7 +14,7 @@ recycled to match the number of states in the data}
 \item{filter_length}{The relative length of the pause at the states. Will be
 recycled to match the number of states in the data}
 
-\item{...}{A number of expression to be evaluated in the context of the layer
+\item{...}{A number of expressions to be evaluated in the context of the layer
 data, returning a logical vector. If the expressions are named, the name will
 be available as a frame variable.}
 
