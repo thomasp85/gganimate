@@ -1,0 +1,32 @@
+reference:
+- title: Animation
+  contents:
+  - animate
+  - ease_aes
+- title: Transitions
+  desc: Define how the data should be spread out and how it relates to itself across time.
+  contents:
+  - starts_with("transition_")
+- title: Enter and Exit
+  desc: >
+    Defines how new data should appear and how old data should disappear
+    during the course of the animation.
+  contents:
+  - starts_with("enter_")
+  - starts_with("exit_")
+- title: Shadows
+  desc: Define how data from other points in time should be presented in the given point in time.
+  contents:
+  - starts_with("shadow_")
+- title: Views
+  desc: Define how the positional scales should change along the animation
+  contents:
+  - starts_with("view_")
+- title: Renderers
+  contents:
+  - ends_with("_renderer")
+- title: Utilites
+  contents:
+  - anim_save
+  - frame_vars
+  - split_animation
