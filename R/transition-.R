@@ -48,15 +48,16 @@ Transition <- ggproto('Transition', NULL,
       groups <- paste0(split_panel[, 2], split_panel[, 4])
       groups_int <- suppressWarnings(as.integer(groups))
       d$group <- if (anyNA(groups_int)) groups else groups_int
-      d$.frame <- split_panel[, 3]
+      d$PANEL <- paste0(d$PANEL, split_panel[, 3])
       d
     })
   },
   remap_frames = function(self, data, params) {
     lapply(data, function(d) {
-      if (is.null(d$.frame)) return(d)
-      d$group <- paste0(d$group, d$.frame)
-      d$.frame <- NULL
+      split_panel <- stri_match(d$PANEL, regex = '^(.*)(<.*>)(.*)$')
+      if (is.na(split_panel[1])) return(d)
+      d$PANEL <- as.integer(split_panel[, 2])
+      d$group <- paste0(d$group, split_panel[, 3])
       d
     })
   },
@@ -64,8 +65,7 @@ Transition <- ggproto('Transition', NULL,
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.+)<(.*)>(.*)$')
       if (is.na(split_panel[1])) return(list(d))
-      d$group <- paste0(split_panel[, 2], split_panel[, 4])
-      d$group <- match(d$group, sort(unique(d$group)))
+      d$group <- match(d$group, unique(d$group))
       empty_d <- d[0, , drop = FALSE]
       d <- split(d, as.integer(split_panel[, 3]))
       frames <- rep(list(empty_d), params$nframes)
