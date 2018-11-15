@@ -27,11 +27,19 @@ ggplot_build.gganim <- function(plot) {
     out
   }
 
+  # Allow all layers to make any final adjustments based
+  # on raw input data and plot info
+  data <- layer_data
+  if (packageVersion("ggplot2") > "3.1.0") {
+    # ggplot2 versions 3.1.0 or earlier do not support `setup_layer()`
+    data <- by_layer(function(l, d) l$setup_layer(d, plot))
+  }
+
   # Initialise panels, add extra data for margins & missing faceting
   # variables, and add on a PANEL variable to data
 
   layout <- create_layout(plot$facet, plot$coordinates)
-  data <- layout$setup(layer_data, plot$data, plot$plot_env)
+  data <- layout$setup(data, plot$data, plot$plot_env)
   scene$setup(data)
   # Compute aesthetics to produce data with generalised variable names
   data <- by_layer(function(l, d) l$compute_aesthetics(d, plot))
