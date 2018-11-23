@@ -28,7 +28,7 @@ Suggests: magick,
     covr,
     transformr,
     av
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues

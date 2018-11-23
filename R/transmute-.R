@@ -9,7 +9,10 @@
 #'
 #' @param early Should the data appear in the beginning of the transition or in
 #' the end
-#' @param fade Should the elements fade in/out in addition to the effect
+#' @param alpha The start/end transparency. `alpha = NA` does not modify the
+#' alpha values
+#' @param size The proportional start/end size. `0` means complete shrinking
+#' while `1` means no shrinking
 #' @param default A default transformation to use
 #' @param ... Additional specific transformations either named by the geom
 #' (e.g. `bar`, or by its position in the layer stack, e.g. `"2"`)

@@ -19,17 +19,17 @@ enter_manual(default, ...)
 
 enter_appear(early = FALSE, ...)
 
-enter_fade(...)
+enter_fade(..., alpha = 0)
 
-enter_grow(fade = FALSE, ...)
+enter_grow(..., size = 0, alpha = NA)
 
 exit_manual(default, ...)
 
 exit_disappear(early = FALSE, ...)
 
-exit_fade(...)
+exit_fade(..., alpha = 0)
 
-exit_shrink(fade = FALSE, ...)
+exit_shrink(..., size = 0, alpha = NA)
 }
 \arguments{
 \item{default}{A default transformation to use}
@@ -40,7 +40,11 @@ exit_shrink(fade = FALSE, ...)
 \item{early}{Should the data appear in the beginning of the transition or in
 the end}
 
-\item{fade}{Should the elements fade in/out in addition to the effect}
+\item{alpha}{The start/end transparency. \code{alpha = NA} does not modify the
+alpha values}
+
+\item{size}{The proportional start/end size. \code{0} means complete shrinking
+while \code{1} means no shrinking}
 }
 \description{
 The purpose of \code{enter_*()} and \code{exit_*()} is to control what happens with
