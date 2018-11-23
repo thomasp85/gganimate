@@ -1,4 +1,5 @@
 #' @importFrom ggplot2 ggplot_build geom_blank waiver
+#' @importFrom utils packageVersion
 #' @export
 ggplot_build.gganim <- function(plot) {
   plot <- plot_clone(plot)
