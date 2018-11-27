@@ -22,6 +22,32 @@
 #' @param ... Additional specific transformations either named by the geom
 #' (e.g. `bar`, or by its position in the layer stack, e.g. `"2"`)
 #'
+#' @section User-defined transformations:
+#' All enter/exit functions allows the user to add additional transformation
+#' functions targeting specific layers. If the functions are named, then the
+#' name is understood to reference the class of geoms it applies to. If the
+#' functions are unnamed or numbered they will apply to the layer with a
+#' matching index in the stack. Named and indexed transformations cannot be
+#' mixed.
+#'
+#' All modifications except `enter_manual()`/`exit_manual()` sets a range of
+#' modifications already, but further can be added with the `...`. For the
+#' manual versions a `default` transformation can be set which will apply to all
+#' layers that does not match any of the other given transformations. Often a
+#' single default transformation is enough and no specific transformations are
+#' needed.
+#'
+#' Transformation can be given as any expression that can be converted with
+#' [rlang::as_function()]. This means that `purrr` style lambda functions are
+#' allowed in addition to anonymous functions etc. Transformation functions must
+#' accept a data.frame and return a data.frame of the same dimensions. The
+#' function will be called with the entering/exiting layer data, except for the
+#' case of polygon- and path-like layers in which case the function recieves the
+#' entering/exiting polygon/path data one by one. A special option is to set a
+#' transformation as `NULL` instead of a function. In that case the entering and
+#' exiting data will simply appear/disappear when it is no longer part of a
+#' frame.
+#'
 #' @section Modification composition:
 #' Enter and exit modifications are composable so that multiple different ones
 #' can be added to an animation and will be applied in turn. You can also

@@ -93,6 +93,34 @@ setting the opacity to 0 or be moving the element off-screen. It is possible
 to define your own transformations, or rely on some of the build in
 \emph{effects}.
 }
+\section{User-defined transformations}{
+
+All enter/exit functions allows the user to add additional transformation
+functions targeting specific layers. If the functions are named, then the
+name is understood to reference the class of geoms it applies to. If the
+functions are unnamed or numbered they will apply to the layer with a
+matching index in the stack. Named and indexed transformations cannot be
+mixed.
+
+All modifications except \code{enter_manual()}/\code{exit_manual()} sets a range of
+modifications already, but further can be added with the \code{...}. For the
+manual versions a \code{default} transformation can be set which will apply to all
+layers that does not match any of the other given transformations. Often a
+single default transformation is enough and no specific transformations are
+needed.
+
+Transformation can be given as any expression that can be converted with
+\code{\link[rlang:as_function]{rlang::as_function()}}. This means that \code{purrr} style lambda functions are
+allowed in addition to anonymous functions etc. Transformation functions must
+accept a data.frame and return a data.frame of the same dimensions. The
+function will be called with the entering/exiting layer data, except for the
+case of polygon- and path-like layers in which case the function recieves the
+entering/exiting polygon/path data one by one. A special option is to set a
+transformation as \code{NULL} instead of a function. In that case the entering and
+exiting data will simply appear/disappear when it is no longer part of a
+frame.
+}
+
 \section{Modification composition}{
 
 Enter and exit modifications are composable so that multiple different ones
