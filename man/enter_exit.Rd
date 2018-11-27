@@ -13,6 +13,7 @@
 \alias{enter_recolor}
 \alias{enter_fly}
 \alias{enter_drift}
+\alias{enter_reset}
 \alias{exit_manual}
 \alias{exit_disappear}
 \alias{exit_fade}
@@ -21,6 +22,7 @@
 \alias{exit_recolor}
 \alias{exit_fly}
 \alias{exit_drift}
+\alias{exit_reset}
 \title{Define how entering and exiting data behaves}
 \usage{
 enter_manual(default, ..., name = "manual")
@@ -39,6 +41,8 @@ enter_fly(..., x_loc = NA, y_loc = NA)
 
 enter_drift(..., x_mod = 0, y_mod = 0)
 
+enter_reset()
+
 exit_manual(default, ..., name = "manual")
 
 exit_disappear(early = FALSE, ...)
@@ -54,12 +58,17 @@ exit_recolor(..., color = "white", fill = color)
 exit_fly(..., x_loc = NA, y_loc = NA)
 
 exit_drift(..., x_mod = 0, y_mod = 0)
+
+exit_reset()
 }
 \arguments{
 \item{default}{A default transformation to use}
 
 \item{...}{Additional specific transformations either named by the geom
 (e.g. \code{bar}, or by its position in the layer stack, e.g. \code{"2"})}
+
+\item{name}{A name for the manual modification (only used when printing the
+object)}
 
 \item{early}{Should the data appear in the beginning of the transition or in
 the end}
@@ -84,18 +93,27 @@ setting the opacity to 0 or be moving the element off-screen. It is possible
 to define your own transformations, or rely on some of the build in
 \emph{effects}.
 }
-\details{
+\section{Modification composition}{
+
 Enter and exit modifications are composable so that multiple different ones
 can be added to an animation and will be applied in turn. You can also
 combine multiples and save them as a new enter or exit modification using
 \code{c()}.
 
-For layers that are tweened based on the raw data, only the specified
-aesthetics are available to modify, while all possible variables are
-available for late-tweening layers
+Due to the composable nature of enter and exit modifications it is not
+possible to overwrite a prior modification by adding a new. If it is needed
+to start from scratch then the sentinels \code{enter_reset()} and \code{exit_reset()}
+are provided which clears all prior modifications.
+}
 
-\strong{appear}/\strong{disappear} will simply make elements appear/disappear at either the
-start or end of the transition.
+\section{Modification types}{
+
+A range of modification types are provided by \code{gganimate} and using
+\code{enter_manual()}/\code{exit_manual()} or modification composition it is possible
+to create your own.
+
+\strong{appear}/\strong{disappear} will simply make elements appear/disappear at either
+the start or end of the transition. The default if nothing else is added.
 
 \strong{fade} will simply set the alpha value to zero making the elements fade
 in/out during the transition.
@@ -119,3 +137,4 @@ by a specified amount, e.g. setting \code{x_mod = -5} will let all elements ente
 from/exit to the left with a terminal position 5 points to the left of the
 real position.
 }
+

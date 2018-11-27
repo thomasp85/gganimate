@@ -17,6 +17,8 @@
 #' @param size The proportional start/end size. `0` means complete shrinking
 #' while `1` means no shrinking
 #' @param default A default transformation to use
+#' @param name A name for the manual modification (only used when printing the
+#' object)
 #' @param ... Additional specific transformations either named by the geom
 #' (e.g. `bar`, or by its position in the layer stack, e.g. `"2"`)
 #'
