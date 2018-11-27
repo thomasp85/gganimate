@@ -1,6 +1,6 @@
 #' @rdname enter_exit
 #' @export
-enter_manual <- function(default, ..., name = 'manual') {
+enter_manual <- function(default = NULL, ..., name = 'manual') {
   create_factory('enter', default, ..., name = name)
 }
 #' @rdname enter_exit

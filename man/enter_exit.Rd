@@ -25,7 +25,7 @@
 \alias{exit_reset}
 \title{Define how entering and exiting data behaves}
 \usage{
-enter_manual(default, ..., name = "manual")
+enter_manual(default = NULL, ..., name = "manual")
 
 enter_appear(early = FALSE, ...)
 
@@ -43,7 +43,7 @@ enter_drift(..., x_mod = 0, y_mod = 0)
 
 enter_reset()
 
-exit_manual(default, ..., name = "manual")
+exit_manual(default = NULL, ..., name = "manual")
 
 exit_disappear(early = FALSE, ...)
 
