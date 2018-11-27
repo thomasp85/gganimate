@@ -9,21 +9,35 @@
 #'
 #' @param early Should the data appear in the beginning of the transition or in
 #' the end
-#' @param alpha The start/end transparency. `alpha = NA` does not modify the
-#' alpha values
+#' @param alpha The start/end transparency.
+#' @param colour,color,fill The start/end colour and fill the elements should
+#' (dis)appear into
+#' @param x_loc,y_loc Start and end positions of the graphic elements
+#' @param x_mod,y_mod Modification to add to the entering or exiting data
 #' @param size The proportional start/end size. `0` means complete shrinking
 #' while `1` means no shrinking
 #' @param default A default transformation to use
 #' @param ... Additional specific transformations either named by the geom
 #' (e.g. `bar`, or by its position in the layer stack, e.g. `"2"`)
 #'
-#' @details
-#' For layers that are tweened based on the raw data, only the specified
-#' aesthetics are available to modify, while all possible variables are
-#' available for late-tweening layers
+#' @section Modification composition:
+#' Enter and exit modifications are composable so that multiple different ones
+#' can be added to an animation and will be applied in turn. You can also
+#' combine multiples and save them as a new enter or exit modification using
+#' `c()`.
 #'
-#' **appear**/**disappear** will simply make elements appear/disappear at either the
-#' start or end of the transition.
+#' Due to the composable nature of enter and exit modifications it is not
+#' possible to overwrite a prior modification by adding a new. If it is needed
+#' to start from scratch then the sentinels `enter_reset()` and `exit_reset()`
+#' are provided which clears all prior modifications.
+#'
+#' @section Modification types:
+#' A range of modification types are provided by `gganimate` and using
+#' `enter_manual()`/`exit_manual()` or modification composition it is possible
+#' to create your own.
+#'
+#' **appear**/**disappear** will simply make elements appear/disappear at either
+#' the start or end of the transition. The default if nothing else is added.
 #'
 #' **fade** will simply set the alpha value to zero making the elements fade
 #' in/out during the transition.
@@ -33,6 +47,20 @@
 #' e.g. polygons/paths will have all their points set to the mean, while points
 #' will have size/stroke set to zero.
 #'
+#' **recolour**/**recolor** will change the colour and/or fill of the elements
+#' making them gradually change from the defined colour and into their try
+#' colour. Be aware that unless the colour and fill are set to the same as the
+#' background colour of the plot this modification needs to be combined with
+#' others to ensure that elements does not abruptly appear.
+#'
+#' **fly** will set a specific x and y position where all elements will enter
+#' from/ exit to, irrespectible of their real position.
+#'
+#' **drift** will modify the real position of the entering and exiting elements
+#' by a specified amount, e.g. setting `x_mod = -5` will let all elements enter
+#' from/exit to the left with a terminal position 5 points to the left of the
+#' real position.
+#'
 #' @name enter_exit
 #' @rdname enter_exit
 #' @aliases enter exit
@@ -40,40 +68,83 @@
 NULL
 
 #' @importFrom ggplot2 ggproto
-create_factory <- function(type, default, ...) {
+create_factory <- function(type, default, ..., name = 'manual') {
   fac_class <- switch(type, enter = 'EnterFactory', exit = 'ExitFactory')
   factories <- prepare_factories(default, ...)
   ggproto(fac_class, TransmuteFactory,
-    default = factories$default,
-    positions = factories$positions,
-    classes = factories$classes
+    factory_layer = list(list(
+      default = factories$default,
+      positions = factories$positions,
+      classes = factories$classes
+    )),
+    name = name
   )
 }
-
+create_resetter <- function(type) {
+  fac_class <- switch(type, enter = 'EnterFactory', exit = 'ExitFactory')
+  ggproto(fac_class, TransmuteFactory, reset = TRUE)
+}
 #' @importFrom ggplot2 ggproto
 TransmuteFactory <- ggproto('TransmuteFactory', NULL,
-  default = NULL,
-  positions = list(),
-  classes = list(),
-  get_factories = function(self, layers) {
-    if (length(self$positions) != 0) {
-      factories <- rep(list(self$default), length(layers))
-      factories[as.integer(names(self$positions))] <- self$positions
-    } else if (length(self$classes) != 0) {
-      lapply(layers, function(l) {
-        best <- inherits(l$geom, names(self$classes), which = TRUE)
-        if (all(best == 0)) {
-          self$default
-        } else {
-          best <- which(best != 0 & best == min(best[best != 0]))
-          self$classes[[best[1]]]
-        }
-      })
+  factory_layer = list(),
+  name = '',
+  reset = FALSE,
+  print = function(self, ...) {
+    cat('<', class(self)[1], if (self$reset) ' (Resetter)' else '', '>\n', sep = '')
+    if (!self$reset) cat(' Stages: ', paste(self$name, collapse = ', '), '\n', sep = '')
+    invisible(self)
+  },
+  add_factory = function(self, x) {
+    if (!self$inherit(x)) stop("Can only combine factories of same class", call. = FALSE)
+    if (x$reset) {
+      self$factory_layer <- list()
+      self$name <- character()
+      self$reset <- TRUE
     } else {
-      rep(list(self$default), length(layers))
+      self$factory_layer <- c(self$factory_layer, x$factory_layer)
+      self$name <- c(self$name, x$name)
+      self$reset <- FALSE
     }
+    invisible(self)
+  },
+  inherit = function(self, x) {
+    inherits(x, class(self)[1])
+  },
+  get_factories = function(self, layers) {
+    f_layers <- lapply(self$factory_layer, function(f_layer) {
+      if (length(f_layer$positions) != 0) {
+        factories <- rep(list(f_layer$default), length(layers))
+        factories[as.integer(names(f_layer$positions))] <- f_layer$positions
+      } else if (length(f_layer$classes) != 0) {
+        lapply(layers, function(l) {
+          best <- inherits(l$geom, names(f_layer$classes), which = TRUE)
+          if (all(best == 0)) {
+            f_layer$default
+          } else {
+            best <- which(best != 0 & best == min(best[best != 0]))
+            f_layer$classes[[best[1]]]
+          }
+        })
+      } else {
+        rep(list(f_layer$default), length(layers))
+      }
+    })
+    lapply(seq_along(layers), function(i) {
+      factory_line <- lapply(f_layers, `[[`, i)
+      if (any(vapply(factory_line, is.null, logical(1)))) return(NULL)
+      function(x) {
+        for (i in seq_along(factory_line)) {
+          x <- factory_line[[i]](x)
+        }
+        x
+      }
+    })
   }
 )
+#' @export
+c.TransmuteFactory <- function(...) {
+  Reduce(function(l, r) l$add_factory(r), list(...))
+}
 #' @export
 #' @importFrom ggplot2 ggplot_add
 ggplot_add.EnterFactory <- function(object, plot, object_name) {

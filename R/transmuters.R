@@ -7,10 +7,22 @@ TransmuterList <- ggproto('TransmuterList', NULL,
   enter_factories = list(),
   exit_factories = list(),
   add_enter = function(self, enter) {
-    self$enter <- enter
+    if (enter$reset) {
+      self$enter <- NULL
+    } else if (is.null(self$enter)) {
+      self$enter <- enter
+    } else {
+      self$enter$add_factory(enter)
+    }
   },
   add_exit = function(self, exit) {
-    self$exit <- exit
+    if (exit$reset) {
+      self$exit <- NULL
+    } else if (is.null(self$exit)) {
+      self$exit <- exit
+    } else {
+      self$exit$add_factory(exit)
+    }
   },
   setup = function(self, layers) {
     if (is.null(self$enter)) self$enter <- enter_appear()
@@ -31,21 +43,39 @@ TransmuterList <- ggproto('TransmuterList', NULL,
   }
 )
 
-transmute_appear <- function(type, early = FALSE, ...) {
+transmute_appear <- function(type, ..., early = FALSE, name) {
   f <- if (early) {
     function(x) x
   } else {
     NULL
   }
-  create_factory(type, default = f, ...)
+  create_factory(type, default = f, ..., name = name)
 }
 #' @importFrom scales alpha
-transmute_fade <- function(type, ..., alpha = 0) {
-  create_factory(type, default = fade_elements(alpha), ...)
+transmute_fade <- function(type, ..., alpha = 0, name) {
+  create_factory(
+    type,
+    default = function(x) {
+      if (!is.null(x$edge_alpha)) {
+        no_alpha <- is.na(x$edge_alpha)
+        x$edge_alpha[!no_alpha] <- alpha
+      } else if (!is.null(x$alpha)) {
+        no_alpha <- is.na(x$alpha)
+        x$alpha[!no_alpha] <- alpha
+      } else {
+        no_alpha <- TRUE
+      }
+      if (!is.null(x$colour)) x$colour[no_alpha] <- alpha(x$colour[no_alpha], alpha)
+      if (!is.null(x$fill)) x$fill[no_alpha] <- alpha(x$fill[no_alpha], alpha)
+      if (!is.null(x$edge_colour)) x$edge_colour[no_alpha] <- alpha(x$edge_colour[no_alpha], alpha)
+      if (!is.null(x$edge_fill)) x$edge_fill[no_alpha] <- alpha(x$edge_fill[no_alpha], alpha)
+      x
+    },
+    ...,
+    name = name
+  )
 }
-transmute_grow <- function(type, ..., size = 0, alpha = NA) {
-  fade <- !is.na(alpha)
-  fader <- if (fade) fade_elements(alpha)
+transmute_grow <- function(type, ..., size = 0, name) {
   create_factory(
     type,
     default = function(x) {
@@ -54,51 +84,11 @@ transmute_grow <- function(type, ..., size = 0, alpha = NA) {
       if (!is.null(x$stroke)) x$stroke <- size * x$stroke
       if (!is.null(x$edge_size)) x$edge_size <- size * x$edge_size
       if (!is.null(x$edge_width)) x$edge_width <- size * x$edge_width
-      if (fade) x <- fader(x)
       x
     },
-    polygon = function(x) {
-      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
-      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
-      group <- match(x$group, names(mean_x))
-      if (size == 0) {
-        x$x <- mean_x[group]
-        x$y <- mean_y[group]
-      } else {
-        x$x <- tween_at(mean_x[group], x$x, size, 'linear')
-        x$y <- tween_at(mean_y[group], x$y, size, 'linear')
-      }
-      if (fade) x <- fader(x)
-      x
-    },
-    violin = function(x) {
-      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
-      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
-      group <- match(x$group, names(mean_x))
-      if (size == 0) {
-        x$x <- mean_x[group]
-        x$y <- mean_y[group]
-      } else {
-        x$x <- tween_at(mean_x[group], x$x, size, 'linear')
-        x$y <- tween_at(mean_y[group], x$y, size, 'linear')
-      }
-      if (fade) x <- fader(x)
-      x
-    },
-    path = function(x) {
-      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
-      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
-      group <- match(x$group, names(mean_x))
-      if (size == 0) {
-        x$x <- mean_x[group]
-        x$y <- mean_y[group]
-      } else {
-        x$x <- tween_at(mean_x[group], x$x, size, 'linear')
-        x$y <- tween_at(mean_y[group], x$y, size, 'linear')
-      }
-      if (fade) x <- fader(x)
-      x
-    },
+    polygon = shrink_multielement(size),
+    violin = shrink_multielement(size),
+    path = shrink_multielement(size),
     boxplot = function(x) {
       if (size == 0) {
         x$ymin <- x$middle
@@ -115,33 +105,99 @@ transmute_grow <- function(type, ..., size = 0, alpha = NA) {
         x$upper <- tween_at(x$middle, x$upper, size, 'linear')
         x$ymax <- tween_at(x$middle, x$ymax, size, 'linear')
       }
-      if (fade) x <- fader(x)
       x
     },
     bar = function(x) {
       x$y <- x$y * size
-      if (fade) x <- fader(x)
+      x$ymax <- x$ymax * size
       x
     },
-    ...
+    ...,
+    name = name
+  )
+}
+transmute_recolour <- function(type, ..., colour = 'white', fill = colour, name) {
+  create_factory(
+    type,
+    default = function(x) {
+      if (!is.na(colour) && !is.null(x$colour)) x$colour <- colour
+      if (!is.na(fill) && !is.null(x$fill)) x$fill <- fill
+      if (!is.na(colour) && !is.null(x$edge_colour)) x$edge_colour <- colour
+      if (!is.na(fill) && !is.null(x$edge_fill)) x$edge_fill <- fill
+    },
+    ...,
+    name = name
+  )
+}
+transmute_fly <- function(type, ..., x_loc = NA, y_loc = NA, name) {
+  if (is.na(x_loc) && is.na(y_loc)) warning('Both x_loc and y_loc are `NA`. No position change will occur.', call. = FALSE)
+  create_factory(
+    type,
+    default = function(x) {
+      if (!is.na(x_loc)) {
+        included_x <- intersect(x_aes, names(x))
+        x[, included_x] <- x[, included_x] - x[, 'x'] + x_loc
+      }
+      if (!is.na(y_loc)) {
+        included_y <- intersect(y_aes, names(x))
+        x[, included_y] <- x[, included_y] - x[, 'y'] + y_loc
+      }
+      x
+    },
+    polygon = move_multielement(x_loc, y_loc),
+    violin = move_multielement(x_loc, y_loc),
+    path = move_multielement(x_loc, y_loc),
+    ...,
+    name = name
+  )
+}
+transmute_drift <- function(type, ..., x_mod = 0, y_mod = 0, name) {
+  if (x_mod == 0 && y_mod == 0) warning('Both x_mod and y_mod are 0. No position change will occur.', call. = FALSE)
+  create_factory(
+    type,
+    default = function(x) {
+      included_x <- intersect(x_aes, names(x))
+      x[, included_x] <- x[, included_x] + x_mod
+      included_y <- intersect(y_aes, names(x))
+      x[, included_y] <- x[, included_y] + y_mod
+      x
+    },
+    ...,
+    name = name
   )
 }
 
-fade_elements <- function(alpha = 0) {
+
+# HELPERS -----------------------------------------------------------------
+
+
+shrink_multielement <- function(size = 0) {
   function(x) {
-    if (!is.null(x$edge_alpha)) {
-      no_alpha <- is.na(x$edge_alpha)
-      x$edge_alpha[!no_alpha] <- alpha
-    } else if (!is.null(x$alpha)) {
-      no_alpha <- is.na(x$alpha)
-      x$alpha[!no_alpha] <- alpha
+    mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
+    mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
+    group <- match(x$group, names(mean_x))
+    if (size == 0) {
+      x$x <- mean_x[group]
+      x$y <- mean_y[group]
     } else {
-      no_alpha <- TRUE
+      x$x <- tween_at(mean_x[group], x$x, size, 'linear')
+      x$y <- tween_at(mean_y[group], x$y, size, 'linear')
     }
-    if (!is.null(x$colour)) x$colour[no_alpha] <- alpha(x$colour[no_alpha], alpha)
-    if (!is.null(x$fill)) x$fill[no_alpha] <- alpha(x$fill[no_alpha], alpha)
-    if (!is.null(x$edge_colour)) x$edge_colour[no_alpha] <- alpha(x$edge_colour[no_alpha], alpha)
-    if (!is.null(x$edge_fill)) x$edge_fill[no_alpha] <- alpha(x$edge_fill[no_alpha], alpha)
+    x
+  }
+}
+move_multielement <- function(x_loc, y_loc) {
+  function(x) {
+    if (!is.na(x_loc)) {
+      mean_x <- vapply(split(x$x, x$group), mean, numeric(1))
+      group <- match(x$group, names(mean_x))
+      x$x <- x$x - mean_x[group] + x_loc
+    }
+    if (!is.na(y_loc)) {
+      mean_y <- vapply(split(x$y, x$group), mean, numeric(1))
+      if (is.na(x_loc)) group <- match(x$group, names(mean_y))
+      x$y <- x$y - mean_y[group] + y_loc
+    }
     x
   }
 }

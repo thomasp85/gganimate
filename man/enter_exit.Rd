@@ -9,27 +9,51 @@
 \alias{enter_appear}
 \alias{enter_fade}
 \alias{enter_grow}
+\alias{enter_recolour}
+\alias{enter_recolor}
+\alias{enter_fly}
+\alias{enter_drift}
 \alias{exit_manual}
 \alias{exit_disappear}
 \alias{exit_fade}
 \alias{exit_shrink}
+\alias{exit_recolour}
+\alias{exit_recolor}
+\alias{exit_fly}
+\alias{exit_drift}
 \title{Define how entering and exiting data behaves}
 \usage{
-enter_manual(default, ...)
+enter_manual(default, ..., name = "manual")
 
 enter_appear(early = FALSE, ...)
 
 enter_fade(..., alpha = 0)
 
-enter_grow(..., size = 0, alpha = NA)
+enter_grow(..., size = 0)
 
-exit_manual(default, ...)
+enter_recolour(..., colour = "white", fill = colour)
+
+enter_recolor(..., color = "white", fill = color)
+
+enter_fly(..., x_loc = NA, y_loc = NA)
+
+enter_drift(..., x_mod = 0, y_mod = 0)
+
+exit_manual(default, ..., name = "manual")
 
 exit_disappear(early = FALSE, ...)
 
 exit_fade(..., alpha = 0)
 
-exit_shrink(..., size = 0, alpha = NA)
+exit_shrink(..., size = 0)
+
+exit_recolour(..., colour = "white", fill = colour)
+
+exit_recolor(..., color = "white", fill = color)
+
+exit_fly(..., x_loc = NA, y_loc = NA)
+
+exit_drift(..., x_mod = 0, y_mod = 0)
 }
 \arguments{
 \item{default}{A default transformation to use}
@@ -40,11 +64,17 @@ exit_shrink(..., size = 0, alpha = NA)
 \item{early}{Should the data appear in the beginning of the transition or in
 the end}
 
-\item{alpha}{The start/end transparency. \code{alpha = NA} does not modify the
-alpha values}
+\item{alpha}{The start/end transparency.}
 
 \item{size}{The proportional start/end size. \code{0} means complete shrinking
 while \code{1} means no shrinking}
+
+\item{colour, color, fill}{The start/end colour and fill the elements should
+(dis)appear into}
+
+\item{x_loc, y_loc}{Start and end positions of the graphic elements}
+
+\item{x_mod, y_mod}{Modification to add to the entering or exiting data}
 }
 \description{
 The purpose of \code{enter_*()} and \code{exit_*()} is to control what happens with
@@ -55,6 +85,11 @@ to define your own transformations, or rely on some of the build in
 \emph{effects}.
 }
 \details{
+Enter and exit modifications are composable so that multiple different ones
+can be added to an animation and will be applied in turn. You can also
+combine multiples and save them as a new enter or exit modification using
+\code{c()}.
+
 For layers that are tweened based on the raw data, only the specified
 aesthetics are available to modify, while all possible variables are
 available for late-tweening layers
@@ -69,4 +104,18 @@ in/out during the transition.
 grow into / shrink out of existence. Zero size depends on the type of layer,
 e.g. polygons/paths will have all their points set to the mean, while points
 will have size/stroke set to zero.
+
+\strong{recolour}/\strong{recolor} will change the colour and/or fill of the elements
+making them gradually change from the defined colour and into their try
+colour. Be aware that unless the colour and fill are set to the same as the
+background colour of the plot this modification needs to be combined with
+others to ensure that elements does not abruptly appear.
+
+\strong{fly} will set a specific x and y position where all elements will enter
+from/ exit to, irrespectible of their real position.
+
+\strong{drift} will modify the real position of the entering and exiting elements
+by a specified amount, e.g. setting \code{x_mod = -5} will let all elements enter
+from/exit to the left with a terminal position 5 points to the left of the
+real position.
 }
