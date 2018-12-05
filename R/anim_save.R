@@ -10,13 +10,16 @@
 #' @param animation The animation object to save, as returned by [animate()].
 #' Defaults to the last rendered animation using [last_animation()]
 #' @inheritParams ggplot2::ggsave
+#' @param ... arguments passed on to [animate()] if `animation` is a `gganim`
+#' object
 #'
 #' @export
 #'
-anim_save <- function(filename, animation = last_animation(), path = NULL) {
+anim_save <- function(filename, animation = last_animation(), path = NULL, ...) {
   if (!is.null(path)) {
     filename <- file.path(path, filename)
   }
+  if (is.gganim(animation)) animation <- animate(animation, ...)
   save_animation(animation, filename)
 }
 #' Infrastructure for animation saving

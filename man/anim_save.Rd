@@ -4,7 +4,7 @@
 \alias{anim_save}
 \title{Save an animation to a file}
 \usage{
-anim_save(filename, animation = last_animation(), path = NULL)
+anim_save(filename, animation = last_animation(), path = NULL, ...)
 }
 \arguments{
 \item{filename}{File name to create on disk.}
@@ -13,6 +13,9 @@ anim_save(filename, animation = last_animation(), path = NULL)
 Defaults to the last rendered animation using \code{\link[=last_animation]{last_animation()}}}
 
 \item{path}{Path to save plot to (combined with filename).}
+
+\item{...}{arguments passed on to \code{\link[=animate]{animate()}} if \code{animation} is a \code{gganim}
+object}
 }
 \description{
 This function is analogous to \code{\link[ggplot2:ggsave]{ggplot2::ggsave()}} in that it by default takes
