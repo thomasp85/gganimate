@@ -7,7 +7,7 @@
 \title{Render a gganim object}
 \usage{
 animate(plot, nframes, fps, duration, detail, renderer, device, ref_frame,
-  ...)
+  start_pause, end_pause, rewind, ...)
 
 \method{print}{gganim}(x, ...)
 
@@ -34,6 +34,11 @@ values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'
 \item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
 space available for axis text. Defaults to the first frame. Negative values
 counts backwards (-1 is the last frame) (default \code{1})}
+
+\item{start_pause, end_pause}{Number of times to repeat the first and last
+frame in the animation (default is \code{0} for both)}
+
+\item{rewind}{Should the animation roll back in the end (default \code{FALSE})}
 
 \item{...}{Arguments passed on to the device}
 

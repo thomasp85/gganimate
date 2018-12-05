@@ -25,6 +25,9 @@
 #' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
 #' space available for axis text. Defaults to the first frame. Negative values
 #' counts backwards (-1 is the last frame) (default `1`)
+#' @param start_pause,end_pause Number of times to repeat the first and last
+#' frame in the animation (default is `0` for both)
+#' @param rewind Should the animation roll back in the end (default `FALSE`)
 #' @param ... Arguments passed on to the device
 #'
 #' @return The return value of the `renderer` function
@@ -66,7 +69,7 @@
 #' @importFrom progress progress_bar
 #' @importFrom ggplot2 ggplot_gtable ggplot_build
 #' @export
-animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, ...) {
+animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- prepare_args(
     nframes = nframes,
     fps = fps,
@@ -75,13 +78,33 @@ animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_
     renderer = renderer,
     device = device,
     ref_frame = ref_frame,
+    start_pause = start_pause,
+    end_pause = end_pause,
+    rewind = rewind,
     ...
   )
+  orig_nframes <- args$nframes
+  args$nframes <- args$nframes - args$start_pause - args$end_pause
+  if (args$rewind) {
+    args$nframes <- ceiling((args$nframes - args$start_pause) / 2)
+    args$end_pause <- ceiling(args$end_pause / 2)
+  }
   nframes_total <- (args$nframes - 1) * args$detail + 1
   plot <- prerender(plot, nframes_total)
   nframes_final <- get_nframes(plot)
 
   frame_ind <- unique(round(seq(1, nframes_final, length.out = args$nframes)))
+
+  if (args$device == 'current') {
+    frame_ind <- c(rep(frame_ind[1], args$start_pause), frame_ind, rep(frame_ind[length(frame_ind)], args$end_pause))
+    if (args$rewind) frame_ind <- c(frame_ind, rev(frame_ind))
+    if (args$ref_frame < 0) {
+      args$ref_frame <- args$ref_frame - args$end_pause
+    } else {
+      args$ref_frame <- args$ref_frame + args$start_pause
+    }
+  }
+
   if (args$nframes != length(frame_ind)) {
     message('nframes and fps adjusted to match transition')
     args$fps <- args$fps * length(frame_ind) / args$nframes
@@ -97,8 +120,11 @@ animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_
            ref_frame = args$ref_frame),
       args$dev_args)
   )
-
   if (args$device == 'current') return(invisible(frames_vars))
+
+  if (args$start_pause != 0) frames_vars <- rbind(frames_vars[rep(1, args$start_pause), , drop = FALSE], frames_vars)
+  if (args$end_pause != 0) frames_vars <- rbind(frames_vars, frames_vars[rep(nrow(frames_vars), args$end_pause), , drop = FALSE])
+  if (args$rewind) frames_vars <- rbind(frames_vars, frames_vars[rev(seq_len(orig_nframes - nrow(frames_vars))), , drop = FALSE])
 
   animation <- args$renderer(frames_vars$frame_source, args$fps)
   attr(animation, 'frame_vars') <- frames_vars
@@ -106,7 +132,7 @@ animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_
   animation
 }
 #' @importFrom utils modifyList
-prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, ...) {
+prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- list()
   args$nframes <- nframes %?% getOption('gganimate.nframes', 100)
   args$fps <- fps %?% getOption('gganimate.fps', 10)
@@ -129,6 +155,9 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
     stop('The svglite package is required to use this device', call. = FALSE)
   }
   args$ref_frame <- ref_frame %?% getOption('gganimate.ref_frame', 1)
+  args$start_pause <- start_pause %?% getOption('gganimate.start_pause', 0)
+  args$end_pause <- end_pause %?% getOption('gganimate.end_pause', 0)
+  args$rewind <- rewind %?% getOption('gganimate.rewind', FALSE)
   args$dev_args <- modifyList(getOption('gganimate.dev_args', list()), list(...))
   args
 }
