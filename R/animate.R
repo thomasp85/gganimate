@@ -18,7 +18,7 @@
 #' @param duration The length of the animation in seconds (unset by default)
 #' @param detail The number of additional frames to calculate, per frame (default `1`)
 #' @param renderer The function used to render the generated frames into an
-#' animation. Gets a vector of paths to images along with the framerate. (default [gifski_renderer()])
+#' animation. Gets a vector of paths to images along with the framerate. (default [default_renderer()])
 #' @param device The device to use for rendering the single frames. Possible
 #' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`
 #' (requires the svglite package). (default `'png'`)
@@ -149,7 +149,7 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
     stop("At least 2 of 'nframes', 'fps', and 'duration' must be given", call. = FALSE)
   }
   args$detail <- detail %?% getOption('gganimate.detail', 1)
-  args$renderer <- renderer %?% getOption('gganimate.renderer', gifski_renderer())
+  args$renderer <- renderer %?% getOption('gganimate.renderer', default_renderer())
   args$device <- tolower(device %?% getOption('gganimate.device', 'png'))
   if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
     stop('The svglite package is required to use this device', call. = FALSE)

@@ -27,7 +27,9 @@ Suggests: magick,
     htmltools,
     covr,
     transformr,
-    av
+    av,
+    png,
+    gifski
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
@@ -40,8 +42,6 @@ Imports: stringi,
     progress,
     plyr,
     scales,
-    png,
-    gifski,
     grDevices,
     utils
 Collate:

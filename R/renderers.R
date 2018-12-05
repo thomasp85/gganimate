@@ -6,7 +6,21 @@
 #' in any way. A renderer is given as argument to [animate()]/print() and
 #' receives the paths to the individual frames once they have been created.
 #'
-#' @details It is possible to provide your own renderer function providing that it
+#' @details The `default_renderer()` is used unless otherwise specified in
+#' [animate()] or in `options('gganimate.renderer')`. This renderer will examine
+#' your installed packages and choose a renderer based on that, using the
+#' following priority:
+#'
+#' 1. `gifski_renderer()`
+#' 2. `magick_renderer()`
+#' 3. `av_renderer()`
+#' 4. `ffmpeg_renderer()`
+#' 5. `file_renderer()`
+#'
+#' If the prefered output is gif, then `gifski` is by far the recommended option
+#' due to its speed and quality, and you are recommended to install that.
+#'
+#' It is possible to create your own renderer function providing that it
 #' matches the required signature (`frames` and `fps` argument). The return
 #' value of your provided function will be the return value ultimately given by
 #' [animate()]
@@ -30,6 +44,7 @@
 #' @param options Either a character vector of command line options for ffmpeg
 #' or a named list of option-value pairs that will be converted to command line
 #' options automatically
+#' @param ... arguments passed on to the selected renderer
 #'
 #' @return The provided renderers are factory functions that returns a new function
 #' that take `frames` and `fps` as arguments, the former being a character
@@ -39,32 +54,51 @@
 #'
 #' The return type of the different returned renderers are:
 #' - **`gifski_renderer`**: Returns a [gif_image] object
-#' - **`file_renderer`**: Returns a vector of file paths
+#' - **`magick_renderer`**: Returns a `magick-image` object
 #' - **`av_renderer`**: Returns a [video_file] object
 #' - **`ffmpeg_renderer`**: Returns a [video_file] object
-#' - **`magick_renderer`**: Returns a `magick-image` object
+#' - **`file_renderer`**: Returns a vector of file paths
 #'
 #' @name renderers
 #' @rdname renderers
 NULL
 
+selected_renderer <- new.env(parent = emptyenv())
 #' @rdname renderers
-#' @importFrom png readPNG
-#' @importFrom gifski gifski
+#' @export
+default_renderer <- function(...) {
+  if (is.null(selected_renderer$fun)) {
+    renderer <- if (requireNamespace('gifski', quietly = TRUE)) gifski_renderer
+    else if (requireNamespace('magick', quietly = TRUE)) magick_renderer
+    else if (requireNamespace('av', quietly = TRUE)) av_renderer
+    else if (has_ffmpeg()) ffmpeg_renderer
+    else file_renderer
+    selected_renderer$fun <- renderer
+  }
+  selected_renderer$fun(...)
+}
+
+#' @rdname renderers
 #' @export
 gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, width = NULL, height = NULL) {
+  if (!requireNamespace('gifski', quietly = TRUE)) {
+    stop('The gifski package is required to use gifski_renderer', call. = FALSE)
+  }
+  if (!requireNamespace('png', quietly = TRUE)) {
+    stop('The png package is required to use gifski_renderer', call. = FALSE)
+  }
   function(frames, fps) {
     if (!all(grepl('.png$', frames))) {
       stop('gifski only supports png files', call. = FALSE)
     }
     if (is.null(width) || is.null(height)) {
-      dims <- dim(readPNG(frames[1], native = TRUE))
+      dims <- dim(png::readPNG(frames[1], native = TRUE))
       height <- height %||% dims[1]
       width <- width %||% dims[2]
     }
     progress <- !isTRUE(getOption("knitr.in.progress"))
     if (progress) message('')
-    gif <- gifski(frames, file, width, height, delay = 1/fps, loop, progress)
+    gif <- gifski::gifski(frames, file, width, height, delay = 1/fps, loop, progress)
     gif_file(gif)
   }
 }
@@ -82,7 +116,7 @@ file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) 
 #' @export
 av_renderer <- function(file = tempfile(fileext = '.mp4'), vfilter = "null", codec = NULL, audio = NULL) {
   if (!requireNamespace('av', quietly = TRUE)) {
-    stop('The av package is required to use this renderer', call. = FALSE)
+    stop('The av package is required to use av_renderer', call. = FALSE)
   }
   function(frames, fps) {
     progress <- !isTRUE(getOption("knitr.in.progress"))
@@ -92,16 +126,22 @@ av_renderer <- function(file = tempfile(fileext = '.mp4'), vfilter = "null", cod
     video_file(file)
   }
 }
+has_ffmpeg <- function(ffmpeg = 'ffmpeg') {
+  tryCatch(
+    {
+      suppressWarnings(system2(ffmpeg, '-version', stdout = FALSE, stderr = FALSE))
+      TRUE
+    },
+    error = function(e) {
+      FALSE
+    }
+  )
+}
 #' @rdname renderers
 #' @export
 ffmpeg_renderer <- function(format = 'mp4', ffmpeg = NULL, options = list(pix_fmt = 'yuv420p')) {
   ffmpeg <- ffmpeg %||% 'ffmpeg'
-  tryCatch(
-    suppressWarnings(system2(ffmpeg, '-version', stdout = FALSE, stderr = FALSE)),
-    error = function(e) {
-      stop('The ffmpeg library is not available at the specified location', call. = FALSE)
-    }
-  )
+  if (!has_ffmpeg(ffmpeg)) stop('The ffmpeg library is not available at the specified location', call. = FALSE)
   if (is.list(options)) {
     if (is.null(names(options))) {
       stop('options list must be named', call. = FALSE)
@@ -137,7 +177,7 @@ ffmpeg_renderer <- function(format = 'mp4', ffmpeg = NULL, options = list(pix_fm
 #' @export
 magick_renderer <- function(loop = TRUE) {
   if (!requireNamespace('magick', quietly = TRUE)) {
-    stop('The magick package is required to use this renderer', call. = FALSE)
+    stop('The magick package is required to use magick_renderer', call. = FALSE)
   }
   function(frames, fps) {
     anim <- if (grepl('.svg$', frames[1])) {
@@ -153,7 +193,7 @@ magick_renderer <- function(loop = TRUE) {
 #' @export
 sprite_renderer <- function() {
   if (!requireNamespace('magick', quietly = TRUE)) {
-    stop('The magick package is required to use this renderer', call. = FALSE)
+    stop('The magick package is required to use sprite_renderer', call. = FALSE)
   }
   function(frames, fps) {
     sprite <- if (grepl('.svg$', frames[1])) {

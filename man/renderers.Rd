@@ -2,6 +2,7 @@
 % Please edit documentation in R/renderers.R
 \name{renderers}
 \alias{renderers}
+\alias{default_renderer}
 \alias{gifski_renderer}
 \alias{file_renderer}
 \alias{av_renderer}
@@ -10,6 +11,8 @@
 \alias{sprite_renderer}
 \title{Renderers provided by gganimate}
 \usage{
+default_renderer(...)
+
 gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
   width = NULL, height = NULL)
 
@@ -26,6 +29,8 @@ magick_renderer(loop = TRUE)
 sprite_renderer()
 }
 \arguments{
+\item{...}{arguments passed on to the selected renderer}
+
 \item{file}{The animation file}
 
 \item{loop}{Logical. Should the produced gif loop}
@@ -67,10 +72,10 @@ animation in frames-per-second.
 The return type of the different returned renderers are:
 \itemize{
 \item \strong{\code{gifski_renderer}}: Returns a \link{gif_image} object
-\item \strong{\code{file_renderer}}: Returns a vector of file paths
+\item \strong{\code{magick_renderer}}: Returns a \code{magick-image} object
 \item \strong{\code{av_renderer}}: Returns a \link{video_file} object
 \item \strong{\code{ffmpeg_renderer}}: Returns a \link{video_file} object
-\item \strong{\code{magick_renderer}}: Returns a \code{magick-image} object
+\item \strong{\code{file_renderer}}: Returns a vector of file paths
 }
 }
 \description{
@@ -81,7 +86,22 @@ in any way. A renderer is given as argument to \code{\link[=animate]{animate()}}
 receives the paths to the individual frames once they have been created.
 }
 \details{
-It is possible to provide your own renderer function providing that it
+The \code{default_renderer()} is used unless otherwise specified in
+\code{\link[=animate]{animate()}} or in \code{options('gganimate.renderer')}. This renderer will examine
+your installed packages and choose a renderer based on that, using the
+following priority:
+\enumerate{
+\item \code{gifski_renderer()}
+\item \code{magick_renderer()}
+\item \code{av_renderer()}
+\item \code{ffmpeg_renderer()}
+\item \code{file_renderer()}
+}
+
+If the prefered output is gif, then \code{gifski} is by far the recommended option
+due to its speed and quality, and you are recommended to install that.
+
+It is possible to create your own renderer function providing that it
 matches the required signature (\code{frames} and \code{fps} argument). The return
 value of your provided function will be the return value ultimately given by
 \code{\link[=animate]{animate()}}

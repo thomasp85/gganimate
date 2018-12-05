@@ -25,7 +25,7 @@ knit_print.gganim(x, options, ...)
 \item{detail}{The number of additional frames to calculate, per frame (default \code{1})}
 
 \item{renderer}{The function used to render the generated frames into an
-animation. Gets a vector of paths to images along with the framerate. (default \code{\link[=gifski_renderer]{gifski_renderer()}})}
+animation. Gets a vector of paths to images along with the framerate. (default \code{\link[=default_renderer]{default_renderer()}})}
 
 \item{device}{The device to use for rendering the single frames. Possible
 values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'}
