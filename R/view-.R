@@ -30,7 +30,7 @@ View <- ggproto('View', NULL,
     if (!plot$layout$coord$is_free()) {
       width <- diff(xlim)
       height <- diff(ylim)
-      current_asp <- width / height
+      current_asp <- if (width == height) 1 else if (height == 0) Inf else width / height
       if (current_asp > self$aspect_ratio) {
         new_height <- width / self$aspect_ratio
         pad <- (new_height - height) / 2
