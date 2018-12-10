@@ -11,6 +11,8 @@ layer_type.GeomPath <- function(x) 'path'
 #' @export
 layer_type.GeomRibbon <- function(x) 'path'
 #' @export
+layer_type.GeomSmooth <- function(x) 'path'
+#' @export
 layer_type.GeomPolygon <- function(x) 'polygon'
 #' @export
 layer_type.GeomSf <- function(x) 'sf'
