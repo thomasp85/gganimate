@@ -155,9 +155,9 @@ ffmpeg_renderer <- function(format = 'mp4', ffmpeg = NULL, options = list(pix_fm
   function(frames, fps) {
     output_file <- tempfile(fileext = paste0('.', sub('^\\.', '', format)))
     frame_loc <- dirname(frames[1])
-    file_glob <- sub('^.*(\\..+$)', '%*\\1', basename(frames[1]))
+    file_glob <- sub('^.*(\\..+$)', 'gganim_plot%4d\\1', basename(frames[1]))
     file_glob <- file.path(frame_loc, file_glob)
-    system2(ffmpeg, c(
+    system2(ffmpeg, c("-pattern_type sequence",
       paste0('-i ', file_glob),
       '-y',
       '-loglevel quiet',
