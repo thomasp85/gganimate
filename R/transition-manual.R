@@ -7,6 +7,8 @@
 #'
 #' @param frames The unquoted name of the column holding the frame membership.
 #' @param ... Additional variables
+#' @param cumulative Keep data from previous frames as part of the current frame
+#' data
 #'
 #' @family transitions
 #'
@@ -21,11 +23,11 @@
 #' @export
 #' @importFrom rlang enquo
 #' @importFrom ggplot2 ggproto
-transition_manual <- function(frames, ...) {
+transition_manual <- function(frames, ..., cumulative = FALSE) {
   frames_quo <- enquo(frames)
   require_quo(frames_quo, 'frames')
   frame_vars <- data.frame(..., stringsAsFactors = FALSE, check.names = FALSE)
-  ggproto(NULL, TransitionManual, params = list(frames_quo = frames_quo, frame_vars = frame_vars))
+  ggproto(NULL, TransitionManual, params = list(frames_quo = frames_quo, frame_vars = frame_vars, cumulative = cumulative))
 }
 #' @rdname gganimate-ggproto
 #' @format NULL
@@ -65,7 +67,21 @@ TransitionManual <- ggproto('TransitionManual', Transition,
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    data
+    if (!params$cumulative) return(data)
+    row_state <- self$get_row_vars(data)
+    if (is.null(row_state)) return(data)
+    data$group <- paste0(row_state$before, row_state$after)
+    state <- as.integer(row_state$frames)
+    states <- split(seq_len(nrow(data)), state)
+    all_frames <- do.call(rbind, lapply(seq_along(states), function(i) {
+      index <- unlist(states[seq_len(i)])
+      frame <- data[index, , drop = FALSE]
+      frame$.frame <- i
+      frame
+    }))
+    all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
+    all_frames$.frame <- NULL
+    all_frames
   }
 )
 
