@@ -5,7 +5,7 @@
 \title{Build up a plot, layer by layer}
 \usage{
 transition_layers(layer_length, transition_length, keep_layers = TRUE,
-  from_blank = TRUE, layer_names = NULL)
+  from_blank = TRUE, layer_order = NULL, layer_names = NULL)
 }
 \arguments{
 \item{layer_length}{The proportional time to pause at each layer before a new
@@ -14,11 +14,18 @@ one enters}
 \item{transition_length}{The proportional time to use for the entrance of a
 new layer}
 
-\item{keep_layers}{Should layers be kept on screen after they have appeared
-or transition out when a new layer enters}
+\item{keep_layers}{Either an integer indicating for how many following layers
+the layers should stay on screen or a logical. In the case of the later,
+\code{TRUE} will mean keep the layer for the remainder of the animation
+(equivalent to setting it to \code{Inf}) and \code{FALSE} will mean to transition the
+layer out as the next layer enters.}
 
 \item{from_blank}{Should the first layer transition in or be present on the
 onset of the animation}
+
+\item{layer_order}{An alternative order the layers should appear in (default
+to using the stacking order). All other arguments that references the layers
+index in some way refers to this order.}
 
 \item{layer_names}{A character vector of names for each layers, to be used
 when interpreting label literals}

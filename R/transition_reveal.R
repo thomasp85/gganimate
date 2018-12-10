@@ -78,6 +78,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    browser()
     row_vars <- self$get_row_vars(data)
     if (is.null(row_vars)) return(data)
     data$group <- paste0(row_vars$before, row_vars$after)

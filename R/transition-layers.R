@@ -11,10 +11,16 @@ NULL
 #' one enters
 #' @param transition_length The proportional time to use for the entrance of a
 #' new layer
-#' @param keep_layers Should layers be kept on screen after they have appeared
-#' or transition out when a new layer enters
+#' @param keep_layers Either an integer indicating for how many following layers
+#' the layers should stay on screen or a logical. In the case of the later,
+#' `TRUE` will mean keep the layer for the remainder of the animation
+#' (equivalent to setting it to `Inf`) and `FALSE` will mean to transition the
+#' layer out as the next layer enters.
 #' @param from_blank Should the first layer transition in or be present on the
 #' onset of the animation
+#' @param layer_order An alternative order the layers should appear in (default
+#' to using the stacking order). All other arguments that references the layers
+#' index in some way refers to this order.
 #' @param layer_names A character vector of names for each layers, to be used
 #' when interpreting label literals
 #'
@@ -32,13 +38,15 @@ NULL
 #' @family transitions
 #'
 #' @export
-transition_layers <- function(layer_length, transition_length, keep_layers = TRUE, from_blank = TRUE, layer_names = NULL) {
+transition_layers <- function(layer_length, transition_length, keep_layers = TRUE, from_blank = TRUE, layer_order = NULL, layer_names = NULL) {
+  if (is.logical(keep_layers)) keep_layers <- if (keep_layers) Inf else 0L
   ggproto(NULL, TransitionLayers,
     params = list(
       layer_length = layer_length,
       transition_length = transition_length,
       keep_layers = keep_layers,
       from_blank = from_blank,
+      layer_order = layer_order,
       layer_names = layer_names
     )
   )
@@ -52,10 +60,17 @@ transition_layers <- function(layer_length, transition_length, keep_layers = TRU
 #' @importFrom tweenr tween_state keep_state
 TransitionLayers <- ggproto('TransitionLayers', Transition,
   setup_params = function(self, data, params) {
-    layer_length <- rep(params$layer_length, length.out = length(data))
-    transition_length <- rep(params$transition_length, length.out = length(data) + params$from_blank)
+    params$nlayers <- length(data)
+    params$layer_order <- if (is.null(params$layer_order)) {
+      seq_len(params$nlayers)
+    } else {
+      match(seq_along(data), params$layer_order)
+    }
+    layer_length <- rep_len(params$layer_length, length(data))
+    transition_length <- rep_len(params$transition_length, length(data) + params$from_blank)
+    params$keep_layers <- rep_len(params$keep_layers, length(data))
     if (params$from_blank) layer_length <- c(0, layer_length)
-    if (params$keep_layers) {
+    if (is.infinite(params$keep_layers[length(data)])) {
       transition_length[length(transition_length)] <- 0
     }
     frames <- distribute_frames(layer_length, transition_length, params$nframes)
@@ -80,17 +95,26 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       nframes = params$nframes,
       static_first = FALSE,
       static_name = 'layer')
-    params$frame_info$nlayers <- length(data)
+    params$frame_info$nlayers <- params$nlayers
     params$nframes <- nrow(params$frame_info)
     params
   },
   expand_layer = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
+    layer_index <- params$layer_order[layer_index]
     offset <- params$offset[layer_index]
     enter_length <- params$enter_length[layer_index]
     if (enter_length < 1) enter_length <- 1
     exit_length <- params$exit_length[layer_index]
     layer_length <- params$layer_length[layer_index]
-    if (params$keep_layers) layer_length <- params$nframes - offset - enter_length
+    max_length <- params$nframes - offset - enter_length
+    layer_length <- if (is.infinite(params$keep_layers[layer_index])) {
+      max_length
+    } else if (params$keep_layers[layer_index] != 0 && layer_index != params$nlayers) {
+      last_layer <- min(layer_index + params$keep_layers[layer_index], params$nlayers)
+      params$offset[last_layer] + params$layer_length[last_layer] - offset
+    } else {
+      layer_length
+    }
     layer <- switch(
       type,
       point = tween_state(data[0,], data, ease, enter_length, NULL, enter, exit),
@@ -100,7 +124,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       stop("Unknown layer type", call. = FALSE)
     )
     layer <- keep_state(layer, layer_length)
-    if (!params$keep_layers) {
+    if (is.finite(params$keep_layers[layer_index])) {
       layer <- switch(
         type,
         point = tween_state(layer, data[0,], ease, exit_length, NULL, enter, exit),
@@ -110,6 +134,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
         stop("Unknown layer type", call. = FALSE)
       )
     }
+    layer <- layer[layer$.frame <= params$nframes, , drop = FALSE]
     layer$group <- paste0(layer$group, '<', layer$.frame + offset, '>')
     layer$.frame <- NULL
     layer
