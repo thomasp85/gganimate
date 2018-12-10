@@ -4,12 +4,9 @@
 \alias{transition_reveal}
 \title{Reveal data along a given dimension}
 \usage{
-transition_reveal(id, along, range = NULL, keep_last = TRUE)
+transition_reveal(along, range = NULL, keep_last = TRUE, id)
 }
 \arguments{
-\item{id}{An unquoted expression giving the id of the row (usually the same
-as the group aesthetic for lines and polygons)}
-
 \item{along}{An unquoted expression giving the dimension to tween along. For
 a gradually revealing time series this should be set to the same as the \code{x}
 aesthetic.}
@@ -19,6 +16,8 @@ of \code{along}}
 
 \item{keep_last}{For non-path/polygon layers should the last row be kept for
 subsequent frames.}
+
+\item{id}{\strong{Deprecated}}
 }
 \description{
 This transition allows you to let data gradually appear, based on a given
@@ -43,7 +42,7 @@ frame corresponds to
 
 p <- ggplot(airquality, aes(Day, Temp, group = Month)) +
   geom_line() +
-  transition_reveal(Month, Day)
+  transition_reveal(Day)
 
 # animate(p)
 
