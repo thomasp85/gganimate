@@ -131,6 +131,23 @@ animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_
   set_last_animation(animation)
   animation
 }
+
+#' Catch attempt to use the old API
+#'
+#' @export
+#' @keywords internal
+gganimate <- function(...) {
+  stop(
+    'It appears that you are trying to use the old API, which has been deprecated.\n',
+    'Please update your code to the new API or install the old version of gganimate\n',
+    'from https://github.com/thomasp85/gganimate/releases/tag/v0.1.1',
+    call. = FALSE
+  )
+}
+#' @rdname gganimate
+#' @export
+gg_animate <- gganimate
+
 #' @importFrom utils modifyList
 prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- list()

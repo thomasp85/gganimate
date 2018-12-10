@@ -2,8 +2,8 @@
 % Please edit documentation in R/gganimate-package.r
 \docType{package}
 \name{gganimate-package}
-\alias{gganimate}
 \alias{gganimate-package}
+\alias{_PACKAGE}
 \title{gganimate: A Grammar of Animated Graphics}
 \description{
 \if{html}{\figure{logo.png}{options: align='right'}}
