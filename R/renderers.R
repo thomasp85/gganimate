@@ -114,9 +114,13 @@ file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) 
 }
 #' @rdname renderers
 #' @export
-av_renderer <- function(file = tempfile(fileext = '.mp4'), vfilter = "null", codec = NULL, audio = NULL) {
+av_renderer <- function(file = NULL, vfilter = "null", codec = NULL, audio = NULL) {
   if (!requireNamespace('av', quietly = TRUE)) {
     stop('The av package is required to use av_renderer', call. = FALSE)
+  }
+  if (is.null(file)) {
+    ext <- if (.Platform$GUI == "RStudio" && "webm" %in% av::av_encoders()$name) ".webm" else ".mp4"
+    file <- tempfile(fileext = ext)
   }
   function(frames, fps) {
     progress <- !isTRUE(getOption("knitr.in.progress"))
@@ -139,9 +143,17 @@ has_ffmpeg <- function(ffmpeg = 'ffmpeg') {
 }
 #' @rdname renderers
 #' @export
-ffmpeg_renderer <- function(format = 'mp4', ffmpeg = NULL, options = list(pix_fmt = 'yuv420p')) {
+ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_fmt = 'yuv420p')) {
   ffmpeg <- ffmpeg %||% 'ffmpeg'
   if (!has_ffmpeg(ffmpeg)) stop('The ffmpeg library is not available at the specified location', call. = FALSE)
+  if (format == 'auto') {
+    format <- if (.Platform$GUI == "RStudio" &&
+                  any(grepl('--enable-libvpx', system2('ffmpeg', '-version', stdout = TRUE)))) {
+      "webm"
+    } else {
+      "mp4"
+    }
+  }
   if (is.list(options)) {
     if (is.null(names(options))) {
       stop('options list must be named', call. = FALSE)
@@ -153,6 +165,7 @@ ffmpeg_renderer <- function(format = 'mp4', ffmpeg = NULL, options = list(pix_fm
   stopifnot(is.character(options))
 
   function(frames, fps) {
+    progress <- !isTRUE(getOption("knitr.in.progress"))
     output_file <- tempfile(fileext = paste0('.', sub('^\\.', '', format)))
     frame_loc <- dirname(frames[1])
     file_glob <- sub('^.*(\\..+$)', 'gganim_plot%4d\\1', basename(frames[1]))
@@ -160,12 +173,13 @@ ffmpeg_renderer <- function(format = 'mp4', ffmpeg = NULL, options = list(pix_fm
     system2(ffmpeg, c("-pattern_type sequence",
       paste0('-i ', file_glob),
       '-y',
-      '-loglevel quiet',
+      '-loglevel ', if (progress) 'info' else 'quiet',
       paste0('-framerate ', 1/fps),
       '-hide_banner',
       options,
       output_file
     ))
+    if (!file.exists(output_file)) stop('Rendering with ffmpeg failed', call. = FALSE)
     if (format == 'gif') {
       gif_file(output_file)
     } else {
@@ -293,7 +307,11 @@ video_file <- function(file) {
 #' @export
 print.video_file <- function(x, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
-    print(htmltools::browsable(as_html_video(x)))
+    if (grepl('\\.mp4$', x, ignore.case = TRUE) && .Platform$GUI == "RStudio") {
+      utils::browseURL(x)
+    } else {
+      print(htmltools::browsable(as_html_video(x)))
+    }
   } else {
     viewer <- getOption("viewer", utils::browseURL)
     viewer(x)
