@@ -2,7 +2,6 @@
 % Please edit documentation in R/renderers.R
 \name{renderers}
 \alias{renderers}
-\alias{default_renderer}
 \alias{gifski_renderer}
 \alias{file_renderer}
 \alias{av_renderer}
@@ -11,8 +10,6 @@
 \alias{sprite_renderer}
 \title{Renderers provided by gganimate}
 \usage{
-default_renderer(...)
-
 gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
   width = NULL, height = NULL)
 
@@ -29,8 +26,6 @@ magick_renderer(loop = TRUE)
 sprite_renderer()
 }
 \arguments{
-\item{...}{arguments passed on to the selected renderer}
-
 \item{file}{The animation file}
 
 \item{loop}{Logical. Should the produced gif loop}
@@ -61,6 +56,8 @@ assumed to be on the search path}
 \item{options}{Either a character vector of command line options for ffmpeg
 or a named list of option-value pairs that will be converted to command line
 options automatically}
+
+\item{...}{arguments passed on to the selected renderer}
 }
 \value{
 The provided renderers are factory functions that returns a new function
@@ -86,20 +83,27 @@ in any way. A renderer is given as argument to \code{\link[=animate]{animate()}}
 receives the paths to the individual frames once they have been created.
 }
 \details{
-The \code{default_renderer()} is used unless otherwise specified in
-\code{\link[=animate]{animate()}} or in \code{options('gganimate.renderer')}. This renderer will examine
-your installed packages and choose a renderer based on that, using the
-following priority:
-\enumerate{
-\item \code{gifski_renderer()}
-\item \code{magick_renderer()}
-\item \code{av_renderer()}
-\item \code{ffmpeg_renderer()}
-\item \code{file_renderer()}
-}
+The \code{gifski_renderer()} is used unless otherwise specified in
+\code{\link[=animate]{animate()}} or in \code{options('gganimate.renderer')}. This renderer requires
+both the \code{gifski} and \code{png} packages to be installed.
 
-If the prefered output is gif, then \code{gifski} is by far the recommended option
-due to its speed and quality, and you are recommended to install that.
+Other possible renderers are:
+\itemize{
+\item \code{magick_renderer()} which requires the \code{magick} package and produce a \code{gif}.
+If \code{gifski} is not installed, the rendering will be much slower than using the
+\code{gifski_renderer()} and can potentially result in system problems when many
+frames need to be rendered (if \code{gifski} is installed \code{magick} will use it
+under the hood)
+\item \code{av_renderer()} which requies the \code{av} package and uses ffmpeg to encode
+the animation into a video file.
+\item \code{ffmpeg_renderer()} which requires that ffmpeg has been installed on your
+computer. As with \code{av_renderer()} it will use ffmpeg to encode the animation
+into a video
+\item \code{sprite_renderer()} which requires \code{magick} and will render the animation
+into a spritesheet
+\item \code{file_renderer()} which has no dependencies and simply returns the
+animation as a list of image files (one for each frame)
+}
 
 It is possible to create your own renderer function providing that it
 matches the required signature (\code{frames} and \code{fps} argument). The return

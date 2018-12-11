@@ -18,7 +18,7 @@
 #' @param duration The length of the animation in seconds (unset by default)
 #' @param detail The number of additional frames to calculate, per frame (default `1`)
 #' @param renderer The function used to render the generated frames into an
-#' animation. Gets a vector of paths to images along with the framerate. (default [default_renderer()])
+#' animation. Gets a vector of paths to images along with the framerate. (default [gifski_renderer()])
 #' @param device The device to use for rendering the single frames. Possible
 #' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`
 #' (requires the svglite package). (default `'png'`)
@@ -166,7 +166,7 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
     stop("At least 2 of 'nframes', 'fps', and 'duration' must be given", call. = FALSE)
   }
   args$detail <- detail %?% getOption('gganimate.detail', 1)
-  args$renderer <- renderer %?% getOption('gganimate.renderer', default_renderer())
+  args$renderer <- renderer %?% getOption('gganimate.renderer', gifski_renderer())
   args$device <- tolower(device %?% getOption('gganimate.device', 'png'))
   if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
     stop('The svglite package is required to use this device', call. = FALSE)
@@ -189,7 +189,13 @@ prerender <- function(plot, nframes) {
 draw_frames <- function(plot, frames, device, ref_frame, ...) {
   stream <- device == 'current'
 
-  dims <- plot_dims(plot, ref_frame)
+  dims <- tryCatch(
+    plot_dims(plot, ref_frame),
+    error = function(e) {
+      warning('Cannot get dimensions of plot table. Plot region might not be fixed', call. = FALSE)
+      list(widths = NULL, heights = NULL)
+    }
+  )
 
   dir <- tempfile(pattern = '')
   dir.create(dir, showWarnings = FALSE)
@@ -252,6 +258,10 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
 plot_dims <- function(plot, ref_frame) {
   tmpf <- tempfile()
   png(tmpf)
+  on.exit({
+    dev.off()
+    unlink(tmpf)
+  })
   frame <- plot$scene$get_frame(plot, ref_frame)
   frame <- ggplot_gtable(frame)
   widths_rel <- frame$widths
@@ -262,7 +272,5 @@ plot_dims <- function(plot, ref_frame) {
   heights <- convertHeight(heights_rel, 'mm')
   null_heights <- as.numeric(heights) == 0
   heights[null_heights] <- heights_rel[null_heights]
-  dev.off()
-  unlink(tmpf)
   list(widths = widths, heights = heights)
 }

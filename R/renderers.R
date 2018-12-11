@@ -6,19 +6,25 @@
 #' in any way. A renderer is given as argument to [animate()]/print() and
 #' receives the paths to the individual frames once they have been created.
 #'
-#' @details The `default_renderer()` is used unless otherwise specified in
-#' [animate()] or in `options('gganimate.renderer')`. This renderer will examine
-#' your installed packages and choose a renderer based on that, using the
-#' following priority:
+#' @details The `gifski_renderer()` is used unless otherwise specified in
+#' [animate()] or in `options('gganimate.renderer')`. This renderer requires
+#' both the `gifski` and `png` packages to be installed.
 #'
-#' 1. `gifski_renderer()`
-#' 2. `magick_renderer()`
-#' 3. `av_renderer()`
-#' 4. `ffmpeg_renderer()`
-#' 5. `file_renderer()`
-#'
-#' If the prefered output is gif, then `gifski` is by far the recommended option
-#' due to its speed and quality, and you are recommended to install that.
+#' Other possible renderers are:
+#' - `magick_renderer()` which requires the `magick` package and produce a `gif`.
+#' If `gifski` is not installed, the rendering will be much slower than using the
+#' `gifski_renderer()` and can potentially result in system problems when many
+#' frames need to be rendered (if `gifski` is installed `magick` will use it
+#' under the hood)
+#' - `av_renderer()` which requies the `av` package and uses ffmpeg to encode
+#' the animation into a video file.
+#' - `ffmpeg_renderer()` which requires that ffmpeg has been installed on your
+#' computer. As with `av_renderer()` it will use ffmpeg to encode the animation
+#' into a video
+#' - `sprite_renderer()` which requires `magick` and will render the animation
+#' into a spritesheet
+#' - `file_renderer()` which has no dependencies and simply returns the
+#' animation as a list of image files (one for each frame)
 #'
 #' It is possible to create your own renderer function providing that it
 #' matches the required signature (`frames` and `fps` argument). The return
@@ -63,26 +69,22 @@
 #' @rdname renderers
 NULL
 
-selected_renderer <- new.env(parent = emptyenv())
-#' @rdname renderers
-#' @export
-default_renderer <- function(...) {
-  if (is.null(selected_renderer$fun)) {
-    renderer <- if (requireNamespace('gifski', quietly = TRUE)) gifski_renderer
-    else if (requireNamespace('magick', quietly = TRUE)) magick_renderer
-    else if (requireNamespace('av', quietly = TRUE)) av_renderer
-    else if (has_ffmpeg()) ffmpeg_renderer
-    else file_renderer
-    selected_renderer$fun <- renderer
-  }
-  selected_renderer$fun(...)
-}
-
+gifski_first_error <- TRUE
 #' @rdname renderers
 #' @export
 gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, width = NULL, height = NULL) {
   if (!requireNamespace('gifski', quietly = TRUE)) {
-    stop('The gifski package is required to use gifski_renderer', call. = FALSE)
+    if (gifski_first_error) {
+      gifski_first_error <<- FALSE
+      stop(
+        'The `gifski_renderer()` is selected by default but requires the gifski\n',
+        'package to be installed. Either install gifski or use another renderer.\n',
+        'See `?renderers` for a list of available ones.',
+        call. = FALSE
+      )
+    } else {
+      stop('The gifski package is required to use gifski_renderer', call. = FALSE)
+    }
   }
   if (!requireNamespace('png', quietly = TRUE)) {
     stop('The png package is required to use gifski_renderer', call. = FALSE)
