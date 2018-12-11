@@ -119,7 +119,7 @@ av_renderer <- function(file = NULL, vfilter = "null", codec = NULL, audio = NUL
     stop('The av package is required to use av_renderer', call. = FALSE)
   }
   if (is.null(file)) {
-    ext <- if (.Platform$GUI == "RStudio" && "webm" %in% av::av_encoders()$name) ".webm" else ".mp4"
+    ext <- if (.Platform$GUI == "RStudio" && "libvpx" %in% av::av_encoders()$name) ".webm" else ".mp4"
     file <- tempfile(fileext = ext)
   }
   function(frames, fps) {
