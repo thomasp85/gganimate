@@ -54,7 +54,10 @@ View <- ggproto('View', NULL,
       } else {
         x <- unlist(d[names(d) %in% x_aes])
         y <- unlist(d[names(d) %in% y_aes])
-        list(x = range(x), y = range(y))
+        list(
+          x = if (length(x) == 0) NULL else range(x),
+          y = if (length(y) == 0) NULL else range(y)
+        )
       }
     })
   },

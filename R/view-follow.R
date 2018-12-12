@@ -45,8 +45,10 @@ ViewFollow <- ggproto('ViewFollow', View,
       stop('This view does not support polar coordinates')
     }
     ranges <- self$get_ranges(plot$data, params)
-    x_range <- range(unlist(lapply(ranges, `[[`, 'x')))
-    y_range <- range(unlist(lapply(ranges, `[[`, 'y')))
+    x_range <- range(inf.omit(unlist(lapply(ranges, `[[`, 'x'))))
+    y_range <- range(inf.omit(unlist(lapply(ranges, `[[`, 'y'))))
     self$reset_limits(plot, x_range, y_range)
   }
 )
+
+inf.omit <- function(x) x[is.finite(x)]
