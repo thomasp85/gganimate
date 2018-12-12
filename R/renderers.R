@@ -69,13 +69,14 @@
 #' @rdname renderers
 NULL
 
-gifski_first_error <- TRUE
+gifski_error <- new.env(parent = emptyenv())
+gifski_error$first <- TRUE
 #' @rdname renderers
 #' @export
 gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, width = NULL, height = NULL) {
   if (!requireNamespace('gifski', quietly = TRUE)) {
-    if (gifski_first_error) {
-      gifski_first_error <<- FALSE
+    if (gifski_error$first) {
+      gifski_error$first <- FALSE
       stop(
         'The `gifski_renderer()` is selected by default but requires the gifski\n',
         'package to be installed. Either install gifski or use another renderer.\n',
