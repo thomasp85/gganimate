@@ -50,7 +50,7 @@ transition_events <- function(start, end = NULL, range = NULL, enter_length = NU
 #' @importFrom stringi stri_match
 #' @importFrom tweenr tween_events
 TransitionEvents <- ggproto('TransitionEvents', Transition,
-  mapping = '(.+?)-(.*?)-(.*?)-(.*?)',
+  mapping = '(.+?)_(.*?)_(.*?)_(.*?)',
   var_names = c('start', 'end', 'enter_length', 'exit_length'),
   setup_params = function(self, data, params) {
     params$start <- get_row_event(data, params$start_quo, 'start')
@@ -60,7 +60,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
     params$exit_length <- get_row_event(data, params$exit_length_quo, 'exit_length', time_class)
     params$require_stat <- is_placeholder(params$start) || is_placeholder(params$end) || is_placeholder(params$enter_length) || is_placeholder(params$exit_length)
     static = lengths(params$start$values) == 0
-    params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '-'),
+    params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '_'),
                          st = params$start$values, end = params$end$values, en = params$enter_length$values, ex = params$exit_length$values, s = static)
     params
   },
@@ -130,7 +130,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
     params$range <- range
     params$frame_time <- frame_time
     static = lengths(start) == 0
-    params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '-'),
+    params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '_'),
                          st = start, end = end, en = enter_length, ex = exit_length, s = static)
     params$frame_info <- data.frame(
       frame_time = frame_time
