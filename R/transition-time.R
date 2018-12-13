@@ -16,6 +16,19 @@
 #'
 #' - **frame_time** gives the time that the current frame corresponds to
 #'
+#' @section Object permanence:
+#' `transition_time` uses the group aesthetic of each layer to identify
+#' which rows in the input data correspond to the same graphic element and will
+#' therefore define which elements will turn into each other between time points.
+#' The group aesthetic, if not set, will be calculated from the interaction of all
+#' discrete aesthetics in the layer (excluding `label`), so it is often better
+#' to set it explicetly when animating, to make sure your data is interpreted in
+#' the right way. If the group aesthetic is not set, and no discrete aesthetics
+#' exists then all rows will have the same group. If the group aesthetic is not
+#' unique in each state, then rows will be matched first by group and then by
+#' index. Unmatched rows will appear/disappear, potentially using an enter or
+#' exit function.
+#'
 #' @family transitions
 #'
 #' @examples

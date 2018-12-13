@@ -16,6 +16,11 @@
 #'
 #' - **frame_time** gives the time that the current frame corresponds to
 #'
+#' @section Object permanence:
+#' `transition_events` does not link rows across data to the same graphic
+#' element, so elements will be defined uniquely by each row and its specific
+#' start, end, enter and exit.
+#'
 #' @family transitions
 #'
 #' @export

@@ -20,6 +20,11 @@
 #' - **current_frame** The name of the current frame
 #' - **next_frame** The name of the next frame in the animation
 #'
+#' @section Object permanence:
+#' `transition_manual` does not link rows across data to the same graphic
+#' element. Every frame is a discrete state and no animation between the states
+#' is done.
+#'
 #' @export
 #' @importFrom rlang enquo
 #' @importFrom ggplot2 ggproto

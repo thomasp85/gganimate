@@ -48,6 +48,16 @@ transitioning phase
 }
 }
 
+\section{Object permanence}{
+
+\code{transition_filter} does not link rows across data to the same graphic
+element, so elements will be defined uniquely by each row. If \code{keep = TRUE}
+the rows not matching the conditions of a filter is not removed from the plot
+after the exit animation, and a possible subsequent enter will begin from
+the state they were left in, rather than enter anew from the state defined by
+the enter function.
+}
+
 \seealso{
 Other transitions: \code{\link{transition_components}},
   \code{\link{transition_events}},

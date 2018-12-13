@@ -32,6 +32,14 @@
 #' - **closest_expression** The expression of the filter closest to this frame
 #' - **next_expression** The expression of the next filter the animation will be part of
 #'
+#' @section Object permanence:
+#' `transition_filter` does not link rows across data to the same graphic
+#' element, so elements will be defined uniquely by each row. If `keep = TRUE`
+#' the rows not matching the conditions of a filter is not removed from the plot
+#' after the exit animation, and a possible subsequent enter will begin from
+#' the state they were left in, rather than enter anew from the state defined by
+#' the enter function.
+#'
 #' @family transitions
 #'
 #' @export

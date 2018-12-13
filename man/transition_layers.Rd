@@ -49,6 +49,13 @@ transitioning phase
 }
 }
 
+\section{Object permanence}{
+
+\code{transition_layer} does not link rows across data to the same graphic
+element, so elements will be defined uniquely by each row and the enter and
+exit of the layer it belongs to.
+}
+
 \seealso{
 Other transitions: \code{\link{transition_components}},
   \code{\link{transition_events}},

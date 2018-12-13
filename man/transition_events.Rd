@@ -30,6 +30,13 @@ literal interpretation:
 }
 }
 
+\section{Object permanence}{
+
+\code{transition_events} does not link rows across data to the same graphic
+element, so elements will be defined uniquely by each row and its specific
+start, end, enter and exit.
+}
+
 \seealso{
 Other transitions: \code{\link{transition_components}},
   \code{\link{transition_filter}},

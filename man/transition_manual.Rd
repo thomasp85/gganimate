@@ -31,6 +31,13 @@ literal interpretation:
 }
 }
 
+\section{Object permanence}{
+
+\code{transition_manual} does not link rows across data to the same graphic
+element. Every frame is a discrete state and no animation between the states
+is done.
+}
+
 \seealso{
 Other transitions: \code{\link{transition_components}},
   \code{\link{transition_events}},

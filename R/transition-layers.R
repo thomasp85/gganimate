@@ -35,6 +35,11 @@ NULL
 #' - **next_layer** The name of the next layer the animation will show
 #' - **nlayers** The total number of layers
 #'
+#' @section Object permanence:
+#' `transition_layer` does not link rows across data to the same graphic
+#' element, so elements will be defined uniquely by each row and the enter and
+#' exit of the layer it belongs to.
+#'
 #' @family transitions
 #'
 #' @export
