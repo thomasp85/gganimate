@@ -2,7 +2,7 @@
 #'
 #' This function takes a gganim object and renders it into an animation. The
 #' nature of the animation is dependent on the renderer, but defaults to using
-#' `magick` to render it to a gif. The length and framerate is decided on render
+#' `gifski` to render it to a gif. The length and framerate is decided on render
 #' time and can be any two combination of `nframes`, `fps`, and `duration`.
 #' Rendering is happening in discrete time units. This means that any event in
 #' the animation is rounded of to the nearest frame (e.g. entering will always
@@ -30,15 +30,18 @@
 #' @param rewind Should the animation roll back in the end (default `FALSE`)
 #' @param ... Arguments passed on to the device
 #'
-#' @return The return value of the `renderer` function
+#' @return The return value of the [renderer][renderers] function
 #'
 #' @details  `print.gganim`()  is an alias for `animate()` in the same way as
 #' `print.ggplot()` is an alias for `plot.ggplot()`. This ensures that gganimate
 #' behaves ggplot2-like and produces the animation when the object is printed.
-#' The `plot()` method is different and produces an ensemble of frames to give
-#' a static overview of the animation. The default is to produce a 3x3 grid.
+#' The `plot()` method is different and produces a single frame for inspection
+#' (by default frame 50 out of 100).
 #'
-#' @section Changing Defaults:
+#' Animations can be saved to disk using [anim_save()] in much the same way
+#' [ggsave()][ggplot2::ggsave] works for static plots.
+#'
+#' @section Defaults:
 #' It is possible to overwrite the defaults used by gganimate for the animation
 #' by setting them with [options()] (prefixed with `gganimate.`. As an example,
 #' if you would like to change the default nframes to 50 you would call
@@ -48,7 +51,7 @@
 #' `options(gganimate.dev_args = list(width = 800, height = 600))` Defaults set
 #' this way can still be overridden by giving arguments directly to `animate()`.
 #'
-#' @section knitr Support:
+#' **knitr Support:** \cr
 #' It is possible to specify the arguments to `animate()` in the chunk options
 #' when using `gganimate` with `knitr`. Arguments specified in this way will
 #' have precedence over defaults, but not over arguments specified directly in
@@ -58,11 +61,10 @@
 #' given specifically in the `gganimate` list option. The native knitr options
 #' supported are:
 #'
-#' - `interval`: will set fps to `1/interval`
 #' - `dev`: will set `device`
 #' - `dev.args`: will set additional arguments to the device (`...`)
 #' - `fig.width`, `fig.height`, `fig.asp`, `fig.dim`: will set `width` and
-#' `height` of the device.
+#'   `height` of the device.
 #'
 #' @section Label variables:
 #' All plots have a certain set of variables available for string literal
@@ -83,6 +85,27 @@
 #' @importFrom progress progress_bar
 #' @importFrom ggplot2 ggplot_gtable ggplot_build
 #' @export
+#'
+#' @examples
+#' anim <- ggplot(mtcars, aes(mpg, disp)) +
+#'   transition_states(gear) +
+#'   enter_fade() +
+#'   exit_fade()
+#'
+#' \dontrun{
+#' # Explicitly animate using default (same as just printing the animation)
+#' animate(anim)
+#'
+#' # Change duration and framerate
+#' animate(anim, fps = 20, duration = 15)
+#'
+#' # Make the animation pause at the end and then rewind
+#' animate(anim, nframes = 200, end_pause = 20, rewind = TRUE)
+#'
+#' # Use a different renderer
+#' animate(anim, renderer = file_renderer('~/animation/'))
+#' }
+#'
 animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- prepare_args(
     nframes = nframes,
@@ -280,11 +303,16 @@ plot_dims <- function(plot, ref_frame) {
   frame <- ggplot_gtable(frame)
   widths_rel <- frame$widths
   widths <- convertWidth(widths_rel, 'mm')
-  null_widths <- as.numeric(widths) == 0
-  widths[null_widths] <- widths_rel[null_widths]
   heights_rel <- frame$heights
   heights <- convertHeight(heights_rel, 'mm')
-  null_heights <- as.numeric(heights) == 0
+  if (is.list(widths)) { # New unit spec
+    null_widths <- vapply(unclass(widths), `[[`, numeric(1), 1L) == 0
+    null_heights <- vapply(unclass(heights), `[[`, numeric(1), 1L) == 0
+  } else {
+    null_widths <- as.numeric(widths) == 0
+    null_heights <- as.numeric(heights) == 0
+  }
+  widths[null_widths] <- widths_rel[null_widths]
   heights[null_heights] <- heights_rel[null_heights]
   list(widths = widths, heights = heights)
 }

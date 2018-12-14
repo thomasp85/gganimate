@@ -45,12 +45,12 @@ frame in the animation (default is \code{0} for both)}
 \item{options}{chunk options for the currently executing chunk}
 }
 \value{
-The return value of the \code{renderer} function
+The return value of the \link[=renderers]{renderer} function
 }
 \description{
 This function takes a gganim object and renders it into an animation. The
 nature of the animation is dependent on the renderer, but defaults to using
-\code{magick} to render it to a gif. The length and framerate is decided on render
+\code{gifski} to render it to a gif. The length and framerate is decided on render
 time and can be any two combination of \code{nframes}, \code{fps}, and \code{duration}.
 Rendering is happening in discrete time units. This means that any event in
 the animation is rounded of to the nearest frame (e.g. entering will always
@@ -64,10 +64,13 @@ spaced frames are rendered.
 \code{print.gganim}()  is an alias for \code{animate()} in the same way as
 \code{print.ggplot()} is an alias for \code{plot.ggplot()}. This ensures that gganimate
 behaves ggplot2-like and produces the animation when the object is printed.
-The \code{plot()} method is different and produces an ensemble of frames to give
-a static overview of the animation. The default is to produce a 3x3 grid.
+The \code{plot()} method is different and produces a single frame for inspection
+(by default frame 50 out of 100).
+
+Animations can be saved to disk using \code{\link[=anim_save]{anim_save()}} in much the same way
+\link[ggplot2:ggsave]{ggsave()} works for static plots.
 }
-\section{Changing Defaults}{
+\section{Defaults}{
 
 It is possible to overwrite the defaults used by gganimate for the animation
 by setting them with \code{\link[=options]{options()}} (prefixed with \code{gganimate.}. As an example,
@@ -77,10 +80,8 @@ if you would like to change the default nframes to 50 you would call
 \code{gganimate.dev_args} options and provide a list of arguments e.g.
 \code{options(gganimate.dev_args = list(width = 800, height = 600))} Defaults set
 this way can still be overridden by giving arguments directly to \code{animate()}.
-}
 
-\section{knitr Support}{
-
+\strong{knitr Support:} \cr
 It is possible to specify the arguments to \code{animate()} in the chunk options
 when using \code{gganimate} with \code{knitr}. Arguments specified in this way will
 have precedence over defaults, but not over arguments specified directly in
@@ -90,7 +91,6 @@ build-in knitr options have relevance for animation and will be used unless
 given specifically in the \code{gganimate} list option. The native knitr options
 supported are:
 \itemize{
-\item \code{interval}: will set fps to \code{1/interval}
 \item \code{dev}: will set \code{device}
 \item \code{dev.args}: will set additional arguments to the device (\code{...})
 \item \code{fig.width}, \code{fig.height}, \code{fig.asp}, \code{fig.dim}: will set \code{width} and
@@ -115,3 +115,24 @@ Further, the transition and view in use can also make variables available.
 Consult the documentation for these for more detail.
 }
 
+\examples{
+anim <- ggplot(mtcars, aes(mpg, disp)) +
+  transition_states(gear) +
+  enter_fade() +
+  exit_fade()
+
+\dontrun{
+# Explicitly animate using default (same as just printing the animation)
+animate(anim)
+
+# Change duration and framerate
+animate(anim, fps = 20, duration = 15)
+
+# Make the animation pause at the end and then rewind
+animate(anim, nframes = 200, end_pause = 20, rewind = TRUE)
+
+# Use a different renderer
+animate(anim, renderer = file_renderer('~/animation/'))
+}
+
+}
