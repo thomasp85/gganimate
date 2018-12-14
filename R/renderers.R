@@ -107,11 +107,13 @@ gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, widt
 }
 #' @rdname renderers
 #' @export
-file_renderer <- function(dir = '~', prefix = 'gganim_plot', overwrite = FALSE) {
+file_renderer <- function(dir = '.', prefix = 'gganim_plot', overwrite = FALSE) {
   function(frames, fps) {
     if (!dir.exists(dir)) dir.create(dir, showWarnings = FALSE, recursive = TRUE)
     new_names <- file.path(dir, sub('gganim_plot', prefix, basename(frames)))
-    file.copy(frames, new_names, overwrite = overwrite)
+    if (any(!file.copy(frames, new_names, overwrite = overwrite))) {
+      warning('file_renderer failed to copy frames to the destination directory', call. = FALSE)
+    }
     invisible(new_names)
   }
 }

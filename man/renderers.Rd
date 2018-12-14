@@ -13,7 +13,7 @@
 gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
   width = NULL, height = NULL)
 
-file_renderer(dir = "~", prefix = "gganim_plot", overwrite = FALSE)
+file_renderer(dir = ".", prefix = "gganim_plot", overwrite = FALSE)
 
 av_renderer(file = NULL, vfilter = "null", codec = NULL,
   audio = NULL)
