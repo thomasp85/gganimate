@@ -98,3 +98,20 @@ supported are:
 }
 }
 
+\section{Label variables}{
+
+All plots have a certain set of variables available for string literal
+interpolation within plot labels. These are:
+\itemize{
+\item \strong{frame} gives you the frame index for the current frame
+\item \strong{nframes} gives you the total number of frames in the animation
+\item \strong{progress} gives you the progress of the animation at the current frame
+(equal to \code{frame/nframes})
+\item \strong{data} gives you the layer data for the current frame (as a list of data
+frames)
+}
+
+Further, the transition and view in use can also make variables available.
+Consult the documentation for these for more detail.
+}
+

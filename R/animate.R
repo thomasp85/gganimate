@@ -64,6 +64,20 @@
 #' - `fig.width`, `fig.height`, `fig.asp`, `fig.dim`: will set `width` and
 #' `height` of the device.
 #'
+#' @section Label variables:
+#' All plots have a certain set of variables available for string literal
+#' interpolation within plot labels. These are:
+#'
+#' - **frame** gives you the frame index for the current frame
+#' - **nframes** gives you the total number of frames in the animation
+#' - **progress** gives you the progress of the animation at the current frame
+#'   (equal to `frame/nframes`)
+#' - **data** gives you the layer data for the current frame (as a list of data
+#'   frames)
+#'
+#' Further, the transition and view in use can also make variables available.
+#' Consult the documentation for these for more detail.
+#'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
 #' @importFrom grDevices png jpeg tiff bmp svg dev.off
 #' @importFrom progress progress_bar

@@ -22,7 +22,8 @@ between them.
 \section{Label variables}{
 
 \code{transition_time} makes the following variables available for string
-literal interpretation:
+literal interpretation, in addition to the general ones provided by
+\code{\link[=animate]{animate()}}:
 \itemize{
 \item \strong{frame_time} gives the time that the current frame corresponds to
 }

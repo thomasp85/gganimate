@@ -31,7 +31,8 @@ disconnected segments as will happen when using \code{\link[=transition_time]{tr
 \section{Label variables}{
 
 \code{transition_along} makes the following variables available for string
-literal interpretation:
+literal interpretation, in addition to the general ones provided by
+\code{\link[=animate]{animate()}}:
 \itemize{
 \item \strong{frame_along} gives the position on the along-dimension that the current
 frame corresponds to

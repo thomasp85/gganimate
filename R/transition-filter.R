@@ -21,7 +21,8 @@
 #'
 #' @section Label variables:
 #' `transition_filter` makes the following variables available for string
-#' literal interpretation:
+#' literal interpretation, in addition to the general ones provided by
+#' [animate()]:
 #'
 #' - **transitioning** is a boolean indicating whether the frame is part of the
 #'   transitioning phase

@@ -38,7 +38,8 @@ but they can also be set to be removed as the next layer enters.
 \section{Label variables}{
 
 \code{transition_layers} makes the following variables available for string
-literal interpretation:
+literal interpretation, in addition to the general ones provided by
+\code{\link[=animate]{animate()}}:
 \itemize{
 \item \strong{transitioning} is a boolean indicating whether the frame is part of the
 transitioning phase

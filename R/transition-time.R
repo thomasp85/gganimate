@@ -12,7 +12,8 @@
 #'
 #' @section Label variables:
 #' `transition_time` makes the following variables available for string
-#' literal interpretation:
+#' literal interpretation, in addition to the general ones provided by
+#' [animate()]:
 #'
 #' - **frame_time** gives the time that the current frame corresponds to
 #'

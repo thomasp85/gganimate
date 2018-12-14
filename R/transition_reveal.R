@@ -19,7 +19,8 @@
 #'
 #' @section Label variables:
 #' `transition_along` makes the following variables available for string
-#' literal interpretation:
+#' literal interpretation, in addition to the general ones provided by
+#' [animate()]:
 #'
 #' - **frame_along** gives the position on the along-dimension that the current
 #' frame corresponds to

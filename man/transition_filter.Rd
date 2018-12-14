@@ -35,7 +35,8 @@ kept the enter function will have no effect.
 \section{Label variables}{
 
 \code{transition_filter} makes the following variables available for string
-literal interpretation:
+literal interpretation, in addition to the general ones provided by
+\code{\link[=animate]{animate()}}:
 \itemize{
 \item \strong{transitioning} is a boolean indicating whether the frame is part of the
 transitioning phase

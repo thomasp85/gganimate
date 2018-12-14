@@ -23,7 +23,8 @@ variable.
 \section{Label variables}{
 
 \code{transition_states} makes the following variables available for string
-literal interpretation:
+literal interpretation, in addition to the general ones provided by
+\code{\link[=animate]{animate()}}:
 \itemize{
 \item \strong{previous_frame} The name of the last frame the animation was at
 \item \strong{current_frame} The name of the current frame

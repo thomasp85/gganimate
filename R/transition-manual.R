@@ -14,7 +14,8 @@
 #'
 #' @section Label variables:
 #' `transition_states` makes the following variables available for string
-#' literal interpretation:
+#' literal interpretation, in addition to the general ones provided by
+#' [animate()]:
 #'
 #' - **previous_frame** The name of the last frame the animation was at
 #' - **current_frame** The name of the current frame
