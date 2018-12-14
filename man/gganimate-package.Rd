@@ -14,6 +14,26 @@ The grammar of graphics as implemented in the 'ggplot2' package has
     provides a completely new set of grammar, fully compatible with 'ggplot2' 
     for specifying transitions and animations in a flexible and extensible way.
 }
+\section{Good starting points}{
+
+The \code{\link[=animate]{animate()}} function documentation describes how to specify how the
+animation is rendered, whereas the documentation for the different transition
+functions, e.g. \code{\link[=transition_states]{transition_states()}}, describe how to declare the animation.
+
+Both \code{\link[=ease_aes]{ease_aes()}} and the different \link[=enter_exit]{enter and exit} functions
+are good to understand in order to modify tweening of the animation.
+
+Apart from the included documentation there is also a few web ressources
+worth mentioning:
+\itemize{
+\item The \href{https://github.com/thomasp85/gganimate/wiki}{gganimate wiki} includes
+user supplied example walkthroughs
+\item The \href{https://github.com/ropenscilabs/learngganimate}{learngganimate} project
+by rOpenSci Labs includes a long range of detailed explorations of the
+different gganimate functions
+}
+}
+
 \seealso{
 Useful links:
 \itemize{

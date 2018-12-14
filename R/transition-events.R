@@ -24,9 +24,29 @@
 #'
 #' @family transitions
 #'
-#' @export
 #' @importFrom rlang enquo quo_is_null quo
 #' @importFrom ggplot2 ggproto
+#' @export
+#'
+#' @examples
+#' data <- data.frame(
+#'   x = 1:10,
+#'   y = runif(10),
+#'   begin = runif(10, 1, 100),
+#'   length = runif(10, 5, 20),
+#'   enter = runif(10, 5, 10),
+#'   exit = runif(10, 5, 10)
+#' )
+#'
+#' anim <- ggplot(data, aes(x, y)) +
+#'   geom_col() +
+#'   transition_events(start = begin,
+#'                     end = begin + length,
+#'                     enter_length = enter,
+#'                     exit_length = exit) +
+#'  enter_grow() +
+#'  exit_drift(x_mod = 11) +
+#'  exit_fade()
 transition_events <- function(start, end = NULL, range = NULL, enter_length = NULL, exit_length = NULL) {
   start_quo <- enquo(start)
   end_quo <- enquo(end)

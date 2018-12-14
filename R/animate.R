@@ -88,7 +88,7 @@
 #'
 #' @examples
 #' anim <- ggplot(mtcars, aes(mpg, disp)) +
-#'   transition_states(gear) +
+#'   transition_states(gear, transition_length = 2, state_length = 1) +
 #'   enter_fade() +
 #'   exit_fade()
 #'

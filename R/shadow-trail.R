@@ -16,9 +16,27 @@
 #'
 #' @family shadows
 #'
-#' @export
 #' @importFrom ggplot2 ggproto
 #' @importFrom rlang quos
+#' @export
+#'
+#' @examples
+#' anim <- ggplot(airquality, aes(Day, Temp, colour = factor(Month))) +
+#'   geom_point() +
+#'   transition_time(Day)
+#'
+#' # Change distance between points
+#' anim1 <- anim +
+#'   shadow_trail(0.02)
+#'
+#' # Style shadow differently
+#' anim2 <- anim +
+#'   shadow_trail(alpha = 0.3, shape = 2)
+#'
+#' # Restrict the shadow to 10 frames
+#' anim3 <- anim +
+#'   shadow_trail(max_frames = 10)
+#'
 shadow_trail <- function(distance = 0.05, max_frames = Inf, ..., exclude_layer = NULL) {
   dots <- quos(...)
   names(dots) <- sub('color', 'colour', names(dots))

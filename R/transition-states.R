@@ -41,18 +41,32 @@
 #'
 #' @family transitions
 #'
-#' @examples
+#' @importFrom rlang enquo
+#' @importFrom ggplot2 ggproto
+#' @export
 #'
-#' p <- ggplot(iris, aes(Sepal.Width, Petal.Width)) +
+#' @examples
+#' anim <- ggplot(iris, aes(Sepal.Width, Petal.Width)) +
 #'   geom_point() +
 #'   labs(title = "{closest_state}") +
 #'   transition_states(Species, transition_length = 3, state_length = 1)
 #'
-#' # animate(p)
+#' # Use a unique group to avoid matching graphic elements
+#' iris$group <- seq_len(nrow(iris))
+#' anim1 <- ggplot(iris, aes(Sepal.Width, Petal.Width, group = group)) +
+#'   geom_point() +
+#'   labs(title = "{closest_state}") +
+#'   transition_states(Species, transition_length = 3, state_length = 1) +
+#'   enter_fade() +
+#'   exit_fade()
 #'
-#' @export
-#' @importFrom rlang enquo
-#' @importFrom ggplot2 ggproto
+#' # Set `wrap = FALSE` to avoid transitioning the last state to the first
+#' anim2 <- ggplot(iris, aes(Sepal.Width, Petal.Width)) +
+#'   geom_point() +
+#'   labs(title = "{closest_state}") +
+#'   transition_states(Species, transition_length = 3, state_length = 1,
+#'                     wrap = FALSE)
+#'
 transition_states <- function(states, transition_length, state_length, wrap = TRUE) {
   states_quo <- enquo(states)
   require_quo(states_quo, 'states')

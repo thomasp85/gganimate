@@ -37,15 +37,28 @@
 #'
 #' @family transitions
 #'
-#' @examples
+#' @export
+#' @importFrom ggplot2 ggproto
 #'
-#' p <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+#' @examples
+#' anim <- ggplot(airquality, aes(Day, Temp, group = Month)) +
 #'   geom_line() +
 #'   transition_reveal(Day)
 #'
-#' # animate(p)
+#' # Non-paths will only show the current position, not the history
+#' anim1 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+#'   geom_line() +
+#'   geom_point(colour = 'red', size = 3) +
+#'   transition_reveal(Day)
 #'
-#' @export
+#' # Points can be kept by giving them a unique group and set `keep = TRUE` (the
+#' # default)
+#' anim2 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+#'   geom_line() +
+#'   geom_point(aes(group = seq_along(Day))) +
+#'   geom_point(colour = 'red', size = 3) +
+#'   transition_reveal(Day)
+#'
 transition_reveal <- function(along, range = NULL, keep_last = TRUE, id) {
   if (!missing(id)) warning('The `id` argument has been deprecated. Set `id` in each layer with the `group` aesthetic', call. = FALSE)
   along_quo <- enquo(along)
@@ -130,7 +143,7 @@ get_row_along <- function(data, quo, nframes, range, after = FALSE) {
   frames <- lapply(times, function(v) {
     if (is.null(v)) return(numeric())
     frame <- round((nframes - 1) * (v - range[1])/full_length) + 1
-    nc <- nchar(max(frame))
+    nc <- nchar(max(frame)) + 1
     sprintf(paste0('%0', nc, 'i'), frame)
   })
   frame_time <- seq(range[1], range[2], length.out = nframes)

@@ -26,6 +26,24 @@ moves slowly the \emph{crumbs} will be closer to each other). It is possible to
 modify the look of the shadow by changing the different graphic parameters in
 the data
 }
+\examples{
+anim <- ggplot(airquality, aes(Day, Temp, colour = factor(Month))) +
+  geom_point() +
+  transition_time(Day)
+
+# Change distance between points
+anim1 <- anim +
+  shadow_trail(0.02)
+
+# Style shadow differently
+anim2 <- anim +
+  shadow_trail(alpha = 0.3, shape = 2)
+
+# Restrict the shadow to 10 frames
+anim3 <- anim +
+  shadow_trail(max_frames = 10)
+
+}
 \seealso{
 Other shadows: \code{\link{shadow_mark}},
   \code{\link{shadow_null}}, \code{\link{shadow_wake}}

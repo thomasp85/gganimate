@@ -67,6 +67,18 @@
 #'
 #' @name renderers
 #' @rdname renderers
+#'
+#' @examples
+#' anim <- ggplot(mtcars, aes(mpg, disp)) +
+#'   transition_states(gear, transition_length = 2, state_length = 1) +
+#'   enter_fade() +
+#'   exit_fade()
+#'
+#' \dontrun{
+#' # Renderers are specified in the `animate()` function
+#' animate(anim, renderer = sprite_renderer())
+#' }
+#'
 NULL
 
 gifski_error <- new.env(parent = emptyenv())

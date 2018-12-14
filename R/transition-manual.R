@@ -26,9 +26,25 @@
 #' element. Every frame is a discrete state and no animation between the states
 #' is done.
 #'
-#' @export
 #' @importFrom rlang enquo
 #' @importFrom ggplot2 ggproto
+#' @export
+#'
+#' @examples
+#' anim <- ggplot(mtcars, aes(factor(gear), mpg)) +
+#'   geom_boxplot() +
+#'   transition_manual(gear)
+#'
+#' # Using `cumulative = TRUE` to keep data from older frames
+#' anim2 <- ggplot(mtcars, aes(factor(gear), mpg)) +
+#'   geom_boxplot() +
+#'   transition_manual(gear, cumulative = TRUE)
+#'
+#' # Use `factor()` to set the order of the frames
+#' anim3 <- ggplot(mtcars, aes(factor(gear), mpg)) +
+#'   geom_boxplot() +
+#'   transition_manual(factor(gear, levels = c('4', '3', '5')))
+#'
 transition_manual <- function(frames, ..., cumulative = FALSE) {
   frames_quo <- enquo(frames)
   require_quo(frames_quo, 'frames')

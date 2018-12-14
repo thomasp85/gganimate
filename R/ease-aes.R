@@ -5,23 +5,61 @@
 #' `gganimate`, each aesthetic or computed variable can be tweened with
 #' individual easing functions using the `ease_aes()` function. All easing
 #' functions implemented in `tweenr` are available, see [tweenr::display_ease]
-#' for an overview.
+#' for an overview. Setting an ease for `x` and/or `y` will also affect the
+#' other related positional aesthetics (e.g. `xmin`, `yend`, etc).
 #'
 #' @param default The default easing function to use
 #' @param ... Override easing for specific aesthetics
 #'
+#' @section Easing functions:
+#' - **quadratic** Models a power-of-2 function
+#' - **cubic** Models a power-of-3 function
+#' - **quartic** Models a power-of-4 function
+#' - **quintic** Models a power-of-5 function
+#' - **sine** Models a sine function
+#' - **circular** Models a pi/2 circle arc
+#' - **exponential** Models an exponential function
+#' - **elastic** Models an elastic release of energy
+#' - **back** Models a pullback and relase
+#' - **bounce** Models the bouncing of a ball
+#'
+#' *Modifiers* \cr
+#' - **-in** The easing function is applied as-is
+#' - **-out** The easing function is applied in reverse
+#' - **-in-out** The first half of the transition it is applied as-is, while in
+#'   the last half it is reversed
+#'
 #' @export
 #' @importFrom ggplot2 ggproto
+#'
+#' @examples
+#' anim <- ggplot(mtcars, aes(mpg, disp)) +
+#'   transition_states(gear, transition_length = 2, state_length = 1) +
+#'   enter_fade() +
+#'   exit_fade()
+#'
+#' \dontrun{
+#' # Default uses linear easing
+#' animate(anim)
+#' }
+#'
+#' # Change all to 'cubic-in-out' for a smoother appearance
+#' anim1 <- anim +
+#'   ease_aes('cubic-in-out')
+#'
+#' # Only change easing of y variables
+#' anim2 <- anim +
+#'   ease_aes('linear', y = 'bounce-in')
 #'
 ease_aes <- function(default, ...) {
   aesthetics <- list(...)
   if (length(aesthetics) > 0) {
     if (is.null(names(aesthetics))) stop('Aesthetics must be named', call. = FALSE)
     if ('x' %in% names(aesthetics)) {
-      aesthetics[x_aes] <- aesthetics['x']
+      aesthetics[setdiff(x_aes, names(aesthetics))] <- aesthetics['x']
     }
     if ('y' %in% names(aesthetics)) {
-      aesthetics[y_aes] <- aesthetics['y']
+      aesthetics[setdiff(y_aes, names(aesthetics))] <- aesthetics['y']
     }
     aes_names <- sub('color', 'colour', names(aesthetics))
     aesthetics <- unlist(aesthetics)

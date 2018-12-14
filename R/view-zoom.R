@@ -4,7 +4,7 @@ NULL
 #' Pan and zoom smoothly between different states
 #'
 #' This view is in many ways equivalent to [view_step()] and
-#' [view_step_manual()]but instead of simply tweening the bounding box of each
+#' [view_step_manual()] but instead of simply tweening the bounding box of each
 #' view it implement the smooth zoom and pan technique developed by Reach &
 #' North (2018). It gradually zooms out and then in during the pan to allow a
 #' smooth transition of the view.

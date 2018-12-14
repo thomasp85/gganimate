@@ -112,6 +112,11 @@ transmute_grow <- function(type, ..., size = 0, name) {
       x$ymax <- x$ymax * size
       x
     },
+    col = function(x) {
+      x$y <- x$y * size
+      x$ymax <- x$ymax * size
+      x
+    },
     ...,
     name = name
   )
@@ -124,6 +129,7 @@ transmute_recolour <- function(type, ..., colour = 'white', fill = colour, name)
       if (!is.na(fill) && !is.null(x$fill)) x$fill <- fill
       if (!is.na(colour) && !is.null(x$edge_colour)) x$edge_colour <- colour
       if (!is.na(fill) && !is.null(x$edge_fill)) x$edge_fill <- fill
+      x
     },
     ...,
     name = name
@@ -141,6 +147,17 @@ transmute_fly <- function(type, ..., x_loc = NA, y_loc = NA, name) {
       if (!is.na(y_loc)) {
         included_y <- intersect(y_aes, names(x))
         x[, included_y] <- x[, included_y] - x[, 'y'] + y_loc
+      }
+      x
+    },
+    boxplot = function(x) {
+      if (!is.na(x_loc)) {
+        included_x <- intersect(x_aes, names(x))
+        x[, included_x] <- x[, included_x] - x[, 'x'] + x_loc
+      }
+      if (!is.na(y_loc)) {
+        included_y <- intersect(y_aes, names(x))
+        x[, included_y] <- x[, included_y] - (x[, 'lower'] + x[, 'upper'])/2 + y_loc
       }
       x
     },

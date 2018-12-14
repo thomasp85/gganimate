@@ -26,21 +26,31 @@
 #'
 #' @family shadows
 #'
+#' @importFrom ggplot2 ggproto
+#' @export
+#'
 #' @examples
-#'
-#' # `shadow_wake` can be combined with `transition_states` to show
-#' # motion of geoms as they are in transition with respect to the selected state.
-#'
-#' p <- ggplot(iris, aes(Petal.Length, Sepal.Length)) +
+#' anim <- ggplot(iris, aes(Petal.Length, Sepal.Length)) +
 #'   geom_point() +
 #'   labs(title = "{closest_state}") +
-#'   transition_states(Species, transition_length = 4, state_length = 1) +
+#'   transition_states(Species, transition_length = 4, state_length = 1)
+#'
+#' # `shadow_wake` can be combined with e.g. `transition_states` to show
+#' # motion of geoms as they are in transition with respect to the selected state.
+#' anim1 <- anim +
 #'   shadow_wake(wake_length = 0.05)
 #'
-#' # animate(p)
+#' # Different qualities can be manipulated by setting a value for it that it
+#' # should taper off to
+#' anim2 <- anim +
+#'   shadow_wake(0.1, size = 10, alpha = FALSE, colour = 'grey92')
 #'
-#' @export
-#' @importFrom ggplot2 ggproto
+#' # Use `detail` in the `animate()` call to increase the number of calculated
+#' # frames and thus make the wake smoother
+#' \dontrun{
+#' animate(anim2, detail = 5)
+#' }
+#'
 shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, colour = NULL, fill = NULL, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_phase = c('enter', 'exit')) {
   if (is.logical(size)) size <- if (size) 0 else NULL
   if (is.logical(alpha)) alpha <- if (alpha) 0 else NULL

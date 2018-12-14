@@ -17,5 +17,50 @@ progress linearly, or maybe start slowly and then build up momentum. In
 \code{gganimate}, each aesthetic or computed variable can be tweened with
 individual easing functions using the \code{ease_aes()} function. All easing
 functions implemented in \code{tweenr} are available, see \link[tweenr:display_ease]{tweenr::display_ease}
-for an overview.
+for an overview. Setting an ease for \code{x} and/or \code{y} will also affect the
+other related positional aesthetics (e.g. \code{xmin}, \code{yend}, etc).
+}
+\section{Easing functions}{
+
+\itemize{
+\item \strong{quadratic} Models a power-of-2 function
+\item \strong{cubic} Models a power-of-3 function
+\item \strong{quartic} Models a power-of-4 function
+\item \strong{quintic} Models a power-of-5 function
+\item \strong{sine} Models a sine function
+\item \strong{circular} Models a pi/2 circle arc
+\item \strong{exponential} Models an exponential function
+\item \strong{elastic} Models an elastic release of energy
+\item \strong{back} Models a pullback and relase
+\item \strong{bounce} Models the bouncing of a ball
+}
+
+\emph{Modifiers} \cr
+\itemize{
+\item \strong{-in} The easing function is applied as-is
+\item \strong{-out} The easing function is applied in reverse
+\item \strong{-in-out} The first half of the transition it is applied as-is, while in
+the last half it is reversed
+}
+}
+
+\examples{
+anim <- ggplot(mtcars, aes(mpg, disp)) +
+  transition_states(gear, transition_length = 2, state_length = 1) +
+  enter_fade() +
+  exit_fade()
+
+\dontrun{
+# Default uses linear easing
+animate(anim)
+}
+
+# Change all to 'cubic-in-out' for a smoother appearance
+anim1 <- anim +
+  ease_aes('cubic-in-out')
+
+# Only change easing of y variables
+anim2 <- anim +
+  ease_aes('linear', y = 'bounce-in')
+
 }

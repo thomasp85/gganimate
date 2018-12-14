@@ -63,7 +63,7 @@ the different views to go through}
 }
 \description{
 This view is in many ways equivalent to \code{\link[=view_step]{view_step()}} and
-\code{\link[=view_step_manual]{view_step_manual()}}but instead of simply tweening the bounding box of each
+\code{\link[=view_step_manual]{view_step_manual()}} but instead of simply tweening the bounding box of each
 view it implement the smooth zoom and pan technique developed by Reach &
 North (2018). It gradually zooms out and then in during the pan to allow a
 smooth transition of the view.

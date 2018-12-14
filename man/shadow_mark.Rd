@@ -21,7 +21,6 @@ This shadow lets you show the raw data behind the current frame. Both past
 and/or future raw data can be shown and styled as you want.
 }
 \examples{
-
 # Use any of the aesthetics to add a style to either the past or the future raw data.
 # Adding a grouping variable in a transition call prior to calling `shadow_mark()` will
 # allow transitioning through different states in time.

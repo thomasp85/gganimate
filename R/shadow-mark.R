@@ -10,8 +10,12 @@
 #' @param exclude_layer Indexes of layers that should be excluded.
 #'
 #' @family shadows
-#' @examples
 #'
+#' @importFrom ggplot2 ggproto
+#' @importFrom rlang quos
+#' @export
+#'
+#' @examples
 #' # Use any of the aesthetics to add a style to either the past or the future raw data.
 #' # Adding a grouping variable in a transition call prior to calling `shadow_mark()` will
 #' # allow transitioning through different states in time.
@@ -32,9 +36,6 @@
 #'
 #' # animate(p2)
 #'
-#' @export
-#' @importFrom ggplot2 ggproto
-#' @importFrom rlang quos
 shadow_mark <- function(past = TRUE, future = FALSE, ..., exclude_layer = NULL) {
   dots <- quos(...)
   names(dots) <- sub('color', 'colour', names(dots))
