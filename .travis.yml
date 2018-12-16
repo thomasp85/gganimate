@@ -1,7 +1,10 @@
 language: R
 cache: packages
 sudo: true
-dist: trusty
+
+env:
+  global:
+  - _R_CHECK_FORCE_SUGGESTS_=false
 
 addons:
   apt:
@@ -10,18 +13,7 @@ addons:
       - libmagick++-dev
       - cargo
 
-r:
-- oldrel
-- release
-- devel
-
-# work around temporary travis + R 3.5 bug
-r_packages: devtools
-r_github_packages: thomasp85/transformr
-
-env:
-  global:
-  - _R_CHECK_FORCE_SUGGESTS_=false
+r_github_packages: r-lib/pkgdown
 
 before_install:
   - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable --yes
@@ -29,11 +21,15 @@ before_install:
   - sudo apt-get install --yes libudunits2-dev libproj-dev libgeos-dev libgdal-dev
   - Rscript -e 'update.packages(ask = FALSE)'
 
-after_success:
-  - Rscript -e 'covr::codecov()'
+matrix:
+  include:
+  - r: devel
+  - r: release
+    after_success:
+    - Rscript -e 'covr::codecov()'
 
-before_deploy: Rscript -e 'remotes::install_cran("pkgdown")'
-deploy:
-  provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github()'
-  skip_cleanup: true
+    deploy:
+      provider: script
+      script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+      skip_cleanup: true
+  - r: oldrel
