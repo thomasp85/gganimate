@@ -39,7 +39,7 @@
 
 <meta property="og:title" content="Function reference" />
 
-<meta property="og:image" content="/logo.png" />
+<meta property="og:image" content="http://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -120,88 +120,28 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-transitions" class="hasAnchor"><a href="#section-transitions" class="anchor"></a>Transitions</h2>
+          <p class="section-desc"><p>Transitions are used to declare how plot data should be interpreted in terms of the animations dimension.</p></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="anim_save.html">anim_save()</a></code> </p>
+          <p><code><a href="transition_states.html">transition_states()</a></code> </p>
         </td>
-        <td><p>Save an animation to a file</p></td>
+        <td><p>Transition between several distinct stages of the data</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="animate.html">animate()</a></code> <code><a href="animate.html">print(<i>&lt;gganim&gt;</i>)</a></code> <code><a href="animate.html">knit_print.gganim()</a></code> </p>
+          <p><code><a href="transition_time.html">transition_time()</a></code> </p>
         </td>
-        <td><p>Render a gganim object</p></td>
+        <td><p>Transition through distinct states in time</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="ease_aes.html">ease_aes()</a></code> </p>
+          <p><code><a href="transition_reveal.html">transition_reveal()</a></code> </p>
         </td>
-        <td><p>Control easing of aesthetics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="enter_exit.html">enter_manual()</a></code> <code><a href="enter_exit.html">enter_appear()</a></code> <code><a href="enter_exit.html">enter_fade()</a></code> <code><a href="enter_exit.html">enter_grow()</a></code> <code><a href="enter_exit.html">enter_recolour()</a></code> <code><a href="enter_exit.html">enter_recolor()</a></code> <code><a href="enter_exit.html">enter_fly()</a></code> <code><a href="enter_exit.html">enter_drift()</a></code> <code><a href="enter_exit.html">enter_reset()</a></code> <code><a href="enter_exit.html">exit_manual()</a></code> <code><a href="enter_exit.html">exit_disappear()</a></code> <code><a href="enter_exit.html">exit_fade()</a></code> <code><a href="enter_exit.html">exit_shrink()</a></code> <code><a href="enter_exit.html">exit_recolour()</a></code> <code><a href="enter_exit.html">exit_recolor()</a></code> <code><a href="enter_exit.html">exit_fly()</a></code> <code><a href="enter_exit.html">exit_drift()</a></code> <code><a href="enter_exit.html">exit_reset()</a></code> </p>
-        </td>
-        <td><p>Define how entering and exiting data behaves</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="frame_vars.html">frame_vars()</a></code> </p>
-        </td>
-        <td><p>Access metadata about the frames in an animation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="gganimate-package.html">gganimate-package</a></code> </p>
-        </td>
-        <td><p>gganimate: A Grammar of Animated Graphics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="renderers.html">gifski_renderer()</a></code> <code><a href="renderers.html">file_renderer()</a></code> <code><a href="renderers.html">av_renderer()</a></code> <code><a href="renderers.html">ffmpeg_renderer()</a></code> <code><a href="renderers.html">magick_renderer()</a></code> <code><a href="renderers.html">sprite_renderer()</a></code> </p>
-        </td>
-        <td><p>Renderers provided by gganimate</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="shadow_mark.html">shadow_mark()</a></code> </p>
-        </td>
-        <td><p>Show original data as background marks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="shadow_null.html">shadow_null()</a></code> </p>
-        </td>
-        <td><p>A non-existent shadow</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="shadow_trail.html">shadow_trail()</a></code> </p>
-        </td>
-        <td><p>A trail of evenly spaced old frames</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="shadow_wake.html">shadow_wake()</a></code> </p>
-        </td>
-        <td><p>Show preceding frames with gradual falloff</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="split_animation.html">split_animation()</a></code> </p>
-        </td>
-        <td><p>Split an animation into chunks</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="transition_components.html">transition_components()</a></code> </p>
-        </td>
-        <td><p>Transition individual components through their own lifecycle</p></td>
+        <td><p>Reveal data along a given dimension</p></td>
       </tr><tr>
         
         <td>
@@ -223,6 +163,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="transition_components.html">transition_components()</a></code> </p>
+        </td>
+        <td><p>Transition individual components through their own lifecycle</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="transition_manual.html">transition_manual()</a></code> </p>
         </td>
         <td><p>Create an animation by specifying the frame membership directly</p></td>
@@ -232,36 +178,20 @@
           <p><code><a href="transition_null.html">transition_null()</a></code> </p>
         </td>
         <td><p>Keep all data constant across the animation</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="transition_reveal.html">transition_reveal()</a></code> </p>
-        </td>
-        <td><p>Reveal data along a given dimension</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="transition_states.html">transition_states()</a></code> </p>
-        </td>
-        <td><p>Transition between several distinct stages of the data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="transition_time.html">transition_time()</a></code> </p>
-        </td>
-        <td><p>Transition through distinct states in time</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-views" class="hasAnchor"><a href="#section-views" class="anchor"></a>Views</h2>
+          <p class="section-desc"><p>Views define how the ranges of the coordinate system changes during the animation.</p></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="view_follow.html">view_follow()</a></code> </p>
         </td>
         <td><p>Let the view follow the data in each frame</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="view_static.html">view_static()</a></code> </p>
-        </td>
-        <td><p>Keep a fixed view that include all of the data</p></td>
       </tr><tr>
         
         <td>
@@ -274,6 +204,116 @@
           <p><code><a href="view_zoom.html">view_zoom()</a></code> <code><a href="view_zoom.html">view_zoom_manual()</a></code> </p>
         </td>
         <td><p>Pan and zoom smoothly between different states</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="view_static.html">view_static()</a></code> </p>
+        </td>
+        <td><p>Keep a fixed view that include all of the data</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-shadows" class="hasAnchor"><a href="#section-shadows" class="anchor"></a>Shadows</h2>
+          <p class="section-desc"><p>Shadows define how data assigned to other than the current frame is displayed in the frame.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="shadow_wake.html">shadow_wake()</a></code> </p>
+        </td>
+        <td><p>Show preceding frames with gradual falloff</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="shadow_trail.html">shadow_trail()</a></code> </p>
+        </td>
+        <td><p>A trail of evenly spaced old frames</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="shadow_mark.html">shadow_mark()</a></code> </p>
+        </td>
+        <td><p>Show original data as background marks</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="shadow_null.html">shadow_null()</a></code> </p>
+        </td>
+        <td><p>A non-existent shadow</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-tweening" class="hasAnchor"><a href="#section-tweening" class="anchor"></a>Tweening</h2>
+          <p class="section-desc"><p>These functions allows control over how graphical elements change into, between, and out of states.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ease_aes.html">ease_aes()</a></code> </p>
+        </td>
+        <td><p>Control easing of aesthetics</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="enter_exit.html">enter_manual()</a></code> <code><a href="enter_exit.html">enter_appear()</a></code> <code><a href="enter_exit.html">enter_fade()</a></code> <code><a href="enter_exit.html">enter_grow()</a></code> <code><a href="enter_exit.html">enter_recolour()</a></code> <code><a href="enter_exit.html">enter_recolor()</a></code> <code><a href="enter_exit.html">enter_fly()</a></code> <code><a href="enter_exit.html">enter_drift()</a></code> <code><a href="enter_exit.html">enter_reset()</a></code> <code><a href="enter_exit.html">exit_manual()</a></code> <code><a href="enter_exit.html">exit_disappear()</a></code> <code><a href="enter_exit.html">exit_fade()</a></code> <code><a href="enter_exit.html">exit_shrink()</a></code> <code><a href="enter_exit.html">exit_recolour()</a></code> <code><a href="enter_exit.html">exit_recolor()</a></code> <code><a href="enter_exit.html">exit_fly()</a></code> <code><a href="enter_exit.html">exit_drift()</a></code> <code><a href="enter_exit.html">exit_reset()</a></code> </p>
+        </td>
+        <td><p>Define how entering and exiting data behaves</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-rendering" class="hasAnchor"><a href="#section-rendering" class="anchor"></a>Rendering</h2>
+          <p class="section-desc"><p>These functions allows you to control the rendering of the animation specified using the functions above.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="animate.html">animate()</a></code> <code><a href="animate.html">print(<i>&lt;gganim&gt;</i>)</a></code> <code><a href="animate.html">knit_print.gganim()</a></code> </p>
+        </td>
+        <td><p>Render a gganim object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="renderers.html">gifski_renderer()</a></code> <code><a href="renderers.html">file_renderer()</a></code> <code><a href="renderers.html">av_renderer()</a></code> <code><a href="renderers.html">ffmpeg_renderer()</a></code> <code><a href="renderers.html">magick_renderer()</a></code> <code><a href="renderers.html">sprite_renderer()</a></code> </p>
+        </td>
+        <td><p>Renderers provided by gganimate</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-output" class="hasAnchor"><a href="#section-output" class="anchor"></a>Output</h2>
+          <p class="section-desc"><p>These functions facilitates working with the output of a rendered animation.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="anim_save.html">anim_save()</a></code> </p>
+        </td>
+        <td><p>Save an animation to a file</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="last_animation.html">last_animation()</a></code> </p>
+        </td>
+        <td><p>Retrieve the last rendered animation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="frame_vars.html">frame_vars()</a></code> </p>
+        </td>
+        <td><p>Access metadata about the frames in an animation</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="split_animation.html">split_animation()</a></code> </p>
+        </td>
+        <td><p>Split an animation into chunks</p></td>
       </tr>
     </tbody>
     </table>
@@ -282,7 +322,12 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-transitions">Transitions</a></li>
+      <li><a href="#section-views">Views</a></li>
+      <li><a href="#section-shadows">Shadows</a></li>
+      <li><a href="#section-tweening">Tweening</a></li>
+      <li><a href="#section-rendering">Rendering</a></li>
+      <li><a href="#section-output">Output</a></li>
     </ul>
   </div>
 </div>
