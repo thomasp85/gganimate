@@ -1,1 +1,59 @@
 destination: docs
+url: http://gganimate.com
+
+reference:
+  - title: "Transitions"
+    desc: >
+      Transitions are used to declare how plot data should be interpreted in
+      terms of the animations dimension.
+    contents:
+      - transition_states
+      - transition_time
+      - transition_reveal
+      - transition_events
+      - transition_filter
+      - transition_layers
+      - transition_components
+      - transition_manual
+      - transition_null
+  - title: "Views"
+    desc: >
+      Views define how the ranges of the coordinate system changes during the
+      animation.
+    contents:
+      - view_follow
+      - view_step
+      - view_zoom
+      - view_static
+  - title: "Shadows"
+    desc: >
+      Shadows define how data assigned to other than the current frame is
+      displayed in the frame.
+    contents:
+      - shadow_wake
+      - shadow_trail
+      - shadow_mark
+      - shadow_null
+  - title: "Tweening"
+    desc: >
+      These functions allows control over how graphical elements change into,
+      between, and out of states.
+    contents:
+      - ease_aes
+      - enter_exit
+  - title: "Rendering"
+    desc: >
+      These functions allows you to control the rendering of the animation
+      specified using the functions above.
+    contents:
+      - animate
+      - renderers
+  - title: "Output"
+    desc: >
+      These functions facilitates working with the output of a rendered
+      animation.
+    contents:
+      - anim_save
+      - last_animation
+      - frame_vars
+      - split_animation
