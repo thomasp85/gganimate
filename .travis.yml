@@ -13,6 +13,7 @@ addons:
       - libmagick++-dev
       - cargo
 
+r_packages: gapminder
 r_github_packages: r-lib/pkgdown
 
 before_install:
