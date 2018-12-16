@@ -1,6 +1,15 @@
 destination: docs
 url: http://gganimate.com
 
+authors:
+  Thomas Lin Pedersen:
+    href: https://data-imaginist.com
+
+template:
+  params:
+    bootswatch: yeti
+    ganalytics: UA-84380701-2
+
 reference:
   - title: "Transitions"
     desc: >
