@@ -35,7 +35,7 @@ navbar:
       href: articles/gganimate.html
     talks:
       text: Talks
-      href: articles/talks.html
+      href: articles/extra/talks.html
     github:
       icon: fa-github fa-lg
       href: https://github.com/thomasp85/gganimate
