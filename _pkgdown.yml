@@ -19,28 +19,17 @@ toc:
   depth: 3
 
 navbar:
-  structure:
-    left:
-    - home
-    - intro
-    - reference
-    - talks
-    right: github
-  components:
-    home:
-      icon: fa-home fa-lg
+  left:
+    - icon: fa-home fa-lg
       href: index.html
-    reference:
-      text: Reference
-      href: reference/index.html
-    intro:
-      text: Getting Started
+    - text: Getting Started
       href: articles/gganimate.html
-    talks:
-      text: Talks
+    - text: Reference
+      href: reference/index.html
+    - text: Talks
       href: articles/extra/talks.html
-    github:
-      icon: fa-github fa-lg
+  right:
+    - icon: fa-github fa-lg
       href: https://github.com/thomasp85/gganimate
 
 reference:
