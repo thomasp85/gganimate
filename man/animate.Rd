@@ -129,7 +129,7 @@ animate(anim)
 animate(anim, fps = 20, duration = 15)
 
 # Make the animation pause at the end and then rewind
-animate(anim, nframes = 200, end_pause = 20, rewind = TRUE)
+animate(anim, nframes = 100, end_pause = 10, rewind = TRUE)
 
 # Use a different renderer
 animate(anim, renderer = file_renderer('~/animation/'))
