@@ -64,7 +64,7 @@ somehow distribute it over a number of frames. `transition_states()`
 specifically splits the data into subsets based on a variable in the data (here
 `Species`), and calculates intermediary data states that ensures a smooth
 transition between the states (something refered to as *tweening*). *gganimate*
-provides a range of different transitions, but for the next couple of examples
+provides a range of different transitions, but for the rest of the examples
 we'll be sticking to `transition_states()` and see how we can modify the output.
 
 ## Easing
@@ -172,4 +172,43 @@ ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
                     state_length = 1)
 ```
 
-## More Coming
+## Enter and Exit
+While we may have made our animation more correct by separating the data from 
+the different species, we have also made it quite a bit more boring. Now it
+simply appears as three static plots shown one at a time, which is hardly an
+attention grabber. If only there were a way to animate the appearance and 
+disappearance of data...
+
+Enter the `enter` and `exit` functions. These functions are responsible for 
+modifying the state of appearing (entering) and disappearing (exiting) data, so
+that the animation can tween from and to the new state. Let's spice up our 
+animation a bit:
+
+```{r}
+anim <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_point(aes(colour = Species), size = 2) + 
+  transition_states(Species,
+                    transition_length = 2,
+                    state_length = 1)
+
+anim + 
+  enter_fade() + 
+  exit_shrink()
+```
+
+> ❗ `enter` and `exit` functions are used to modify the aesthetics of appearing
+  and disappearing data so that their entrance or exit may be animated.
+  
+*gganimate* comes with a range of different functions, and using the 
+`enter_manual()` and `exit_manual()` functions you can create your own. Enter 
+and exit functions are composable though, so you can often come pretty far by
+combining preexisting ones
+
+```{r}
+anim + 
+  enter_fade() + enter_drift(x_mod = -1) + 
+  exit_shrink() + exit_drift(x_mod = 5)
+```
+
+## Rendering
+
