@@ -136,6 +136,9 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">anim <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ease_aes.html">ease_aes</a></span>(<span class="st">'cubic-in-out'</span>) <span class="co"># Slow start and end for a smoother look</span></a></code></pre></div>
 <p><img src="gganimate_files/figure-html/unnamed-chunk-4-1.gif"><!-- --></p>
+<blockquote>
+<p>❗ <code><a href="../reference/ease_aes.html">ease_aes()</a></code> defines the velocity with which aesthetics change during an animation.</p>
+</blockquote>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">anim <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/ease_aes.html">ease_aes</a></span>(<span class="st">'linear'</span>, <span class="dt">y =</span> <span class="st">'bounce-out'</span>) <span class="co"># Sets special ease for y aesthetic</span></a></code></pre></div>
 <p><img src="gganimate_files/figure-html/unnamed-chunk-5-1.gif"><!-- --></p>
@@ -148,13 +151,50 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">'Now showing {closest_state}'</span>,</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">          <span class="dt">subtitle =</span> <span class="st">'Frame {frame} of {nframes}'</span>)</a></code></pre></div>
 <p><img src="gganimate_files/figure-html/unnamed-chunk-6-1.gif"><!-- --></p>
+<blockquote>
+<p>❗ Use <em>glue</em> syntax to insert frame variables in plot labels and titles.</p>
+</blockquote>
 <p>Different transitions provide different frame variables. <code>closest_state</code> only makes sense for <code><a href="../reference/transition_states.html">transition_states()</a></code> and is thus only avaialable when that transition is used.</p>
 </div>
 <div id="object-permanence" class="section level2">
 <h2 class="hasAnchor">
 <a href="#object-permanence" class="anchor"></a>Object Permanence</h2>
-<p>In the animation above it appears as if data if a single measurement changes gradually as the flower being measured on somehow morphs between three different iris species. This is probably not how Fisher conducted the experiement and got those numbers. In general, when you make an animation, <em>graphic elements should only transition between different instances of the same underlying phenomenon</em>. This sounds complicated but it is more or less the same principle that governs if it is ok to draw a line between two observations. You wouldn’t connect observations from different iris species, but repeated observations on the same plant would be ok to connect. Same thing with animations.</p>
-<p>So, how do we fix this and tell <em>gganimate</em> to not morph observations from different species into each others? The key is the <em>group aesthetic</em>. You may be familiar with this aesthetic from plotitng lines and polygons, but in <em>gganimate</em> it takes a more central place. Data that has the same group aesthetic are interpreted as being linked across states. The semantics of the group aesthetic in <em>ggplot2</em> is such that if it is undefined it will get calculated based on the interaction of all discrete aesthetics (sans <code>label</code>). If none exists, such as in our iris animation, all data will get the same group, and will thus be matched by <em>gganimate</em>.</p>
+<p>In the animation above, it appears as if data if a single measurement changes gradually as the flower being measured on somehow morphs between three different iris species. This is probably not how Fisher conducted the experiement and got those numbers. In general, when you make an animation, <em>graphic elements should only transition between instances of the same underlying phenomenon</em>. This sounds complicated but it is more or less the same principle that governs makes sense to draw a line between two observations. You wouldn’t connect observations from different iris species, but repeated observations on the same plant would be ok to connect. Same thing with animations.</p>
+<p>Just to make this very clear (it is an important concept). The line plot equivalent of our animation above is:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Width, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rep">rep</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">50</span>, <span class="dv">3</span>)), <span class="dt">colour =</span> <span class="st">'grey'</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="gganimate_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>Ugh…</p>
+<p>So, how do we fix this and tell <em>gganimate</em> to not morph observations from different species into each others? The key is the <em>group aesthetic</em>. You may be familiar with this aesthetic from plotitng lines and polygons, but in <em>gganimate</em> it takes a more central place. Data that have the same group aesthetic are interpreted as being linked across states. The semantics of the group aesthetic in <em>ggplot2</em> is such that if it is undefined it will get calculated based on the interaction of all discrete aesthetics (sans <code>label</code>). If none exists, such as in our iris animation, all data will get the same group, and will thus be matched by <em>gganimate</em>. So, there are two ways to fix our plot:</p>
+<ol style="list-style-type: decimal">
+<li>Add some aesthetics that distinguish the different species</li>
+</ol>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Width, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Species)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transition_states.html">transition_states</a></span>(Species,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                    <span class="dt">transition_length =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">                    <span class="dt">state_length =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="gganimate_files/figure-html/unnamed-chunk-8-1.gif"><!-- --></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Set the group directly</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Width, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">group =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq_along</a></span>(Species))) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transition_states.html">transition_states</a></span>(Species,</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">                    <span class="dt">transition_length =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                    <span class="dt">state_length =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="gganimate_files/figure-html/unnamed-chunk-9-1.gif"><!-- --></p>
+<blockquote>
+<p>❗ The group aesthetic defines how the data in a layer is matched across the animation.</p>
+</blockquote>
+<p>In general <em>2)</em> is preferred as it makes the intend explicit. It also makes it possible to match data with different discrete aesthetics such as keeping our (now obviously faulty) transition while having different colour for the different species)</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Width, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Species, <span class="dt">group =</span> 1L)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transition_states.html">transition_states</a></span>(Species,</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">                    <span class="dt">transition_length =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">                    <span class="dt">state_length =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p><img src="gganimate_files/figure-html/unnamed-chunk-10-1.gif"><!-- --></p>
 </div>
 <div id="more-coming" class="section level2">
 <h2 class="hasAnchor">
