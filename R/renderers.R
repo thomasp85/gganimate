@@ -271,6 +271,7 @@ gif_file <- function(file) {
 #' @rdname gif_file
 #' @export
 print.gif_image <- function(x, ...) {
+  if (in_pkgdown()) knit_print.gif_image(x, ...)
   viewer <- getOption("viewer", utils::browseURL)
   if (is.function(viewer) && length(x)) {
     viewer(x)
@@ -323,6 +324,7 @@ video_file <- function(file) {
 #' @rdname video_file
 #' @export
 print.video_file <- function(x, ...) {
+  if (in_pkgdown()) knit_print.video_file(x, ...)
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
     if (grepl('\\.mp4$', x, ignore.case = TRUE) && .Platform$GUI == "RStudio") {
       utils::browseURL(x)
@@ -395,6 +397,7 @@ sprite_file <- function(file, fps, width, full_width, height) {
 #' @rdname sprite_file
 #' @export
 print.sprite_image <- function(x, ...) {
+  if (in_pkgdown()) knit_print.sprite_image(x, ...)
   print(htmltools::browsable(as_sprite_html(x)))
 }
 #' @rdname sprite_file
@@ -476,4 +479,9 @@ as_sprite_html <- function(x, ...) {
 #' @export
 split.sprite_image <- function(x, f, drop = FALSE, ...) {
   stop('sprite_image objects does not support splitting', call. = FALSE)
+}
+
+
+in_pkgdown <- function() {
+  identical(Sys.getenv("IN_PKGDOWN"), "true")
 }
