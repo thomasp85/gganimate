@@ -15,6 +15,9 @@ template:
       api_key: ee1fa0fd61e4ffed26fdeaf44ebdd541
       index_name: gganimate
 
+toc:
+  depth: 3
+
 navbar:
   structure:
     left:

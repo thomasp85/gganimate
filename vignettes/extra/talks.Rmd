@@ -1,10 +1,6 @@
 ---
 title: "gganimate Talks"
 output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{gganimate Talks}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
@@ -17,7 +13,7 @@ knitr::opts_chunk$set(
 This is an ever-growing list of talks I've given about *gganimate* in reverse
 chronological order:
 
-## Rstudio::conf 2019L
+### Rstudio::conf 2019
 **Title:** gganimate Live Cookbook
 
 **Abstract:** Animation of data visualisation is becoming increasingly popular 
@@ -31,7 +27,7 @@ animation and show how they were made and how they could be changed or expanded.
 
 **Video:** Pending presentation
 
-## useR 2018
+### useR 2018
 **Title:** The Grammar of Animation
 
 **Abstract:** In the world of data visualisation much work has been put into 
