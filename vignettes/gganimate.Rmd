@@ -51,7 +51,7 @@ anim <- p +
                     transition_length = 2,
                     state_length = 1)
 
-animate(p)
+animate(anim)
 ```
 
 > ❗ `transition_states()` splits up plot data by a discrete varaible and 
