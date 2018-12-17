@@ -111,7 +111,7 @@ gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, widt
       height <- height %||% dims[1]
       width <- width %||% dims[2]
     }
-    progress <- !isTRUE(getOption("knitr.in.progress"))
+    progress <- interactive()
     if (progress) message('')
     gif <- gifski::gifski(frames, file, width, height, delay = 1/fps, loop, progress)
     gif_file(gif)
@@ -140,7 +140,7 @@ av_renderer <- function(file = NULL, vfilter = "null", codec = NULL, audio = NUL
     file <- tempfile(fileext = ext)
   }
   function(frames, fps) {
-    progress <- !isTRUE(getOption("knitr.in.progress"))
+    progress <- interactive()
     av::av_encode_video(input = frames, output = file, framerate = fps,
                         vfilter = vfilter, codec = codec, audio = audio,
                         verbose = progress)
@@ -182,7 +182,7 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
   stopifnot(is.character(options))
 
   function(frames, fps) {
-    progress <- !isTRUE(getOption("knitr.in.progress"))
+    progress <- interactive()
     output_file <- tempfile(fileext = paste0('.', sub('^\\.', '', format)))
     frame_loc <- dirname(frames[1])
     file_glob <- sub('^.*(\\..+$)', 'gganim_plot%4d\\1', basename(frames[1]))
