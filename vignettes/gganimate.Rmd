@@ -11,8 +11,9 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  cache = TRUE,
-  gganimate.nframes = 50
+  gganimate = list(
+    nframes = 50
+  )
 )
 ```
 
