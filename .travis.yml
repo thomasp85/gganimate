@@ -13,7 +13,6 @@ addons:
       - libmagick++-dev
       - cargo
 
-r_packages: gapminder
 r_github_packages: r-lib/pkgdown
 
 before_install:
@@ -26,6 +25,8 @@ matrix:
   include:
   - r: devel
   - r: release
+    r_packages:
+      - gapminder
     after_success:
     - Rscript -e 'covr::codecov()'
 
