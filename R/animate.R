@@ -103,7 +103,7 @@
 #' animate(anim, nframes = 100, end_pause = 10, rewind = TRUE)
 #'
 #' # Use a different renderer
-#' animate(anim, renderer = file_renderer('~/animation/'))
+#' animate(anim, renderer = file_renderer('~/animation/'))[1:6]
 #' }
 #'
 animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
