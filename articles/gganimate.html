@@ -58,10 +58,25 @@
   </a>
 </li>
 <li>
-  <a href="../articles/gganimate.html">Get started</a>
+  <a href="../articles/gganimate.html">Getting Started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="../articles/talks.html">Talks</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/articles/talks.html">gganimate Talks</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -127,7 +142,7 @@
 <blockquote>
 <p>❗ <code><a href="../reference/transition_states.html">transition_states()</a></code> splits up plot data by a discrete varaible and animates between the different states.</p>
 </blockquote>
-<p>As can be seen, very few additions to the plot results in a quite complex animation. So what did we do to get this animation? We added a type of <em>transition</em>. Transitions are functions that interpret the plot data in order to somehow distribute it over a number of frames. <code><a href="../reference/transition_states.html">transition_states()</a></code> specifically splits the data into subsets based on a variable in the data (here <code>Species</code>), and calculates intermediary data states that ensures a smooth transition between the states (something refered to as <em>tweening</em>). <em>gganimate</em> provides a range of different transitions, but for the next couple of examples we’ll be sticking to <code><a href="../reference/transition_states.html">transition_states()</a></code> and see how we can modify the output.</p>
+<p>As can be seen, very few additions to the plot results in a quite complex animation. So what did we do to get this animation? We added a type of <em>transition</em>. Transitions are functions that interpret the plot data in order to somehow distribute it over a number of frames. <code><a href="../reference/transition_states.html">transition_states()</a></code> specifically splits the data into subsets based on a variable in the data (here <code>Species</code>), and calculates intermediary data states that ensures a smooth transition between the states (something refered to as <em>tweening</em>). <em>gganimate</em> provides a range of different transitions, but for the rest of the examples we’ll be sticking to <code><a href="../reference/transition_states.html">transition_states()</a></code> and see how we can modify the output.</p>
 </div>
 <div id="easing" class="section level2">
 <h2 class="hasAnchor">
@@ -196,9 +211,33 @@
 <a class="sourceLine" id="cb9-5" data-line-number="5">                    <span class="dt">state_length =</span> <span class="dv">1</span>)</a></code></pre></div>
 <p><img src="gganimate_files/figure-html/unnamed-chunk-10-1.gif"><!-- --></p>
 </div>
-<div id="more-coming" class="section level2">
+<div id="enter-and-exit" class="section level2">
 <h2 class="hasAnchor">
-<a href="#more-coming" class="anchor"></a>More Coming</h2>
+<a href="#enter-and-exit" class="anchor"></a>Enter and Exit</h2>
+<p>While we may have made our animation more correct by separating the data from the different species, we have also made it quite a bit more boring. Now it simply appears as three static plots shown one at a time, which is hardly an attention grabber. If only there were a way to animate the appearance and disappearance of data…</p>
+<p>Enter the <code>enter</code> and <code>exit</code> functions. These functions are responsible for modifying the state of appearing (entering) and disappearing (exiting) data, so that the animation can tween from and to the new state. Let’s spice up our animation a bit:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">anim &lt;-<span class="st"> </span><span class="kw">ggplot</span>(iris, <span class="kw">aes</span>(<span class="dt">x =</span> Petal.Width, <span class="dt">y =</span> Petal.Length)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> Species), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/transition_states.html">transition_states</a></span>(Species,</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">                    <span class="dt">transition_length =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">                    <span class="dt">state_length =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">anim <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="../reference/enter_exit.html">enter_fade</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw"><a href="../reference/enter_exit.html">exit_shrink</a></span>()</a></code></pre></div>
+<p><img src="gganimate_files/figure-html/unnamed-chunk-11-1.gif"><!-- --></p>
+<blockquote>
+<p>❗ <code>enter</code> and <code>exit</code> functions are used to modify the aesthetics of appearing and disappearing data so that their entrance or exit may be animated.</p>
+</blockquote>
+<p><em>gganimate</em> comes with a range of different functions, and using the <code><a href="../reference/enter_exit.html">enter_manual()</a></code> and <code><a href="../reference/enter_exit.html">exit_manual()</a></code> functions you can create your own. Enter and exit functions are composable though, so you can often come pretty far by combining preexisting ones</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">anim <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="../reference/enter_exit.html">enter_fade</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/enter_exit.html">enter_drift</a></span>(<span class="dt">x_mod =</span> <span class="dv">-1</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/enter_exit.html">exit_shrink</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/enter_exit.html">exit_drift</a></span>(<span class="dt">x_mod =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p><img src="gganimate_files/figure-html/unnamed-chunk-12-1.gif"><!-- --></p>
+</div>
+<div id="rendering" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rendering" class="anchor"></a>Rendering</h2>
 </div>
   </div>
 
@@ -211,7 +250,8 @@
       <li><a href="#easing">Easing</a></li>
       <li><a href="#labelling">Labelling</a></li>
       <li><a href="#object-permanence">Object Permanence</a></li>
-      <li><a href="#more-coming">More Coming</a></li>
+      <li><a href="#enter-and-exit">Enter and Exit</a></li>
+      <li><a href="#rendering">Rendering</a></li>
       </ul>
 </div>
       </div>
