@@ -1,0 +1,55 @@
+---
+title: "gganimate Talks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gganimate Talks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This is an ever-growing list of talks I've given about *gganimate* in reverse
+chronological order:
+
+## Rstudio::conf 2019L
+**Title:** gganimate Live Cookbook
+
+**Abstract:** Animation of data visualisation is becoming increasingly popular 
+both as an attention grabber on social media and as a way to tell small data 
+stories. gganimate is a package that extends ggplot2 for making animations and 
+provides a grammar of animation on top of the grammar of graphics. This talk 
+will quickly introduce gganimate, and then dive into a series of different 
+animation and show how they were made and how they could be changed or expanded.
+
+**Slides:** Pending presentation
+
+**Video:** Pending presentation
+
+## useR 2018
+**Title:** The Grammar of Animation
+
+**Abstract:** In the world of data visualisation much work has been put into 
+defining a grammar for both static and interactive graphics. These efforts has 
+often been coupled to the development of visualisation frameworks where the 
+grammar has been reflected in the API design. Less attention has been devoted to 
+a grammar of animation, and subsequently animation frameworks has often missed 
+the breadth and composability that are the hallmark of grammar-driven 
+visualisation frameworks. In this talk I will justify and present a grammar of 
+animation and position it in relation to graphics and interactivity grammar, 
+thus creating a clear division of responsibility between the three domains. I 
+will present an R implementation of the grammar of animation which builds on top 
+of the ggplot2 framework and made available as the gganimate package, Using 
+examples with gganimate I'll show how the proposed grammar can be used to break 
+down, and reason about, animated data visualisation, and how the grammar 
+succinctly can describe very diverse animation operations.
+
+**Slides:** <https://data-imaginist.com/slides/user2018>
+
+**Video:** 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/21ZWDrTukEs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>

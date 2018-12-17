@@ -15,6 +15,31 @@ template:
       api_key: ee1fa0fd61e4ffed26fdeaf44ebdd541
       index_name: gganimate
 
+navbar:
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - talks
+    right: github
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    intro:
+      text: Getting Started
+      href: articles/gganimate.html
+    talks:
+      text: Talks
+      href: articles/talks.html
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/thomasp85/gganimate
+
 reference:
   - title: "Transitions"
     desc: >
