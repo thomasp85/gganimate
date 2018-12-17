@@ -14,8 +14,10 @@
 #'
 #' @family views
 #'
-#' @examples
+#' @importFrom ggplot2 ggproto
+#' @export
 #'
+#' @examples
 #' # `view_follow()` can be combined with `transition_states()` to follow
 #' # transitions in each frame.
 #'
@@ -27,8 +29,6 @@
 #'
 #' # animate(p)
 #'
-#' @export
-#' @importFrom ggplot2 ggproto
 view_follow <- function(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1) {
   ggproto(NULL, ViewFollow, exclude_layer = exclude_layer, aspect_ratio = aspect_ratio,
           fixed_lim = list(x = fixed_x, y = fixed_y))

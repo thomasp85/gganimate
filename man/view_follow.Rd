@@ -24,7 +24,6 @@ given aspect ratio. Will override anything given in \code{fixed_x}/\code{fixed_y
 This view will set the panels to include the data present in the frame.
 }
 \examples{
-
 # `view_follow()` can be combined with `transition_states()` to follow
 # transitions in each frame.
 
