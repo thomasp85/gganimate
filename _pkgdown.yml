@@ -4,6 +4,8 @@ url: http://gganimate.com
 authors:
   Thomas Lin Pedersen:
     href: https://data-imaginist.com
+  David Robinson:
+    href: http://varianceexplained.org
 
 template:
   params:
