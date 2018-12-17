@@ -80,6 +80,9 @@ anim +
   ease_aes('cubic-in-out') # Slow start and end for a smoother look
 ```
 
+> ❗ `ease_aes()` defines the  velocity with which aesthetics change during an
+  animation.
+
 ```{r}
 anim + 
   ease_aes('linear', y = 'bounce-out') # Sets special ease for y aesthetic
@@ -97,29 +100,76 @@ anim +
           subtitle = 'Frame {frame} of {nframes}')
 ```
 
+> ❗ Use *glue* syntax to insert frame variables in plot labels and titles.
+
 Different transitions provide different frame variables. `closest_state` only
 makes sense for `transition_states()` and is thus only avaialable when that 
 transition is used.
 
 ## Object Permanence
-In the animation above it appears as if data if a single measurement changes
+In the animation above, it appears as if data if a single measurement changes
 gradually as the flower being measured on somehow morphs between three different
 iris species. This is probably not how Fisher conducted the experiement and got
 those numbers. In general, when you make an animation, *graphic elements should
-only transition between different instances of the same underlying phenomenon*. 
+only transition between instances of the same underlying phenomenon*. 
 This sounds complicated but it is more or less the same principle that governs 
-if it is ok to draw a line between two observations. You wouldn't connect 
+makes sense to draw a line between two observations. You wouldn't connect 
 observations from different iris species, but repeated observations on the same
 plant would be ok to connect. Same thing with animations.
+
+Just to make this very clear (it is an important concept). The line plot 
+equivalent of our animation above is:
+
+```{r}
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_line(aes(group = rep(1:50, 3)), colour = 'grey') + 
+  geom_point()
+```
+
+Ugh...
 
 So, how do we fix this and tell *gganimate* to not morph observations from 
 different species into each others? The key is the *group aesthetic*. You may be
 familiar with this aesthetic from plotitng lines and polygons, but in 
-*gganimate* it takes a more central place. Data that has the same group 
+*gganimate* it takes a more central place. Data that have the same group 
 aesthetic are interpreted as being linked across states. The semantics of the
 group aesthetic in *ggplot2* is such that if it is undefined it will get 
 calculated based on the interaction of all discrete aesthetics (sans `label`). 
 If none exists, such as in our iris animation, all data will get the same group, 
-and will thus be matched by *gganimate*.
+and will thus be matched by *gganimate*. So, there are two ways to fix our plot:
+
+1. Add some aesthetics that distinguish the different species
+```{r}
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_point(aes(colour = Species)) + 
+  transition_states(Species,
+                    transition_length = 2,
+                    state_length = 1)
+```
+
+2. Set the group directly
+```{r}
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_point(aes(group = seq_along(Species))) + 
+  transition_states(Species,
+                    transition_length = 2,
+                    state_length = 1)
+```
+
+> ❗ The group aesthetic defines how the data in a layer is matched across the
+  animation.
+
+In general *2)* is preferred as it makes the intend explicit. It also makes it 
+possible to match data with different discrete aesthetics such as keeping our 
+(now obviously faulty) transition while having different colour for the different
+species)
+
+```{r}
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_point(aes(colour = Species, group = 1L)) + 
+  transition_states(Species,
+                    transition_length = 2,
+                    state_length = 1)
+```
 
 ## More Coming
