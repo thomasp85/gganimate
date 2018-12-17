@@ -36,6 +36,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Let the view follow the data in each frame — view_follow" />
 
@@ -108,6 +114,12 @@
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -162,8 +174,7 @@ given aspect ratio. Will override anything given in <code>fixed_x</code>/<code>f
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># `view_follow()` can be combined with `transition_states()` to follow</span>
+    <pre class="examples"><div class='input'><span class='co'># `view_follow()` can be combined with `transition_states()` to follow</span>
 <span class='co'># transitions in each frame.</span>
 
 <span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Sepal.Length</span>, <span class='no'>Sepal.Width</span>)) +
@@ -199,6 +210,23 @@ given aspect ratio. Will override anything given in <code>fixed_x</code>/<code>f
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: 'ee1fa0fd61e4ffed26fdeaf44ebdd541',
+    indexName: 'gganimate',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

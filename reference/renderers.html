@@ -36,6 +36,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Renderers provided by gganimate — renderers" />
 
@@ -111,6 +117,12 @@ receives the paths to the individual frames once they have been created." />
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -263,10 +275,8 @@ value of your provided function will be the return value ultimately given by
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>gear</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><span class='co'># NOT RUN {</span>
-<span class='co'># Renderers are specified in the `animate()` function</span>
-<span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'>sprite_renderer</span>())
-<span class='co'># }</span><div class='input'>
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><div class='input'><span class='co'># Renderers are specified in the `animate()` function</span>
+<span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'>sprite_renderer</span>())</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -296,6 +306,23 @@ value of your provided function will be the return value ultimately given by
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: 'ee1fa0fd61e4ffed26fdeaf44ebdd541',
+    indexName: 'gganimate',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>

@@ -36,6 +36,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="Render a gganim object — animate" />
 
@@ -117,6 +123,12 @@ spaced frames are rendered." />
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -276,19 +288,269 @@ Consult the documentation for these for more detail.</p>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>gear</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><span class='co'># NOT RUN {</span>
-<span class='co'># Explicitly animate using default (same as just printing the animation)</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>)
-
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><div class='input'><span class='co'># Explicitly animate using default (same as just printing the animation)</span>
+<span class='fu'>animate</span>(<span class='no'>anim</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Frame 1 (1%)Frame 2 (2%)Frame 3 (3%)Frame 4 (4%)Frame 5 (5%)Frame 6 (6%)Frame 7 (7%)Frame 8 (8%)Frame 9 (9%)Frame 10 (10%)Frame 11 (11%)Frame 12 (12%)Frame 13 (13%)Frame 14 (14%)Frame 15 (15%)Frame 16 (16%)Frame 17 (17%)Frame 18 (18%)Frame 19 (19%)Frame 20 (20%)Frame 21 (21%)Frame 22 (22%)Frame 23 (23%)Frame 24 (24%)Frame 25 (25%)Frame 26 (26%)Frame 27 (27%)Frame 28 (28%)Frame 29 (29%)Frame 30 (30%)Frame 31 (31%)Frame 32 (32%)Frame 33 (33%)Frame 34 (34%)Frame 35 (35%)Frame 36 (36%)Frame 37 (37%)Frame 38 (38%)Frame 39 (39%)Frame 40 (40%)Frame 41 (41%)Frame 42 (42%)Frame 43 (43%)Frame 44 (44%)Frame 45 (45%)Frame 46 (46%)Frame 47 (47%)Frame 48 (48%)Frame 49 (49%)Frame 50 (50%)Frame 51 (51%)Frame 52 (52%)Frame 53 (53%)Frame 54 (54%)Frame 55 (55%)Frame 56 (56%)Frame 57 (57%)Frame 58 (58%)Frame 59 (59%)Frame 60 (60%)Frame 61 (61%)Frame 62 (62%)Frame 63 (63%)Frame 64 (64%)Frame 65 (65%)Frame 66 (66%)Frame 67 (67%)Frame 68 (68%)Frame 69 (69%)Frame 70 (70%)Frame 71 (71%)Frame 72 (72%)Frame 73 (73%)Frame 74 (74%)Frame 75 (75%)Frame 76 (76%)Frame 77 (77%)Frame 78 (78%)Frame 79 (79%)Frame 80 (80%)Frame 81 (81%)Frame 82 (82%)Frame 83 (83%)Frame 84 (84%)Frame 85 (85%)Frame 86 (86%)Frame 87 (87%)Frame 88 (88%)Frame 89 (89%)Frame 90 (90%)Frame 91 (91%)Frame 92 (92%)Frame 93 (93%)Frame 94 (94%)Frame 95 (95%)Frame 96 (96%)Frame 97 (97%)Frame 98 (98%)Frame 99 (99%)Frame 100 (100%)
+#&gt; Finalizing encoding... done!</div><div class='input'>
 <span class='co'># Change duration and framerate</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>fps</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>15</span>)
-
+<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>fps</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Frame 1 (0%)Frame 2 (0%)Frame 3 (1%)Frame 4 (1%)Frame 5 (1%)Frame 6 (2%)Frame 7 (2%)Frame 8 (2%)Frame 9 (3%)Frame 10 (3%)Frame 11 (3%)Frame 12 (4%)Frame 13 (4%)Frame 14 (4%)Frame 15 (5%)Frame 16 (5%)Frame 17 (5%)Frame 18 (6%)Frame 19 (6%)Frame 20 (6%)Frame 21 (7%)Frame 22 (7%)Frame 23 (7%)Frame 24 (8%)Frame 25 (8%)Frame 26 (8%)Frame 27 (9%)Frame 28 (9%)Frame 29 (9%)Frame 30 (10%)Frame 31 (10%)Frame 32 (10%)Frame 33 (11%)Frame 34 (11%)Frame 35 (11%)Frame 36 (12%)Frame 37 (12%)Frame 38 (12%)Frame 39 (13%)Frame 40 (13%)Frame 41 (13%)Frame 42 (14%)Frame 43 (14%)Frame 44 (14%)Frame 45 (15%)Frame 46 (15%)Frame 47 (15%)Frame 48 (16%)Frame 49 (16%)Frame 50 (16%)Frame 51 (17%)Frame 52 (17%)Frame 53 (17%)Frame 54 (18%)Frame 55 (18%)Frame 56 (18%)Frame 57 (19%)Frame 58 (19%)Frame 59 (19%)Frame 60 (20%)Frame 61 (20%)Frame 62 (20%)Frame 63 (21%)Frame 64 (21%)Frame 65 (21%)Frame 66 (22%)Frame 67 (22%)Frame 68 (22%)Frame 69 (23%)Frame 70 (23%)Frame 71 (23%)Frame 72 (24%)Frame 73 (24%)Frame 74 (24%)Frame 75 (25%)Frame 76 (25%)Frame 77 (25%)Frame 78 (26%)Frame 79 (26%)Frame 80 (26%)Frame 81 (27%)Frame 82 (27%)Frame 83 (27%)Frame 84 (28%)Frame 85 (28%)Frame 86 (28%)Frame 87 (29%)Frame 88 (29%)Frame 89 (29%)Frame 90 (30%)Frame 91 (30%)Frame 92 (30%)Frame 93 (31%)Frame 94 (31%)Frame 95 (31%)Frame 96 (32%)Frame 97 (32%)Frame 98 (32%)Frame 99 (33%)Frame 100 (33%)Frame 101 (33%)Frame 102 (34%)Frame 103 (34%)Frame 104 (34%)Frame 105 (35%)Frame 106 (35%)Frame 107 (35%)Frame 108 (36%)Frame 109 (36%)Frame 110 (36%)Frame 111 (37%)Frame 112 (37%)Frame 113 (37%)Frame 114 (38%)Frame 115 (38%)Frame 116 (38%)Frame 117 (39%)Frame 118 (39%)Frame 119 (39%)Frame 120 (40%)Frame 121 (40%)Frame 122 (40%)Frame 123 (41%)Frame 124 (41%)Frame 125 (41%)Frame 126 (42%)Frame 127 (42%)Frame 128 (42%)Frame 129 (43%)Frame 130 (43%)Frame 131 (43%)Frame 132 (44%)Frame 133 (44%)Frame 134 (44%)Frame 135 (45%)Frame 136 (45%)Frame 137 (45%)Frame 138 (46%)Frame 139 (46%)Frame 140 (46%)Frame 141 (47%)Frame 142 (47%)Frame 143 (47%)Frame 144 (48%)Frame 145 (48%)Frame 146 (48%)Frame 147 (49%)Frame 148 (49%)Frame 149 (49%)Frame 150 (50%)Frame 151 (50%)Frame 152 (50%)Frame 153 (51%)Frame 154 (51%)Frame 155 (51%)Frame 156 (52%)Frame 157 (52%)Frame 158 (52%)Frame 159 (53%)Frame 160 (53%)Frame 161 (53%)Frame 162 (54%)Frame 163 (54%)Frame 164 (54%)Frame 165 (55%)Frame 166 (55%)Frame 167 (55%)Frame 168 (56%)Frame 169 (56%)Frame 170 (56%)Frame 171 (57%)Frame 172 (57%)Frame 173 (57%)Frame 174 (58%)Frame 175 (58%)Frame 176 (58%)Frame 177 (59%)Frame 178 (59%)Frame 179 (59%)Frame 180 (60%)Frame 181 (60%)Frame 182 (60%)Frame 183 (61%)Frame 184 (61%)Frame 185 (61%)Frame 186 (62%)Frame 187 (62%)Frame 188 (62%)Frame 189 (63%)Frame 190 (63%)Frame 191 (63%)Frame 192 (64%)Frame 193 (64%)Frame 194 (64%)Frame 195 (65%)Frame 196 (65%)Frame 197 (65%)Frame 198 (66%)Frame 199 (66%)Frame 200 (66%)Frame 201 (67%)Frame 202 (67%)Frame 203 (67%)Frame 204 (68%)Frame 205 (68%)Frame 206 (68%)Frame 207 (69%)Frame 208 (69%)Frame 209 (69%)Frame 210 (70%)Frame 211 (70%)Frame 212 (70%)Frame 213 (71%)Frame 214 (71%)Frame 215 (71%)Frame 216 (72%)Frame 217 (72%)Frame 218 (72%)Frame 219 (73%)Frame 220 (73%)Frame 221 (73%)Frame 222 (74%)Frame 223 (74%)Frame 224 (74%)Frame 225 (75%)Frame 226 (75%)Frame 227 (75%)Frame 228 (76%)Frame 229 (76%)Frame 230 (76%)Frame 231 (77%)Frame 232 (77%)Frame 233 (77%)Frame 234 (78%)Frame 235 (78%)Frame 236 (78%)Frame 237 (79%)Frame 238 (79%)Frame 239 (79%)Frame 240 (80%)Frame 241 (80%)Frame 242 (80%)Frame 243 (81%)Frame 244 (81%)Frame 245 (81%)Frame 246 (82%)Frame 247 (82%)Frame 248 (82%)Frame 249 (83%)Frame 250 (83%)Frame 251 (83%)Frame 252 (84%)Frame 253 (84%)Frame 254 (84%)Frame 255 (85%)Frame 256 (85%)Frame 257 (85%)Frame 258 (86%)Frame 259 (86%)Frame 260 (86%)Frame 261 (87%)Frame 262 (87%)Frame 263 (87%)Frame 264 (88%)Frame 265 (88%)Frame 266 (88%)Frame 267 (89%)Frame 268 (89%)Frame 269 (89%)Frame 270 (90%)Frame 271 (90%)Frame 272 (90%)Frame 273 (91%)Frame 274 (91%)Frame 275 (91%)Frame 276 (92%)Frame 277 (92%)Frame 278 (92%)Frame 279 (93%)Frame 280 (93%)Frame 281 (93%)Frame 282 (94%)Frame 283 (94%)Frame 284 (94%)Frame 285 (95%)Frame 286 (95%)Frame 287 (95%)Frame 288 (96%)Frame 289 (96%)Frame 290 (96%)Frame 291 (97%)Frame 292 (97%)Frame 293 (97%)Frame 294 (98%)Frame 295 (98%)Frame 296 (98%)Frame 297 (99%)Frame 298 (99%)Frame 299 (99%)Frame 300 (100%)
+#&gt; Finalizing encoding... done!</div><div class='input'>
 <span class='co'># Make the animation pause at the end and then rewind</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>nframes</span> <span class='kw'>=</span> <span class='fl'>200</span>, <span class='kw'>end_pause</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>rewind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>nframes</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>end_pause</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rewind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </div><div class='output co'>#&gt; Frame 1 (1%)Frame 2 (2%)Frame 3 (3%)Frame 4 (4%)Frame 5 (5%)Frame 6 (6%)Frame 7 (7%)Frame 8 (8%)Frame 9 (9%)Frame 10 (10%)Frame 11 (11%)Frame 12 (12%)Frame 13 (13%)Frame 14 (14%)Frame 15 (15%)Frame 16 (16%)Frame 17 (17%)Frame 18 (18%)Frame 19 (19%)Frame 20 (20%)Frame 21 (21%)Frame 22 (22%)Frame 23 (23%)Frame 24 (24%)Frame 25 (25%)Frame 26 (26%)Frame 27 (27%)Frame 28 (28%)Frame 29 (29%)Frame 30 (30%)Frame 31 (31%)Frame 32 (32%)Frame 33 (33%)Frame 34 (34%)Frame 35 (35%)Frame 36 (36%)Frame 37 (37%)Frame 38 (38%)Frame 39 (39%)Frame 40 (40%)Frame 41 (41%)Frame 42 (42%)Frame 43 (43%)Frame 44 (44%)Frame 45 (45%)Frame 46 (46%)Frame 47 (47%)Frame 48 (48%)Frame 49 (49%)Frame 50 (50%)Frame 51 (51%)Frame 52 (52%)Frame 53 (53%)Frame 54 (54%)Frame 55 (55%)Frame 56 (56%)Frame 57 (57%)Frame 58 (58%)Frame 59 (59%)Frame 60 (60%)Frame 61 (61%)Frame 62 (62%)Frame 63 (63%)Frame 64 (64%)Frame 65 (65%)Frame 66 (66%)Frame 67 (67%)Frame 68 (68%)Frame 69 (69%)Frame 70 (70%)Frame 71 (71%)Frame 72 (72%)Frame 73 (73%)Frame 74 (74%)Frame 75 (75%)Frame 76 (76%)Frame 77 (77%)Frame 78 (78%)Frame 79 (79%)Frame 80 (80%)Frame 81 (81%)Frame 82 (82%)Frame 83 (83%)Frame 84 (84%)Frame 85 (85%)Frame 86 (86%)Frame 87 (87%)Frame 88 (88%)Frame 89 (89%)Frame 90 (90%)Frame 91 (91%)Frame 92 (92%)Frame 93 (93%)Frame 94 (94%)Frame 95 (95%)Frame 96 (96%)Frame 97 (97%)Frame 98 (98%)Frame 99 (99%)Frame 100 (100%)
+#&gt; Finalizing encoding... done!</div><div class='input'>
 <span class='co'># Use a different renderer</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'><a href='renderers.html'>file_renderer</a></span>(<span class='st'>'~/animation/'</span>))
-<span class='co'># }</span><div class='input'>
+<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'><a href='renderers.html'>file_renderer</a></span>(<span class='st'>'~/animation/'</span>))</div><div class='output co'>#&gt;   [1] "~/animation//gganim_plot0001.png" "~/animation//gganim_plot0002.png"
+#&gt;   [3] "~/animation//gganim_plot0003.png" "~/animation//gganim_plot0004.png"
+#&gt;   [5] "~/animation//gganim_plot0005.png" "~/animation//gganim_plot0006.png"
+#&gt;   [7] "~/animation//gganim_plot0007.png" "~/animation//gganim_plot0008.png"
+#&gt;   [9] "~/animation//gganim_plot0009.png" "~/animation//gganim_plot0010.png"
+#&gt;  [11] "~/animation//gganim_plot0011.png" "~/animation//gganim_plot0012.png"
+#&gt;  [13] "~/animation//gganim_plot0013.png" "~/animation//gganim_plot0014.png"
+#&gt;  [15] "~/animation//gganim_plot0015.png" "~/animation//gganim_plot0016.png"
+#&gt;  [17] "~/animation//gganim_plot0017.png" "~/animation//gganim_plot0018.png"
+#&gt;  [19] "~/animation//gganim_plot0019.png" "~/animation//gganim_plot0020.png"
+#&gt;  [21] "~/animation//gganim_plot0021.png" "~/animation//gganim_plot0022.png"
+#&gt;  [23] "~/animation//gganim_plot0023.png" "~/animation//gganim_plot0024.png"
+#&gt;  [25] "~/animation//gganim_plot0025.png" "~/animation//gganim_plot0026.png"
+#&gt;  [27] "~/animation//gganim_plot0027.png" "~/animation//gganim_plot0028.png"
+#&gt;  [29] "~/animation//gganim_plot0029.png" "~/animation//gganim_plot0030.png"
+#&gt;  [31] "~/animation//gganim_plot0031.png" "~/animation//gganim_plot0032.png"
+#&gt;  [33] "~/animation//gganim_plot0033.png" "~/animation//gganim_plot0034.png"
+#&gt;  [35] "~/animation//gganim_plot0035.png" "~/animation//gganim_plot0036.png"
+#&gt;  [37] "~/animation//gganim_plot0037.png" "~/animation//gganim_plot0038.png"
+#&gt;  [39] "~/animation//gganim_plot0039.png" "~/animation//gganim_plot0040.png"
+#&gt;  [41] "~/animation//gganim_plot0041.png" "~/animation//gganim_plot0042.png"
+#&gt;  [43] "~/animation//gganim_plot0043.png" "~/animation//gganim_plot0044.png"
+#&gt;  [45] "~/animation//gganim_plot0045.png" "~/animation//gganim_plot0046.png"
+#&gt;  [47] "~/animation//gganim_plot0047.png" "~/animation//gganim_plot0048.png"
+#&gt;  [49] "~/animation//gganim_plot0049.png" "~/animation//gganim_plot0050.png"
+#&gt;  [51] "~/animation//gganim_plot0051.png" "~/animation//gganim_plot0052.png"
+#&gt;  [53] "~/animation//gganim_plot0053.png" "~/animation//gganim_plot0054.png"
+#&gt;  [55] "~/animation//gganim_plot0055.png" "~/animation//gganim_plot0056.png"
+#&gt;  [57] "~/animation//gganim_plot0057.png" "~/animation//gganim_plot0058.png"
+#&gt;  [59] "~/animation//gganim_plot0059.png" "~/animation//gganim_plot0060.png"
+#&gt;  [61] "~/animation//gganim_plot0061.png" "~/animation//gganim_plot0062.png"
+#&gt;  [63] "~/animation//gganim_plot0063.png" "~/animation//gganim_plot0064.png"
+#&gt;  [65] "~/animation//gganim_plot0065.png" "~/animation//gganim_plot0066.png"
+#&gt;  [67] "~/animation//gganim_plot0067.png" "~/animation//gganim_plot0068.png"
+#&gt;  [69] "~/animation//gganim_plot0069.png" "~/animation//gganim_plot0070.png"
+#&gt;  [71] "~/animation//gganim_plot0071.png" "~/animation//gganim_plot0072.png"
+#&gt;  [73] "~/animation//gganim_plot0073.png" "~/animation//gganim_plot0074.png"
+#&gt;  [75] "~/animation//gganim_plot0075.png" "~/animation//gganim_plot0076.png"
+#&gt;  [77] "~/animation//gganim_plot0077.png" "~/animation//gganim_plot0078.png"
+#&gt;  [79] "~/animation//gganim_plot0079.png" "~/animation//gganim_plot0080.png"
+#&gt;  [81] "~/animation//gganim_plot0081.png" "~/animation//gganim_plot0082.png"
+#&gt;  [83] "~/animation//gganim_plot0083.png" "~/animation//gganim_plot0084.png"
+#&gt;  [85] "~/animation//gganim_plot0085.png" "~/animation//gganim_plot0086.png"
+#&gt;  [87] "~/animation//gganim_plot0087.png" "~/animation//gganim_plot0088.png"
+#&gt;  [89] "~/animation//gganim_plot0089.png" "~/animation//gganim_plot0090.png"
+#&gt;  [91] "~/animation//gganim_plot0091.png" "~/animation//gganim_plot0092.png"
+#&gt;  [93] "~/animation//gganim_plot0093.png" "~/animation//gganim_plot0094.png"
+#&gt;  [95] "~/animation//gganim_plot0095.png" "~/animation//gganim_plot0096.png"
+#&gt;  [97] "~/animation//gganim_plot0097.png" "~/animation//gganim_plot0098.png"
+#&gt;  [99] "~/animation//gganim_plot0099.png" "~/animation//gganim_plot0100.png"
+#&gt; attr(,"frame_vars")
+#&gt;     frame nframes progress transitioning previous_state closest_state
+#&gt; 1       1     100     0.01         FALSE              3             3
+#&gt; 2       2     100     0.02         FALSE              3             3
+#&gt; 3       3     100     0.03         FALSE              3             3
+#&gt; 4       4     100     0.04         FALSE              3             3
+#&gt; 5       5     100     0.05         FALSE              3             3
+#&gt; 6       6     100     0.06         FALSE              3             3
+#&gt; 7       7     100     0.07         FALSE              3             3
+#&gt; 8       8     100     0.08         FALSE              3             3
+#&gt; 9       9     100     0.09         FALSE              3             3
+#&gt; 10     10     100     0.10         FALSE              3             3
+#&gt; 11     11     100     0.11         FALSE              3             3
+#&gt; 12     12     100     0.12         FALSE              3             3
+#&gt; 13     13     100     0.13          TRUE              3             3
+#&gt; 14     14     100     0.14          TRUE              3             3
+#&gt; 15     15     100     0.15          TRUE              3             3
+#&gt; 16     16     100     0.16          TRUE              3             3
+#&gt; 17     17     100     0.17          TRUE              3             3
+#&gt; 18     18     100     0.18          TRUE              3             3
+#&gt; 19     19     100     0.19          TRUE              3             3
+#&gt; 20     20     100     0.20          TRUE              3             3
+#&gt; 21     21     100     0.21          TRUE              3             3
+#&gt; 22     22     100     0.22          TRUE              3             3
+#&gt; 23     23     100     0.23          TRUE              3             3
+#&gt; 24     24     100     0.24          TRUE              3             4
+#&gt; 25     25     100     0.25          TRUE              3             4
+#&gt; 26     26     100     0.26          TRUE              3             4
+#&gt; 27     27     100     0.27          TRUE              3             4
+#&gt; 28     28     100     0.28          TRUE              3             4
+#&gt; 29     29     100     0.29          TRUE              3             4
+#&gt; 30     30     100     0.30          TRUE              3             4
+#&gt; 31     31     100     0.31          TRUE              3             4
+#&gt; 32     32     100     0.32          TRUE              3             4
+#&gt; 33     33     100     0.33          TRUE              3             4
+#&gt; 34     34     100     0.34          TRUE              3             4
+#&gt; 35     35     100     0.35         FALSE              4             4
+#&gt; 36     36     100     0.36         FALSE              4             4
+#&gt; 37     37     100     0.37         FALSE              4             4
+#&gt; 38     38     100     0.38         FALSE              4             4
+#&gt; 39     39     100     0.39         FALSE              4             4
+#&gt; 40     40     100     0.40         FALSE              4             4
+#&gt; 41     41     100     0.41         FALSE              4             4
+#&gt; 42     42     100     0.42         FALSE              4             4
+#&gt; 43     43     100     0.43         FALSE              4             4
+#&gt; 44     44     100     0.44         FALSE              4             4
+#&gt; 45     45     100     0.45         FALSE              4             4
+#&gt; 46     46     100     0.46         FALSE              4             4
+#&gt; 47     47     100     0.47          TRUE              4             4
+#&gt; 48     48     100     0.48          TRUE              4             4
+#&gt; 49     49     100     0.49          TRUE              4             4
+#&gt; 50     50     100     0.50          TRUE              4             4
+#&gt; 51     51     100     0.51          TRUE              4             4
+#&gt; 52     52     100     0.52          TRUE              4             4
+#&gt; 53     53     100     0.53          TRUE              4             4
+#&gt; 54     54     100     0.54          TRUE              4             4
+#&gt; 55     55     100     0.55          TRUE              4             4
+#&gt; 56     56     100     0.56          TRUE              4             4
+#&gt; 57     57     100     0.57          TRUE              4             4
+#&gt; 58     58     100     0.58          TRUE              4             5
+#&gt; 59     59     100     0.59          TRUE              4             5
+#&gt; 60     60     100     0.60          TRUE              4             5
+#&gt; 61     61     100     0.61          TRUE              4             5
+#&gt; 62     62     100     0.62          TRUE              4             5
+#&gt; 63     63     100     0.63          TRUE              4             5
+#&gt; 64     64     100     0.64          TRUE              4             5
+#&gt; 65     65     100     0.65          TRUE              4             5
+#&gt; 66     66     100     0.66          TRUE              4             5
+#&gt; 67     67     100     0.67          TRUE              4             5
+#&gt; 68     68     100     0.68          TRUE              4             5
+#&gt; 69     69     100     0.69         FALSE              5             5
+#&gt; 70     70     100     0.70         FALSE              5             5
+#&gt; 71     71     100     0.71         FALSE              5             5
+#&gt; 72     72     100     0.72         FALSE              5             5
+#&gt; 73     73     100     0.73         FALSE              5             5
+#&gt; 74     74     100     0.74         FALSE              5             5
+#&gt; 75     75     100     0.75         FALSE              5             5
+#&gt; 76     76     100     0.76         FALSE              5             5
+#&gt; 77     77     100     0.77         FALSE              5             5
+#&gt; 78     78     100     0.78         FALSE              5             5
+#&gt; 79     79     100     0.79         FALSE              5             5
+#&gt; 80     80     100     0.80         FALSE              5             5
+#&gt; 81     81     100     0.81          TRUE              5             5
+#&gt; 82     82     100     0.82          TRUE              5             5
+#&gt; 83     83     100     0.83          TRUE              5             5
+#&gt; 84     84     100     0.84          TRUE              5             5
+#&gt; 85     85     100     0.85          TRUE              5             5
+#&gt; 86     86     100     0.86          TRUE              5             5
+#&gt; 87     87     100     0.87          TRUE              5             5
+#&gt; 88     88     100     0.88          TRUE              5             5
+#&gt; 89     89     100     0.89          TRUE              5             5
+#&gt; 90     90     100     0.90          TRUE              5             5
+#&gt; 91     91     100     0.91          TRUE              5             5
+#&gt; 92     92     100     0.92          TRUE              5             3
+#&gt; 93     93     100     0.93          TRUE              5             3
+#&gt; 94     94     100     0.94          TRUE              5             3
+#&gt; 95     95     100     0.95          TRUE              5             3
+#&gt; 96     96     100     0.96          TRUE              5             3
+#&gt; 97     97     100     0.97          TRUE              5             3
+#&gt; 98     98     100     0.98          TRUE              5             3
+#&gt; 99     99     100     0.99          TRUE              5             3
+#&gt; 100   100     100     1.00          TRUE              5             3
+#&gt;     next_state                                     frame_source
+#&gt; 1            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0001.png
+#&gt; 2            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0002.png
+#&gt; 3            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0003.png
+#&gt; 4            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0004.png
+#&gt; 5            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0005.png
+#&gt; 6            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0006.png
+#&gt; 7            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0007.png
+#&gt; 8            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0008.png
+#&gt; 9            3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0009.png
+#&gt; 10           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0010.png
+#&gt; 11           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0011.png
+#&gt; 12           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0012.png
+#&gt; 13           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0013.png
+#&gt; 14           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0014.png
+#&gt; 15           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0015.png
+#&gt; 16           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0016.png
+#&gt; 17           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0017.png
+#&gt; 18           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0018.png
+#&gt; 19           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0019.png
+#&gt; 20           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0020.png
+#&gt; 21           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0021.png
+#&gt; 22           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0022.png
+#&gt; 23           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0023.png
+#&gt; 24           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0024.png
+#&gt; 25           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0025.png
+#&gt; 26           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0026.png
+#&gt; 27           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0027.png
+#&gt; 28           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0028.png
+#&gt; 29           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0029.png
+#&gt; 30           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0030.png
+#&gt; 31           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0031.png
+#&gt; 32           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0032.png
+#&gt; 33           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0033.png
+#&gt; 34           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0034.png
+#&gt; 35           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0035.png
+#&gt; 36           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0036.png
+#&gt; 37           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0037.png
+#&gt; 38           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0038.png
+#&gt; 39           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0039.png
+#&gt; 40           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0040.png
+#&gt; 41           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0041.png
+#&gt; 42           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0042.png
+#&gt; 43           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0043.png
+#&gt; 44           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0044.png
+#&gt; 45           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0045.png
+#&gt; 46           4 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0046.png
+#&gt; 47           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0047.png
+#&gt; 48           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0048.png
+#&gt; 49           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0049.png
+#&gt; 50           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0050.png
+#&gt; 51           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0051.png
+#&gt; 52           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0052.png
+#&gt; 53           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0053.png
+#&gt; 54           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0054.png
+#&gt; 55           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0055.png
+#&gt; 56           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0056.png
+#&gt; 57           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0057.png
+#&gt; 58           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0058.png
+#&gt; 59           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0059.png
+#&gt; 60           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0060.png
+#&gt; 61           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0061.png
+#&gt; 62           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0062.png
+#&gt; 63           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0063.png
+#&gt; 64           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0064.png
+#&gt; 65           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0065.png
+#&gt; 66           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0066.png
+#&gt; 67           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0067.png
+#&gt; 68           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0068.png
+#&gt; 69           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0069.png
+#&gt; 70           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0070.png
+#&gt; 71           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0071.png
+#&gt; 72           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0072.png
+#&gt; 73           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0073.png
+#&gt; 74           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0074.png
+#&gt; 75           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0075.png
+#&gt; 76           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0076.png
+#&gt; 77           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0077.png
+#&gt; 78           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0078.png
+#&gt; 79           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0079.png
+#&gt; 80           5 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0080.png
+#&gt; 81           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0081.png
+#&gt; 82           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0082.png
+#&gt; 83           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0083.png
+#&gt; 84           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0084.png
+#&gt; 85           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0085.png
+#&gt; 86           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0086.png
+#&gt; 87           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0087.png
+#&gt; 88           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0088.png
+#&gt; 89           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0089.png
+#&gt; 90           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0090.png
+#&gt; 91           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0091.png
+#&gt; 92           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0092.png
+#&gt; 93           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0093.png
+#&gt; 94           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0094.png
+#&gt; 95           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0095.png
+#&gt; 96           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0096.png
+#&gt; 97           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0097.png
+#&gt; 98           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0098.png
+#&gt; 99           3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0099.png
+#&gt; 100          3 /tmp/RtmpHpc40i/531d683bbb8e/gganim_plot0100.png</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -322,6 +584,23 @@ Consult the documentation for these for more detail.</p>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: 'ee1fa0fd61e4ffed26fdeaf44ebdd541',
+    indexName: 'gganimate',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>
