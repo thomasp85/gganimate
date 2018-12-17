@@ -67,7 +67,7 @@ transition between the states (something refered to as *tweening*). *gganimate*
 provides a range of different transitions, but for the next couple of examples
 we'll be sticking to `transition_states()` and see how we can modify the output.
 
-### Easing
+## Easing
 When `transition_states()` calculates intermediary data for the tweening, it 
 needs to decide how the change from one value to another should progress. This
 is a concept called *easing*. The default easing is *linear*, but others can be
@@ -85,7 +85,7 @@ anim +
   ease_aes('linear', y = 'bounce-out') # Sets special ease for y aesthetic
 ```
 
-### Labelling
+## Labelling
 It can be quite hard to understand an animation without any indication as to
 what each time point relates to. *gganimate* solves this by providing a set of 
 variables for each frame, which can be inserted into plot labels using 
@@ -100,3 +100,26 @@ anim +
 Different transitions provide different frame variables. `closest_state` only
 makes sense for `transition_states()` and is thus only avaialable when that 
 transition is used.
+
+## Object Permanence
+In the animation above it appears as if data if a single measurement changes
+gradually as the flower being measured on somehow morphs between three different
+iris species. This is probably not how Fisher conducted the experiement and got
+those numbers. In general, when you make an animation, *graphic elements should
+only transition between different instances of the same underlying phenomenon*. 
+This sounds complicated but it is more or less the same principle that governs 
+if it is ok to draw a line between two observations. You wouldn't connect 
+observations from different iris species, but repeated observations on the same
+plant would be ok to connect. Same thing with animations.
+
+So, how do we fix this and tell *gganimate* to not morph observations from 
+different species into each others? The key is the *group aesthetic*. You may be
+familiar with this aesthetic from plotitng lines and polygons, but in 
+*gganimate* it takes a more central place. Data that has the same group 
+aesthetic are interpreted as being linked across states. The semantics of the
+group aesthetic in *ggplot2* is such that if it is undefined it will get 
+calculated based on the interaction of all discrete aesthetics (sans `label`). 
+If none exists, such as in our iris animation, all data will get the same group, 
+and will thus be matched by *gganimate*.
+
+## More Coming
