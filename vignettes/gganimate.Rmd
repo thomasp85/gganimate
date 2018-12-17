@@ -1,0 +1,61 @@
+---
+title: "Getting Started"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  cache = TRUE,
+  gganimate.nframes = 50
+)
+```
+
+*gganimate* is an extension of the *grammar of graphics*, as implemented by the
+[*ggplot2*](https://ggplot2.tidyverse.org) package, that adds support for 
+declaring animations using an API familiar to users of *ggplot2*.
+
+> The following introduction assumes familiarity with *ggplot2* to the extend 
+  that constructing static plots and reading standard *ggplot2* code feels
+  natural. If you are new to both *ggplot2* and *gganimate* you'll benefit from
+  exploring the trove of *ggplot2* documentation, tutorials, and courses 
+  avaialble online first (see the 
+  [*ggplot2* webpage](https://ggplot2.tidyverse.org/#learning-ggplot2) for some 
+  pointers).
+  
+## Your First Animation
+We'll jump right into our first animation. Don't worry too much about 
+understanding the code, as we'll dissect it later.
+
+```{r}
+library(gganimate)
+
+# We'll start with a static plot
+p <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+  geom_point()
+
+plot(p)
+```
+
+You go from a static plot made with *ggplot2* to an animated one, simply by 
+adding on functions from *gganimate*.
+
+```{r}
+anim <- p + 
+  transition_states(Species,
+                    transition_length = 2,
+                    state_length = 1)
+
+animate(p)
+```
+
+> ❗ `transition_states()` splits up plot data by a discrete varaible and 
+  animates between the different states.
+
+As can be seen, very few additions to the plot results in a quite complex 
+animation. 
