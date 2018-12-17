@@ -52,4 +52,5 @@ succinctly can describe very diverse animation operations.
 **Slides:** <https://data-imaginist.com/slides/user2018>
 
 **Video:** 
+
 <iframe width="560" height="315" src="https://www.youtube.com/embed/21ZWDrTukEs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
