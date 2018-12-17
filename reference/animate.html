@@ -292,14 +292,11 @@ Consult the documentation for these for more detail.</p>
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>gear</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
   <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><div class='input'><span class='co'># Explicitly animate using default (same as just printing the animation)</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>)
-
+<span class='fu'>animate</span>(<span class='no'>anim</span>)</div><div class='output co'>#&gt; <span class='error'>Error in need_screenshot(x, ...): argument "options" is missing, with no default</span></div><div class='input'>
 <span class='co'># Change duration and framerate</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>fps</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>15</span>)
-
+<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>fps</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; <span class='error'>Error in need_screenshot(x, ...): argument "options" is missing, with no default</span></div><div class='input'>
 <span class='co'># Make the animation pause at the end and then rewind</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>nframes</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>end_pause</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rewind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>nframes</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>end_pause</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rewind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in need_screenshot(x, ...): argument "options" is missing, with no default</span></div><div class='input'>
 <span class='co'># Use a different renderer</span>
 <span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'><a href='renderers.html'>file_renderer</a></span>(<span class='st'>'~/animation/'</span>))</div><div class='output co'>#&gt;   [1] "~/animation//gganim_plot0001.png" "~/animation//gganim_plot0002.png"
 #&gt;   [3] "~/animation//gganim_plot0003.png" "~/animation//gganim_plot0004.png"
@@ -453,107 +450,107 @@ Consult the documentation for these for more detail.</p>
 #&gt; 98     98     100     0.98          TRUE              5             3
 #&gt; 99     99     100     0.99          TRUE              5             3
 #&gt; 100   100     100     1.00          TRUE              5             3
-#&gt;     next_state                                  frame_source
-#&gt; 1            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0001.png
-#&gt; 2            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0002.png
-#&gt; 3            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0003.png
-#&gt; 4            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0004.png
-#&gt; 5            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0005.png
-#&gt; 6            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0006.png
-#&gt; 7            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0007.png
-#&gt; 8            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0008.png
-#&gt; 9            3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0009.png
-#&gt; 10           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0010.png
-#&gt; 11           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0011.png
-#&gt; 12           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0012.png
-#&gt; 13           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0013.png
-#&gt; 14           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0014.png
-#&gt; 15           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0015.png
-#&gt; 16           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0016.png
-#&gt; 17           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0017.png
-#&gt; 18           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0018.png
-#&gt; 19           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0019.png
-#&gt; 20           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0020.png
-#&gt; 21           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0021.png
-#&gt; 22           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0022.png
-#&gt; 23           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0023.png
-#&gt; 24           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0024.png
-#&gt; 25           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0025.png
-#&gt; 26           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0026.png
-#&gt; 27           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0027.png
-#&gt; 28           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0028.png
-#&gt; 29           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0029.png
-#&gt; 30           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0030.png
-#&gt; 31           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0031.png
-#&gt; 32           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0032.png
-#&gt; 33           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0033.png
-#&gt; 34           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0034.png
-#&gt; 35           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0035.png
-#&gt; 36           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0036.png
-#&gt; 37           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0037.png
-#&gt; 38           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0038.png
-#&gt; 39           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0039.png
-#&gt; 40           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0040.png
-#&gt; 41           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0041.png
-#&gt; 42           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0042.png
-#&gt; 43           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0043.png
-#&gt; 44           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0044.png
-#&gt; 45           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0045.png
-#&gt; 46           4 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0046.png
-#&gt; 47           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0047.png
-#&gt; 48           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0048.png
-#&gt; 49           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0049.png
-#&gt; 50           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0050.png
-#&gt; 51           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0051.png
-#&gt; 52           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0052.png
-#&gt; 53           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0053.png
-#&gt; 54           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0054.png
-#&gt; 55           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0055.png
-#&gt; 56           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0056.png
-#&gt; 57           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0057.png
-#&gt; 58           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0058.png
-#&gt; 59           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0059.png
-#&gt; 60           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0060.png
-#&gt; 61           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0061.png
-#&gt; 62           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0062.png
-#&gt; 63           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0063.png
-#&gt; 64           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0064.png
-#&gt; 65           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0065.png
-#&gt; 66           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0066.png
-#&gt; 67           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0067.png
-#&gt; 68           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0068.png
-#&gt; 69           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0069.png
-#&gt; 70           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0070.png
-#&gt; 71           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0071.png
-#&gt; 72           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0072.png
-#&gt; 73           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0073.png
-#&gt; 74           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0074.png
-#&gt; 75           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0075.png
-#&gt; 76           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0076.png
-#&gt; 77           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0077.png
-#&gt; 78           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0078.png
-#&gt; 79           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0079.png
-#&gt; 80           5 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0080.png
-#&gt; 81           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0081.png
-#&gt; 82           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0082.png
-#&gt; 83           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0083.png
-#&gt; 84           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0084.png
-#&gt; 85           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0085.png
-#&gt; 86           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0086.png
-#&gt; 87           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0087.png
-#&gt; 88           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0088.png
-#&gt; 89           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0089.png
-#&gt; 90           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0090.png
-#&gt; 91           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0091.png
-#&gt; 92           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0092.png
-#&gt; 93           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0093.png
-#&gt; 94           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0094.png
-#&gt; 95           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0095.png
-#&gt; 96           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0096.png
-#&gt; 97           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0097.png
-#&gt; 98           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0098.png
-#&gt; 99           3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0099.png
-#&gt; 100          3 /tmp/RtmpaLwhsN/50c74bb47/gganim_plot0100.png</div><div class='input'>
+#&gt;     next_state                                    frame_source
+#&gt; 1            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0001.png
+#&gt; 2            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0002.png
+#&gt; 3            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0003.png
+#&gt; 4            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0004.png
+#&gt; 5            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0005.png
+#&gt; 6            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0006.png
+#&gt; 7            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0007.png
+#&gt; 8            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0008.png
+#&gt; 9            3 /tmp/RtmpWgg568/50d32736500/gganim_plot0009.png
+#&gt; 10           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0010.png
+#&gt; 11           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0011.png
+#&gt; 12           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0012.png
+#&gt; 13           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0013.png
+#&gt; 14           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0014.png
+#&gt; 15           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0015.png
+#&gt; 16           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0016.png
+#&gt; 17           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0017.png
+#&gt; 18           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0018.png
+#&gt; 19           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0019.png
+#&gt; 20           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0020.png
+#&gt; 21           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0021.png
+#&gt; 22           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0022.png
+#&gt; 23           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0023.png
+#&gt; 24           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0024.png
+#&gt; 25           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0025.png
+#&gt; 26           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0026.png
+#&gt; 27           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0027.png
+#&gt; 28           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0028.png
+#&gt; 29           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0029.png
+#&gt; 30           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0030.png
+#&gt; 31           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0031.png
+#&gt; 32           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0032.png
+#&gt; 33           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0033.png
+#&gt; 34           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0034.png
+#&gt; 35           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0035.png
+#&gt; 36           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0036.png
+#&gt; 37           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0037.png
+#&gt; 38           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0038.png
+#&gt; 39           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0039.png
+#&gt; 40           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0040.png
+#&gt; 41           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0041.png
+#&gt; 42           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0042.png
+#&gt; 43           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0043.png
+#&gt; 44           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0044.png
+#&gt; 45           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0045.png
+#&gt; 46           4 /tmp/RtmpWgg568/50d32736500/gganim_plot0046.png
+#&gt; 47           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0047.png
+#&gt; 48           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0048.png
+#&gt; 49           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0049.png
+#&gt; 50           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0050.png
+#&gt; 51           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0051.png
+#&gt; 52           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0052.png
+#&gt; 53           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0053.png
+#&gt; 54           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0054.png
+#&gt; 55           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0055.png
+#&gt; 56           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0056.png
+#&gt; 57           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0057.png
+#&gt; 58           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0058.png
+#&gt; 59           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0059.png
+#&gt; 60           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0060.png
+#&gt; 61           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0061.png
+#&gt; 62           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0062.png
+#&gt; 63           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0063.png
+#&gt; 64           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0064.png
+#&gt; 65           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0065.png
+#&gt; 66           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0066.png
+#&gt; 67           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0067.png
+#&gt; 68           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0068.png
+#&gt; 69           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0069.png
+#&gt; 70           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0070.png
+#&gt; 71           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0071.png
+#&gt; 72           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0072.png
+#&gt; 73           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0073.png
+#&gt; 74           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0074.png
+#&gt; 75           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0075.png
+#&gt; 76           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0076.png
+#&gt; 77           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0077.png
+#&gt; 78           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0078.png
+#&gt; 79           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0079.png
+#&gt; 80           5 /tmp/RtmpWgg568/50d32736500/gganim_plot0080.png
+#&gt; 81           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0081.png
+#&gt; 82           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0082.png
+#&gt; 83           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0083.png
+#&gt; 84           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0084.png
+#&gt; 85           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0085.png
+#&gt; 86           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0086.png
+#&gt; 87           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0087.png
+#&gt; 88           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0088.png
+#&gt; 89           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0089.png
+#&gt; 90           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0090.png
+#&gt; 91           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0091.png
+#&gt; 92           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0092.png
+#&gt; 93           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0093.png
+#&gt; 94           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0094.png
+#&gt; 95           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0095.png
+#&gt; 96           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0096.png
+#&gt; 97           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0097.png
+#&gt; 98           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0098.png
+#&gt; 99           3 /tmp/RtmpWgg568/50d32736500/gganim_plot0099.png
+#&gt; 100          3 /tmp/RtmpWgg568/50d32736500/gganim_plot0100.png</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
