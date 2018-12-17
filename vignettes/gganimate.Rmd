@@ -13,7 +13,8 @@ knitr::opts_chunk$set(
   comment = "#>",
   gganimate = list(
     nframes = 50
-  )
+  ),
+  out.width = '100%'
 )
 ```
 
