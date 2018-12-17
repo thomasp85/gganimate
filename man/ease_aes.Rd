@@ -58,9 +58,15 @@ animate(anim)
 # Change all to 'cubic-in-out' for a smoother appearance
 anim1 <- anim +
   ease_aes('cubic-in-out')
+\dontrun{
+animate(anim1)
+}
 
 # Only change easing of y variables
 anim2 <- anim +
   ease_aes('linear', y = 'bounce-in')
+\dontrun{
+animate(anim2)
+}
 
 }
