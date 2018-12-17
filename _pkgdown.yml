@@ -9,6 +9,9 @@ template:
   params:
     bootswatch: yeti
     ganalytics: UA-84380701-2
+    docsearch:
+      api_key: ee1fa0fd61e4ffed26fdeaf44ebdd541
+      index_name: gganimate
 
 reference:
   - title: "Transitions"
