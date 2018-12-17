@@ -51,11 +51,52 @@ anim <- p +
                     transition_length = 2,
                     state_length = 1)
 
-animate(anim)
+anim
 ```
 
 > ❗ `transition_states()` splits up plot data by a discrete varaible and 
   animates between the different states.
 
 As can be seen, very few additions to the plot results in a quite complex 
-animation. 
+animation. So what did we do to get this animation? We added a type of 
+*transition*. Transitions are functions that interpret the plot data in order to
+somehow distribute it over a number of frames. `transition_states()` 
+specifically splits the data into subsets based on a variable in the data (here
+`Species`), and calculates intermediary data states that ensures a smooth
+transition between the states (something refered to as *tweening*). *gganimate*
+provides a range of different transitions, but for the next couple of examples
+we'll be sticking to `transition_states()` and see how we can modify the output.
+
+### Easing
+When `transition_states()` calculates intermediary data for the tweening, it 
+needs to decide how the change from one value to another should progress. This
+is a concept called *easing*. The default easing is *linear*, but others can be
+used, potentially only targeting specific aesthetics. Setting easing is done
+with the `ease_aes()` function. The first argument sets the default easing and
+subsequent named arguments sets it for specific aesthetics.
+
+```{r}
+anim + 
+  ease_aes('cubic-in-out') # Slow start and end for a smoother look
+```
+
+```{r}
+anim + 
+  ease_aes('linear', y = 'bounce-out') # Sets special ease for y aesthetic
+```
+
+### Labelling
+It can be quite hard to understand an animation without any indication as to
+what each time point relates to. *gganimate* solves this by providing a set of 
+variables for each frame, which can be inserted into plot labels using 
+[*glue*](https://glue.tidyverse.org) syntax.
+
+```{r}
+anim + 
+  ggtitle('Now showing {closest_state}',
+          subtitle = 'Frame {frame} of {nframes}')
+```
+
+Different transitions provide different frame variables. `closest_state` only
+makes sense for `transition_states()` and is thus only avaialable when that 
+transition is used.
