@@ -284,6 +284,9 @@ knit_print.gif_image <- function(x, options, ...) {
   knitr_path <- knitr::fig_path('.gif')
   dir.create(dirname(knitr_path), showWarnings = FALSE, recursive = TRUE)
   file.copy(x, knitr_path, overwrite = TRUE)
+  if (is.null(options$out.width)) {
+    options$out.width <- options$fig.width * options$dpi / (options$fig.retina %||% 1)
+  }
   knitr::knit_print(knitr::include_graphics(knitr_path), options, ...)
 }
 #' @rdname gif_file
