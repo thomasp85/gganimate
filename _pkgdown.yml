@@ -71,3 +71,6 @@ reference:
       - last_animation
       - frame_vars
       - split_animation
+  - title: "Misc"
+    contents:
+      - gganimate-package
