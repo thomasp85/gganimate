@@ -2,21 +2,21 @@
   "index_name": "gganimate",
   "start_urls": [
     {
-      "url": "http://gganimate.com/index.html",
+      "url": "https://gganimate.com/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "http://gganimate.com/reference",
+      "url": "https://gganimate.com/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "http://gganimate.com/articles",
+      "url": "https://gganimate.com/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "http://gganimate.com/sitemap.xml"
+    "https://gganimate.com/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
