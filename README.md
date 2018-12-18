@@ -106,14 +106,14 @@ provide different type of information to use.
 
 ## Where is my animation?
 
-`gganimate` mimicks the way `ggplot2` renders its output, in that the
+`gganimate` mimics the way `ggplot2` renders its output, in that the
 rendering is done automatically when the `gganim` object is printed.
 Under the hood, the `animate()` function is called which renders the
 frame and passes the frames to a renderer functions which takes care of
 combining them to the final animation. The default renderer is
 `gifski_renderer()` which returns a `gif_image` object which is a simple
 wrapper around a path to a gif file. If `animate()` has been called
-implicetly as part of `print` the `gif_image` object is available using
+implicitly as part of `print` the `gif_image` object is available using
 the `last_animation()` function (analogous to `ggplot2::last_plot()`).
 In order to save the animation to a specific location, you can use the
 `anim_save()` function which, like `ggplot2::ggsave`, defaults to taking
@@ -139,7 +139,7 @@ animate(p, renderer = ffmpeg_renderer())
 ```
 
 *Video output are automatically embedded in RMarkdown documents, but
-GitHub strips video when renderering READMEs so you can’t see it here*
+GitHub strips video when rendering READMEs so you can’t see it here*
 
 Further there’s support for rendering to sprite sheets if that is your
 vice.

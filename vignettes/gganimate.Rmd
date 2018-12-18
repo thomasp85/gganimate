@@ -26,7 +26,7 @@ declaring animations using an API familiar to users of *ggplot2*.
   that constructing static plots and reading standard *ggplot2* code feels
   natural. If you are new to both *ggplot2* and *gganimate* you'll benefit from
   exploring the trove of *ggplot2* documentation, tutorials, and courses 
-  avaialble online first (see the 
+  available online first (see the 
   [*ggplot2* webpage](https://ggplot2.tidyverse.org/#learning-ggplot2) for some 
   pointers).
   
@@ -56,7 +56,7 @@ anim <- p +
 anim
 ```
 
-> ❗ `transition_states()` splits up plot data by a discrete varaible and 
+> ❗ `transition_states()` splits up plot data by a discrete variable and 
   animates between the different states.
 
 As can be seen, very few additions to the plot results in a quite complex 
@@ -65,7 +65,7 @@ animation. So what did we do to get this animation? We added a type of
 somehow distribute it over a number of frames. `transition_states()` 
 specifically splits the data into subsets based on a variable in the data (here
 `Species`), and calculates intermediary data states that ensures a smooth
-transition between the states (something refered to as *tweening*). *gganimate*
+transition between the states (something referred to as *tweening*). *gganimate*
 provides a range of different transitions, but for the rest of the examples
 we'll be sticking to `transition_states()` and see how we can modify the output.
 
@@ -90,7 +90,7 @@ anim +
   ease_aes(y = 'bounce-out') # Sets special ease for y aesthetic
 ```
 
-## Labelling
+## Labeling
 It can be quite hard to understand an animation without any indication as to
 what each time point relates to. *gganimate* solves this by providing a set of 
 variables for each frame, which can be inserted into plot labels using 
@@ -105,19 +105,19 @@ anim +
 > ❗ Use *glue* syntax to insert frame variables in plot labels and titles.
 
 Different transitions provide different frame variables. `closest_state` only
-makes sense for `transition_states()` and is thus only avaialable when that 
+makes sense for `transition_states()` and is thus only available when that 
 transition is used.
 
 ## Object Permanence
 In the animation above, it appears as if data if a single measurement changes
 gradually as the flower being measured on somehow morphs between three different
-iris species. This is probably not how Fisher conducted the experiement and got
+iris species. This is probably not how Fisher conducted the experiment and got
 those numbers. In general, when you make an animation, *graphic elements should
 only transition between instances of the same underlying phenomenon*. 
 This sounds complicated but it is more or less the same principle that governs 
 makes sense to draw a line between two observations. You wouldn't connect 
 observations from different iris species, but repeated observations on the same
-plant would be ok to connect. Same thing with animations.
+plant would be fine to connect. Same thing with animations.
 
 Just to make this very clear (it is an important concept). The line plot 
 equivalent of our animation above is:
@@ -132,7 +132,7 @@ Ugh...
 
 So, how do we fix this and tell *gganimate* to not morph observations from 
 different species into each others? The key is the *group aesthetic*. You may be
-familiar with this aesthetic from plotitng lines and polygons, but in 
+familiar with this aesthetic from plotting lines and polygons, but in 
 *gganimate* it takes a more central place. Data that have the same group 
 aesthetic are interpreted as being linked across states. The semantics of the
 group aesthetic in *ggplot2* is such that if it is undefined it will get 
@@ -220,7 +220,7 @@ will give a brief overview of the rendering.
 
 *gganimate*'s model for an animation is dimensionless in the same way as 
 *ggplot2* describe plots independent of the final width and height of the plot.
-This means that the final number of frames and its framerate are only ever given
+This means that the final number of frames and its frame-rate are only ever given
 when you ask *gganimate* to render the animation. When you print an animation
 object the `animate()` function is called on the animation with default 
 arguments, some of which are:
@@ -243,7 +243,7 @@ gifs are great because they are virtually supported everywhere, and gifski is
 both a very fast, and very high quality converter. Still, you may have reasons 
 to want a different output. *gganimate* is quite agnostic to how you want to 
 combine the frames and, while it comes with a set of predefined renderers, any
-function that takes a vector of paths to image files along with a framerate, 
+function that takes a vector of paths to image files along with a frame-rate, 
 will do. The return value of your renderer is what is ultimately returned by the
 `animate()` function.
 
