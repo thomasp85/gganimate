@@ -159,14 +159,14 @@ other related positional aesthetics (e.g. <code>xmin</code>, <code>yend</code>, 
     
     </div>
 
-    <pre class="usage"><span class='fu'>ease_aes</span>(<span class='no'>default</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ease_aes</span>(<span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"linear"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>default</th>
-      <td><p>The default easing function to use</p></td>
+      <td><p>The default easing function to use (defaults to <code>'linear'</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -212,7 +212,7 @@ the last half it is reversed</p></li>
 <span class='co'># }</span><div class='input'>
 <span class='co'># Only change easing of y variables</span>
 <span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
-  <span class='fu'>ease_aes</span>(<span class='st'>'linear'</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'bounce-in'</span>)</div><span class='co'># NOT RUN {</span>
+  <span class='fu'>ease_aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'bounce-in'</span>)</div><span class='co'># NOT RUN {</span>
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim2</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
