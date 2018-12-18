@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# gganimate <img src="man/figures/logo.png" align="right" />
+# gganimate <img src="man/figures/logo.png" align="right" style="padding-left:10px" />
 
 [![Travis-CI Build
 Status](https://travis-ci.org/thomasp85/gganimate.svg?branch=master)](https://travis-ci.org/thomasp85/gganimate)
@@ -51,7 +51,7 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
   ease_aes('sine-in-out')
 ```
 
-![](man/figures/README-unnamed-chunk-2-1.gif)<!-- -->
+![](/var/folders/wq/20rfm4212kx8fdtc4q_bvfd00000gn/T//Rtmp3mSsrb/file12cd919c9962b.gif)<!-- -->
 
 Here we take a simple boxplot of fuel consumption as a function of
 cylinders and lets it transition between the number of gears available
@@ -93,7 +93,7 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   ease_aes('linear')
 ```
 
-![](man/figures/README-unnamed-chunk-4-1.gif)<!-- -->
+![](/var/folders/wq/20rfm4212kx8fdtc4q_bvfd00000gn/T//Rtmp3mSsrb/file12cd96aaf1ac0.gif)<!-- -->
 
 In this example we see the use of `transition_time()` which can be used
 with continuous variables such as `year`. With this transition it is not
