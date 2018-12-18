@@ -397,16 +397,16 @@ sprite_file <- function(file, fps, width, full_width, height) {
 }
 #' @rdname sprite_file
 #' @export
-print.sprite_image <- function(x, ...) {
-  print(htmltools::browsable(as_sprite_html(x)))
+print.sprite_image <- function(x, width = NULL, ...) {
+  print(htmltools::browsable(as_sprite_html(x, width = width)))
 }
 #' @rdname sprite_file
 #' @export
 knit_print.sprite_image <- function(x, options, ...) {
-  knitr::knit_print(htmltools::browsable(as_sprite_html(x)), options, ...)
+  knitr::knit_print(htmltools::browsable(as_sprite_html(x, width = options$out.width)), options, ...)
 }
 #' @importFrom glue glue
-as_sprite_html <- function(x, ...) {
+as_sprite_html <- function(x, width = NULL, ...) {
   if (!requireNamespace("base64enc", quietly = TRUE)) {
     stop('The base64enc package is required for showing video')
   }
@@ -419,19 +419,21 @@ as_sprite_html <- function(x, ...) {
     '
     <style>
     #sprite-%sprite_id% {
-      height: %height%px;
-      width: %width%px;
+      padding-bottom: %height%;
+      width: %width%;
       background: url(data:image/png;base64,%img_encode%) 0px 0px;
+      background-size: %size%;
     }
     </style>
     ',
-    height = attr(x, 'height'),
-    width = attr(x, 'single_width'),
+    height = paste0(100*attr(x, 'height') / attr(x, 'single_width'), '%'),
+    width = width %||% paste0(attr(x, 'single_width'), 'px'),
+    size = paste0(100 * attr(x, 'full_width') / attr(x, 'single_width'), '%'),
     img_encode = base64enc::base64encode(x),
     .open = '%',
     .close = '%'
   )
-  html <- glue('<div class="gganimate-sprite"><p id="sprite-{sprite_id}" onclick="toggleAnimation_{sprite_id}()"></p></div>')
+  html <- glue('<div class="gganimate-sprite"><div id="sprite-{sprite_id}" onclick="toggleAnimation_{sprite_id}()"></div></div>')
   js <- glue(
     '
     <script>
@@ -453,9 +455,9 @@ as_sprite_html <- function(x, ...) {
       const diff = %width%; //diff as a variable for position offset
 
       tID_%sprite_id% = setInterval(() => {
-        document.getElementById("sprite-%sprite_id%").style.backgroundPosition = `-${position_%sprite_id%}px 0px`;
+        document.getElementById("sprite-%sprite_id%").style.backgroundPosition = `-${position_%sprite_id%}%% 0%%`;
 
-        if (position_%sprite_id% < %full_width%) {
+        if (position_%sprite_id% < 100) {
           position_%sprite_id% = position_%sprite_id% + diff;
         } else {
           position_%sprite_id% = %width%;
@@ -467,8 +469,7 @@ as_sprite_html <- function(x, ...) {
     animateScript_%sprite_id%()
     </script>
     ',
-    width = attr(x, 'single_width'),
-    full_width = attr(x, 'full_width'),
+    width = 100 / (attr(x, 'full_width') / attr(x, 'single_width') - 1),
     fps = attr(x, 'fps'),
     .open = '%',
     .close = '%'
