@@ -67,7 +67,7 @@
 #'   transition_states(Species, transition_length = 3, state_length = 1,
 #'                     wrap = FALSE)
 #'
-transition_states <- function(states, transition_length, state_length, wrap = TRUE) {
+transition_states <- function(states, transition_length = 1, state_length = 1, wrap = TRUE) {
   states_quo <- enquo(states)
   require_quo(states_quo, 'states')
   ggproto(NULL, TransitionStates,

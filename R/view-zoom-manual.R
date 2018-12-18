@@ -9,7 +9,7 @@ NULL
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
-view_zoom_manual <- function(pause_length, step_length, xmin, xmax, ymin, ymax,
+view_zoom_manual <- function(pause_length = 1, step_length = 1, xmin, xmax, ymin, ymax,
                       delay = 0, wrap = TRUE, pause_first = FALSE,
                       fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1) {
   ggproto(NULL, ViewZoomManual,

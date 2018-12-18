@@ -17,7 +17,7 @@ NULL
 #'
 #' @export
 #' @importFrom ggplot2 ggproto
-view_zoom <- function(pause_length, step_length, nsteps = NULL, look_ahead = pause_length,
+view_zoom <- function(pause_length = 1, step_length = 1, nsteps = NULL, look_ahead = pause_length,
                       delay = 0, include = FALSE, wrap = TRUE, pause_first = FALSE,
                       fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1) {
   ggproto(NULL, ViewZoom,

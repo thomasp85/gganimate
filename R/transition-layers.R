@@ -84,7 +84,7 @@ NULL
 #'   enter_fade() + enter_grow() +
 #'   exit_fade() + exit_shrink()
 #'
-transition_layers <- function(layer_length, transition_length, keep_layers = TRUE, from_blank = TRUE, layer_order = NULL, layer_names = NULL) {
+transition_layers <- function(layer_length = 1, transition_length = 1, keep_layers = TRUE, from_blank = TRUE, layer_order = NULL, layer_names = NULL) {
   if (is.logical(keep_layers)) keep_layers <- if (keep_layers) Inf else 0L
   ggproto(NULL, TransitionLayers,
     params = list(

@@ -84,7 +84,7 @@
 #'   exit_recolour(colour = 'grey') +
 #'   exit_shrink(size = 0.5)
 #'
-transition_filter <- function(transition_length, filter_length, ..., wrap = TRUE, keep = FALSE) {
+transition_filter <- function(transition_length = 1, filter_length = 1, ..., wrap = TRUE, keep = FALSE) {
   filter_quos <- quos_auto_name(quos(...))
   if (length(filter_quos) < 2) {
     stop('transition_filter requires at least 2 filtering conditions', call. = FALSE)
