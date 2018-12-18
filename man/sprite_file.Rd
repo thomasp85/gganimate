@@ -8,7 +8,7 @@
 \usage{
 sprite_file(file, fps, width, full_width, height)
 
-\method{print}{sprite_image}(x, ...)
+\method{print}{sprite_image}(x, width = NULL, ...)
 
 knit_print.sprite_image(x, options, ...)
 }

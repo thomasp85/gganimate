@@ -310,6 +310,7 @@ split.gif_image <- function(x, f, drop = FALSE, ...) {
 #'
 #' @param file A video file
 #' @param x A `video_file` object
+#' @param width The width the output should be scaled to
 #' @param ... Arguments passed on
 #'
 #' @return `video_file` returns a `video_file` object which is a shallow wrapper

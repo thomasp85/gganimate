@@ -8,7 +8,7 @@
 \usage{
 video_file(file)
 
-\method{print}{video_file}(x, ...)
+\method{print}{video_file}(x, width = NULL, ...)
 
 knit_print.video_file(x, options, ...)
 }
@@ -16,6 +16,8 @@ knit_print.video_file(x, options, ...)
 \item{file}{A video file}
 
 \item{x}{A \code{video_file} object}
+
+\item{width}{The width the output should be scaled to}
 
 \item{...}{Arguments passed on}
 }
