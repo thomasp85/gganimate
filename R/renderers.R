@@ -458,7 +458,7 @@ as_sprite_html <- function(x, width = NULL, ...) {
       const diff = %width%; //diff as a variable for position offset
 
       tID_%sprite_id% = setInterval(() => {
-        document.getElementById("sprite-%sprite_id%").style.backgroundPosition = `-${position_%sprite_id%}%% 0%%`;
+        document.getElementById("sprite-%sprite_id%").style.backgroundPosition = `${position_%sprite_id%}%% 0%%`;
 
         if (position_%sprite_id% < 100) {
           position_%sprite_id% = position_%sprite_id% + diff;
