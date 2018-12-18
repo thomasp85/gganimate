@@ -87,7 +87,7 @@ anim +
 
 ```{r}
 anim + 
-  ease_aes('linear', y = 'bounce-out') # Sets special ease for y aesthetic
+  ease_aes(y = 'bounce-out') # Sets special ease for y aesthetic
 ```
 
 ## Labelling
