@@ -30,9 +30,6 @@ TransmuterList <- ggproto('TransmuterList', NULL,
     if (is.null(self$exit)) self$exit <- exit_disappear()
     self$exit_factories <- self$exit$get_factories(layers)
   },
-  clone = function(self) {
-    ggproto(NULL, self, enter = self$enter, exit = self$exit)
-  },
   enter_transmuters = function(self, i = NULL) {
     if (is.null(i)) i <- seq_along(self$enter_factories)
     self$enter_factories[i]
@@ -40,6 +37,12 @@ TransmuterList <- ggproto('TransmuterList', NULL,
   exit_transmuters = function(self, i = NULL) {
     if (is.null(i)) i <- seq_along(self$exit_factories)
     self$exit_factories[i]
+  },
+  clone = function(self) {
+    ggproto(NULL, self,
+      enter = if (is.null(self$enter)) NULL else self$enter$clone(),
+      exit = if (is.null(self$exit)) NULL else self$exit$clone()
+    )
   }
 )
 

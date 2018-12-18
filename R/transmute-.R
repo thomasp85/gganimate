@@ -183,16 +183,23 @@ TransmuteFactory <- ggproto('TransmuteFactory', NULL,
         x
       }
     })
+  },
+  clone = function(self) {
+    ggproto(NULL, self)
   }
 )
 #' @export
 c.TransmuteFactory <- function(...) {
-  Reduce(function(l, r) l$add_factory(r), list(...))
+  factories <- list(...)
+  if (length(factories) == 1) return(factories)
+  factories[[1]] <- factories[[1]]$clone()
+  Reduce(function(l, r) l$add_factory(r), factories)
 }
 #' @export
 #' @importFrom ggplot2 ggplot_add
 ggplot_add.EnterFactory <- function(object, plot, object_name) {
   plot <- as.gganim(plot)
+  plot$transmuters <- plot$transmuters$clone()
   plot$transmuters$add_enter(object)
   plot
 }
@@ -200,6 +207,7 @@ ggplot_add.EnterFactory <- function(object, plot, object_name) {
 #' @importFrom ggplot2 ggplot_add
 ggplot_add.ExitFactory <- function(object, plot, object_name) {
   plot <- as.gganim(plot)
+  plot$transmuters <- plot$transmuters$clone()
   plot$transmuters$add_exit(object)
   plot
 }
