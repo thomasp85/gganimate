@@ -8,7 +8,7 @@
 #' for an overview. Setting an ease for `x` and/or `y` will also affect the
 #' other related positional aesthetics (e.g. `xmin`, `yend`, etc).
 #'
-#' @param default The default easing function to use
+#' @param default The default easing function to use (defaults to `'linear'`)
 #' @param ... Override easing for specific aesthetics
 #'
 #' @section Easing functions:
@@ -52,12 +52,12 @@
 #'
 #' # Only change easing of y variables
 #' anim2 <- anim +
-#'   ease_aes('linear', y = 'bounce-in')
+#'   ease_aes(y = 'bounce-in')
 #' \dontrun{
 #' animate(anim2)
 #' }
 #'
-ease_aes <- function(default, ...) {
+ease_aes <- function(default = 'linear', ...) {
   aesthetics <- list(...)
   if (length(aesthetics) > 0) {
     if (is.null(names(aesthetics))) stop('Aesthetics must be named', call. = FALSE)

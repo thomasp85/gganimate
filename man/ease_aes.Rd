@@ -4,10 +4,10 @@
 \alias{ease_aes}
 \title{Control easing of aesthetics}
 \usage{
-ease_aes(default, ...)
+ease_aes(default = "linear", ...)
 }
 \arguments{
-\item{default}{The default easing function to use}
+\item{default}{The default easing function to use (defaults to \code{'linear'})}
 
 \item{...}{Override easing for specific aesthetics}
 }
@@ -64,7 +64,7 @@ animate(anim1)
 
 # Only change easing of y variables
 anim2 <- anim +
-  ease_aes('linear', y = 'bounce-in')
+  ease_aes(y = 'bounce-in')
 \dontrun{
 animate(anim2)
 }

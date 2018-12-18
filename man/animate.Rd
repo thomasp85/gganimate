@@ -132,7 +132,7 @@ animate(anim, fps = 20, duration = 15)
 animate(anim, nframes = 100, end_pause = 10, rewind = TRUE)
 
 # Use a different renderer
-animate(anim, renderer = file_renderer('~/animation/'))
+animate(anim, renderer = file_renderer('~/animation/'))[1:6]
 }
 
 }

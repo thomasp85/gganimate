@@ -5,14 +5,14 @@
 \alias{view_step_manual}
 \title{Follow the data in steps}
 \usage{
-view_step(pause_length, step_length, nsteps = NULL,
+view_step(pause_length = 1, step_length = 1, nsteps = NULL,
   look_ahead = pause_length, delay = 0, include = TRUE,
   ease = "cubic-in-out", wrap = TRUE, pause_first = FALSE,
   fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
   aspect_ratio = 1)
 
-view_step_manual(pause_length, step_length, xmin, xmax, ymin, ymax,
-  delay = 0, ease = "cubic-in-out", wrap = TRUE,
+view_step_manual(pause_length = 1, step_length = 1, xmin, xmax, ymin,
+  ymax, delay = 0, ease = "cubic-in-out", wrap = TRUE,
   pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
   exclude_layer = NULL, aspect_ratio = 1)
 }

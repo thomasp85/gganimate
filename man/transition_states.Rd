@@ -4,7 +4,8 @@
 \alias{transition_states}
 \title{Transition between several distinct stages of the data}
 \usage{
-transition_states(states, transition_length, state_length, wrap = TRUE)
+transition_states(states, transition_length = 1, state_length = 1,
+  wrap = TRUE)
 }
 \arguments{
 \item{states}{The unquoted name of the column holding the state levels in the

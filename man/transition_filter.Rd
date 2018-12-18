@@ -4,8 +4,8 @@
 \alias{transition_filter}
 \title{Transition between different filters}
 \usage{
-transition_filter(transition_length, filter_length, ..., wrap = TRUE,
-  keep = FALSE)
+transition_filter(transition_length = 1, filter_length = 1, ...,
+  wrap = TRUE, keep = FALSE)
 }
 \arguments{
 \item{transition_length}{The relative length of the transition. Will be
