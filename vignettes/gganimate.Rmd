@@ -213,4 +213,62 @@ anim +
 ```
 
 ## Rendering
+In the examples above the animations has simply appeared when we printed the 
+animation object, just like we would expect from *ggplot2*. As a lot of things
+are happening automatically, and you might want to take control, this section
+will give a brief overview of the rendering.
 
+*gganimate*'s model for an animation is dimensionless in the same way as 
+*ggplot2* describe plots independent of the final width and height of the plot.
+This means that the final number of frames and its framerate are only ever given
+when you ask *gganimate* to render the animation. When you print an animation
+object the `animate()` function is called on the animation with default 
+arguments, some of which are:
+
+- **nframes** sets the number of frames (defaults to `100`)
+- **fps** sets the number of frames (defaults to `10`)
+- **dev** sets the device used to render each frame (defaults to `'png'`)
+- **renderer** sets the function used to combine each frame into an animate 
+  (defaults to `gifski_renderer()`)
+
+There are other arguments as well (e.g. `...` will be passed on to the device
+so you can set width, height, dpi, etc), but these are the most important. If 
+you don't like the defaults you can either call `animate()` directly with values
+of your choosing, or modify the defaults by setting new with 
+`options(gganimate.<argument> = <value>)`.
+
+A topic that requires some additional words are the renderers. The default will
+use [gifski](https://github.com/r-rust/gifski) to combine the frames into a gif.
+gifs are great because they are virtually supported everywhere, and gifski is
+both a very fast, and very high quality converter. Still, you may have reasons 
+to want a different output. *gganimate* is quite agnostic to how you want to 
+combine the frames and, while it comes with a set of predefined renderers, any
+function that takes a vector of paths to image files along with a framerate, 
+will do. The return value of your renderer is what is ultimately returned by the
+`animate()` function.
+
+Below are a couple of examples of different renderers:
+
+```{r}
+# Video output
+animate(
+  anim + enter_fade() + exit_fly(y_loc = 1),
+  renderer = av_renderer()
+)
+```
+
+```{r}
+# Sprite sheet
+animate(
+  anim + ease_aes(x = 'bounce-out') + enter_fly(x_loc = -1) + exit_fade(),
+  renderer = sprite_renderer()
+)
+```
+
+## Want more?
+This guide is far from exhaustive, but have hopefully given you a broad 
+understanding of how *gganimate* works. There are still more to explore as we 
+have only scratched the surface of transitions, let alone mentioned views and 
+shadows. But for now this is left to you. There is a fantastic joy in discovery
+and with the things you have now learned you are ready to go digging on your 
+own.
