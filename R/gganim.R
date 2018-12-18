@@ -37,7 +37,7 @@ knit_print.gganim <- function(x, options, ...) {
     knitr::knit_print(anim, options, ...)
   }
 }
-get_knitr_options <- function(options) {
+get_knitr_options <- function(options, unlist = TRUE) {
   opt <- options$gganimate
   opt$device <- opt$device %||% options$dev
   if (is.null(opt$width) || is.null(opt$height)) {
@@ -46,7 +46,13 @@ get_knitr_options <- function(options) {
     opt$units <- 'in'
     opt$res <- options$dpi
   }
-  c(opt, options$dev.args)
+  if (unlist) {
+    c(opt, options$dev.args)
+  } else {
+    opt$dev_args <- options$dev.args %||% list()
+    opt$dev_args <- modifyList(opt$dev_args, opt[c('width', 'height', 'units', 'res')])
+    opt
+  }
 }
 # HELPERS -----------------------------------------------------------------
 

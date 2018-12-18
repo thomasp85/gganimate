@@ -188,9 +188,11 @@ gg_animate <- gganimate
 #' @importFrom utils modifyList
 prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- list()
-  args$nframes <- nframes %?% getOption('gganimate.nframes', 100)
-  args$fps <- fps %?% getOption('gganimate.fps', 10)
-  duration <- duration %?% getOption('gganimate.duration', NULL)
+  #if (!missing(renderer)) browser()
+  chunk_args <- if (is_knitting()) get_knitr_options(knitr::opts_chunk$get(), unlist = FALSE) else list(dev_args = list())
+  args$nframes <- nframes %?% chunk_args$nframes %||% getOption('gganimate.nframes', 100)
+  args$fps <- fps %?% chunk_args$fps %||% getOption('gganimate.fps', 10)
+  duration <- duration %?% chunk_args$duration %||% getOption('gganimate.duration', NULL)
   if (!is.null(duration)) {
     if (
       !missing(fps) ||
@@ -202,17 +204,18 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
   if (is.null(args$nframes) || is.null(args$fps)) {
     stop("At least 2 of 'nframes', 'fps', and 'duration' must be given", call. = FALSE)
   }
-  args$detail <- detail %?% getOption('gganimate.detail', 1)
-  args$renderer <- renderer %?% getOption('gganimate.renderer', gifski_renderer())
-  args$device <- tolower(device %?% getOption('gganimate.device', 'png'))
+  args$detail <- detail %?% chunk_args$detail %||% getOption('gganimate.detail', 1)
+  args$renderer <- renderer %?% chunk_args$renderer %||% getOption('gganimate.renderer', gifski_renderer())
+  args$device <- tolower(device %?% chunk_args$device %||% getOption('gganimate.device', 'png'))
   if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
     stop('The svglite package is required to use this device', call. = FALSE)
   }
-  args$ref_frame <- ref_frame %?% getOption('gganimate.ref_frame', 1)
-  args$start_pause <- start_pause %?% getOption('gganimate.start_pause', 0)
-  args$end_pause <- end_pause %?% getOption('gganimate.end_pause', 0)
-  args$rewind <- rewind %?% getOption('gganimate.rewind', FALSE)
-  args$dev_args <- modifyList(getOption('gganimate.dev_args', list()), list(...))
+  args$ref_frame <- ref_frame %?% chunk_args$ref_frame %||% getOption('gganimate.ref_frame', 1)
+  args$start_pause <- start_pause %?% chunk_args$start_pause %||% getOption('gganimate.start_pause', 0)
+  args$end_pause <- end_pause %?% chunk_args$end_pause %||% getOption('gganimate.end_pause', 0)
+  args$rewind <- rewind %?% chunk_args$rewind %||% getOption('gganimate.rewind', FALSE)
+  args$dev_args <- modifyList(getOption('gganimate.dev_args', list()), modifyList(list(...), chunk_args$dev_args))
+
   args
 }
 # Build plot for a specific number of frames
@@ -316,3 +319,5 @@ plot_dims <- function(plot, ref_frame) {
   heights[null_heights] <- heights_rel[null_heights]
   list(widths = widths, heights = heights)
 }
+
+is_knitting <- function() isTRUE(getOption("knitr.in.progress"))
