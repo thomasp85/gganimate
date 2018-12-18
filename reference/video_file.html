@@ -162,7 +162,7 @@ Other formats will be opened in their default OS-specific viewer.</p>
     <pre class="usage"><span class='fu'>video_file</span>(<span class='no'>file</span>)
 
 <span class='co'># S3 method for video_file</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>knit_print.video_file</span>(<span class='no'>x</span>, <span class='no'>options</span>, <span class='no'>...</span>)</pre>
     
@@ -176,6 +176,10 @@ Other formats will be opened in their default OS-specific viewer.</p>
     <tr>
       <th>x</th>
       <td><p>A <code>video_file</code> object</p></td>
+    </tr>
+    <tr>
+      <th>width</th>
+      <td><p>The width the output should be scaled to</p></td>
     </tr>
     <tr>
       <th>...</th>
