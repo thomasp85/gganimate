@@ -325,12 +325,12 @@ video_file <- function(file) {
 }
 #' @rdname video_file
 #' @export
-print.video_file <- function(x, ...) {
+print.video_file <- function(x, width = NULL, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
     if (grepl('\\.mp4$', x, ignore.case = TRUE) && .Platform$GUI == "RStudio") {
       utils::browseURL(x)
     } else {
-      print(htmltools::browsable(as_html_video(x)))
+      print(htmltools::browsable(as_html_video(x, width)))
     }
   } else {
     viewer <- getOption("viewer", utils::browseURL)
@@ -341,7 +341,7 @@ print.video_file <- function(x, ...) {
 #' @export
 knit_print.video_file <- function(x, options, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
-    knitr::knit_print(htmltools::browsable(as_html_video(x)), options, ...)
+    knitr::knit_print(htmltools::browsable(as_html_video(x, width = get_chunk_width(options))), options, ...)
   } else {
     warning('The video format doesn\'t support HTML', call. = FALSE)
     invisible(NULL)
@@ -351,7 +351,7 @@ knit_print.video_file <- function(x, options, ...) {
 split.video_file <- function(x, f, drop = FALSE, ...) {
   stop('video_file objects does not support splitting', call. = FALSE)
 }
-as_html_video <- function(x) {
+as_html_video <- function(x, width = NULL) {
   if (!requireNamespace("base64enc", quietly = TRUE)) {
     stop('The base64enc package is required for showing video')
   }
@@ -360,7 +360,9 @@ as_html_video <- function(x) {
   }
   format <- tolower(sub('^.*\\.(.+)$', '\\1', x))
   htmltools::HTML(paste0(
-    '<video controls autoplay><source src="data:video/',
+    '<video controls autoplay',
+    if (is.null(width)) '' else paste0(' width="', width, '"'),
+    '><source src="data:video/',
     format,
     ';base64,',
     base64enc::base64encode(x),
@@ -403,7 +405,7 @@ print.sprite_image <- function(x, width = NULL, ...) {
 #' @rdname sprite_file
 #' @export
 knit_print.sprite_image <- function(x, options, ...) {
-  knitr::knit_print(htmltools::browsable(as_sprite_html(x, width = options$out.width)), options, ...)
+  knitr::knit_print(htmltools::browsable(as_sprite_html(x, width = get_chunk_width(options))), options, ...)
 }
 #' @importFrom glue glue
 as_sprite_html <- function(x, width = NULL, ...) {
@@ -485,4 +487,8 @@ split.sprite_image <- function(x, f, drop = FALSE, ...) {
 
 in_pkgdown <- function() {
   identical(Sys.getenv("IN_PKGDOWN"), "true")
+}
+
+get_chunk_width <- function(options) {
+  options$out.width %||% paste0((options$fig.width / (options$fig.retina %||% 1)), 'px')
 }
