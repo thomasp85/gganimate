@@ -30,6 +30,8 @@
 #' the right way. If the group aesthetic is not set, and no discrete aesthetics
 #' exists then all rows will have the same group.
 #'
+#' @inheritSection transition_states Computed Variables
+#'
 #' @family transitions
 #'
 #' @importFrom rlang enquo

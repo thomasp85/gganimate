@@ -26,6 +26,8 @@
 #' element. Every frame is a discrete state and no animation between the states
 #' is done.
 #'
+#' @inheritSection transition_states Computed Variables
+#'
 #' @importFrom rlang enquo
 #' @importFrom ggplot2 ggproto
 #' @export

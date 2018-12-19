@@ -39,6 +39,13 @@ element. Every frame is a discrete state and no animation between the states
 is done.
 }
 
+\section{Computed Variables}{
+
+It is possible to use variables calculated by the statistic to define the
+transition. Simply inclose the variable in \code{stat()} in the same way as when
+using computed variables in aesthetics.
+}
+
 \examples{
 anim <- ggplot(mtcars, aes(factor(gear), mpg)) +
   geom_boxplot() +

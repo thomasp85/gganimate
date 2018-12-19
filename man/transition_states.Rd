@@ -56,6 +56,13 @@ index. Unmatched rows will appear/disappear, potentially using an enter or
 exit function.
 }
 
+\section{Computed Variables}{
+
+It is possible to use variables calculated by the statistic to define the
+transition. Simply inclose the variable in \code{stat()} in the same way as when
+using computed variables in aesthetics.
+}
+
 \examples{
 anim <- ggplot(iris, aes(Sepal.Width, Petal.Width)) +
   geom_point() +

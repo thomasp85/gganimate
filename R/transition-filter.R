@@ -41,6 +41,8 @@
 #' the state they were left in, rather than enter anew from the state defined by
 #' the enter function.
 #'
+#' @inheritSection transition_states Computed Variables
+#'
 #' @family transitions
 #'
 #' @importFrom rlang quos quos_auto_name

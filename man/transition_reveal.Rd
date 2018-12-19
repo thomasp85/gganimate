@@ -51,6 +51,13 @@ the right way. If the group aesthetic is not set, and no discrete aesthetics
 exists then all rows will have the same group.
 }
 
+\section{Computed Variables}{
+
+It is possible to use variables calculated by the statistic to define the
+transition. Simply inclose the variable in \code{stat()} in the same way as when
+using computed variables in aesthetics.
+}
+
 \examples{
 anim <- ggplot(airquality, aes(Day, Temp, group = Month)) +
   geom_line() +

@@ -22,6 +22,8 @@
 #' element, so elements will be defined uniquely by each row and its specific
 #' start, end, enter and exit.
 #'
+#' @inheritSection transition_states Computed Variables
+#'
 #' @family transitions
 #'
 #' @importFrom rlang enquo quo_is_null quo

@@ -59,6 +59,13 @@ the state they were left in, rather than enter anew from the state defined by
 the enter function.
 }
 
+\section{Computed Variables}{
+
+It is possible to use variables calculated by the statistic to define the
+transition. Simply inclose the variable in \code{stat()} in the same way as when
+using computed variables in aesthetics.
+}
+
 \examples{
 anim <- ggplot(iris, aes(Petal.Width, Petal.Length, colour = Species)) +
   geom_point() +

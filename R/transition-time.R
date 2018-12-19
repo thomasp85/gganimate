@@ -30,6 +30,8 @@
 #' index. Unmatched rows will appear/disappear, potentially using an enter or
 #' exit function.
 #'
+#' @inheritSection transition_states Computed Variables
+#'
 #' @family transitions
 #'
 #' @importFrom ggplot2 ggproto

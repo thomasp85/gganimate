@@ -38,6 +38,13 @@ element, so elements will be defined uniquely by each row and its specific
 start, end, enter and exit.
 }
 
+\section{Computed Variables}{
+
+It is possible to use variables calculated by the statistic to define the
+transition. Simply inclose the variable in \code{stat()} in the same way as when
+using computed variables in aesthetics.
+}
+
 \examples{
 data <- data.frame(
   x = 1:10,

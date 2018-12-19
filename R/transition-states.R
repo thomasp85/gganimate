@@ -39,6 +39,11 @@
 #' index. Unmatched rows will appear/disappear, potentially using an enter or
 #' exit function.
 #'
+#' @section Computed Variables:
+#' It is possible to use variables calculated by the statistic to define the
+#' transition. Simply inclose the variable in `stat()` in the same way as when
+#' using computed variables in aesthetics.
+#'
 #' @family transitions
 #'
 #' @importFrom rlang enquo
