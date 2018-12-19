@@ -261,7 +261,7 @@ animate(
 # Different size and resolution
 animate(
   anim + ease_aes(x = 'bounce-out') + enter_fly(x_loc = -1) + exit_fade(),
-  width = 400, height = 600, res = 300
+  width = 400, height = 600, res = 35
 )
 ```
 

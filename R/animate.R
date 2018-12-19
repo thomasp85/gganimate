@@ -214,8 +214,12 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
   args$start_pause <- start_pause %?% chunk_args$start_pause %||% getOption('gganimate.start_pause', 0)
   args$end_pause <- end_pause %?% chunk_args$end_pause %||% getOption('gganimate.end_pause', 0)
   args$rewind <- rewind %?% chunk_args$rewind %||% getOption('gganimate.rewind', FALSE)
-  args$dev_args <- modifyList(modifyList(getOption('gganimate.dev_args', list()), chunk_args$dev_args), list(...))
-
+  dev_args <- list(...)
+  args$dev_args <- if (length(dev_args) > 0) {
+    modifyList(getOption('gganimate.dev_args', list()), dev_args)
+  } else {
+    modifyList(getOption('gganimate.dev_args', list()), chunk_args$dev_args)
+  }
   args
 }
 # Build plot for a specific number of frames
@@ -243,12 +247,12 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   files <- switch(
     tolower(device),
     png = paste0(files, '.png'),
-    jpg =,
+    jpg = ,
     jpeg = paste0(files, '.jpg'),
-    tif =,
+    tif = ,
     tiff = paste0(files, '.tif'),
     bmp = paste0(files, '.bmp'),
-    svglite =,
+    svglite = ,
     svg = paste0(files, '.svg'),
     current = files,
     stop('Unsupported device', call. = FALSE)
@@ -256,9 +260,9 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   device <- switch(
     device,
     png = png,
-    jpg =,
+    jpg = ,
     jpeg = jpeg,
-    tif =,
+    tif = ,
     tiff = tiff,
     bmp = bmp,
     svg = svg,
