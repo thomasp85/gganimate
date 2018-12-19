@@ -109,7 +109,7 @@ makes sense for `transition_states()` and is thus only available when that
 transition is used.
 
 ## Object Permanence
-In the animation above, it appears as if data if a single measurement changes
+In the animation above, it appears as if data in a single measurement changes
 gradually as the flower being measured on somehow morphs between three different
 iris species. This is probably not how Fisher conducted the experiment and got
 those numbers. In general, when you make an animation, *graphic elements should
