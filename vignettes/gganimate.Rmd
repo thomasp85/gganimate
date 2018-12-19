@@ -247,7 +247,7 @@ function that takes a vector of paths to image files along with a frame-rate,
 will do. The return value of your renderer is what is ultimately returned by the
 `animate()` function.
 
-Below are a couple of examples of different renderers:
+Below are a couple of examples of different `animate()` calls:
 
 ```{r}
 # Video output
@@ -257,13 +257,17 @@ animate(
 )
 ```
 
-```{r}
-# Sprite sheet
+```{r, out.width=NULL}
+# Different size and resolution
 animate(
   anim + ease_aes(x = 'bounce-out') + enter_fly(x_loc = -1) + exit_fade(),
-  renderer = sprite_renderer()
+  width = 500, height = 400, dpi = 72
 )
 ```
+
+If you need to save the animation for later use you can use the `anim_save()`
+function. It works much like `ggsave()` from *ggplot2* and automatically grabs
+the last rendered animation if you do not specify one directly.
 
 ## Want more?
 This guide is far from exhaustive, but have hopefully given you a broad 
