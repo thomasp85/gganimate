@@ -89,18 +89,27 @@ ViewStep <- ggproto('ViewStep', View,
     nframes <- params$nframes
     if (params$wrap) nframes <- nframes + 1
     frames <- distribute_frames(params$pause_length, params$step_length, nframes)
+    if (!params$pause_first) {
+      frames$transition_length[length(frames$transition_length)] <- frames$transition_length[1]
+    }
     look_ahead <- round(params$look_ahead * frames$mod)
     breaks <- cumsum(frames$static_length + frames$transition_length) + look_ahead
     if (params$wrap) {
-      breaks <- breaks %% params$nframes
-      breaks <- c(breaks[length(breaks)], breaks)
+      breaks <- breaks %% nframes
+      breaks[breaks == 0] <- 1L
+      breaks <- if (params$pause_first) {
+        c(breaks[length(breaks)], breaks)
+      } else {
+        c(breaks[length(breaks) - 1], breaks)
+      }
     } else {
       breaks <- c(1, pmin(breaks, params$nframes))
     }
     data <- data[!seq_along(data) %in% params$excluded_layers]
     windows <- lapply(breaks, function(i) {
       data <- lapply(data, `[[`, i)
-      ranges <- self$get_ranges(data, params)
+      ranges <- self$get_ranges(data,
+                                params)
       x_range <- range(unlist(lapply(ranges, `[[`, 'x')))
       y_range <- range(unlist(lapply(ranges, `[[`, 'y')))
       data.frame(xmin = x_range[1], xmax = x_range[2], ymin = y_range[1], ymax = y_range[2])
@@ -117,10 +126,15 @@ ViewStep <- ggproto('ViewStep', View,
         data.frame(xmin = min(range$xmin), xmax = max(range$xmax), ymin = min(range$ymin), ymax = max(range$ymax))
       })
     }
-    if (params$wrap && !params$pause_first) {
-      frame_ranges <- windows[[length(windows) - 1]]
+
+    frame_ranges <- if (params$wrap) {
+      if (params$pause_first) {
+        windows[[length(windows)]]
+      } else {
+        windows[[length(windows) - 1]]
+      }
     } else {
-      frame_ranges <- windows[[1]]
+      windows[[1]]
     }
 
     for (i in seq_len(length(windows) - 1)) {
