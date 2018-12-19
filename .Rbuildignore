@@ -1,5 +1,7 @@
 ^pkgdown$
 ^_pkgdown\.yml$
+^.github$
+^inst/pkgdown$
 ^docs$
 ^.*\.Rproj$
 ^\.Rproj\.user$
