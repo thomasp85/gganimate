@@ -6,9 +6,10 @@
 \title{Pan and zoom smoothly between different states}
 \usage{
 view_zoom(pause_length = 1, step_length = 1, nsteps = NULL,
-  look_ahead = pause_length, delay = 0, include = FALSE,
-  wrap = TRUE, pause_first = FALSE, fixed_x = FALSE,
-  fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1)
+  look_ahead = 0, delay = 0, include = FALSE, pan_zoom = 0,
+  ease = "sine-in-out", wrap = TRUE, pause_first = TRUE,
+  fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
+  aspect_ratio = 1)
 
 view_zoom_manual(pause_length = 1, step_length = 1, xmin, xmax, ymin,
   ymax, delay = 0, wrap = TRUE, pause_first = FALSE,
@@ -33,6 +34,11 @@ the actual frames. E.g. if delay is calculated to 5 frames, frame 6 will get
 the view intended for frame 1.}
 
 \item{include}{Should the steps include both the start and end frame range}
+
+\item{pan_zoom}{The tradeoff between pan- and zoom-induced movement. Negative
+values will value zoom over pan and positive values will value pan over zoom}
+
+\item{ease}{The easing function used for the step}
 
 \item{wrap}{As in \code{\link[=transition_states]{transition_states()}}. Should the view wrap around and zoom
 back to the first state.}
@@ -67,7 +73,33 @@ This view is in many ways equivalent to \code{\link[=view_step]{view_step()}} an
 \code{\link[=view_step_manual]{view_step_manual()}} but instead of simply tweening the bounding box of each
 view it implement the smooth zoom and pan technique developed by Reach &
 North (2018). It gradually zooms out and then in during the pan to allow a
-smooth transition of the view.
+smooth transition of the view. As with \code{\link[=view_step]{view_step()}} the standard version
+will look at the data present in the calculated frames and set the ranges
+based on that, while the \code{_manual} version will allow you to define your own
+ranges to zoom between.
+}
+\examples{
+anim <- ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
+  geom_point() +
+  transition_states(Species, transition_length = 2, state_length = 1) +
+  shadow_mark(past = TRUE, future = TRUE, colour = 'grey') +
+  view_zoom(pause_length = 1, step_length = 2, nsteps = 3)
+
+# Use pan_zoom to change the relationship between pan- and zoom movement
+# Mainly zooming
+ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
+  geom_point() +
+  transition_states(Species, transition_length = 2, state_length = 1) +
+  shadow_mark(past = TRUE, future = TRUE, colour = 'grey') +
+  view_zoom(pause_length = 1, step_length = 2, nsteps = 3, pan_zoom = -3)
+
+# Mainly panning
+ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
+  geom_point() +
+  transition_states(Species, transition_length = 2, state_length = 1) +
+  shadow_mark(past = TRUE, future = TRUE, colour = 'grey') +
+  view_zoom(pause_length = 1, step_length = 2, nsteps = 3, pan_zoom = -3)
+
 }
 \references{
 Reach, A., North, C. (2018) \emph{Smooth, Efficient, and Interruptible Zooming and Panning}. IEEE Transactions on Visualization and Computer Graphics DOI:10.1109/TVCG.2018.2800013

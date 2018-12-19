@@ -24,16 +24,25 @@ given aspect ratio. Will override anything given in \code{fixed_x}/\code{fixed_y
 This view will set the panels to include the data present in the frame.
 }
 \examples{
-# `view_follow()` can be combined with `transition_states()` to follow
-# transitions in each frame.
+anim <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+  geom_point() +
+  labs(title = "{closest_state}") +
+  transition_states(Species, transition_length = 4, state_length = 1) +
+  view_follow()
 
-p <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
- geom_point() +
- labs(title = "{closest_state}") +
- transition_states(Species, transition_length = 4, state_length = 1) +
- view_follow()
+# Fixing a dimension can be done in general
+anim1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+  geom_point() +
+  labs(title = "{closest_state}") +
+  transition_states(Species, transition_length = 4, state_length = 1) +
+  view_follow(fixed_x = TRUE)
 
-# animate(p)
+# ...or just for one side of the range
+anim1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
+  geom_point() +
+  labs(title = "{closest_state}") +
+  transition_states(Species, transition_length = 4, state_length = 1) +
+  view_follow(fixed_x = c(4, NA), fixed_y = c(2, NA))
 
 }
 \seealso{

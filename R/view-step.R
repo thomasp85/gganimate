@@ -3,7 +3,10 @@
 #' This view is a bit like [view_follow()] but will not match the data in each
 #' frame. Instead it will switch between being static and zoom to the range of
 #' the data. It is a great pairing with [transition_states()] as it can move the
-#' view while the data is static and then be static while the data moves.
+#' view while the data is static and then be static while the data moves. The
+#' standard version will look at the data present in the calculated frames and
+#' set the ranges based on that, while the `_manual` version will allow you to
+#' define your own ranges.
 #'
 #' @param pause_length The relative length the view will be kept static. Will
 #' be recycled to match the number of steps
@@ -27,17 +30,35 @@
 #'
 #' @family views
 #'
-#' @examples
-#'
-#' p <- ggplot(mtcars, aes(factor(am), mpg)) +
-#'   geom_violin() +
-#'   transition_states(cyl, transition_length = 4, state_length = 1) +
-#'   view_step(pause_length = 3, step_length = 2)
-#'
-#' # animate(p)
-#'
-#' @export
 #' @importFrom ggplot2 ggproto
+#' @export
+#'
+#' @examples
+#' anim <- ggplot(iris, aes(Petal.Length, Petal.Width)) +
+#'   geom_point() +
+#'   transition_states(Species, transition_length = 2, state_length = 1) +
+#'   view_step(pause_length = 2, step_length = 1, nsteps = 3)
+#'
+#' # Default is to include the data from the two states you're stepping between
+#' # but this can be turned off
+#' anim <- ggplot(iris, aes(Petal.Length, Petal.Width)) +
+#'   geom_point() +
+#'   transition_states(Species, transition_length = 2, state_length = 1) +
+#'   view_step(pause_length = 2, step_length = 1, nsteps = 3, include = FALSE)
+#'
+#' # Default is to work off-beat of transition_states so that view changes while
+#' # data is static. Setting pause_first=TRUE changes this
+#' anim <- ggplot(iris, aes(Petal.Length, Petal.Width)) +
+#'   geom_point() +
+#'   transition_states(Species, transition_length = 2, state_length = 1) +
+#'   view_step(pause_length = 1, step_length = 2, nsteps = 3, pause_first = TRUE)
+#'
+#' # If the transition doesn't wrap, then the view shouldn't either
+#' anim <- ggplot(iris, aes(Petal.Length, Petal.Width)) +
+#'   geom_point() +
+#'   transition_states(Species, transition_length = 2, state_length = 1, wrap = FALSE) +
+#'   view_step(pause_length = 2, step_length = 1, nsteps = 3, wrap = FALSE)
+#'
 view_step <- function(pause_length = 1, step_length = 1, nsteps = NULL, look_ahead = pause_length,
                       delay = 0, include = TRUE, ease = 'cubic-in-out', wrap = TRUE,
                       pause_first = FALSE, fixed_x = FALSE, fixed_y = FALSE,
