@@ -49,7 +49,10 @@
 view_step_manual() but instead of simply tweening the bounding box of each
 view it implement the smooth zoom and pan technique developed by Reach &amp;amp;
 North (2018). It gradually zooms out and then in during the pan to allow a
-smooth transition of the view." />
+smooth transition of the view. As with view_step() the standard version
+will look at the data present in the calculated frames and set the ranges
+based on that, while the _manual version will allow you to define your own
+ranges to zoom between." />
 
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -151,14 +154,18 @@ smooth transition of the view." />
 <code><a href='view_step.html'>view_step_manual()</a></code> but instead of simply tweening the bounding box of each
 view it implement the smooth zoom and pan technique developed by Reach &amp;
 North (2018). It gradually zooms out and then in during the pan to allow a
-smooth transition of the view.</p>
+smooth transition of the view. As with <code><a href='view_step.html'>view_step()</a></code> the standard version
+will look at the data present in the calculated frames and set the ranges
+based on that, while the <code>_manual</code> version will allow you to define your own
+ranges to zoom between.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>view_zoom</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>look_ahead</span> <span class='kw'>=</span> <span class='no'>pause_length</span>, <span class='kw'>delay</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pause_first</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+  <span class='kw'>look_ahead</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>delay</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>pan_zoom</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>ease</span> <span class='kw'>=</span> <span class='st'>"sine-in-out"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pause_first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>view_zoom_manual</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>xmin</span>, <span class='no'>xmax</span>, <span class='no'>ymin</span>,
   <span class='no'>ymax</span>, <span class='kw'>delay</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>pause_first</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -197,6 +204,15 @@ the view intended for frame 1.</p></td>
     <tr>
       <th>include</th>
       <td><p>Should the steps include both the start and end frame range</p></td>
+    </tr>
+    <tr>
+      <th>pan_zoom</th>
+      <td><p>The tradeoff between pan- and zoom-induced movement. Negative
+values will value zoom over pan and positive values will value pan over zoom</p></td>
+    </tr>
+    <tr>
+      <th>ease</th>
+      <td><p>The easing function used for the step</p></td>
     </tr>
     <tr>
       <th>wrap</th>
@@ -252,6 +268,27 @@ the different views to go through</p></td>
   <code><a href='view_static.html'>view_static</a></code>, <code><a href='view_step.html'>view_step</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
+  <span class='fu'>geom_point</span>() +
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
+  <span class='fu'><a href='shadow_mark.html'>shadow_mark</a></span>(<span class='kw'>past</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>future</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>) +
+  <span class='fu'>view_zoom</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+
+<span class='co'># Use pan_zoom to change the relationship between pan- and zoom movement</span>
+<span class='co'># Mainly zooming</span>
+<span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
+  <span class='fu'>geom_point</span>() +
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
+  <span class='fu'><a href='shadow_mark.html'>shadow_mark</a></span>(<span class='kw'>past</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>future</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>) +
+  <span class='fu'>view_zoom</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pan_zoom</span> <span class='kw'>=</span> -<span class='fl'>3</span>)
+
+<span class='co'># Mainly panning</span>
+<span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
+  <span class='fu'>geom_point</span>() +
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
+  <span class='fu'><a href='shadow_mark.html'>shadow_mark</a></span>(<span class='kw'>past</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>future</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>) +
+  <span class='fu'>view_zoom</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pan_zoom</span> <span class='kw'>=</span> -<span class='fl'>3</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -261,7 +298,9 @@ the different views to go through</p></td>
       <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
