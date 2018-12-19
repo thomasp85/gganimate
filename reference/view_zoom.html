@@ -277,14 +277,14 @@ the different views to go through</p></td>
 
 <span class='co'># Use pan_zoom to change the relationship between pan- and zoom movement</span>
 <span class='co'># Mainly zooming</span>
-<span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
+<span class='no'>anim1</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='shadow_mark.html'>shadow_mark</a></span>(<span class='kw'>past</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>future</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>) +
   <span class='fu'>view_zoom</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pan_zoom</span> <span class='kw'>=</span> -<span class='fl'>3</span>)
 
 <span class='co'># Mainly panning</span>
-<span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
+<span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='shadow_mark.html'>shadow_mark</a></span>(<span class='kw'>past</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>future</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>) +
