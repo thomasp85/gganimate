@@ -14,7 +14,7 @@ template:
     docsearch:
       api_key: ee1fa0fd61e4ffed26fdeaf44ebdd541
       index_name: gganimate
-  assets: pkgdown/assets
+  assets: pkgdown/assets/images
 
 toc:
   depth: 3
