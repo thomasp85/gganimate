@@ -281,7 +281,7 @@ print.gif_image <- function(x, ...) {
 #' @rdname gif_file
 #' @export
 knit_print.gif_image <- function(x, options, ...) {
-  knitr_path <- knitr::fig_path('.gif')
+  knitr_path <- knitr::fig_path('.gif', options)
   dir.create(dirname(knitr_path), showWarnings = FALSE, recursive = TRUE)
   file.copy(x, knitr_path, overwrite = TRUE)
   if (is.null(options$out.width)) {
