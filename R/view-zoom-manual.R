@@ -10,7 +10,7 @@ NULL
 #' @export
 #' @importFrom ggplot2 ggproto
 view_zoom_manual <- function(pause_length = 1, step_length = 1, xmin, xmax, ymin, ymax,
-                      delay = 0, wrap = TRUE, pause_first = FALSE,
+                      delay = 0, pan_zoom = 0, ease = 'sine-in-out', wrap = TRUE, pause_first = TRUE,
                       fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL, aspect_ratio = 1) {
   ggproto(NULL, ViewZoomManual,
           fixed_lim = list(x = fixed_x, y = fixed_y),
@@ -26,6 +26,8 @@ view_zoom_manual <- function(pause_length = 1, step_length = 1, xmin, xmax, ymin
               ymax = ymax
             ),
             delay = delay,
+            pan_zoom = exp(pan_zoom),
+            ease = ease,
             wrap = wrap,
             pause_first = pause_first
           )

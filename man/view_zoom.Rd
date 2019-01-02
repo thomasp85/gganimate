@@ -12,9 +12,9 @@ view_zoom(pause_length = 1, step_length = 1, nsteps = NULL,
   aspect_ratio = 1)
 
 view_zoom_manual(pause_length = 1, step_length = 1, xmin, xmax, ymin,
-  ymax, delay = 0, wrap = TRUE, pause_first = FALSE,
-  fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
-  aspect_ratio = 1)
+  ymax, delay = 0, pan_zoom = 0, ease = "sine-in-out", wrap = TRUE,
+  pause_first = TRUE, fixed_x = FALSE, fixed_y = FALSE,
+  exclude_layer = NULL, aspect_ratio = 1)
 }
 \arguments{
 \item{pause_length}{The relative length the view will be kept static. Will
