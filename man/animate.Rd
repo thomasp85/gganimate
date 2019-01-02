@@ -6,8 +6,7 @@
 \alias{knit_print.gganim}
 \title{Render a gganim object}
 \usage{
-animate(plot, nframes, fps, duration, detail, renderer, device, ref_frame,
-  start_pause, end_pause, rewind, ...)
+animate(plot, ...)
 
 \method{print}{gganim}(x, ...)
 
@@ -15,6 +14,10 @@ knit_print.gganim(x, options, ...)
 }
 \arguments{
 \item{plot, x}{A \code{gganim} object}
+
+\item{...}{Arguments passed on to the device}
+
+\item{options}{chunk options for the currently executing chunk}
 
 \item{nframes}{The number of frames to render (default \code{100})}
 
@@ -39,10 +42,6 @@ counts backwards (-1 is the last frame) (default \code{1})}
 frame in the animation (default is \code{0} for both)}
 
 \item{rewind}{Should the animation roll back in the end (default \code{FALSE})}
-
-\item{...}{Arguments passed on to the device}
-
-\item{options}{chunk options for the currently executing chunk}
 }
 \value{
 The return value of the \link[=renderers]{renderer} function

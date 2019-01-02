@@ -106,7 +106,15 @@
 #' animate(anim, renderer = file_renderer('~/animation/'))[1:6]
 #' }
 #'
-animate <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
+animate <- function(plot, ...) {
+  UseMethod('animate')
+}
+#' @export
+animate.default <- function(plot, ...) {
+  stop('animation of ', class(plot)[1], ' objects not supported')
+}
+#' @export
+animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- prepare_args(
     nframes = nframes,
     fps = fps,
