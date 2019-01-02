@@ -167,8 +167,11 @@ spaced frames are rendered.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>animate</span>(<span class='no'>plot</span>, <span class='no'>nframes</span>, <span class='no'>fps</span>, <span class='no'>duration</span>, <span class='no'>detail</span>, <span class='no'>renderer</span>, <span class='no'>device</span>, <span class='no'>ref_frame</span>,
-  <span class='no'>start_pause</span>, <span class='no'>end_pause</span>, <span class='no'>rewind</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>animate</span>(<span class='no'>plot</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for gganim</span>
+<span class='fu'>animate</span>(<span class='no'>plot</span>, <span class='no'>nframes</span>, <span class='no'>fps</span>, <span class='no'>duration</span>, <span class='no'>detail</span>, <span class='no'>renderer</span>,
+  <span class='no'>device</span>, <span class='no'>ref_frame</span>, <span class='no'>start_pause</span>, <span class='no'>end_pause</span>, <span class='no'>rewind</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for gganim</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -181,6 +184,10 @@ spaced frames are rendered.</p>
     <tr>
       <th>plot, x</th>
       <td><p>A <code>gganim</code> object</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Arguments passed on to the device</p></td>
     </tr>
     <tr>
       <th>nframes</th>
@@ -223,10 +230,6 @@ frame in the animation (default is <code>0</code> for both)</p></td>
     <tr>
       <th>rewind</th>
       <td><p>Should the animation roll back in the end (default <code>FALSE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Arguments passed on to the device</p></td>
     </tr>
     <tr>
       <th>options</th>
