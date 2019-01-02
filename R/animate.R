@@ -113,6 +113,7 @@ animate <- function(plot, ...) {
 animate.default <- function(plot, ...) {
   stop('animation of ', class(plot)[1], ' objects not supported')
 }
+#' @rdname animate
 #' @export
 animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- prepare_args(
