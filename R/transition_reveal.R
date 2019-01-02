@@ -143,7 +143,7 @@ get_row_along <- function(data, quo, nframes, range, after = FALSE) {
   }
   full_length <- diff(range)
   frames <- lapply(times, function(v) {
-    if (is.null(v)) return(numeric())
+    if (length(v) == 0) return(numeric())
     frame <- round((nframes - 1) * (v - range[1])/full_length) + 1
     nc <- nchar(max(frame)) + 1
     sprintf(paste0('%0', nc, 'i'), frame)

@@ -163,7 +163,7 @@ get_row_comp_time <- function(data, quo, params, after = FALSE) {
   }
   full_length <- diff(range)
   frames <- lapply(standard_times$times, function(x) {
-    if (is.null(x)) return(numeric())
+    if (length(x) == 0) return(numeric())
     frame <- round((params$nframes - 1) * (x - range[1])/full_length) + 1
     nc <- nchar(max(frame)) + 1
     sprintf(paste0('%0', nc, 'i'), frame)
