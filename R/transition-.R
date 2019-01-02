@@ -17,12 +17,12 @@ Transition <- ggproto('Transition', NULL,
   map_data = function(self, data, params, replace = FALSE) {
     if (is.null(params$row_id)) return(data)
     Map(function(d, id) {
-      if (length(id) > 0) {
-        d$group <- if (replace) {
-          stri_replace(d$group, paste0('<', id, '>'), regex = '<.*>')
-        } else {
-          paste0(d$group, '<', id, '>')
-        }
+      if (length(id) == 0 && !replace) return(d)
+      id <- if (length(id) > 0) paste0('<', id, '>') else ''
+      d$group <- if (replace) {
+        stri_replace(d$group, id, regex = '<.*>')
+      } else {
+        paste0(d$group, id)
       }
       d
     }, d = data, id = params$row_id)
