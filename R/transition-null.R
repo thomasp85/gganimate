@@ -14,6 +14,7 @@ transition_null <- function() {
 TransitionNull <- ggproto('TransitionNull', Transition,
   setup_params = function(self, data, params) {
     params$n_layers <- length(data)
+    params
   },
   expand_data = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
     data
