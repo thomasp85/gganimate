@@ -1,8 +1,8 @@
 Package: gganimate
 Type: Package
 Title: A Grammar of Animated Graphics
-Version: 0.9.9.9999
-Date: 2017-10-29
+Version: 1.0.0
+Date: 2019-01-02
 Authors@R: c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",
     role = c("aut", "cre")),
     person("David", "Robinson", email = "admiral.david@gmail.com",
@@ -35,7 +35,7 @@ Roxygen: list(markdown = TRUE)
 URL: http://github.com/thomasp85/gganimate
 BugReports: http://github.com/thomasp85/gganimate/issues
 Imports: stringi,
-    tweenr,
+    tweenr (>= 1.0.1),
     grid,
     rlang,
     glue,
