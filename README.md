@@ -41,6 +41,7 @@ library(gganimate)
 ggplot(mtcars, aes(factor(cyl), mpg)) + 
   geom_boxplot() + 
   # Here comes the gganimate code
+  labs(title = 'Gears: {closest_state}') +
   transition_states(
     gear,
     transition_length = 2,
