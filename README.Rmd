@@ -69,8 +69,9 @@ should shrink away when it disappear. Lastly we decide to use a sinusoidal
 easing for all our aesthetics (here, only `y` is changing)
 
 ## Installation
-`gganimate` is currently GitHub-only, but will be released on CRAN once ready. 
-In the meantime, install it using the `devtools` package
+`gganimate` is available on CRAN and can be installed with 
+`install.packages('gganimate')`. If you wish to install the development version
+you can install directly from github using devtools:
 
 ```{r, eval=FALSE}
 # install.packages('devtools')

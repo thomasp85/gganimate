@@ -65,8 +65,9 @@ aesthetics (here, only `y` is changing)
 
 ## Installation
 
-`gganimate` is currently GitHub-only, but will be released on CRAN once
-ready. In the meantime, install it using the `devtools` package
+`gganimate` is available on CRAN and can be installed with
+`install.packages('gganimate')`. If you wish to install the development
+version you can install directly from github using devtools:
 
 ``` r
 # install.packages('devtools')
