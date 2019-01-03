@@ -42,13 +42,14 @@ added to the plot object in order to customise how it should change with time.
 ## An Example
 All of the above might seem a bit abstract. Let's try with a contrived example:
 
-```{r, message=FALSE}
+```{r example_mtcars, message=FALSE}
 library(ggplot2)
 library(gganimate)
 
 ggplot(mtcars, aes(factor(cyl), mpg)) + 
   geom_boxplot() + 
   # Here comes the gganimate code
+  labs(title = 'Gears: {closest_state}') +
   transition_states(
     gear,
     transition_length = 2,
@@ -82,7 +83,7 @@ devtools::install_github('thomasp85/gganimate')
 It is impossible to cover everything possible with `gganimate` in a README, but
 animations are fun, so let's at least have one more:
 
-```{r}
+```{r example_gapminder}
 library(gapminder)
 
 ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
@@ -127,7 +128,7 @@ the `animate()` function you can control the animation format, and `gganimate`
 comes with a bunch (and you can write your own). To create video files you can
 e.g. use the `ffmpeg_renderer()`:
 
-```{r, eval=FALSE}
+```{r example_airquality, eval=FALSE}
 p <- ggplot(airquality, aes(Day, Temp)) + 
   geom_line(size = 2, colour = 'steelblue') + 
   transition_states(Month, 4, 1) + 

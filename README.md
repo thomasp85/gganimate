@@ -52,7 +52,7 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
   ease_aes('sine-in-out')
 ```
 
-![](man/figures/README-unnamed-chunk-2-1.gif)<!-- -->
+![](man/figures/README-example_mtcars-1.gif)<!-- -->
 
 Here we take a simple boxplot of fuel consumption as a function of
 cylinders and lets it transition between the number of gears available
@@ -95,7 +95,7 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   ease_aes('linear')
 ```
 
-![](man/figures/README-unnamed-chunk-4-1.gif)<!-- -->
+![](man/figures/README-example_gapminder-1.gif)<!-- -->
 
 In this example we see the use of `transition_time()` which can be used
 with continuous variables such as `year`. With this transition it is not
