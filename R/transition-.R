@@ -3,7 +3,7 @@
 #' @usage NULL
 #' @export
 #' @importFrom ggplot2 ggproto
-#' @importFrom stringi stri_replace stri_match
+#' @importFrom stringi stri_replace stri_match stri_detect
 Transition <- ggproto('Transition', NULL,
   params = NULL,
   mapping = '',
@@ -19,7 +19,7 @@ Transition <- ggproto('Transition', NULL,
     Map(function(d, id) {
       if (length(id) == 0 && !replace) return(d)
       id <- if (length(id) > 0) paste0('<', id, '>') else ''
-      d$group <- if (replace) {
+      d$group <- if (replace && any(stri_detect(d$group, regex = '<.*>'))) {
         stri_replace(d$group, id, regex = '<.*>')
       } else {
         paste0(d$group, id)
