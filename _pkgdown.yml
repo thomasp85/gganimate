@@ -29,6 +29,14 @@ navbar:
       href: reference/index.html
     - text: Talks
       href: articles/extra/talks.html
+    - text: News
+      menu:
+      - text: "Release notes"
+      - text: "Version 1.0.0"
+        href: https://www.data-imaginist.com/2019/gganimate-has-transitioned-to-a-state-of-release/
+      - text: "------------------"
+      - text: "Change log"
+        href: news/index.html
   right:
     - icon: fa-github fa-lg
       href: https://github.com/thomasp85/gganimate
