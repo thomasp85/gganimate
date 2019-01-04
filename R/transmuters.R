@@ -74,6 +74,15 @@ transmute_fade <- function(type, ..., alpha = 0, name) {
       if (!is.null(x$edge_fill)) x$edge_fill[no_alpha] <- alpha(x$edge_fill[no_alpha], alpha)
       x
     },
+    smooth = function(x) {
+      if (!is.null(x$alpha)) {
+        no_alpha <- is.na(x$alpha)
+        x$alpha[!no_alpha] <- alpha
+      }
+      if (!is.null(x$fill)) x$fill[no_alpha] <- alpha(x$fill[no_alpha], alpha)
+      if (!is.null(x$colour)) x$colour <- alpha(x$colour, alpha)
+      x
+    },
     ...,
     name = name
   )
