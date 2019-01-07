@@ -272,7 +272,7 @@ layers that does not match any of the other given transformations. Often a
 single default transformation is enough and no specific transformations are
 needed.</p>
 <p>Transformation can be given as any expression that can be converted with
-<code><a href='https://rlang.r-lib.org/reference/as_function.html'>rlang::as_function()</a></code>. This means that <code>purrr</code> style lambda functions are
+<code><a href='https://www.rdocumentation.org/packages/rlang/topics/as_function'>rlang::as_function()</a></code>. This means that <code>purrr</code> style lambda functions are
 allowed in addition to anonymous functions etc. Transformation functions must
 accept a data.frame and return a data.frame of the same dimensions. The
 function will be called with the entering/exiting layer data, except for the
