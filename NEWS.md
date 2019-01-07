@@ -1,9 +1,11 @@
 # gganimate (development version)
 
 * Fix bug in transitions when the group aesthetic was late evalued (#262)
-* Better fade support for geom_smooth. Both ribbon and line will now fade.
+* Better fade support for `geom_smooth()`. Both ribbon and line will now fade.
 * Fix bug in transitions when group aesthetic was a string that could be 
   interpreted as a double (#266)
+* Fix bug in `shadow_mark()` where future shadows were drawn above the main 
+  frame data.
 
 # gganimate 1.0.0
 
