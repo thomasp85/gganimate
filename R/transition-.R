@@ -47,10 +47,10 @@ Transition <- ggproto('Transition', NULL,
       split_panel <- stri_match(d$group, regex = '^(.*)(<.*>)(.*)$')
       if (is.na(split_panel[1])) return(d)
       groups <- paste0(split_panel[, 2], split_panel[, 4])
-      if (any(stri_detect(groups, regex = '[^0-9-]'))) {
-        d$group <- groups
-      } else {
+      if (all(stri_detect(groups, regex = '^-?[0-9]$'))) {
         d$group <- as.integer(groups)
+      } else {
+        d$group <- groups
       }
       d$PANEL <- paste0(d$PANEL, split_panel[, 3])
       d
