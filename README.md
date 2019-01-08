@@ -54,14 +54,14 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 ![](man/figures/README-unnamed-chunk-2-1.gif)<!-- -->
 
 Here we take a simple boxplot of fuel consumption as a function of
-cylinders and lets it transition between the number of gears available
+cylinders and let it transition between the number of gears available
 in the cars. As this is a discrete split (`gear` being best described as
 an ordered factor) we use `transition_states` and provides a relative
 length to use for transition and state view. As not all combinations of
-data is present there are states missing a box. We define that when a
-box appears it should fade into view, whereas at should shrink away when
+data are present, there are states missing a box. We define that when a
+box appears it should fade into view, whereas it should shrink away when
 it disappear. Lastly we decide to use a sinusoidal easing for all our
-aesthetics (here, only `y` is changing)
+aesthetics (here, only `y` is changing).
 
 ## Installation
 
