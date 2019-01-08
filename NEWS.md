@@ -6,6 +6,7 @@
   interpreted as a double (#266)
 * Fix bug in `shadow_mark()` where future shadows were drawn above the main 
   frame data.
+* Better error messages when a layer type is not supported by the transition
 
 # gganimate 1.0.0
 

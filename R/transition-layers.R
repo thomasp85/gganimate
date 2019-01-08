@@ -167,7 +167,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       path = transform_path(data[0,], data, ease, enter_length, NULL, enter, exit),
       polygon = transform_polygon(data[0,], data, ease, enter_length, NULL, enter, exit),
       sf = transform_sf(data[0,], data, ease, enter_length, NULL, enter, exit),
-      stop("Unknown layer type", call. = FALSE)
+      stop(type, ' layers not currently supported by transition_layers', call. = FALSE)
     )
     layer <- keep_state(layer, layer_length)
     if (is.finite(params$keep_layers[layer_index])) {
@@ -177,7 +177,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
         path = transform_path(layer, data[0,], ease, exit_length, NULL, enter, exit),
         polygon = transform_polygon(layer, data[0,], ease, exit_length, NULL, enter, exit),
         sf = transform_sf(layer, data[0,], ease, exit_length, NULL, enter, exit),
-        stop("Unknown layer type", call. = FALSE)
+        stop(type, ' layers not currently supported by transition_layers', call. = FALSE)
       )
     }
     layer <- layer[layer$.frame <= params$nframes, , drop = FALSE]

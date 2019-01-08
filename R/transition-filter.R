@@ -191,7 +191,7 @@ TransitionFilter <- ggproto('TransitionFilter', Transition,
           path = transform_path(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
           polygon = transform_polygon(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
           sf = transform_sf(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
-          stop("Unknown layer type", call. = FALSE)
+          stop(type, ' layers not currently supported by transition_filter', call. = FALSE)
         )
       }
     }

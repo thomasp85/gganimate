@@ -175,7 +175,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
     all_frames <- switch(
       type,
       point = tween_events(data, ease, params$nframes, !!start, !!end, c(1, params$nframes), enter, exit, !!enter_length, !!exit_length),
-      stop("Unknown layer type", call. = FALSE)
+      stop(type, ' layers not currently supported by transition_events', call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL

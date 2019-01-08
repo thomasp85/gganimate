@@ -131,7 +131,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
         path = transform_path(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
         polygon = transform_polygon(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
         sf = transform_sf(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit),
-        stop("Unknown layer type", call. = FALSE)
+        stop(type, ' layers not currently supported by transition_time', call. = FALSE)
       )
     }
     true_frame <- seq(times[1], times[length(times)])

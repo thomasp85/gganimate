@@ -123,7 +123,7 @@ TransitionComponents <- ggproto('TransitionComponents', Transition,
     all_frames <- switch(
       type,
       point = tween_components(data, ease, params$nframes, !!time, group, c(1, params$nframes), enter, exit, params$enter_length, params$exit_length),
-      stop("Unsupported layer type", call. = FALSE)
+      stop(type, ' layers not currently supported by transition_components', call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL

@@ -114,7 +114,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
       point = tween_along(data, ease, params$nframes, !!time, group, c(1, params$nframes), FALSE, params$keep_last),
       path = tween_along(data, ease, params$nframes, !!time, group, c(1, params$nframes), TRUE, params$keep_last),
       polygon = tween_along(data, ease, params$nframes, !!time, group, c(1, params$nframes), TRUE, params$keep_last),
-      stop("Unsupported layer type", call. = FALSE)
+      stop(type, ' layers not currently supported by transition_reveal', call. = FALSE)
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
