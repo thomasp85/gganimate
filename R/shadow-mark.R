@@ -83,6 +83,7 @@ ShadowMark <- ggproto('ShadowMark', Shadow,
       } else if (params$future) {
         s[s$.frame > frame_ind, , drop = FALSE]
       }
+      if (nrow(s) == 0) return(d[[1]])
       s$.frame <- NULL
       s$group <- s$group - (max(s$group) + 1) # make sure shadow groups are prior to frame group
       rbind(s, d[[1]])
