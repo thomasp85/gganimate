@@ -11,6 +11,7 @@
   durations when transition variable was a POSIX or date class.
 * Fix bug where using a view would modify the plot coordinate system in-place,
   resulting in modifications to the original plot object.
+* `view_follow` now works with transformed scales.
 
 # gganimate 1.0.0
 
