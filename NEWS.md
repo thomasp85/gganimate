@@ -7,6 +7,8 @@
 * Fix bug in `shadow_mark()` where future shadows were drawn above the main 
   frame data.
 * Better error messages when a layer type is not supported by the transition
+* Fix bug where transitions didn't work with difftime/hms for specifying 
+  durations when transition variable was a POSIX or date class
 
 # gganimate 1.0.0
 

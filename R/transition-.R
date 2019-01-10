@@ -195,13 +195,17 @@ standardise_times <- function(times, name, to_class = NULL) {
   cl <- possible_classes[unique(classes)]
   if (length(cl) == 1 && (cl == 'difftime' || cl == 'hms')) {
     if (is.null(to_class)) {
-      lapply(times, `units<-`, 'secs')
+      times <- lapply(times, `units<-`, 'secs')
     } else if (to_class == 'POSIXct') {
       cl <- to_class
-      lapply(times, `units<-`, 'secs')
+      times <- lapply(times, `units<-`, 'secs')
     } else if (to_class == 'Date') {
+      if (cl == 'hms') {
+        times <- lapply(times, `class<-`, 'difftime')
+      }
+      times <- lapply(times, `units<-`, 'days')
       cl <- to_class
-      lapply(times, `units<-`, 'days')
+
     }
   }
   if (!is.null(to_class) && length(cl) != 0) if (cl != to_class) stop(name, ' data must be ', to_class, call. = FALSE)
