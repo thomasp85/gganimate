@@ -2,6 +2,7 @@
 plot_clone <- function(plot) {
   p <- plot
   p$scales <- plot$scales$clone()
+  p$coordinates <- ggproto(NULL, plot$coordinates)
   p$transmuters <- plot$transmuters$clone()
   p
 }

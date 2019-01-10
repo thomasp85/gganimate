@@ -8,7 +8,9 @@
   frame data.
 * Better error messages when a layer type is not supported by the transition
 * Fix bug where transitions didn't work with difftime/hms for specifying 
-  durations when transition variable was a POSIX or date class
+  durations when transition variable was a POSIX or date class.
+* Fix bug where using a view would modify the plot coordinate system in-place,
+  resulting in modifications to the original plot object.
 
 # gganimate 1.0.0
 
