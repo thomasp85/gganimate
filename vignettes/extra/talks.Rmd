@@ -23,9 +23,9 @@ provides a grammar of animation on top of the grammar of graphics. This talk
 will quickly introduce gganimate, and then dive into a series of different 
 animation and show how they were made and how they could be changed or expanded.
 
-**Slides:** Pending presentation
+**Slides:** https://data-imaginist.com/slides/rstudioconf2019
 
-**Video:** Pending presentation
+**Video:** https://resources.rstudio.com/rstudio-conf-2019/gganimate-live-cookbook
 
 ### useR 2018
 **Title:** The Grammar of Animation
