@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1</span>
       </span>
     </div>
 
@@ -155,6 +155,22 @@
       <small>Source: <a href='https://github.com/thomasp85/gganimate/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="gganimate-1-0-1" class="section level1">
+<h1 class="page-header">
+<a href="#gganimate-1-0-1" class="anchor"></a>gganimate 1.0.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fix bug in transitions when the group aesthetic was late evalued (<a href='https://github.com/thomasp85/gganimate/issues/262'>#262</a>)</li>
+<li>Better fade support for <code>geom_smooth()</code>. Both ribbon and line will now fade.</li>
+<li>Fix bug in transitions when group aesthetic was a string that could be interpreted as a double (<a href='https://github.com/thomasp85/gganimate/issues/266'>#266</a>)</li>
+<li>Fix bug in <code><a href="../reference/shadow_mark.html">shadow_mark()</a></code> where future shadows were drawn above the main frame data.</li>
+<li>Better error messages when a layer type is not supported by the transition</li>
+<li>Fix bug where transitions didn’t work with difftime/hms for specifying durations when transition variable was a POSIX or date class.</li>
+<li>Fix bug where using a view would modify the plot coordinate system in-place, resulting in modifications to the original plot object.</li>
+<li>
+<code>view_follow</code> now works with transformed scales.</li>
+</ul>
+</div>
     <div id="gganimate-1-0-0" class="section level1">
 <h1 class="page-header">
 <a href="#gganimate-1-0-0" class="anchor"></a>gganimate 1.0.0<small> 2019-01-02 </small>
@@ -169,6 +185,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#gganimate-1-0-1">1.0.1</a></li>
         <li><a href="#gganimate-1-0-0">1.0.0</a></li>
       </ul>
     </div>
