@@ -1,3 +1,5 @@
+# gganimate (development version)
+
 # gganimate 1.0.1
 
 * Fix bug in transitions when the group aesthetic was late evalued (#262)
