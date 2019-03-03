@@ -1,5 +1,7 @@
 # gganimate (development version)
 
+* Fix registration of S3 methods for suggested packages
+
 # gganimate 1.0.1
 
 * Fix bug in transitions when the group aesthetic was late evalued (#262)
