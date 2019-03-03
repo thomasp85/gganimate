@@ -1,4 +1,4 @@
-# gganimate (development version)
+# gganimate 1.0.2
 
 * Fix registration of S3 methods for suggested packages
 
