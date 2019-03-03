@@ -3,10 +3,14 @@ Type: Package
 Title: A Grammar of Animated Graphics
 Version: 1.0.1.9000
 Date: 2019-02-15
-Authors@R: c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",
-    role = c("aut", "cre")),
-    person("David", "Robinson", email = "admiral.david@gmail.com",
-    role = c("aut")))
+Authors@R: 
+    c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",
+             role = c("aut", "cre"), 
+             comment = c(ORCID = "0000-0002-5147-4711")),
+      person("David", "Robinson", email = "admiral.david@gmail.com",
+             role = c("aut")),
+      person("RStudio",
+             role = "cph"))
 Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
 Description: The grammar of graphics as implemented in the 'ggplot2' package has
     been successful in providing a powerful API for creating static 
@@ -89,3 +93,4 @@ Collate:
     'view-step-manual.R'
     'view-zoom.R'
     'view-zoom-manual.R'
+    'zzz.R'
