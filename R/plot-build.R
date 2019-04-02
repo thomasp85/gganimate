@@ -31,7 +31,7 @@ ggplot_build.gganim <- function(plot) {
   # Allow all layers to make any final adjustments based
   # on raw input data and plot info
   data <- layer_data
-  if (packageVersion("ggplot2") > "3.1.0") {
+  if (packageVersion("ggplot2") > "3.1.1") {
     # ggplot2 versions 3.1.0 or earlier do not support `setup_layer()`
     data <- by_layer(function(l, d) l$setup_layer(d, plot))
   }
