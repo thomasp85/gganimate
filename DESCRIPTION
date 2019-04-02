@@ -1,7 +1,7 @@
 Package: gganimate
 Type: Package
 Title: A Grammar of Animated Graphics
-Version: 1.0.2.9000
+Version: 1.0.3
 Date: 2019-03-03
 Authors@R: 
     c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",

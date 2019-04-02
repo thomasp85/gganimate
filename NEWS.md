@@ -1,4 +1,7 @@
-# gganimate (development version)
+# gganimate 1.0.3
+
+* Fix a conditional in the plot building step to make it work with the ggplot2
+  3.1.1 hotfix
 
 # gganimate 1.0.2
 

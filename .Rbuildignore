@@ -11,3 +11,5 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
+^cran-comments\.md$
+^CRAN-RELEASE$
