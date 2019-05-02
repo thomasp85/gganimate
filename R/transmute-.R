@@ -191,7 +191,10 @@ TransmuteFactory <- ggproto('TransmuteFactory', NULL,
 #' @export
 c.TransmuteFactory <- function(...) {
   factories <- list(...)
-  if (length(factories) == 1) return(factories)
+  if (length(factories) == 1) return(factories[[1]])
+  # This is solemnly there to please the byte-compiler from R3.6 and onwards
+  # "Everything under heaven is in utter chaos; the situation is excellent."
+  if (!all(vapply(factories, inherits, logical(1), what = 'TransmuteFactory'))) return(factories)
   factories[[1]] <- factories[[1]]$clone()
   Reduce(function(l, r) l$add_factory(r), factories)
 }
