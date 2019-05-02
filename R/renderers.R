@@ -188,10 +188,11 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
     file_glob <- sub('^.*(\\..+$)', 'gganim_plot%4d\\1', basename(frames[1]))
     file_glob <- file.path(frame_loc, file_glob)
     system2(ffmpeg, c("-pattern_type sequence",
+      paste0('-r ', fps),
       paste0('-i ', file_glob),
       '-y',
       '-loglevel ', if (progress) 'info' else 'quiet',
-      paste0('-framerate ', 1/fps),
+      paste0('-r ', fps),
       '-hide_banner',
       options,
       output_file
