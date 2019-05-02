@@ -23,7 +23,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -98,7 +99,7 @@ spaced frames are rendered." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -191,7 +192,7 @@ spaced frames are rendered.</p>
   <span class='no'>device</span>, <span class='no'>ref_frame</span>, <span class='no'>start_pause</span>, <span class='no'>end_pause</span>, <span class='no'>rewind</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for gganim</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='fu'>knit_print.gganim</span>(<span class='no'>x</span>, <span class='no'>options</span>, <span class='no'>...</span>)</pre>
     
@@ -263,21 +264,21 @@ frame in the animation (default is <code>0</code> for both)</p></td>
     <p><code>print.gganim</code>()  is an alias for <code>animate()</code> in the same way as
 <code>print.ggplot()</code> is an alias for <code>plot.ggplot()</code>. This ensures that gganimate
 behaves ggplot2-like and produces the animation when the object is printed.
-The <code><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot()</a></code> method is different and produces a single frame for inspection
+The <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code> method is different and produces a single frame for inspection
 (by default frame 50 out of 100).</p>
 <p>Animations can be saved to disk using <code><a href='anim_save.html'>anim_save()</a></code> in much the same way
-<a href='https://ggplot2.tidyverse.org/reference/ggsave.html'>ggsave()</a> works for static plots.</p>
+<a href='https://rdrr.io/pkg/ggplot2/man/ggsave.html'>ggsave()</a> works for static plots.</p>
     
     <h2 class="hasAnchor" id="defaults"><a class="anchor" href="#defaults"></a>Defaults</h2>
 
     
     <p>It is possible to overwrite the defaults used by gganimate for the animation
-by setting them with <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options()</a></code> (prefixed with <code>gganimate.</code>. As an example,
+by setting them with <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code> (prefixed with <code>gganimate.</code>. As an example,
 if you would like to change the default nframes to 50 you would call
-<code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(gganimate.nframes = 50)</a></code>. In order to set default device arguments
+<code><a href='https://rdrr.io/r/base/options.html'>options(gganimate.nframes = 50)</a></code>. In order to set default device arguments
 (those you would normally pass through with <code>...</code>) you should use the
 <code>gganimate.dev_args</code> options and provide a list of arguments e.g.
-<code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(gganimate.dev_args = list(width = 800, height = 600))</a></code> Defaults set
+<code><a href='https://rdrr.io/r/base/options.html'>options(gganimate.dev_args = list(width = 800, height = 600))</a></code> Defaults set
 this way can still be overridden by giving arguments directly to <code>animate()</code>.</p>
 <p><strong>knitr Support:</strong> <br />
 It is possible to specify the arguments to <code>animate()</code> in the chunk options

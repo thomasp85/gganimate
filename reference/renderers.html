@@ -23,7 +23,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -92,7 +93,7 @@ receives the paths to the individual frames once they have been created." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -172,7 +173,7 @@ receives the paths to the individual frames once they have been created.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>gifski_renderer</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".gif"</span>), <span class='kw'>loop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>gifski_renderer</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".gif"</span>), <span class='kw'>loop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>file_renderer</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='st'>"."</span>, <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"gganim_plot"</span>, <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
@@ -181,7 +182,7 @@ receives the paths to the individual frames once they have been created.</p>
   <span class='kw'>audio</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>ffmpeg_renderer</span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='st'>"auto"</span>, <span class='kw'>ffmpeg</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>pix_fmt</span> <span class='kw'>=</span> <span class='st'>"yuv420p"</span>))
+  <span class='kw'>options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>pix_fmt</span> <span class='kw'>=</span> <span class='st'>"yuv420p"</span>))
 
 <span class='fu'>magick_renderer</span>(<span class='kw'>loop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
@@ -270,7 +271,7 @@ animation in frames-per-second.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>gifski_renderer()</code> is used unless otherwise specified in
-<code><a href='animate.html'>animate()</a></code> or in <code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options('gganimate.renderer')</a></code>. This renderer requires
+<code><a href='animate.html'>animate()</a></code> or in <code><a href='https://rdrr.io/r/base/options.html'>options('gganimate.renderer')</a></code>. This renderer requires
 both the <code>gifski</code> and <code>png</code> packages to be installed.</p>
 <p>Other possible renderers are:</p><ul>
 <li><p><code>magick_renderer()</code> which requires the <code>magick</code> package and produce a <code>gif</code>.

@@ -23,7 +23,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -90,7 +91,7 @@ but they can also be set to be removed as the next layer enters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.3</span>
       </span>
     </div>
 
@@ -249,7 +250,7 @@ exit of the layer it belongs to.</p>
 <span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>gear</span>))) +
+  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
   <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>()
 
@@ -257,7 +258,7 @@ exit of the layer it belongs to.</p>
 <span class='no'>anim1</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>gear</span>))) +
+  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
   <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
                     <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>()
@@ -266,9 +267,9 @@ exit of the layer it belongs to.</p>
 <span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>gear</span>))) +
+  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
   <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_order</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)) +
+                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>()
 
 <span class='co'># Keep layer 1 for the whole animation, but remove the 2nd layer as the 3rd</span>
@@ -276,9 +277,9 @@ exit of the layer it belongs to.</p>
 <span class='no'>anim3</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'>geom_point</span>() +
   <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>factor</a></span>(<span class='no'>gear</span>))) +
+  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
   <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep_layers</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>Inf</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)) +
+                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep_layers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>Inf</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>() +
   <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>exit_shrink</a></span>()</div></pre>
   </div>
