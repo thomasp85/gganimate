@@ -10,7 +10,7 @@
 animate(plot, ...)
 
 \method{animate}{gganim}(plot, nframes, fps, duration, detail, renderer,
-  device, ref_frame, start_pause, end_pause, rewind, ...)
+  device, suffix = NULL, ref_frame, start_pause, end_pause, rewind, ...)
 
 \method{print}{gganim}(x, ...)
 
@@ -32,9 +32,12 @@ knit_print.gganim(x, options, ...)
 \item{renderer}{The function used to render the generated frames into an
 animation. Gets a vector of paths to images along with the framerate. (default \code{\link[=gifski_renderer]{gifski_renderer()}})}
 
-\item{device}{The device to use for rendering the single frames. Possible
-values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'}
-(requires the svglite package). (default \code{'png'})}
+\item{device}{The name (character string) of the device to use for rendering the single frames. Possible
+values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, \code{'svglite'}
+(requires the svglite package) or any other output device. (default \code{'png'})}
+
+\item{suffix}{The suffix for the individual frames produced by the device.
+If NULL then a standard suffix for that device is chosen automatically. Default: NULL}
 
 \item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
 space available for axis text. Defaults to the first frame. Negative values
