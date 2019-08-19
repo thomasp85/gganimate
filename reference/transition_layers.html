@@ -29,8 +29,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -74,6 +75,7 @@ but they can also be set to be removed as the next layer enters." />
 
   gtag('config', 'UA-84380701-2');
 </script>
+
 
   </head>
 
@@ -151,6 +153,7 @@ but they can also be set to be removed as the next layer enters." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -215,7 +218,8 @@ when interpreting label literals</p></td>
     <h2 class="hasAnchor" id="label-variables"><a class="anchor" href="#label-variables"></a>Label variables</h2>
 
     
-    <p><code>transition_layers</code> makes the following variables available for string
+
+<p><code>transition_layers</code> makes the following variables available for string
 literal interpretation, in addition to the general ones provided by
 <code><a href='animate.html'>animate()</a></code>:</p><ul>
 <li><p><strong>transitioning</strong> is a boolean indicating whether the frame is part of the
@@ -225,11 +229,13 @@ transitioning phase</p></li>
 <li><p><strong>next_layer</strong> The name of the next layer the animation will show</p></li>
 <li><p><strong>nlayers</strong> The total number of layers</p></li>
 </ul>
+
     
     <h2 class="hasAnchor" id="object-permanence"><a class="anchor" href="#object-permanence"></a>Object permanence</h2>
 
     
-    <p><code>transition_layer</code> does not link rows across data to the same graphic
+
+<p><code>transition_layer</code> does not link rows across data to the same graphic
 element, so elements will be defined uniquely by each row and the enter and
 exit of the layer it belongs to.</p>
     
@@ -300,14 +306,16 @@ exit of the layer it belongs to.</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://data-imaginist.com'>Thomas Lin Pedersen</a>, <a href='http://varianceexplained.org'>David Robinson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
    </div>
 
@@ -330,6 +338,8 @@ exit of the layer it belongs to.</p>
 </script>
 
 
+
   </body>
 </html>
+
 

@@ -29,8 +29,9 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -82,6 +83,7 @@ spaced frames are rendered." />
 
   gtag('config', 'UA-84380701-2');
 </script>
+
 
   </head>
 
@@ -159,6 +161,7 @@ spaced frames are rendered." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -267,12 +270,13 @@ behaves ggplot2-like and produces the animation when the object is printed.
 The <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code> method is different and produces a single frame for inspection
 (by default frame 50 out of 100).</p>
 <p>Animations can be saved to disk using <code><a href='anim_save.html'>anim_save()</a></code> in much the same way
-<a href='https://rdrr.io/pkg/ggplot2/man/ggsave.html'>ggsave()</a> works for static plots.</p>
+<a href='https://ggplot2.tidyverse.org/reference/ggsave.html'>ggsave()</a> works for static plots.</p>
     
     <h2 class="hasAnchor" id="defaults"><a class="anchor" href="#defaults"></a>Defaults</h2>
 
     
-    <p>It is possible to overwrite the defaults used by gganimate for the animation
+
+<p>It is possible to overwrite the defaults used by gganimate for the animation
 by setting them with <code><a href='https://rdrr.io/r/base/options.html'>options()</a></code> (prefixed with <code>gganimate.</code>. As an example,
 if you would like to change the default nframes to 50 you would call
 <code><a href='https://rdrr.io/r/base/options.html'>options(gganimate.nframes = 50)</a></code>. In order to set default device arguments
@@ -294,11 +298,13 @@ supported are:</p><ul>
 <li><p><code>fig.width</code>, <code>fig.height</code>, <code>fig.asp</code>, <code>fig.dim</code>: will set <code>width</code> and
 <code>height</code> of the device.</p></li>
 </ul>
+
     
     <h2 class="hasAnchor" id="label-variables"><a class="anchor" href="#label-variables"></a>Label variables</h2>
 
     
-    <p>All plots have a certain set of variables available for string literal
+
+<p>All plots have a certain set of variables available for string literal
 interpolation within plot labels. These are:</p><ul>
 <li><p><strong>frame</strong> gives you the frame index for the current frame</p></li>
 <li><p><strong>nframes</strong> gives you the total number of frames in the animation</p></li>
@@ -307,7 +313,8 @@ interpolation within plot labels. These are:</p><ul>
 <li><p><strong>data</strong> gives you the layer data for the current frame (as a list of data
 frames)</p></li>
 </ul>
-    <p>Further, the transition and view in use can also make variables available.
+
+<p>Further, the transition and view in use can also make variables available.
 Consult the documentation for these for more detail.</p>
     
 
@@ -349,14 +356,16 @@ Consult the documentation for these for more detail.</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://data-imaginist.com'>Thomas Lin Pedersen</a>, <a href='http://varianceexplained.org'>David Robinson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
    </div>
 
@@ -379,6 +388,8 @@ Consult the documentation for these for more detail.</p>
 </script>
 
 
+
   </body>
 </html>
+
 

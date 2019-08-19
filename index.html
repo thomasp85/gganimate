@@ -15,14 +15,14 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="A Grammar of Animated Graphics">
-<meta property="og:description" content="The grammar of graphics as implemented in the 'ggplot2' package has
+<meta property="og:description" content="The grammar of graphics as implemented in the ggplot2 package has
     been successful in providing a powerful API for creating static 
     visualisation. In order to extend the API for animated graphics this package
-    provides a completely new set of grammar, fully compatible with 'ggplot2' 
+    provides a completely new set of grammar, fully compatible with ggplot2 
     for specifying transitions and animations in a flexible and extensible way.">
 <meta property="og:image" content="https://gganimate.com/logo.png">
 <meta name="twitter:card" content="summary">
@@ -38,7 +38,7 @@
 </script>
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -83,8 +83,7 @@
       <a href="https://www.data-imaginist.com/2019/gganimate-has-transitioned-to-a-state-of-release/">Version 1.0.0</a>
     </li>
     <li class="divider">
-    </li>
-<li>
+    <li>
       <a href="news/index.html">Change log</a>
     </li>
   </ul>
@@ -112,13 +111,9 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+      </header><div class="row">
+  <div class="contents col-md-9">
 <div id="gganimate" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#gganimate" class="anchor"></a>gganimate <img src="reference/figures/logo.png" align="right" style="padding-left:10px;background-color:white;">
@@ -144,8 +139,8 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(gganimate)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span>(mtcars, <span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), mpg)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/geom_boxplot.html">geom_boxplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mtcars, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), mpg)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>() <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span><span class="co"># Here comes the gganimate code</span></a>
 <a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="reference/transition_states.html">transition_states</a></span>(</a>
 <a class="sourceLine" id="cb1-8" data-line-number="8">    gear,</a>
@@ -171,14 +166,14 @@
 <p>It is impossible to cover everything possible with <code>gganimate</code> in a README, but animations are fun, so let’s at least have one more:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(gapminder)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span>(gapminder, <span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(gdpPercap, lifeExp, <span class="dt">size =</span> pop, <span class="dt">colour =</span> country)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/scale_manual.html">scale_colour_manual</a></span>(<span class="dt">values =</span> country_colors) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/scale_size.html">scale_size</a></span>(<span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/scale_continuous.html">scale_x_log10</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>continent) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(gapminder, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(gdpPercap, lifeExp, <span class="dt">size =</span> pop, <span class="dt">colour =</span> country)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span>(<span class="dt">alpha =</span> <span class="fl">0.7</span>, <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span>(<span class="dt">values =</span> country_colors) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size</a></span>(<span class="dt">range =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">2</span>, <span class="dv">12</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span>(<span class="op">~</span>continent) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="st">  </span><span class="co"># Here comes the gganimate specific bits</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">'Year: {frame_time}'</span>, <span class="dt">x =</span> <span class="st">'GDP per capita'</span>, <span class="dt">y =</span> <span class="st">'life expectancy'</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span>(<span class="dt">title =</span> <span class="st">'Year: {frame_time}'</span>, <span class="dt">x =</span> <span class="st">'GDP per capita'</span>, <span class="dt">y =</span> <span class="st">'life expectancy'</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="reference/transition_time.html">transition_time</a></span>(year) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="reference/ease_aes.html">ease_aes</a></span>(<span class="st">'linear'</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.gif"><!-- --></p>
@@ -187,14 +182,14 @@
 <div id="where-is-my-animation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#where-is-my-animation" class="anchor"></a>Where is my animation?</h2>
-<p><code>gganimate</code> mimics the way <code>ggplot2</code> renders its output, in that the rendering is done automatically when the <code>gganim</code> object is printed. Under the hood, the <code><a href="reference/animate.html">animate()</a></code> function is called which renders the frame and passes the frames to a renderer functions which takes care of combining them to the final animation. The default renderer is <code><a href="reference/renderers.html">gifski_renderer()</a></code> which returns a <code>gif_image</code> object which is a simple wrapper around a path to a gif file. If <code><a href="reference/animate.html">animate()</a></code> has been called implicitly as part of <code>print</code> the <code>gif_image</code> object is available using the <code><a href="reference/last_animation.html">last_animation()</a></code> function (analogous to <code><a href="https://rdrr.io/pkg/ggplot2/man/last_plot.html">ggplot2::last_plot()</a></code>). In order to save the animation to a specific location, you can use the <code><a href="reference/anim_save.html">anim_save()</a></code> function which, like <code><a href="https://rdrr.io/pkg/ggplot2/man/ggsave.html">ggplot2::ggsave</a></code>, defaults to taking the last rendered animation and writes it to a file.</p>
+<p><code>gganimate</code> mimics the way <code>ggplot2</code> renders its output, in that the rendering is done automatically when the <code>gganim</code> object is printed. Under the hood, the <code><a href="reference/animate.html">animate()</a></code> function is called which renders the frame and passes the frames to a renderer functions which takes care of combining them to the final animation. The default renderer is <code><a href="reference/renderers.html">gifski_renderer()</a></code> which returns a <code>gif_image</code> object which is a simple wrapper around a path to a gif file. If <code><a href="reference/animate.html">animate()</a></code> has been called implicitly as part of <code>print</code> the <code>gif_image</code> object is available using the <code><a href="reference/last_animation.html">last_animation()</a></code> function (analogous to <code><a href="https://ggplot2.tidyverse.org/reference/last_plot.html">ggplot2::last_plot()</a></code>). In order to save the animation to a specific location, you can use the <code><a href="reference/anim_save.html">anim_save()</a></code> function which, like <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggplot2::ggsave</a></code>, defaults to taking the last rendered animation and writes it to a file.</p>
 </div>
 <div id="i-dont-like-gifs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#i-dont-like-gifs" class="anchor"></a>I don’t like gifs…</h2>
 <p>gif is a fantastic format for animations due to its wide support, but sometimes another format is required. <code>gganimate</code> is agnostic to the renderer and while the default is to use <a href="https://github.com/r-rust/gifski">gifski</a> to combines the frames into a gif, it doesn’t have to be so. By passing an alternate renderer to the <code><a href="reference/animate.html">animate()</a></code> function you can control the animation format, and <code>gganimate</code> comes with a bunch (and you can write your own). To create video files you can e.g. use the <code><a href="reference/renderers.html">ffmpeg_renderer()</a></code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span>(airquality, <span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(Day, Temp)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/geom_path.html">geom_line</a></span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">'steelblue'</span>) <span class="op">+</span><span class="st"> </span></a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">p &lt;-<span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(airquality, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(Day, Temp)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>(<span class="dt">size =</span> <span class="dv">2</span>, <span class="dt">colour =</span> <span class="st">'steelblue'</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="reference/transition_states.html">transition_states</a></span>(Month, <span class="dv">4</span>, <span class="dv">1</span>) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="reference/shadow_mark.html">shadow_mark</a></span>(<span class="dt">size =</span> <span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">'grey'</span>)</a>
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw"><a href="reference/animate.html">animate</a></span>(p, <span class="dt">renderer =</span> <span class="kw"><a href="reference/renderers.html">ffmpeg_renderer</a></span>())</a></code></pre></div>
@@ -204,16 +199,16 @@
 <div id="old-api" class="section level2">
 <h2 class="hasAnchor">
 <a href="#old-api" class="anchor"></a>Old API</h2>
-<p>This is the second iteration of the gganimate package. The first, developed by <a href="https://github.com/dgrtwo">David Robinson</a> had a very different API, and relied on specifying animation frame membership inside <code><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes()</a></code> blocks in the <code>geom_*()</code> calls. This approach was easy to grasp, but essentially limited in capabilities and has thus been abandoned for a more thorough grammar.</p>
+<p>This is the second iteration of the gganimate package. The first, developed by <a href="https://github.com/dgrtwo">David Robinson</a> had a very different API, and relied on specifying animation frame membership inside <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> blocks in the <code>geom_*()</code> calls. This approach was easy to grasp, but essentially limited in capabilities and has thus been abandoned for a more thorough grammar.</p>
 <p>Code written for the old API will not work with this <code>gganimate</code> version and there will not come a future support for it. If you wish to continue using the old API then avoid upgrading <code>gganimate</code>. If you’ve already upgraded and wish to downgrade, the latest version of the old API is available as a <a href="https://github.com/thomasp85/gganimate/releases/tag/v0.1.1">GitHub release</a>.</p>
 <p>If you wish to convert your old animations to the new API, the closest you get is probably with <code>transition_manual</code>, even though it is not completely substitutable:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Old code</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span>(mtcars) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/geom_boxplot.html">geom_boxplot</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), mpg, <span class="dt">frame =</span> gear))</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mtcars) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), mpg, <span class="dt">frame =</span> gear))</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># New code</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span>(mtcars) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/geom_boxplot.html">geom_boxplot</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), mpg)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(mtcars) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span>(<span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(cyl), mpg)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="reference/transition_manual.html">transition_manual</a></span>(gear)</a></code></pre></div>
 </div>
 </div>
@@ -243,14 +238,14 @@
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://data-imaginist.com">Thomas Lin Pedersen</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5147-4711" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<a href="https://data-imaginist.com">Thomas Lin Pedersen</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5147-4711" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 <li>
 <a href="http://varianceexplained.org">David Robinson</a> <br><small class="roles"> Author </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/thomasp85/gganimate"><img src="https://travis-ci.org/thomasp85/gganimate.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -261,7 +256,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -270,8 +264,9 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9100.</p>
 </div>
+
       </footer>
 </div>
 
