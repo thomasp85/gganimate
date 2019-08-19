@@ -3,6 +3,12 @@ as.gganim <- function(x) {
   if (is.gganim(x)) return(x)
   if (!is.ggplot(x)) stop('Only knows how to convert ggplot to gganim', call. = FALSE)
   class(x) <- c('gganim', class(x))
+  if (inherits(x, 'ggraph')) {
+    cl <- class(x)
+    ggraph_ind <- cl == 'ggraph'
+    cl <- c(cl[ggraph_ind], cl[!ggraph_ind])
+    class(x) <- cl
+  }
   x$transition <- transition_null()
   x$view <- view_static()
   x$shadow <- shadow_null()
