@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,8 +47,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Wrap a video file for easy handling — video_file" />
 
+<meta property="og:title" content="Wrap a video file for easy handling — video_file" />
 <meta property="og:description" content="This function is equivalent to gif_file() but works for arbitrary video
 file formats. There are some caveats involved though, most notably it doesn't
 currently supports splitting so you can't easily use this output together
@@ -54,9 +56,9 @@ with split_animation(). Graceful printing is contingent on the file format.
 Only mp4, webm, and ogg is supported by the HTML format and can thus be
 shown in the RStudio viewer and inside HTML documents created with knitr.
 Other formats will be opened in their default OS-specific viewer." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -136,7 +138,6 @@ Other formats will be opened in their default OS-specific viewer." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -169,7 +170,6 @@ Other formats will be opened in their default OS-specific viewer." />
     </div>
 
     <div class="ref-description">
-    
     <p>This function is equivalent to <code><a href='gif_file.html'>gif_file()</a></code> but works for arbitrary video
 file formats. There are some caveats involved though, most notably it doesn't
 currently supports splitting so you can't easily use this output together
@@ -177,7 +177,6 @@ with <code><a href='split_animation.html'>split_animation()</a></code>. Graceful
 Only <code>mp4</code>, <code>webm</code>, and <code>ogg</code> is supported by the HTML format and can thus be
 shown in the RStudio viewer and inside HTML documents created with knitr.
 Other formats will be opened in their default OS-specific viewer.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>video_file</span>(<span class='no'>file</span>)
@@ -186,7 +185,7 @@ Other formats will be opened in their default OS-specific viewer.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>knit_print.video_file</span>(<span class='no'>x</span>, <span class='no'>options</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -207,21 +206,19 @@ Other formats will be opened in their default OS-specific viewer.</p>
       <td><p>Arguments passed on</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>video_file</code> returns a <code>video_file</code> object which is a shallow wrapper
 around the file path text string.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

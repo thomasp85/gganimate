@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,16 +47,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Renderers provided by gganimate — renderers" />
 
+<meta property="og:title" content="Renderers provided by gganimate — renderers" />
 <meta property="og:description" content="The purpose of the renderer function is to take a list of image files and
 assemble them into an animation. gganimate provide a range of renderers
 but it is also possible to provide your own, if the supplied ones are lacking
 in any way. A renderer is given as argument to animate()/print() and
 receives the paths to the individual frames once they have been created." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -134,7 +136,6 @@ receives the paths to the individual frames once they have been created." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -167,13 +168,11 @@ receives the paths to the individual frames once they have been created." />
     </div>
 
     <div class="ref-description">
-    
     <p>The purpose of the renderer function is to take a list of image files and
 assemble them into an animation. <code>gganimate</code> provide a range of renderers
 but it is also possible to provide your own, if the supplied ones are lacking
 in any way. A renderer is given as argument to <code><a href='animate.html'>animate()</a></code>/print() and
 receives the paths to the individual frames once they have been created.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>gifski_renderer</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".gif"</span>), <span class='kw'>loop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -190,7 +189,7 @@ receives the paths to the individual frames once they have been created.</p>
 <span class='fu'>magick_renderer</span>(<span class='kw'>loop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>sprite_renderer</span>()</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -254,7 +253,7 @@ options automatically</p></td>
       <td><p>arguments passed on to the selected renderer</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The provided renderers are factory functions that returns a new function
@@ -270,7 +269,6 @@ animation in frames-per-second.</p>
 <li><p><strong><code>file_renderer</code></strong>: Returns a vector of file paths</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>gifski_renderer()</code> is used unless otherwise specified in
@@ -297,27 +295,24 @@ animation as a list of image files (one for each frame)</p></li>
 matches the required signature (<code>frames</code> and <code>fps</code> argument). The return
 value of your provided function will be the return value ultimately given by
 <code><a href='animate.html'>animate()</a></code></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>gear</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><span class='co'># NOT RUN {</span>
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Renderers are specified in the `animate()` function</span>
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'>sprite_renderer</span>())
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

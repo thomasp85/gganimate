@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,16 +47,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Split an animation into chunks — split_animation" />
 
+<meta property="og:title" content="Split an animation into chunks — split_animation" />
 <meta property="og:description" content="Sometimes it is of interest to split an animation out in smaller chunks so
 they can be orchestrated, e.g. in a presentation. This function lets you
 provide a 'factor' to split by in the same way as base::split() though this
 one will be evaluated in the context of the animations frame_vars() data,
 so you can split directly on frame metadata." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -134,7 +136,6 @@ so you can split directly on frame metadata." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -167,17 +168,15 @@ so you can split directly on frame metadata." />
     </div>
 
     <div class="ref-description">
-    
     <p>Sometimes it is of interest to split an animation out in smaller chunks so
 they can be orchestrated, e.g. in a presentation. This function lets you
 provide a 'factor' to split by in the same way as <code><a href='https://rdrr.io/r/base/split.html'>base::split()</a></code> though this
 one will be evaluated in the context of the animations <code><a href='frame_vars.html'>frame_vars()</a></code> data,
 so you can split directly on frame metadata.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>split_animation</span>(<span class='kw'>animation</span> <span class='kw'>=</span> <span class='fu'><a href='last_animation.html'>last_animation</a></span>(), <span class='no'>by</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -193,22 +192,20 @@ metadata. The result must be of equal length to the number of frames in the
 animation and define a grouping</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Depending on the output type of the renderer used to produce the
 animation. Often a list with elements referencing the chunks of the
 animation. that can then be saved individually.</p>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>

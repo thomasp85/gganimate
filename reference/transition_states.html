@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,16 +47,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Transition between several distinct stages of the data — transition_states" />
 
+<meta property="og:title" content="Transition between several distinct stages of the data — transition_states" />
 <meta property="og:description" content="This transition splits your data into multiple states based on the levels in
 a given column, much like ggplot2::facet_wrap() splits up the data in
 multiple panels. It then tweens between the defined states and pauses at each
 state. Layers with data without the specified column will be kept constant
 during the animation (again, mimicking facet_wrap)." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -134,7 +136,6 @@ during the animation (again, mimicking facet_wrap)." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -167,18 +168,16 @@ during the animation (again, mimicking facet_wrap)." />
     </div>
 
     <div class="ref-description">
-    
     <p>This transition splits your data into multiple states based on the levels in
 a given column, much like <code><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>ggplot2::facet_wrap()</a></code> splits up the data in
 multiple panels. It then tweens between the defined states and pauses at each
 state. Layers with data without the specified column will be kept constant
 during the animation (again, mimicking <code>facet_wrap</code>).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>transition_states</span>(<span class='no'>states</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -203,7 +202,7 @@ recycled to match the number of states in the data</p></td>
 be transitioned into the first.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="label-variables"><a class="anchor" href="#label-variables"></a>Label variables</h2>
 
     
@@ -218,7 +217,6 @@ transitioning phase</p></li>
 <li><p><strong>next_state</strong> The name of the next state the animation will be part of</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="object-permanence"><a class="anchor" href="#object-permanence"></a>Object permanence</h2>
 
     
@@ -234,7 +232,6 @@ exists then all rows will have the same group. If the group aesthetic is not
 unique in each state, then rows will be matched first by group and then by
 index. Unmatched rows will appear/disappear, potentially using an enter or
 exit function.</p>
-    
     <h2 class="hasAnchor" id="computed-variables"><a class="anchor" href="#computed-variables"></a>Computed Variables</h2>
 
     
@@ -242,7 +239,6 @@ exit function.</p>
 <p>It is possible to use variables calculated by the statistic to define the
 transition. Simply inclose the variable in <code>stat()</code> in the same way as when
 using computed variables in aesthetics.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other transitions: <code><a href='transition_components.html'>transition_components</a></code>,
@@ -253,7 +249,6 @@ using computed variables in aesthetics.</p>
   <code><a href='transition_null.html'>transition_null</a></code>,
   <code><a href='transition_reveal.html'>transition_reveal</a></code>,
   <code><a href='transition_time.html'>transition_time</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Sepal.Width</span>, <span class='no'>Petal.Width</span>)) +
@@ -281,15 +276,10 @@ using computed variables in aesthetics.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#label-variables">Label variables</a></li>
-
       <li><a href="#object-permanence">Object permanence</a></li>
-
       <li><a href="#computed-variables">Computed Variables</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

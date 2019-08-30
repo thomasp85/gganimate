@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,13 +47,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Transition individual events in and out — transition_events" />
 
+<meta property="og:title" content="Transition individual events in and out — transition_events" />
 <meta property="og:description" content="This transition treats each visual element as an event in time and allows you
 to control the duration and enter/exit length individually for each event." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -131,7 +133,6 @@ to control the duration and enter/exit length individually for each event." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -164,15 +165,13 @@ to control the duration and enter/exit length individually for each event." />
     </div>
 
     <div class="ref-description">
-    
     <p>This transition treats each visual element as an event in time and allows you
 to control the duration and enter/exit length individually for each event.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>transition_events</span>(<span class='no'>start</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>enter_length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exit_length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -192,7 +191,7 @@ the events from they enter to they have exited.</p></td>
 be used for enter and exit for each event.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="label-variables"><a class="anchor" href="#label-variables"></a>Label variables</h2>
 
     
@@ -203,7 +202,6 @@ literal interpretation, in addition to the general ones provided by
 <li><p><strong>frame_time</strong> gives the time that the current frame corresponds to</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="object-permanence"><a class="anchor" href="#object-permanence"></a>Object permanence</h2>
 
     
@@ -211,7 +209,6 @@ literal interpretation, in addition to the general ones provided by
 <p><code>transition_events</code> does not link rows across data to the same graphic
 element, so elements will be defined uniquely by each row and its specific
 start, end, enter and exit.</p>
-    
     <h2 class="hasAnchor" id="computed-variables"><a class="anchor" href="#computed-variables"></a>Computed Variables</h2>
 
     
@@ -219,7 +216,6 @@ start, end, enter and exit.</p>
 <p>It is possible to use variables calculated by the statistic to define the
 transition. Simply inclose the variable in <code>stat()</code> in the same way as when
 using computed variables in aesthetics.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other transitions: <code><a href='transition_components.html'>transition_components</a></code>,
@@ -230,7 +226,6 @@ using computed variables in aesthetics.</p>
   <code><a href='transition_reveal.html'>transition_reveal</a></code>,
   <code><a href='transition_states.html'>transition_states</a></code>,
   <code><a href='transition_time.html'>transition_time</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
@@ -256,15 +251,10 @@ using computed variables in aesthetics.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#label-variables">Label variables</a></li>
-
       <li><a href="#object-permanence">Object permanence</a></li>
-
       <li><a href="#computed-variables">Computed Variables</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

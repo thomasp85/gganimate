@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,17 +47,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Show preceding frames with gradual falloff — shadow_wake" />
 
+<meta property="og:title" content="Show preceding frames with gradual falloff — shadow_wake" />
 <meta property="og:description" content="This shadow is meant to draw a small wake after data by showing the latest
 frames up to the current. You can choose to gradually diminish the size
 and/or opacity of the shadow. The length of the wake is not given in absolute
 frames as that would make the animation susceptible to changes in the
 framerate. Instead it is given as a proportion of the total length of the
 animation." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -135,7 +137,6 @@ animation." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -168,20 +169,18 @@ animation." />
     </div>
 
     <div class="ref-description">
-    
     <p>This shadow is meant to draw a small wake after data by showing the latest
 frames up to the current. You can choose to gradually diminish the size
 and/or opacity of the shadow. The length of the wake is not given in absolute
 frames as that would make the animation susceptible to changes in the
 framerate. Instead it is given as a proportion of the total length of the
 animation.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>shadow_wake</span>(<span class='no'>wake_length</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>falloff</span> <span class='kw'>=</span> <span class='st'>"cubic-in"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_phase</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"enter"</span>, <span class='st'>"exit"</span>))</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -226,12 +225,11 @@ values are <code>'enter'</code>, <code>'exit'</code>, <code>'static'</code>, <co
 <code>NULL</code> all phases will be included. Defaults to <code>'enter'</code> and <code>'exit'</code></p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other shadows: <code><a href='shadow_mark.html'>shadow_mark</a></code>,
   <code><a href='shadow_null.html'>shadow_null</a></code>, <code><a href='shadow_trail.html'>shadow_trail</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Sepal.Length</span>)) +
@@ -250,18 +248,16 @@ values are <code>'enter'</code>, <code>'exit'</code>, <code>'static'</code>, <co
   <span class='fu'>shadow_wake</span>(<span class='fl'>0.1</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey92'</span>)
 
 <span class='co'># Use `detail` in the `animate()` call to increase the number of calculated</span>
-<span class='co'># frames and thus make the wake smoother</span></div><span class='co'># NOT RUN {</span>
+<span class='co'># frames and thus make the wake smoother</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim2</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

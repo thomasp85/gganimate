@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,8 +47,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Control easing of aesthetics — ease_aes" />
 
+<meta property="og:title" content="Control easing of aesthetics — ease_aes" />
 <meta property="og:description" content="Easing defines how a value change to another during tweening. Will it
 progress linearly, or maybe start slowly and then build up momentum. In
 gganimate, each aesthetic or computed variable can be tweened with
@@ -54,9 +56,9 @@ individual easing functions using the ease_aes() function. All easing
 functions implemented in tweenr are available, see tweenr::display_ease
 for an overview. Setting an ease for x and/or y will also affect the
 other related positional aesthetics (e.g. xmin, yend, etc)." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -136,7 +138,6 @@ other related positional aesthetics (e.g. xmin, yend, etc)." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -169,7 +170,6 @@ other related positional aesthetics (e.g. xmin, yend, etc)." />
     </div>
 
     <div class="ref-description">
-    
     <p>Easing defines how a value change to another during tweening. Will it
 progress linearly, or maybe start slowly and then build up momentum. In
 <code>gganimate</code>, each aesthetic or computed variable can be tweened with
@@ -177,11 +177,10 @@ individual easing functions using the <code>ease_aes()</code> function. All easi
 functions implemented in <code>tweenr</code> are available, see <a href='https://rdrr.io/pkg/tweenr/man/display_ease.html'>tweenr::display_ease</a>
 for an overview. Setting an ease for <code>x</code> and/or <code>y</code> will also affect the
 other related positional aesthetics (e.g. <code>xmin</code>, <code>yend</code>, etc).</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>ease_aes</span>(<span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"linear"</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -194,7 +193,7 @@ other related positional aesthetics (e.g. <code>xmin</code>, <code>yend</code>, 
       <td><p>Override easing for specific aesthetics</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="easing-functions"><a class="anchor" href="#easing-functions"></a>Easing functions</h2>
 
     
@@ -219,35 +218,37 @@ other related positional aesthetics (e.g. <code>xmin</code>, <code>yend</code>, 
 the last half it is reversed</p></li>
 </ul>
 
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>gear</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div><span class='co'># NOT RUN {</span>
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Default uses linear easing</span>
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim</span>)
-<span class='co'># }</span><div class='input'>
+}
+
 <span class='co'># Change all to 'cubic-in-out' for a smoother appearance</span>
 <span class='no'>anim1</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
-  <span class='fu'>ease_aes</span>(<span class='st'>'cubic-in-out'</span>)</div><span class='co'># NOT RUN {</span>
+  <span class='fu'>ease_aes</span>(<span class='st'>'cubic-in-out'</span>)
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim1</span>)
-<span class='co'># }</span><div class='input'>
+}
+
 <span class='co'># Only change easing of y variables</span>
 <span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
-  <span class='fu'>ease_aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'bounce-in'</span>)</div><span class='co'># NOT RUN {</span>
+  <span class='fu'>ease_aes</span>(<span class='kw'>y</span> <span class='kw'>=</span> <span class='st'>'bounce-in'</span>)
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim2</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#easing-functions">Easing functions</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

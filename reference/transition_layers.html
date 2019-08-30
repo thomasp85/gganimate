@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,14 +47,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Build up a plot, layer by layer — transition_layers" />
 
+<meta property="og:title" content="Build up a plot, layer by layer — transition_layers" />
 <meta property="og:description" content="This transition gradually adds layers to the plot in the order they have been
 defined. By default prior layers are kept for the remainder of the animation,
 but they can also be set to be removed as the next layer enters." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -132,7 +134,6 @@ but they can also be set to be removed as the next layer enters." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -165,17 +166,15 @@ but they can also be set to be removed as the next layer enters." />
     </div>
 
     <div class="ref-description">
-    
     <p>This transition gradually adds layers to the plot in the order they have been
 defined. By default prior layers are kept for the remainder of the animation,
 but they can also be set to be removed as the next layer enters.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>keep_layers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>layer_order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>layer_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -214,7 +213,7 @@ index in some way refers to this order.</p></td>
 when interpreting label literals</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="label-variables"><a class="anchor" href="#label-variables"></a>Label variables</h2>
 
     
@@ -230,7 +229,6 @@ transitioning phase</p></li>
 <li><p><strong>nlayers</strong> The total number of layers</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="object-permanence"><a class="anchor" href="#object-permanence"></a>Object permanence</h2>
 
     
@@ -238,7 +236,6 @@ transitioning phase</p></li>
 <p><code>transition_layer</code> does not link rows across data to the same graphic
 element, so elements will be defined uniquely by each row and the enter and
 exit of the layer it belongs to.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>Other transitions: <code><a href='transition_components.html'>transition_components</a></code>,
@@ -249,7 +246,6 @@ exit of the layer it belongs to.</p>
   <code><a href='transition_reveal.html'>transition_reveal</a></code>,
   <code><a href='transition_states.html'>transition_states</a></code>,
   <code><a href='transition_time.html'>transition_time</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Default is to use layer order and keep layers for duration of animation</span>
@@ -293,13 +289,9 @@ exit of the layer it belongs to.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#label-variables">Label variables</a></li>
-
       <li><a href="#object-permanence">Object permanence</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

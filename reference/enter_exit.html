@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
@@ -45,17 +47,17 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Define how entering and exiting data behaves — enter_exit" />
 
+<meta property="og:title" content="Define how entering and exiting data behaves — enter_exit" />
 <meta property="og:description" content="The purpose of enter_*() and exit_*() is to control what happens with
 data that does not persist during a tween. In general the non-persistent data
 is transformed to an invisible version that can be tweened to, e.g. by
 setting the opacity to 0 or be moving the element off-screen. It is possible
 to define your own transformations, or rely on some of the build in
 effects." />
-
 <meta property="og:image" content="https://gganimate.com/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -135,7 +137,6 @@ effects." />
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
@@ -168,14 +169,12 @@ effects." />
     </div>
 
     <div class="ref-description">
-    
     <p>The purpose of <code>enter_*()</code> and <code>exit_*()</code> is to control what happens with
 data that does not persist during a tween. In general the non-persistent data
 is transformed to an <em>invisible</em> version that can be tweened to, e.g. by
 setting the opacity to 0 or be moving the element off-screen. It is possible
 to define your own transformations, or rely on some of the build in
 <em>effects</em>.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>enter_manual</span>(<span class='kw'>default</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>name</span> <span class='kw'>=</span> <span class='st'>"manual"</span>)
@@ -213,7 +212,7 @@ to define your own transformations, or rely on some of the build in
 <span class='fu'>exit_drift</span>(<span class='no'>...</span>, <span class='kw'>x_mod</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>y_mod</span> <span class='kw'>=</span> <span class='fl'>0</span>)
 
 <span class='fu'>exit_reset</span>()</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -259,7 +258,7 @@ while <code>1</code> means no shrinking</p></td>
       <td><p>Modification to add to the entering or exiting data</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="user-defined-transformations"><a class="anchor" href="#user-defined-transformations"></a>User-defined transformations</h2>
 
     
@@ -286,7 +285,6 @@ entering/exiting polygon/path data one by one. A special option is to set a
 transformation as <code>NULL</code> instead of a function. In that case the entering and
 exiting data will simply appear/disappear when it is no longer part of a
 frame.</p>
-    
     <h2 class="hasAnchor" id="modification-composition"><a class="anchor" href="#modification-composition"></a>Modification composition</h2>
 
     
@@ -299,7 +297,6 @@ combine multiples and save them as a new enter or exit modification using
 possible to overwrite a prior modification by adding a new. If it is needed
 to start from scratch then the sentinels <code>enter_reset()</code> and <code>exit_reset()</code>
 are provided which clears all prior modifications.</p>
-    
     <h2 class="hasAnchor" id="modification-types"><a class="anchor" href="#modification-types"></a>Modification types</h2>
 
     
@@ -326,7 +323,6 @@ from/ exit to, irrespectible of their real position.</p>
 by a specified amount, e.g. setting <code>x_mod = -5</code> will let all elements enter
 from/exit to the left with a terminal position 5 points to the left of the
 real position.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Default is appear/disappear</span>
@@ -348,13 +344,9 @@ real position.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#user-defined-transformations">User-defined transformations</a></li>
-
       <li><a href="#modification-composition">Modification composition</a></li>
-
       <li><a href="#modification-types">Modification types</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
