@@ -2,7 +2,6 @@ Package: gganimate
 Type: Package
 Title: A Grammar of Animated Graphics
 Version: 1.0.3.9000
-Date: 2019-05-03
 Authors@R: 
     c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",
              role = c("aut", "cre"), 
@@ -21,7 +20,21 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 VignetteBuilder: knitr
+RoxygenNote: 6.1.1
+Roxygen: list(markdown = TRUE)
+URL: https://gganimate.com, https://github.com/thomasp85/gganimate
+BugReports: https://github.com/thomasp85/gganimate/issues
 Depends: ggplot2 (>= 3.0.0)
+Imports: stringi,
+    tweenr (>= 1.0.1),
+    grid,
+    rlang,
+    glue,
+    progress,
+    plyr,
+    scales,
+    grDevices,
+    utils
 Suggests: magick,
     svglite,
     knitr,
@@ -34,20 +47,6 @@ Suggests: magick,
     av,
     png,
     gifski
-RoxygenNote: 6.1.1
-Roxygen: list(markdown = TRUE)
-URL: https://gganimate.com, https://github.com/thomasp85/gganimate
-BugReports: https://github.com/thomasp85/gganimate/issues
-Imports: stringi,
-    tweenr (>= 1.0.1),
-    grid,
-    rlang,
-    glue,
-    progress,
-    plyr,
-    scales,
-    grDevices,
-    utils
 Collate:
     'aaa.R'
     'anim_save.R'

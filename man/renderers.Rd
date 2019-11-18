@@ -10,8 +10,8 @@
 \alias{sprite_renderer}
 \title{Renderers provided by gganimate}
 \usage{
-gifski_renderer(file = tempfile(fileext = ".gif"), loop = TRUE,
-  width = NULL, height = NULL)
+gifski_renderer(file = NULL, loop = TRUE, width = NULL,
+  height = NULL)
 
 file_renderer(dir = ".", prefix = "gganim_plot", overwrite = FALSE)
 
