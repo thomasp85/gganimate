@@ -1,6 +1,9 @@
 context("test-anim_save")
 
 test_that("anim_save overwrites existing files", {
+
+  skip_on_os('solaris') # gifski not available
+
   p <- ggplot(airquality, aes(Day, Temp)) +
     geom_line(color = 'red', size = 1) +
     transition_time(Month)

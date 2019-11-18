@@ -129,6 +129,10 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
     rewind = rewind,
     ...
   )
+  if (is_knitting() && identical(def_ren$renderer, args$renderer) && !def_ren$has_proper) {
+    warning('No renderer available. Please install the gifski, av, or magick package to create animated output', call. = FALSE)
+    return(invisible(NULL))
+  }
   orig_nframes <- args$nframes
   args$nframes <- args$nframes - args$start_pause - args$end_pause
   if (args$rewind) {
@@ -213,7 +217,7 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
     stop("At least 2 of 'nframes', 'fps', and 'duration' must be given", call. = FALSE)
   }
   args$detail <- detail %?% chunk_args$detail %||% getOption('gganimate.detail', 1)
-  args$renderer <- renderer %?% chunk_args$renderer %||% getOption('gganimate.renderer', gifski_renderer())
+  args$renderer <- renderer %?% chunk_args$renderer %||% getOption('gganimate.renderer', def_ren$renderer)
   args$device <- tolower(device %?% chunk_args$device %||% getOption('gganimate.device', 'png'))
   if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
     stop('The svglite package is required to use this device', call. = FALSE)

@@ -1,6 +1,9 @@
 # gganimate (development version)
 
 * Fix a bug in `ffmpeg_renderer()` where the `fps` argument were being ignored.
+* Make sure `ggraph` objects registers the graph context after they are promoted
+  to `gganim` objects.
+* Better fallback strategy for lack of gifski.
 
 # gganimate 1.0.3
 

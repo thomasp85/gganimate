@@ -81,28 +81,17 @@
 #'
 NULL
 
-gifski_error <- new.env(parent = emptyenv())
-gifski_error$first <- TRUE
 #' @rdname renderers
 #' @export
-gifski_renderer <- function(file = tempfile(fileext = '.gif'), loop = TRUE, width = NULL, height = NULL) {
+gifski_renderer <- function(file = NULL, loop = TRUE, width = NULL, height = NULL) {
   if (!requireNamespace('gifski', quietly = TRUE)) {
-    if (gifski_error$first) {
-      gifski_error$first <- FALSE
-      stop(
-        'The `gifski_renderer()` is selected by default but requires the gifski\n',
-        'package to be installed. Either install gifski or use another renderer.\n',
-        'See `?renderers` for a list of available ones.',
-        call. = FALSE
-      )
-    } else {
-      stop('The gifski package is required to use gifski_renderer', call. = FALSE)
-    }
+    stop('The gifski package is required to use gifski_renderer', call. = FALSE)
   }
   if (!requireNamespace('png', quietly = TRUE)) {
     stop('The png package is required to use gifski_renderer', call. = FALSE)
   }
   function(frames, fps) {
+    if (is.null(file)) file <- tempfile(fileext = '.gif')
     if (!all(grepl('.png$', frames))) {
       stop('gifski only supports png files', call. = FALSE)
     }
@@ -135,11 +124,11 @@ av_renderer <- function(file = NULL, vfilter = "null", codec = NULL, audio = NUL
   if (!requireNamespace('av', quietly = TRUE)) {
     stop('The av package is required to use av_renderer', call. = FALSE)
   }
-  if (is.null(file)) {
-    ext <- if (.Platform$GUI == "RStudio" && "libvpx" %in% av::av_encoders()$name) ".webm" else ".mp4"
-    file <- tempfile(fileext = ext)
-  }
+  def_ext <- if (.Platform$GUI == "RStudio" && "libvpx" %in% av::av_encoders()$name) ".webm" else ".mp4"
   function(frames, fps) {
+    if (is.null(file)) {
+      file <- tempfile(fileext = def_ext)
+    }
     progress <- interactive()
     av::av_encode_video(input = frames, output = file, framerate = fps,
                         vfilter = vfilter, codec = codec, audio = audio,

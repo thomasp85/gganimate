@@ -37,8 +37,9 @@ different gganimate functions
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://github.com/thomasp85/gganimate}
-  \item Report bugs at \url{http://github.com/thomasp85/gganimate/issues}
+  \item \url{https://gganimate.com}
+  \item \url{https://github.com/thomasp85/gganimate}
+  \item Report bugs at \url{https://github.com/thomasp85/gganimate/issues}
 }
 
 }
