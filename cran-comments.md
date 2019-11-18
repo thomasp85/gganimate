@@ -1,13 +1,24 @@
+This is a minor release addressing new check failures on Solaris. No outwards-
+facing changes
+
 ## Test environments
-* local OS X install, R 3.5.1
-* ubuntu 14.04 (on travis-ci), R 3.5.1
-* win-builder (devel and release)
+* local R installation, R 3.6.0
+* ubuntu 16.04 (on travis-ci), R 3.6.0
+* win-builder (devel)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 0 note
 
-This is a very minor release, fixing a single bug occuring with the submitted
-ggplot2 3.1.1 package. The code anticipated changes in the next release of 
-ggplot2 that is not part of the 3.1.1 hotfix. The version check in gganimate
-has been updated accordingly.
+## revdepcheck results
+
+We checked 8 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 1 packages
+
+Issues with CRAN packages are summarised below.
+
+### Failed to check
+
+* SSOSVM (NA)
