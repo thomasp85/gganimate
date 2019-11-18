@@ -1,4 +1,4 @@
-# gganimate (development version)
+# gganimate 1.0.4
 
 * Fix a bug in `ffmpeg_renderer()` where the `fps` argument were being ignored.
 * Make sure `ggraph` objects registers the graph context after they are promoted
