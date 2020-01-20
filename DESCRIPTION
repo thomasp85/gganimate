@@ -45,7 +45,6 @@ Suggests: magick,
     covr,
     transformr,
     av,
-    png,
     gifski
 Collate:
     'aaa.R'

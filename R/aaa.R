@@ -34,3 +34,15 @@ require_stat <- function(x) {
   }
 }
 `%?%` <- function(l, r) if (missing(l)) r else l
+
+png_dim <- function(file) {
+  if (!file.exists(file)) {
+    stop('Provided file does not exist', call. = FALSE)
+  }
+  bts <- as.integer(readBin(file, n = 24L, what = "raw"))
+  if (!all(bts[1:8] == c(137, 80, 78, 71, 13, 10, 26 ,10))) {
+    stop('Provided file does not appear to be a png', call. = FALSE)
+  }
+  c(bts[21] * 2^24 + bts[22] * 2^16 + bts[23] * 2^8 + bts[24],
+    bts[17] * 2^24 + bts[18] * 2^16 + bts[19] * 2^8 + bts[20])
+}
