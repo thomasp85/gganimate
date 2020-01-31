@@ -19,9 +19,11 @@
 #' @param detail The number of additional frames to calculate, per frame (default `1`)
 #' @param renderer The function used to render the generated frames into an
 #' animation. Gets a vector of paths to images along with the framerate. (default [gifski_renderer()])
-#' @param device The device to use for rendering the single frames. Possible
-#' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`
-#' (requires the svglite package). (default `'png'`)
+#' @param device The name (character string) of the device to use for rendering the single frames. Possible
+#' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, `'svglite'`
+#' (requires the svglite package) or any other output device. (default `'png'`)
+#' @param suffix The suffix for the individual frames produced by the device.
+#' If NULL then a standard suffix for that device is chosen automatically. Default: NULL
 #' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
 #' space available for axis text. Defaults to the first frame. Negative values
 #' counts backwards (-1 is the last frame) (default `1`)
@@ -115,7 +117,7 @@ animate.default <- function(plot, ...) {
 }
 #' @rdname animate
 #' @export
-animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
+animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, device, suffix = NULL, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- prepare_args(
     nframes = nframes,
     fps = fps,
@@ -167,6 +169,7 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
     c(list(plot = plot,
            frames = frame_ind,
            device = args$device,
+           suffix = suffix,
            ref_frame = args$ref_frame),
       args$dev_args)
   )
@@ -242,7 +245,7 @@ prerender <- function(plot, nframes) {
 # Draw each frame as an image based on a specified device
 # Returns a data.frame of frame metadata with image location in frame_source
 # column
-draw_frames <- function(plot, frames, device, ref_frame, ...) {
+draw_frames <- function(plot, frames, device, suffix, ref_frame, ...) {
   stream <- device == 'current'
 
   dims <- tryCatch(
@@ -256,30 +259,33 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   dir <- tempfile(pattern = '')
   dir.create(dir, showWarnings = FALSE)
   files <- file.path(dir, sprintf('gganim_plot%04d', seq_along(frames)))
-  files <- switch(
-    tolower(device),
-    png = paste0(files, '.png'),
-    jpg = ,
-    jpeg = paste0(files, '.jpg'),
-    tif = ,
-    tiff = paste0(files, '.tif'),
-    bmp = paste0(files, '.bmp'),
-    svglite = ,
-    svg = paste0(files, '.svg'),
-    current = files,
-    stop('Unsupported device', call. = FALSE)
-  )
+
+  if (is.null(suffix)) {
+    suffix <- switch(
+      tolower(device),
+      png     = '.png',
+      jpg     = ,
+      jpeg    = '.jpg',
+      tif     = ,
+      tiff    = '.tif',
+      bmp     = '.bmp',
+      svglite = ,
+      svg     = '.svg',
+      current = '',
+      ".bin"
+    )
+  }
+
+  files <- paste0(files, suffix)
+
   device <- switch(
     device,
-    png = png,
-    jpg = ,
-    jpeg = jpeg,
-    tif = ,
-    tiff = tiff,
-    bmp = bmp,
-    svg = svg,
-    svglite = svglite::svglite
+    jpg = 'jpeg',
+    tif = 'tiff',
+    device
   )
+
+  device <- get(device)
 
   pb <- progress_bar$new(
     'Rendering [:bar] at :fps fps ~ eta: :eta',
