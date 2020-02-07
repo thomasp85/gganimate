@@ -63,13 +63,14 @@ anim3 <- ggplot(mtcars, aes(factor(gear), mpg)) +
 
 }
 \seealso{
-Other transitions: \code{\link{transition_components}},
-  \code{\link{transition_events}},
-  \code{\link{transition_filter}},
-  \code{\link{transition_layers}},
-  \code{\link{transition_null}},
-  \code{\link{transition_reveal}},
-  \code{\link{transition_states}},
-  \code{\link{transition_time}}
+Other transitions: 
+\code{\link{transition_components}()},
+\code{\link{transition_events}()},
+\code{\link{transition_filter}()},
+\code{\link{transition_layers}()},
+\code{\link{transition_null}()},
+\code{\link{transition_reveal}()},
+\code{\link{transition_states}()},
+\code{\link{transition_time}()}
 }
 \concept{transitions}

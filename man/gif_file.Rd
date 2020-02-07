@@ -23,7 +23,7 @@ knit_print.gif_image(x, options, ...)
 
 \item{...}{Arguments passed on}
 
-\item{f}{a \sQuote{factor} in the sense that \code{\link{as.factor}(f)}
+\item{f}{a \sQuote{factor} in the sense that \code{\link[base]{as.factor}(f)}
     defines the grouping, or a list of such factors in which case their
     interaction is used for the grouping.}
 

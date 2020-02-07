@@ -4,8 +4,13 @@
 \alias{transition_events}
 \title{Transition individual events in and out}
 \usage{
-transition_events(start, end = NULL, range = NULL,
-  enter_length = NULL, exit_length = NULL)
+transition_events(
+  start,
+  end = NULL,
+  range = NULL,
+  enter_length = NULL,
+  exit_length = NULL
+)
 }
 \arguments{
 \item{start, end}{The unquoted expression giving the start and end time of
@@ -66,13 +71,14 @@ anim <- ggplot(data, aes(x, y)) +
  exit_fade()
 }
 \seealso{
-Other transitions: \code{\link{transition_components}},
-  \code{\link{transition_filter}},
-  \code{\link{transition_layers}},
-  \code{\link{transition_manual}},
-  \code{\link{transition_null}},
-  \code{\link{transition_reveal}},
-  \code{\link{transition_states}},
-  \code{\link{transition_time}}
+Other transitions: 
+\code{\link{transition_components}()},
+\code{\link{transition_filter}()},
+\code{\link{transition_layers}()},
+\code{\link{transition_manual}()},
+\code{\link{transition_null}()},
+\code{\link{transition_reveal}()},
+\code{\link{transition_states}()},
+\code{\link{transition_time}()}
 }
 \concept{transitions}

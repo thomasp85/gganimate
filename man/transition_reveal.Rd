@@ -79,13 +79,14 @@ anim2 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
 
 }
 \seealso{
-Other transitions: \code{\link{transition_components}},
-  \code{\link{transition_events}},
-  \code{\link{transition_filter}},
-  \code{\link{transition_layers}},
-  \code{\link{transition_manual}},
-  \code{\link{transition_null}},
-  \code{\link{transition_states}},
-  \code{\link{transition_time}}
+Other transitions: 
+\code{\link{transition_components}()},
+\code{\link{transition_events}()},
+\code{\link{transition_filter}()},
+\code{\link{transition_layers}()},
+\code{\link{transition_manual}()},
+\code{\link{transition_null}()},
+\code{\link{transition_states}()},
+\code{\link{transition_time}()}
 }
 \concept{transitions}

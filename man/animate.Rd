@@ -9,8 +9,20 @@
 \usage{
 animate(plot, ...)
 
-\method{animate}{gganim}(plot, nframes, fps, duration, detail, renderer,
-  device, ref_frame, start_pause, end_pause, rewind, ...)
+\method{animate}{gganim}(
+  plot,
+  nframes,
+  fps,
+  duration,
+  detail,
+  renderer,
+  device,
+  ref_frame,
+  start_pause,
+  end_pause,
+  rewind,
+  ...
+)
 
 \method{print}{gganim}(x, ...)
 
@@ -89,7 +101,7 @@ It is possible to specify the arguments to \code{animate()} in the chunk options
 when using \code{gganimate} with \code{knitr}. Arguments specified in this way will
 have precedence over defaults, but not over arguments specified directly in
 \code{animate()}. The arguments should be provided as a list to the \code{gganimate}
-chunk option, e.g. \code{{r, gganimate = list(nframes = 50, fps = 20)}}. A few
+chunk option, e.g. \verb{\{r, gganimate = list(nframes = 50, fps = 20)\}}. A few
 build-in knitr options have relevance for animation and will be used unless
 given specifically in the \code{gganimate} list option. The native knitr options
 supported are:

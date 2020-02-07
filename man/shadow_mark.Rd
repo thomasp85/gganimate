@@ -43,7 +43,9 @@ p2 <- ggplot(airquality, aes(Day, Temp)) +
 
 }
 \seealso{
-Other shadows: \code{\link{shadow_null}},
-  \code{\link{shadow_trail}}, \code{\link{shadow_wake}}
+Other shadows: 
+\code{\link{shadow_null}()},
+\code{\link{shadow_trail}()},
+\code{\link{shadow_wake}()}
 }
 \concept{shadows}

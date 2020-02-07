@@ -86,7 +86,7 @@ while \code{1} means no shrinking}
 \item{x_mod, y_mod}{Modification to add to the entering or exiting data}
 }
 \description{
-The purpose of \code{enter_*()} and \code{exit_*()} is to control what happens with
+The purpose of \verb{enter_*()} and \verb{exit_*()} is to control what happens with
 data that does not persist during a tween. In general the non-persistent data
 is transformed to an \emph{invisible} version that can be tweened to, e.g. by
 setting the opacity to 0 or be moving the element off-screen. It is possible

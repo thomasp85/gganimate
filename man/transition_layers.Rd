@@ -4,9 +4,14 @@
 \alias{transition_layers}
 \title{Build up a plot, layer by layer}
 \usage{
-transition_layers(layer_length = 1, transition_length = 1,
-  keep_layers = TRUE, from_blank = TRUE, layer_order = NULL,
-  layer_names = NULL)
+transition_layers(
+  layer_length = 1,
+  transition_length = 1,
+  keep_layers = TRUE,
+  from_blank = TRUE,
+  layer_order = NULL,
+  layer_names = NULL
+)
 }
 \arguments{
 \item{layer_length}{The proportional time to pause at each layer before a new
@@ -98,13 +103,14 @@ anim3 <- ggplot(mtcars, aes(mpg, disp)) +
 
 }
 \seealso{
-Other transitions: \code{\link{transition_components}},
-  \code{\link{transition_events}},
-  \code{\link{transition_filter}},
-  \code{\link{transition_manual}},
-  \code{\link{transition_null}},
-  \code{\link{transition_reveal}},
-  \code{\link{transition_states}},
-  \code{\link{transition_time}}
+Other transitions: 
+\code{\link{transition_components}()},
+\code{\link{transition_events}()},
+\code{\link{transition_filter}()},
+\code{\link{transition_manual}()},
+\code{\link{transition_null}()},
+\code{\link{transition_reveal}()},
+\code{\link{transition_states}()},
+\code{\link{transition_time}()}
 }
 \concept{transitions}

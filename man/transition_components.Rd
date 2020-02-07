@@ -4,8 +4,13 @@
 \alias{transition_components}
 \title{Transition individual components through their own lifecycle}
 \usage{
-transition_components(time, range = NULL, enter_length = NULL,
-  exit_length = NULL, id)
+transition_components(
+  time,
+  range = NULL,
+  enter_length = NULL,
+  exit_length = NULL,
+  id
+)
 }
 \arguments{
 \item{time}{The unquoted name of the column holding the time for each state
@@ -82,13 +87,14 @@ anim3 <- ggplot(data, aes(x, y, group = id, size = size)) +
 
 }
 \seealso{
-Other transitions: \code{\link{transition_events}},
-  \code{\link{transition_filter}},
-  \code{\link{transition_layers}},
-  \code{\link{transition_manual}},
-  \code{\link{transition_null}},
-  \code{\link{transition_reveal}},
-  \code{\link{transition_states}},
-  \code{\link{transition_time}}
+Other transitions: 
+\code{\link{transition_events}()},
+\code{\link{transition_filter}()},
+\code{\link{transition_layers}()},
+\code{\link{transition_manual}()},
+\code{\link{transition_null}()},
+\code{\link{transition_reveal}()},
+\code{\link{transition_states}()},
+\code{\link{transition_time}()}
 }
 \concept{transitions}

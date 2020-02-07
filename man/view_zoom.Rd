@@ -5,16 +5,40 @@
 \alias{view_zoom_manual}
 \title{Pan and zoom smoothly between different states}
 \usage{
-view_zoom(pause_length = 1, step_length = 1, nsteps = NULL,
-  look_ahead = 0, delay = 0, include = FALSE, pan_zoom = 0,
-  ease = "sine-in-out", wrap = TRUE, pause_first = TRUE,
-  fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
-  aspect_ratio = 1)
+view_zoom(
+  pause_length = 1,
+  step_length = 1,
+  nsteps = NULL,
+  look_ahead = 0,
+  delay = 0,
+  include = FALSE,
+  pan_zoom = 0,
+  ease = "sine-in-out",
+  wrap = TRUE,
+  pause_first = TRUE,
+  fixed_x = FALSE,
+  fixed_y = FALSE,
+  exclude_layer = NULL,
+  aspect_ratio = 1
+)
 
-view_zoom_manual(pause_length = 1, step_length = 1, xmin, xmax, ymin,
-  ymax, delay = 0, pan_zoom = 0, ease = "sine-in-out", wrap = TRUE,
-  pause_first = TRUE, fixed_x = FALSE, fixed_y = FALSE,
-  exclude_layer = NULL, aspect_ratio = 1)
+view_zoom_manual(
+  pause_length = 1,
+  step_length = 1,
+  xmin,
+  xmax,
+  ymin,
+  ymax,
+  delay = 0,
+  pan_zoom = 0,
+  ease = "sine-in-out",
+  wrap = TRUE,
+  pause_first = TRUE,
+  fixed_x = FALSE,
+  fixed_y = FALSE,
+  exclude_layer = NULL,
+  aspect_ratio = 1
+)
 }
 \arguments{
 \item{pause_length}{The relative length the view will be kept static. Will
@@ -75,7 +99,7 @@ view it implement the smooth zoom and pan technique developed by Reach &
 North (2018). It gradually zooms out and then in during the pan to allow a
 smooth transition of the view. As with \code{\link[=view_step]{view_step()}} the standard version
 will look at the data present in the calculated frames and set the ranges
-based on that, while the \code{_manual} version will allow you to define your own
+based on that, while the \verb{_manual} version will allow you to define your own
 ranges to zoom between.
 }
 \examples{
@@ -105,7 +129,9 @@ anim2 <- ggplot(iris, aes(Petal.Length, Petal.Width, colour = Species)) +
 Reach, A., North, C. (2018) \emph{Smooth, Efficient, and Interruptible Zooming and Panning}. IEEE Transactions on Visualization and Computer Graphics DOI:10.1109/TVCG.2018.2800013
 }
 \seealso{
-Other views: \code{\link{view_follow}},
-  \code{\link{view_static}}, \code{\link{view_step}}
+Other views: 
+\code{\link{view_follow}()},
+\code{\link{view_static}()},
+\code{\link{view_step}()}
 }
 \concept{views}

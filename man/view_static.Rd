@@ -10,7 +10,9 @@ view_static()
 This view keeps positional scales fixed across all frames
 }
 \seealso{
-Other views: \code{\link{view_follow}},
-  \code{\link{view_step}}, \code{\link{view_zoom}}
+Other views: 
+\code{\link{view_follow}()},
+\code{\link{view_step}()},
+\code{\link{view_zoom}()}
 }
 \concept{views}

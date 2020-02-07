@@ -10,16 +10,17 @@
 \alias{sprite_renderer}
 \title{Renderers provided by gganimate}
 \usage{
-gifski_renderer(file = NULL, loop = TRUE, width = NULL,
-  height = NULL)
+gifski_renderer(file = NULL, loop = TRUE, width = NULL, height = NULL)
 
 file_renderer(dir = ".", prefix = "gganim_plot", overwrite = FALSE)
 
-av_renderer(file = NULL, vfilter = "null", codec = NULL,
-  audio = NULL)
+av_renderer(file = NULL, vfilter = "null", codec = NULL, audio = NULL)
 
-ffmpeg_renderer(format = "auto", ffmpeg = NULL,
-  options = list(pix_fmt = "yuv420p"))
+ffmpeg_renderer(
+  format = "auto",
+  ffmpeg = NULL,
+  options = list(pix_fmt = "yuv420p")
+)
 
 magick_renderer(loop = TRUE)
 

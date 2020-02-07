@@ -4,8 +4,7 @@
 \alias{transition_states}
 \title{Transition between several distinct stages of the data}
 \usage{
-transition_states(states, transition_length = 1, state_length = 1,
-  wrap = TRUE)
+transition_states(states, transition_length = 1, state_length = 1, wrap = TRUE)
 }
 \arguments{
 \item{states}{The unquoted name of the column holding the state levels in the
@@ -87,13 +86,14 @@ anim2 <- ggplot(iris, aes(Sepal.Width, Petal.Width)) +
 
 }
 \seealso{
-Other transitions: \code{\link{transition_components}},
-  \code{\link{transition_events}},
-  \code{\link{transition_filter}},
-  \code{\link{transition_layers}},
-  \code{\link{transition_manual}},
-  \code{\link{transition_null}},
-  \code{\link{transition_reveal}},
-  \code{\link{transition_time}}
+Other transitions: 
+\code{\link{transition_components}()},
+\code{\link{transition_events}()},
+\code{\link{transition_filter}()},
+\code{\link{transition_layers}()},
+\code{\link{transition_manual}()},
+\code{\link{transition_null}()},
+\code{\link{transition_reveal}()},
+\code{\link{transition_time}()}
 }
 \concept{transitions}

@@ -4,8 +4,12 @@
 \alias{view_follow}
 \title{Let the view follow the data in each frame}
 \usage{
-view_follow(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL,
-  aspect_ratio = 1)
+view_follow(
+  fixed_x = FALSE,
+  fixed_y = FALSE,
+  exclude_layer = NULL,
+  aspect_ratio = 1
+)
 }
 \arguments{
 \item{fixed_x, fixed_y}{Either a logical indicating if the dimension should
@@ -46,7 +50,9 @@ anim1 <- ggplot(iris, aes(Sepal.Length, Sepal.Width)) +
 
 }
 \seealso{
-Other views: \code{\link{view_static}},
-  \code{\link{view_step}}, \code{\link{view_zoom}}
+Other views: 
+\code{\link{view_static}()},
+\code{\link{view_step}()},
+\code{\link{view_zoom}()}
 }
 \concept{views}
