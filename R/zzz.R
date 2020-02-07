@@ -16,6 +16,12 @@ def_ren <- new.env(parent = emptyenv())
   } else {
     def_ren$renderer <- file_renderer()
     def_ren$has_proper <- FALSE
+  }
+
+  invisible()
+}
+.onAttach <- function(...) {
+  if (!def_ren$has_proper) {
     packageStartupMessage(
       'No renderer backend detected. gganimate will default to writing frames to separate files\n',
       'Consider installing:\n',
@@ -24,8 +30,6 @@ def_ren <- new.env(parent = emptyenv())
       'and restarting the R session'
     )
   }
-
-  invisible()
 }
 
 register_s3_method <- function(pkg, generic, class, fun = NULL) {
