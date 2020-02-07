@@ -21,7 +21,7 @@ def_ren <- new.env(parent = emptyenv())
   invisible()
 }
 .onAttach <- function(...) {
-  if (!def_ren$has_proper) {
+  if (!isTRUE(def_ren$has_proper)) {
     packageStartupMessage(
       'No renderer backend detected. gganimate will default to writing frames to separate files\n',
       'Consider installing:\n',
