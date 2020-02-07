@@ -51,7 +51,7 @@
 <meta property="og:title" content="Transition individual events in and out — transition_events" />
 <meta property="og:description" content="This transition treats each visual element as an event in time and allows you
 to control the duration and enter/exit length individually for each event." />
-<meta property="og:image" content="https://gganimate.com/logo.png" />
+<meta property="og:image" content="https://gganimate.com/logo.svg" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -169,8 +169,13 @@ to control the duration and enter/exit length individually for each event." />
 to control the duration and enter/exit length individually for each event.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transition_events</span>(<span class='no'>start</span>, <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>enter_length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exit_length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>transition_events</span>(
+  <span class='no'>start</span>,
+  <span class='kw'>end</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>enter_length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exit_length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -218,14 +223,15 @@ transition. Simply inclose the variable in <code>stat()</code> in the same way a
 using computed variables in aesthetics.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other transitions: <code><a href='transition_components.html'>transition_components</a></code>,
-  <code><a href='transition_filter.html'>transition_filter</a></code>,
-  <code><a href='transition_layers.html'>transition_layers</a></code>,
-  <code><a href='transition_manual.html'>transition_manual</a></code>,
-  <code><a href='transition_null.html'>transition_null</a></code>,
-  <code><a href='transition_reveal.html'>transition_reveal</a></code>,
-  <code><a href='transition_states.html'>transition_states</a></code>,
-  <code><a href='transition_time.html'>transition_time</a></code></p></div>
+    <div class='dont-index'><p>Other transitions: 
+<code><a href='transition_components.html'>transition_components</a>()</code>,
+<code><a href='transition_filter.html'>transition_filter</a>()</code>,
+<code><a href='transition_layers.html'>transition_layers</a>()</code>,
+<code><a href='transition_manual.html'>transition_manual</a>()</code>,
+<code><a href='transition_null.html'>transition_null</a>()</code>,
+<code><a href='transition_reveal.html'>transition_reveal</a>()</code>,
+<code><a href='transition_states.html'>transition_states</a>()</code>,
+<code><a href='transition_time.html'>transition_time</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
@@ -247,7 +253,7 @@ using computed variables in aesthetics.</p>
  <span class='fu'><a href='enter_exit.html'>exit_drift</a></span>(<span class='kw'>x_mod</span> <span class='kw'>=</span> <span class='fl'>11</span>) +
  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

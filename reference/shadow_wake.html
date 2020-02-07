@@ -55,7 +55,7 @@ and/or opacity of the shadow. The length of the wake is not given in absolute
 frames as that would make the animation susceptible to changes in the
 framerate. Instead it is given as a proportion of the total length of the
 animation." />
-<meta property="og:image" content="https://gganimate.com/logo.png" />
+<meta property="og:image" content="https://gganimate.com/logo.svg" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -177,9 +177,17 @@ framerate. Instead it is given as a proportion of the total length of the
 animation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shadow_wake</span>(<span class='no'>wake_length</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>falloff</span> <span class='kw'>=</span> <span class='st'>"cubic-in"</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude_phase</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"enter"</span>, <span class='st'>"exit"</span>))</pre>
+    <pre class="usage"><span class='fu'>shadow_wake</span>(
+  <span class='no'>wake_length</span>,
+  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>colour</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>falloff</span> <span class='kw'>=</span> <span class='st'>"cubic-in"</span>,
+  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude_phase</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"enter"</span>, <span class='st'>"exit"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -228,8 +236,10 @@ values are <code>'enter'</code>, <code>'exit'</code>, <code>'static'</code>, <co
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other shadows: <code><a href='shadow_mark.html'>shadow_mark</a></code>,
-  <code><a href='shadow_null.html'>shadow_null</a></code>, <code><a href='shadow_trail.html'>shadow_trail</a></code></p></div>
+    <div class='dont-index'><p>Other shadows: 
+<code><a href='shadow_mark.html'>shadow_mark</a>()</code>,
+<code><a href='shadow_null.html'>shadow_null</a>()</code>,
+<code><a href='shadow_trail.html'>shadow_trail</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Sepal.Length</span>)) +
@@ -253,7 +263,7 @@ values are <code>'enter'</code>, <code>'exit'</code>, <code>'static'</code>, <co
 <span class='fu'><a href='animate.html'>animate</a></span>(<span class='no'>anim2</span>, <span class='kw'>detail</span> <span class='kw'>=</span> <span class='fl'>5</span>)
 }</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

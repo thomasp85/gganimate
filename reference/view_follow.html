@@ -50,7 +50,7 @@
 
 <meta property="og:title" content="Let the view follow the data in each frame — view_follow" />
 <meta property="og:description" content="This view will set the panels to include the data present in the frame." />
-<meta property="og:image" content="https://gganimate.com/logo.png" />
+<meta property="og:image" content="https://gganimate.com/logo.svg" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -167,8 +167,12 @@
     <p>This view will set the panels to include the data present in the frame.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>view_follow</span>(<span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>view_follow</span>(
+  <span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,8 +199,10 @@ given aspect ratio. Will override anything given in <code>fixed_x</code>/<code>f
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other views: <code><a href='view_static.html'>view_static</a></code>,
-  <code><a href='view_step.html'>view_step</a></code>, <code><a href='view_zoom.html'>view_zoom</a></code></p></div>
+    <div class='dont-index'><p>Other views: 
+<code><a href='view_static.html'>view_static</a>()</code>,
+<code><a href='view_step.html'>view_step</a>()</code>,
+<code><a href='view_zoom.html'>view_zoom</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Sepal.Length</span>, <span class='no'>Sepal.Width</span>)) +
@@ -219,7 +225,7 @@ given aspect ratio. Will override anything given in <code>fixed_x</code>/<code>f
   <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
   <span class='fu'>view_follow</span>(<span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>NA</span>), <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>NA</span>))</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

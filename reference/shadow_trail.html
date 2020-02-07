@@ -55,7 +55,7 @@ frames will not be equidistant in space but in time (that is, if a point
 moves slowly the crumbs will be closer to each other). It is possible to
 modify the look of the shadow by changing the different graphic parameters in
 the data" />
-<meta property="og:image" content="https://gganimate.com/logo.png" />
+<meta property="og:image" content="https://gganimate.com/logo.svg" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -177,8 +177,7 @@ modify the look of the shadow by changing the different graphic parameters in
 the data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shadow_trail</span>(<span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>max_frames</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>...</span>,
-  <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>shadow_trail</span>(<span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>max_frames</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>...</span>, <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,8 +204,10 @@ fraction of the full animation length</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other shadows: <code><a href='shadow_mark.html'>shadow_mark</a></code>,
-  <code><a href='shadow_null.html'>shadow_null</a></code>, <code><a href='shadow_wake.html'>shadow_wake</a></code></p></div>
+    <div class='dont-index'><p>Other shadows: 
+<code><a href='shadow_mark.html'>shadow_mark</a>()</code>,
+<code><a href='shadow_null.html'>shadow_null</a>()</code>,
+<code><a href='shadow_wake.html'>shadow_wake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>Month</span>))) +
@@ -225,7 +226,7 @@ fraction of the full animation length</p></td>
 <span class='no'>anim3</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
   <span class='fu'>shadow_trail</span>(<span class='kw'>max_frames</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

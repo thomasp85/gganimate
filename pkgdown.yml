@@ -1,6 +1,6 @@
 pandoc: '2.2'
 pkgdown: 1.4.1.9000
-pkgdown_sha: d0b233e7966dc86c2b315f880deead3c7f9a5a02
+pkgdown_sha: 48e12e0fc836ec8ca423b44656b97f719cd856c7
 articles:
   talks: extra/talks.html
   gganimate: gganimate.html

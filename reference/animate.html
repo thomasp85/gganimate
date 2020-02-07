@@ -60,7 +60,7 @@ possible when only rendering few frames. To avoid this you can increase the
 detail argument. detail will get multiplied to nframes and the
 resulting number of frames will get calculated, but only nframes evenly
 spaced frames are rendered." />
-<meta property="og:image" content="https://gganimate.com/logo.png" />
+<meta property="og:image" content="https://gganimate.com/logo.svg" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -190,8 +190,20 @@ spaced frames are rendered.</p>
     <pre class="usage"><span class='fu'>animate</span>(<span class='no'>plot</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for gganim</span>
-<span class='fu'>animate</span>(<span class='no'>plot</span>, <span class='no'>nframes</span>, <span class='no'>fps</span>, <span class='no'>duration</span>, <span class='no'>detail</span>, <span class='no'>renderer</span>,
-  <span class='no'>device</span>, <span class='no'>ref_frame</span>, <span class='no'>start_pause</span>, <span class='no'>end_pause</span>, <span class='no'>rewind</span>, <span class='no'>...</span>)
+<span class='fu'>animate</span>(
+  <span class='no'>plot</span>,
+  <span class='no'>nframes</span>,
+  <span class='no'>fps</span>,
+  <span class='no'>duration</span>,
+  <span class='no'>detail</span>,
+  <span class='no'>renderer</span>,
+  <span class='no'>device</span>,
+  <span class='no'>ref_frame</span>,
+  <span class='no'>start_pause</span>,
+  <span class='no'>end_pause</span>,
+  <span class='no'>rewind</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for gganim</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -333,7 +345,7 @@ Consult the documentation for these for more detail.</p>
 <span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'><a href='renderers.html'>file_renderer</a></span>(<span class='st'>'~/animation/'</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>]
 }</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
