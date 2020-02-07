@@ -15,8 +15,8 @@ addons:
       - cargo
       - libavfilter-dev
     sources:
-      - sourceline: 'ppa:jonathonf/ffmpeg-4'
-      - sourceline: 'ppa:jonathonf/ffmpeg-3'
+      - sourceline: 'ppa:cran/ffmpeg-4'
+      - sourceline: 'ppa:cran/ffmpeg-3'
 
 r_github_packages: r-lib/pkgdown
 
