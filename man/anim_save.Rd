@@ -12,9 +12,7 @@ anim_save(filename, animation = last_animation(), path = NULL, ...)
 \item{animation}{The animation object to save, as returned by \code{\link[=animate]{animate()}}.
 Defaults to the last rendered animation using \code{\link[=last_animation]{last_animation()}}}
 
-\item{path}{Path of the directory to save plot to: \code{path} and \code{filename}
-are combined to create the fully qualified file name. Defaults to the
-working directory.}
+\item{path}{Path to save plot to (combined with filename).}
 
 \item{...}{arguments passed on to \code{\link[=animate]{animate()}} if \code{animation} is a \code{gganim}
 object}

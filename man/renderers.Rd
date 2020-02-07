@@ -57,8 +57,6 @@ assumed to be on the search path}
 \item{options}{Either a character vector of command line options for ffmpeg
 or a named list of option-value pairs that will be converted to command line
 options automatically}
-
-\item{...}{arguments passed on to the selected renderer}
 }
 \value{
 The provided renderers are factory functions that returns a new function
