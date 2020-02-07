@@ -16,6 +16,13 @@ def_ren <- new.env(parent = emptyenv())
   } else {
     def_ren$renderer <- file_renderer()
     def_ren$has_proper <- FALSE
+    packageStartupMessage(
+      'No renderer backend detected. gganimate will default to writing frames to separate files\n',
+      'Consider installing:\n',
+      '- the `gifski` package for gif output\n',
+      '- the `av` package for video output\n',
+      'and restarting the R session'
+    )
   }
 
   invisible()
