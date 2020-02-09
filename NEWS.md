@@ -1,3 +1,5 @@
+# gganimate (development version)
+
 # gganimate 1.0.5
 
 * No longer needs the png package for gifski rendering
