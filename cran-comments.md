@@ -1,5 +1,4 @@
-This is a minor release addressing new check failures on Solaris. No outwards-
-facing changes
+Small update to comply with CRAN request regarding erroneous `...` documentation
 
 ## Test environments
 * local R installation, R 3.6.0
@@ -12,13 +11,8 @@ facing changes
 
 ## revdepcheck results
 
-We checked 8 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 10 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
- * We failed to check 1 packages
-
-Issues with CRAN packages are summarised below.
-
-### Failed to check
-
-* SSOSVM (NA)
+ * We failed to check 0 packages
+ 
