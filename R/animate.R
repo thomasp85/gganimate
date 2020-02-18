@@ -28,6 +28,7 @@
 #' @param start_pause,end_pause Number of times to repeat the first and last
 #' frame in the animation (default is `0` for both)
 #' @param rewind Should the animation roll back in the end (default `FALSE`)
+#' @param update_progress function to called as each frame is rendered
 #' @param ... Arguments passed on to the device
 #'
 #' @return The return value of the [renderer][renderers] function
@@ -242,7 +243,7 @@ prerender <- function(plot, nframes) {
 # Draw each frame as an image based on a specified device
 # Returns a data.frame of frame metadata with image location in frame_source
 # column
-draw_frames <- function(plot, frames, device, ref_frame, ...) {
+draw_frames <- function(plot, frames, device, ref_frame, update_progress = NULL, ...) {
   stream <- device == 'current'
 
   dims <- tryCatch(
@@ -300,6 +301,16 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
 
     rate <- i/as.double(Sys.time() - start, units = 'secs')
     if (is.nan(rate)) rate <- 0
+    
+    # send update to shiny progress
+    if(is.function(update_progress)) {
+      frames_left <- length(frames) - i
+      projected_secs <- as.difftime(frames_left / rate, units = "secs")
+      eta <- vague_dt(projected_secs, format = "terse")
+      detail <- paste0("at ", format(rate, digits = 2), " fps ~ eta: ", eta)
+      update_progress(detail)
+    }
+
     rate <- format(rate, digits = 2)
     pb$tick(tokens = list(fps = rate))
 
