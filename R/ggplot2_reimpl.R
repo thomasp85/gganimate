@@ -11,7 +11,7 @@ scales_transform_df <- function(scales, df) {
 
   transformed <- unlist(lapply(scales$scales, function(s) s$transform_df(df = df)),
                         recursive = FALSE)
-  plyr::quickdf(c(transformed, df[setdiff(names(df), names(transformed))]))
+  ggplot2:::new_data_frame(c(transformed, df[setdiff(names(df), names(transformed))]))
 }
 empty <- function(df) {
   is.null(df) || nrow(df) == 0 || ncol(df) == 0
@@ -50,7 +50,7 @@ scales_map_df <- function(scales, df) {
 
   mapped <- unlist(lapply(scales$scales, function(scale) scale$map_df(df = df)), recursive = FALSE)
 
-  plyr::quickdf(c(mapped, df[setdiff(names(df), names(mapped))]))
+  ggplot2:::new_data_frame(c(mapped, df[setdiff(names(df), names(mapped))]))
 }
 is.waive <- function(x) inherits(x, 'waiver')
 

@@ -31,7 +31,6 @@ Imports: stringi,
     rlang,
     glue,
     progress,
-    plyr,
     scales,
     grDevices,
     utils
