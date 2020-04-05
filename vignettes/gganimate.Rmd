@@ -161,7 +161,7 @@ ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
 > ❗ The group aesthetic defines how the data in a layer is matched across the
   animation.
 
-In general *2)* is preferred as it makes the intend explicit. It also makes it 
+In general *2)* is preferred as it makes the intent explicit. It also makes it 
 possible to match data with different discrete aesthetics such as keeping our 
 (now obviously faulty) transition while having different colour for the different
 species)
