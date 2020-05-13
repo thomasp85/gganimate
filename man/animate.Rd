@@ -31,7 +31,8 @@ knit_print.gganim(x, options, ...)
 \arguments{
 \item{plot, x}{A \code{gganim} object}
 
-\item{...}{Arguments passed on to the device}
+\item{...}{Arguments passed on to the device.
+For available device arguments, see \code{\link[grDevices:png]{grDevices::png()}} or \code{\link[grDevices:svg]{grDevices::svg()}}}
 
 \item{nframes}{The number of frames to render (default \code{100})}
 
@@ -148,6 +149,9 @@ animate(anim, nframes = 100, end_pause = 10, rewind = TRUE)
 
 # Use a different renderer
 animate(anim, renderer = file_renderer('~/animation/'))[1:6]
+
+# Specify device dimensions and/or resolution
+animate(anim, height = 2, width = 3, units = "in", res = 150)
 }
 
 }

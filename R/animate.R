@@ -28,7 +28,8 @@
 #' @param start_pause,end_pause Number of times to repeat the first and last
 #' frame in the animation (default is `0` for both)
 #' @param rewind Should the animation roll back in the end (default `FALSE`)
-#' @param ... Arguments passed on to the device
+#' @param ... Arguments passed on to the device.
+#' For available device arguments, see [grDevices::png()] or [grDevices::svg()]
 #'
 #' @return The return value of the [renderer][renderers] function
 #'
@@ -104,6 +105,9 @@
 #'
 #' # Use a different renderer
 #' animate(anim, renderer = file_renderer('~/animation/'))[1:6]
+#'
+#' # Specify device dimensions and/or resolution
+#' animate(anim, height = 2, width = 3, units = "in", res = 150)
 #' }
 #'
 animate <- function(plot, ...) {
