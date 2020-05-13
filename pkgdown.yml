@@ -1,9 +1,10 @@
 pandoc: '2.2'
-pkgdown: 1.4.1.9000
-pkgdown_sha: 48e12e0fc836ec8ca423b44656b97f719cd856c7
+pkgdown: 1.5.1.9000
+pkgdown_sha: c181e5c9ac09b28974a97f5e32deddc36690fcf2
 articles:
   talks: extra/talks.html
   gganimate: gganimate.html
+last_built: 2020-05-13T18:57Z
 urls:
   reference: https://gganimate.com/reference
   article: https://gganimate.com/articles
