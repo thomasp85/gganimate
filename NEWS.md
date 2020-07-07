@@ -1,4 +1,4 @@
-# gganimate (development version)
+# gganimate 1.0.6
 
 # gganimate 1.0.5
 
