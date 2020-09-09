@@ -27,6 +27,7 @@ BugReports: https://github.com/thomasp85/gganimate/issues
 Depends: ggplot2 (>= 3.0.0)
 Imports: stringi,
     tweenr (>= 1.0.1),
+    future.apply,
     grid,
     rlang,
     glue,
