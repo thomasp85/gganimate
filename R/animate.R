@@ -292,23 +292,26 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   start <- Sys.time()
   pb$tick(0)
 
-  for (i in seq_along(frames)) {
-    if (!stream) device(files[i], ...)
+  res <- mapply(frames, files, seq_along(frames), FUN = function(frame, file, i, stream, ..., plot, dims, pb = NULL) {
+    if (!stream) {
+      device(file, ...)
+      on.exit(dev.off())
+    }
 
     tryCatch(
-      plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights),
+      plot$scene$plot_frame(plot, frame, widths = dims$widths, heights = dims$heights),
       error = function(e) {
         warning(conditionMessage(e), call. = FALSE)
       }
     )
 
-    rate <- i/as.double(Sys.time() - start, units = 'secs')
-    if (is.nan(rate)) rate <- 0
-    rate <- format(rate, digits = 2)
-    pb$tick(tokens = list(fps = rate))
-
-    if (!stream) dev.off()
-  }
+    if (!is.null(pb)) {
+      rate <- i/as.double(Sys.time() - start, units = 'secs')
+      if (is.nan(rate)) rate <- 0
+      rate <- format(rate, digits = 2)
+      pb$tick(tokens = list(fps = rate))
+    }
+  }, MoreArgs = list(stream = stream, ..., plot = plot, dims = dims, pb = pb), SIMPLIFY = FALSE, USE.NAMES = FALSE)
 
   frame_vars <- plot$scene$frame_vars[frames, , drop = FALSE]
   if (!stream) frame_vars$frame_source <- files
