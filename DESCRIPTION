@@ -20,7 +20,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 VignetteBuilder: knitr
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 URL: https://gganimate.com, https://github.com/thomasp85/gganimate
 BugReports: https://github.com/thomasp85/gganimate/issues
@@ -35,7 +35,8 @@ Imports: stringi,
     scales,
     grDevices,
     utils
-Suggests: magick,
+Suggests: 
+    magick,
     svglite,
     knitr,
     rmarkdown,
@@ -45,7 +46,8 @@ Suggests: magick,
     covr,
     transformr,
     av,
-    gifski
+    gifski,
+    ragg
 Collate:
     'aaa.R'
     'anim_save.R'

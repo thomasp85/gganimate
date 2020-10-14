@@ -249,7 +249,7 @@ will do. The return value of your renderer is what is ultimately returned by the
 
 Below are a couple of examples of different `animate()` calls:
 
-```{r}
+```{r, eval=requireNamespace('av', quietly = TRUE)}
 # Video output
 animate(
   anim + enter_fade() + exit_fly(y_loc = 1),

@@ -20,8 +20,9 @@
 #' @param renderer The function used to render the generated frames into an
 #' animation. Gets a vector of paths to images along with the framerate. (default [gifski_renderer()])
 #' @param device The device to use for rendering the single frames. Possible
-#' values are `'png'`, `'jpeg'`, `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'`
-#' (requires the svglite package). (default `'png'`)
+#' values are `'png'`, `'ragg_png'` (requires the ragg package), `'jpeg'`,
+#' `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'` (requires the svglite package).
+#' (default `'png'`)
 #' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
 #' space available for axis text. Defaults to the first frame. Negative values
 #' counts backwards (-1 is the last frame) (default `1`)
@@ -226,6 +227,9 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
   if (args$device == 'svglite' && !requireNamespace('svglite', quietly = TRUE)) {
     stop('The svglite package is required to use this device', call. = FALSE)
   }
+  if (args$device == 'ragg_png' && !requireNamespace('ragg', quietly = TRUE)) {
+    stop('The ragg package is required to use this device', call. = FALSE)
+  }
   args$ref_frame <- ref_frame %?% chunk_args$ref_frame %||% getOption('gganimate.ref_frame', 1)
   args$start_pause <- start_pause %?% chunk_args$start_pause %||% getOption('gganimate.start_pause', 0)
   args$end_pause <- end_pause %?% chunk_args$end_pause %||% getOption('gganimate.end_pause', 0)
@@ -262,6 +266,7 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   files <- file.path(dir, sprintf('gganim_plot%04d', seq_along(frames)))
   files <- switch(
     tolower(device),
+    ragg_png = ,
     png = paste0(files, '.png'),
     jpg = ,
     jpeg = paste0(files, '.jpg'),
@@ -275,6 +280,7 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   )
   device <- switch(
     device,
+    ragg_png = ragg::agg_png,
     png = png,
     jpg = ,
     jpeg = jpeg,

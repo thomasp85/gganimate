@@ -32,7 +32,7 @@ knit_print.gganim(x, options, ...)
 \item{plot, x}{A \code{gganim} object}
 
 \item{...}{Arguments passed on to the device.
-For available device arguments, see \code{\link[grDevices:png]{grDevices::png()}} or \code{\link[grDevices:svg]{grDevices::svg()}}}
+For available device arguments, see \code{\link[grDevices:png]{grDevices::png()}} or \code{\link[grDevices:cairo]{grDevices::svg()}}}
 
 \item{nframes}{The number of frames to render (default \code{100})}
 
@@ -46,8 +46,9 @@ For available device arguments, see \code{\link[grDevices:png]{grDevices::png()}
 animation. Gets a vector of paths to images along with the framerate. (default \code{\link[=gifski_renderer]{gifski_renderer()}})}
 
 \item{device}{The device to use for rendering the single frames. Possible
-values are \code{'png'}, \code{'jpeg'}, \code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'}
-(requires the svglite package). (default \code{'png'})}
+values are \code{'png'}, \code{'ragg_png'} (requires the ragg package), \code{'jpeg'},
+\code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'} (requires the svglite package).
+(default \code{'png'})}
 
 \item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
 space available for axis text. Defaults to the first frame. Negative values
