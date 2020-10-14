@@ -1,4 +1,4 @@
-# gganimate (development version)
+# gganimate 1.0.7
 
 * Support ragg png device to ensure that it works with knitr's ragg support
 
