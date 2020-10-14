@@ -23,9 +23,9 @@ knit_print.gif_image(x, options, ...)
 
 \item{...}{Arguments passed on}
 
-\item{f}{a \sQuote{factor} in the sense that \code{\link[base]{as.factor}(f)}
-    defines the grouping, or a list of such factors in which case their
-    interaction is used for the grouping.}
+\item{f}{a ‘factor’ in the sense that \link[base:factor]{as.factor(f)} defines
+the grouping, or a list of such factors in which case their interaction is
+used for the grouping.}
 
 \item{drop}{logical indicating if levels that do not occur should be dropped
     (if \code{f} is a \code{factor} or a list).}

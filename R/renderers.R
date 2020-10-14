@@ -238,6 +238,9 @@ sprite_renderer <- function() {
 #'
 #' @param file The gif file to be wrapped
 #' @param x A `gif_image` object
+#' @param f a ‘factor’ in the sense that [as.factor(f)][base::factor] defines
+#' the grouping, or a list of such factors in which case their interaction is
+#' used for the grouping.
 #' @inheritParams base::split
 #' @param ... Arguments passed on
 #'
