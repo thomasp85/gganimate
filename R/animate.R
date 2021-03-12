@@ -89,7 +89,8 @@
 #' @export
 #'
 #' @examples
-#' anim <- ggplot(mtcars, aes(mpg, disp)) + geom_point(aes(color = gear)) +
+#' anim <- ggplot(mtcars, aes(mpg, disp)) +
+#'   geom_point(aes(color = gear)) +
 #'   transition_states(gear, transition_length = 2, state_length = 1) +
 #'   enter_fade() +
 #'   exit_fade()

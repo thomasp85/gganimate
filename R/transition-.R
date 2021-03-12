@@ -45,14 +45,17 @@ Transition <- ggproto('Transition', NULL,
   unmap_frames = function(self, data, params) {
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.*)(<.*>)(.*)$')
-      if (is.na(split_panel[1])) return(d)
-      groups <- paste0(split_panel[, 2], split_panel[, 4])
+      if (is.na(split_panel[1])) {
+        groups <- d$group
+      } else {
+        groups <- paste0(split_panel[, 2], split_panel[, 4])
+        d$PANEL <- paste0(d$PANEL, split_panel[, 3])
+      }
       if (all(stri_detect(groups, regex = '^-?[0-9]+$'))) {
         d$group <- as.integer(groups)
       } else {
         d$group <- groups
       }
-      d$PANEL <- paste0(d$PANEL, split_panel[, 3])
       d
     })
   },

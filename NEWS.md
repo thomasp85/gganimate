@@ -6,6 +6,7 @@
 * Remove plyr dependency
 * Fix a bug in `transition_filter()` in the presence of `NA` filter values 
   (#404, @rsaporta)
+* Fix a bug with static layers that include position adjustments (#418)
 
 # gganimate 1.0.7
 
