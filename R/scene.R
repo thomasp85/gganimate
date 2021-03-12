@@ -144,7 +144,14 @@ Scene <- ggproto('Scene', NULL,
     label_var$data <- plot$data
     plot$plot$labels <- lapply(plot$plot$labels, function(label) {
       if (is.expression(label)) return(label)
-      vapply(label, glue_data, character(1), .x = label_var, .envir = plot$plot$plot_env)
+      vapply(label, function(l) {
+        l2 <- try(glue_data(label_var, l, .envir = plot$plot$plot_env), silent = TRUE)
+        if (inherits(l2, 'try-error')) {
+          l
+        } else {
+          l2
+        }
+      }, character(1))
     })
     plot
   },

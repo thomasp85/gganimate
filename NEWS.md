@@ -1,5 +1,8 @@
 # gganimate (development version)
 
+* Fix a bug when creating labels from aesthetics that iclude glue expressions 
+  (#422)
+
 # gganimate 1.0.7
 
 * Support ragg png device to ensure that it works with knitr's ragg support
