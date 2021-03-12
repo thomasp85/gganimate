@@ -2,6 +2,8 @@
 
 * Fix a bug when creating labels from aesthetics that iclude glue expressions 
   (#422)
+* Fix a bug in ffmpeg detection (#346, @rfaelens, #360, @adamdsmith)
+* Remove plyr dependency
 
 # gganimate 1.0.7
 
