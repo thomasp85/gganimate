@@ -23,7 +23,7 @@ provides a grammar of animation on top of the grammar of graphics. This talk
 will quickly introduce gganimate, and then dive into a series of different 
 animation and show how they were made and how they could be changed or expanded.
 
-**Slides:** https://data-imaginist.com/slides/rstudioconf2019
+**Slides:** https://data-imaginist.com/slides/rstudioconf2019/
 
 **Video:** https://resources.rstudio.com/rstudio-conf-2019/gganimate-live-cookbook
 
@@ -45,7 +45,7 @@ examples with gganimate I'll show how the proposed grammar can be used to break
 down, and reason about, animated data visualisation, and how the grammar 
 succinctly can describe very diverse animation operations.
 
-**Slides:** <https://data-imaginist.com/slides/user2018>
+**Slides:** <https://data-imaginist.com/slides/user2018/>
 
 **Video:** 
 
