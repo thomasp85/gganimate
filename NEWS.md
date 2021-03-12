@@ -4,6 +4,8 @@
   (#422)
 * Fix a bug in ffmpeg detection (#346, @rfaelens, #360, @adamdsmith)
 * Remove plyr dependency
+* Fix a bug in `transition_filter()` in the presence of `NA` filter values 
+  (#404, @rsaporta)
 
 # gganimate 1.0.7
 
