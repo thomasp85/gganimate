@@ -121,7 +121,7 @@ animation and writes it to a file.
 ## I don't like gifs...
 gif is a fantastic format for animations due to its wide support, but sometimes
 another format is required. `gganimate` is agnostic to the renderer and while 
-the default is to use [gifski](https://github.com/r-rust/gifski) to combines the
+the default is to use [gifski](https://github.com/r-rust/gifski) to combine the
 frames into a gif, it doesn't have to be so. By passing an alternate renderer to
 the `animate()` function you can control the animation format, and `gganimate` 
 comes with a bunch (and you can write your own). To create video files you can
