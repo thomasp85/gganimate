@@ -150,7 +150,7 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
   if (!has_ffmpeg(ffmpeg)) stop('The ffmpeg library is not available at the specified location', call. = FALSE)
   if (format == 'auto') {
     format <- if (.Platform$GUI == "RStudio" &&
-                  any(grepl('--enable-libvpx', system2('ffmpeg', '-version', stdout = TRUE)))) {
+                  any(grepl('--enable-libvpx', system2(ffmpeg, '-version', stdout = TRUE)))) {
       "webm"
     } else {
       "mp4"
