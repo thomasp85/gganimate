@@ -118,7 +118,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
-    all_frames
+    all_frames[!(c(diff(all_frames$.time), 1) <= .Machine$double.eps & all_frames$.phase == 'raw'), ]
   }
 )
 

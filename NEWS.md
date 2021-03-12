@@ -9,6 +9,8 @@
 * Fix a bug with static layers that include position adjustments (#418)
 * Fix a bug in `transition_time()` where multiple time values in the same frame
   would lead to unexpected stacking of the data (#414)
+* Fix a bug in `transition_reveal()` where coinciding tweens would result in 
+  wrong direction of the arrow (#409)
 
 # gganimate 1.0.7
 
