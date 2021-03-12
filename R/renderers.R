@@ -334,8 +334,8 @@ knit_print.video_file <- function(x, options, ...) {
     knitr::knit_print(
       htmltools::browsable(
         as_html_video(x, width = get_chunk_width(options), autoplay = get_chunk_autoplay(options))
-      ), 
-      options, 
+      ),
+      options,
       ...
     )
   } else {
@@ -363,7 +363,7 @@ as_html_video <- function(x, width = NULL, autoplay = TRUE) {
   ))
 }
 get_chunk_autoplay <- function(options) {
-  options$autoplay %||% TRUE
+  options$gganimate.autoplay %||% TRUE
 }
 #' Wrap an image sprite for easy handling
 #'
