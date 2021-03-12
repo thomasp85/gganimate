@@ -215,7 +215,7 @@ assign_filters <- function(data, filters, after = FALSE, row_vars = NULL) {
       filter
     }))
     if (all(row_filter)) return(numeric(0))
-    apply(row_filter, 2, function(x) if (!any(x)) '0' else paste(which(x), collapse = '-'))
+    apply(row_filter, 2, function(x) if (!any(x, na.rm = TRUE)) '0' else paste(which(x), collapse = '-'))
   })
   if (after) {
     Map(function(new_f, old_f) paste0(old_f, '-', new_f), new_f = row_filters, old_f = row_vars$filter)

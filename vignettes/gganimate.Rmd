@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [*ggplot2*](https://ggplot2.tidyverse.org) package, that adds support for 
 declaring animations using an API familiar to users of *ggplot2*.
 
-> The following introduction assumes familiarity with *ggplot2* to the extend 
+> The following introduction assumes familiarity with *ggplot2* to the extent 
   that constructing static plots and reading standard *ggplot2* code feels
   natural. If you are new to both *ggplot2* and *gganimate* you'll benefit from
   exploring the trove of *ggplot2* documentation, tutorials, and courses 
@@ -161,7 +161,7 @@ ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
 > ❗ The group aesthetic defines how the data in a layer is matched across the
   animation.
 
-In general *2)* is preferred as it makes the intend explicit. It also makes it 
+In general *2)* is preferred as it makes the intent explicit. It also makes it 
 possible to match data with different discrete aesthetics such as keeping our 
 (now obviously faulty) transition while having different colour for the different
 species)
