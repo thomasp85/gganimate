@@ -96,7 +96,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
     if (is_placeholder(params$time)) {
       params$time <- get_row_time(data, params$time_quo, params$nframes, params$range, after = TRUE)
     } else {
-      params$time$values <- lapply(row_vars$time, as.integer)
+      params$time$values <- suppressWarnings(lapply(row_vars$time, as.integer))
     }
     params$row_id <- params$time$values
     params$frame_info <- data.frame(frame_time = params$time$frame_time)
@@ -106,7 +106,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
     row_time <- self$get_row_vars(data)
     if (is.null(row_time)) return(data)
     data$group <- paste0(row_time$before, row_time$after)
-    time <- as.integer(row_time$time)
+    time <- suppressWarnings(as.integer(row_time$time))
     states <- split(data, time)
     times <- as.integer(names(states))
     nframes <- diff(times)
@@ -168,7 +168,10 @@ get_times <- function(data, var, nframes, range) {
   }
   times <- lapply(times, function(v) {
     if (is.null(v)) return(integer())
-    round(1 + (nframes - 1) * (v - range[1]) / diff(range))
+    v_u <- unique(v)
+    v_v <- round(1 + (nframes - 1) * (v_u - range[1]) / diff(range))
+    v_v[duplicated(v_v)] <- NA
+    v_v[match(v, v_u)]
   })
   frame_time <- seq(range[1], range[2], length.out = nframes)
   frame_time <- recast_times(frame_time, time_class)
