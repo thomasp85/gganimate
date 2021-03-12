@@ -2,9 +2,12 @@
 % Please edit documentation in R/animation_store.R
 \name{last_animation}
 \alias{last_animation}
+\alias{set_last_animation}
 \title{Retrieve the last rendered animation}
 \usage{
 last_animation()
+
+set_last_animation(value)
 }
 \description{
 Retrieve the last rendered animation
