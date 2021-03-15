@@ -1,6 +1,6 @@
 # gganimate (development version)
 
-* Fix a bug when creating labels from aesthetics that iclude glue expressions 
+* Fix a bug when creating labels from aesthetics that include glue expressions 
   (#422)
 * Fix a bug in ffmpeg detection (#346, @rfaelens, #360, @adamdsmith)
 * Remove plyr dependency
@@ -11,6 +11,8 @@
   would lead to unexpected stacking of the data (#414)
 * Fix a bug in `transition_reveal()` where coinciding tweens would result in 
   wrong direction of the arrow (#409)
+* Fix a bug in `transition_layer()` when the last layer had an exit duration 
+  (#384)
 
 # gganimate 1.0.7
 

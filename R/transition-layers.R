@@ -116,8 +116,12 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
     transition_length <- rep_len(params$transition_length, length(data) + params$from_blank)
     params$keep_layers <- rep_len(params$keep_layers, length(data))
     if (params$from_blank) layer_length <- c(0, layer_length)
-    if (is.infinite(params$keep_layers[length(data)])) {
+    transitions_out <- !is.infinite(params$keep_layers[length(data)])
+    if (!transitions_out) {
       transition_length[length(transition_length)] <- 0
+    } else {
+      transition_length <- c(transition_length, 0)
+      layer_length <- c(layer_length, 0)
     }
     frames <- distribute_frames(layer_length, transition_length, params$nframes)
     frames <- data.frame(layer = frames$static_length, exit = frames$transition_length)
@@ -133,6 +137,9 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       if (length(params$layer_names) != length(data)) {
         stop('When providing layer names the number of names must match the number of layers', call. = FALSE)
       }
+    }
+    if (transitions_out) {
+      params$layer_names <- params$layer_names[c(seq_along(data), length(data))]
     }
     params$frame_info <- get_frame_info(
       static_levels = params$layer_names,
