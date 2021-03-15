@@ -43,7 +43,10 @@ For available device arguments, see \code{\link[grDevices:png]{grDevices::png()}
 \item{detail}{The number of additional frames to calculate, per frame (default \code{1})}
 
 \item{renderer}{The function used to render the generated frames into an
-animation. Gets a vector of paths to images along with the framerate. (default \code{\link[=gifski_renderer]{gifski_renderer()}})}
+animation. Gets a vector of paths to images along with the framerate. (by
+default it will use \code{\link[=gifski_renderer]{gifski_renderer()}} if gifski is installed. If not it
+will use \code{\link[=magick_renderer]{magick_renderer()}} if magick is installed and then \code{\link[=av_renderer]{av_renderer()}}
+if av is installed. If all fails it will use the \code{\link[=file_renderer]{file_renderer()}})}
 
 \item{device}{The device to use for rendering the single frames. Possible
 values are \code{'png'}, \code{'ragg_png'} (requires the ragg package), \code{'jpeg'},

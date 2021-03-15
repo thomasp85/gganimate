@@ -18,7 +18,10 @@
 #' @param duration The length of the animation in seconds (unset by default)
 #' @param detail The number of additional frames to calculate, per frame (default `1`)
 #' @param renderer The function used to render the generated frames into an
-#' animation. Gets a vector of paths to images along with the framerate. (default [gifski_renderer()])
+#' animation. Gets a vector of paths to images along with the framerate. (by
+#' default it will use [gifski_renderer()] if gifski is installed. If not it
+#' will use [magick_renderer()] if magick is installed and then [av_renderer()]
+#' if av is installed. If all fails it will use the [file_renderer()])
 #' @param device The device to use for rendering the single frames. Possible
 #' values are `'png'`, `'ragg_png'` (requires the ragg package), `'jpeg'`,
 #' `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'` (requires the svglite package).
