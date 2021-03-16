@@ -129,8 +129,8 @@ ViewStep <- ggproto('ViewStep', View,
     data <- data[!seq_along(data) %in% params$excluded_layers]
     windows <- lapply(breaks, function(i) {
       data <- lapply(data, `[[`, i)
-      ranges <- self$get_ranges(data,
-                                params)
+      ranges <- self$get_ranges(data, params)
+      ranges <- ranges[!seq_along(ranges) %in% params$excluded_layers]
       x_range <- range(unlist(lapply(ranges, `[[`, 'x')))
       y_range <- range(unlist(lapply(ranges, `[[`, 'y')))
       data.frame(xmin = x_range[1], xmax = x_range[2], ymin = y_range[1], ymax = y_range[2])

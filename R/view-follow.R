@@ -54,6 +54,7 @@ ViewFollow <- ggproto('ViewFollow', View,
       stop('This view does not support polar coordinates')
     }
     ranges <- self$get_ranges(plot$data, params)
+    ranges <- ranges[!seq_along(ranges) %in% params$excluded_layers]
     x_range <- range(inf.omit(unlist(lapply(ranges, `[[`, 'x'))))
     y_range <- range(inf.omit(unlist(lapply(ranges, `[[`, 'y'))))
     x_range <- plot$layout$panel_scales_x[[1]]$trans$inverse(x_range)
