@@ -13,6 +13,8 @@
   wrong direction of the arrow (#409)
 * Fix a bug in `transition_layer()` when the last layer had an exit duration 
   (#384)
+* Fix a bug in `transition_time()` when facets had data with different starting
+  time (#357)
 
 # gganimate 1.0.7
 

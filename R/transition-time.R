@@ -134,9 +134,8 @@ TransitionTime <- ggproto('TransitionTime', Transition,
         stop(type, ' layers not currently supported by transition_time', call. = FALSE)
       )
     }
-    true_frame <- seq(times[1], times[length(times)])
-    all_frames <- all_frames[all_frames$.frame %in% which(true_frame > 0 & true_frame <= params$nframes), , drop = FALSE]
-    all_frames$.frame <- all_frames$.frame - min(all_frames$.frame) + 1
+    true_frame <- seq(max(1, times[1]), min(times[length(times)], params$nframes))
+    all_frames <- all_frames[all_frames$.frame %in% true_frame, , drop = FALSE]
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
     all_frames
