@@ -20,6 +20,8 @@
   flickering and movement of the position guies (#336)
 * Fix a bug in `transition_reveal()` that would require input to be ordered 
   along the time dimension for point-like geoms (#323)
+* Fix a bug in `view_follow()` that would result in errors when used with 
+  discrete scales (#304)
 
 # gganimate 1.0.7
 

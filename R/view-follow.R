@@ -57,8 +57,12 @@ ViewFollow <- ggproto('ViewFollow', View,
     ranges <- ranges[!seq_along(ranges) %in% params$excluded_layers]
     x_range <- range(inf.omit(unlist(lapply(ranges, `[[`, 'x'))))
     y_range <- range(inf.omit(unlist(lapply(ranges, `[[`, 'y'))))
-    x_range <- plot$layout$panel_scales_x[[1]]$trans$inverse(x_range)
-    y_range <- plot$layout$panel_scales_y[[1]]$trans$inverse(y_range)
+    if (!is.null(plot$layout$panel_scales_x[[1]]$trans)) {
+      x_range <- plot$layout$panel_scales_x[[1]]$trans$inverse(x_range)
+    }
+    if (!is.null(plot$layout$panel_scales_y[[1]]$trans)) {
+      y_range <- plot$layout$panel_scales_y[[1]]$trans$inverse(y_range)
+    }
 
     self$reset_limits(plot, x_range, y_range)
   }
