@@ -143,7 +143,7 @@ Scene <- ggproto('Scene', NULL,
     label_var <- as.list(self$frame_vars[i, ])
     label_var$data <- plot$data
     plot$plot$labels <- lapply(plot$plot$labels, function(label) {
-      if (is.expression(label)) return(label)
+      if (is.expression(label) || is.call(label)) return(label)
       vapply(label, function(l) {
         l2 <- try(glue_data(label_var, l, .envir = plot$plot$plot_env), silent = TRUE)
         if (inherits(l2, 'try-error')) {
