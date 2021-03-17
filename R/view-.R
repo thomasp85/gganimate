@@ -44,6 +44,10 @@ View <- ggproto('View', NULL,
     plot$layout$coord$limits$x <- xlim
     plot$layout$coord$limits$y <- ylim
     plot$layout$setup_panel_params()
+    if (inherits(plot$layout$coord, 'CoordFlip')) {
+      # We need to do it twice because CoordFlip flips the scales in-place
+      plot$layout$setup_panel_params()
+    }
     plot
   },
   get_ranges = function(self, data, params) {

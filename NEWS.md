@@ -15,6 +15,9 @@
   (#384)
 * Fix a bug in `transition_time()` when facets had data with different starting
   time (#357)
+* Make sure `exclude_layer` in `view_*()` is taken into account
+* Fix a bug when using a view with `coord_flip()` which would result in weird 
+  flickering and movement of the position guies (#336)
 
 # gganimate 1.0.7
 
