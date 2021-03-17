@@ -18,6 +18,8 @@
 * Make sure `exclude_layer` in `view_*()` is taken into account
 * Fix a bug when using a view with `coord_flip()` which would result in weird 
   flickering and movement of the position guies (#336)
+* Fix a bug in `transition_reveal()` that would require input to be ordered 
+  along the time dimension for point-like geoms (#323)
 
 # gganimate 1.0.7
 

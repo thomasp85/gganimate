@@ -108,6 +108,11 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     if (is.null(row_vars)) return(data)
     data$group <- paste0(row_vars$before, row_vars$after)
     time <- as.numeric(row_vars$along)
+    if (type == 'point') {
+      rank <- order(data$group, time)
+      data <- data[rank, ]
+      time <- time[rank]
+    }
 
     all_frames <- switch(
       type,
