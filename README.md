@@ -3,14 +3,14 @@
 
 # gganimate <img src="man/figures/logo.png" align="right" style="padding-left:10px;background-color:white;" />
 
-[![Travis-CI Build
-Status](https://travis-ci.org/thomasp85/gganimate.svg?branch=master)](https://travis-ci.org/thomasp85/gganimate)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/thomasp85/gganimate?branch=master&svg=true)](https://ci.appveyor.com/project/thomasp85/gganimate)
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/thomasp85/gganimate/workflows/R-CMD-check/badge.svg)](https://github.com/thomasp85/gganimate/actions)
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/gganimate)](https://cran.r-project.org/package=gganimate)
 [![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/thomasp85/gganimate/master.svg)](https://codecov.io/github/thomasp85/gganimate?branch=master)
+[![Codecov test
+coverage](https://codecov.io/gh/thomasp85/gganimate/branch/master/graph/badge.svg)](https://codecov.io/gh/thomasp85/gganimate?branch=master)
+<!-- badges: end -->
 
 `gganimate` extends the grammar of graphics as implemented by
 [`ggplot2`](https://github.com/tidyverse/ggplot2) to include the
@@ -54,14 +54,14 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 ![](man/figures/README-unnamed-chunk-2-1.gif)<!-- -->
 
 Here we take a simple boxplot of fuel consumption as a function of
-cylinders and let it transition between the number of gears available
+cylinders and lets it transition between the number of gears available
 in the cars. As this is a discrete split (`gear` being best described as
 an ordered factor) we use `transition_states` and provides a relative
 length to use for transition and state view. As not all combinations of
-data are present, there are states missing a box. We define that when a
-box appears it should fade into view, whereas it should shrink away when
+data is present there are states missing a box. We define that when a
+box appears it should fade into view, whereas at should shrink away when
 it disappear. Lastly we decide to use a sinusoidal easing for all our
-aesthetics (here, only `y` is changing).
+aesthetics (here, only `y` is changing)
 
 ## Installation
 
@@ -125,7 +125,7 @@ the last rendered animation and writes it to a file.
 gif is a fantastic format for animations due to its wide support, but
 sometimes another format is required. `gganimate` is agnostic to the
 renderer and while the default is to use
-[gifski](https://github.com/r-rust/gifski) to combines the frames into a
+[gifski](https://github.com/r-rust/gifski) to combine the frames into a
 gif, it doesn’t have to be so. By passing an alternate renderer to the
 `animate()` function you can control the animation format, and
 `gganimate` comes with a bunch (and you can write your own). To create

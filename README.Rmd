@@ -17,11 +17,12 @@ knitr::opts_chunk$set(
 
 # gganimate <img src="man/figures/logo.png" align="right" style="padding-left:10px;background-color:white;" />
 
-[![Travis-CI Build Status](https://travis-ci.org/thomasp85/gganimate.svg?branch=master)](https://travis-ci.org/thomasp85/gganimate)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/thomasp85/gganimate?branch=master&svg=true)](https://ci.appveyor.com/project/thomasp85/gganimate)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/thomasp85/gganimate/workflows/R-CMD-check/badge.svg)](https://github.com/thomasp85/gganimate/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-ago/gganimate)](https://cran.r-project.org/package=gganimate)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
-[![Coverage Status](https://img.shields.io/codecov/c/github/thomasp85/gganimate/master.svg)](https://codecov.io/github/thomasp85/gganimate?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/thomasp85/gganimate/branch/master/graph/badge.svg)](https://codecov.io/gh/thomasp85/gganimate?branch=master)
+<!-- badges: end -->
 
 `gganimate` extends the grammar of graphics as implemented by
 [`ggplot2`](https://github.com/tidyverse/ggplot2) to include the description of
