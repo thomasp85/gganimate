@@ -113,6 +113,7 @@ TransitionStates <- ggproto('TransitionStates', Transition,
     if (!params$wrap) transition_length[length(transition_length)] <- 0
     state_length <- rep(params$state_length, length.out = length(all_levels))
     frames <- distribute_frames(state_length, transition_length, params$nframes + if (params$wrap) 1 else 0)
+    params$nframes <- sum(frames$static_length) + sum(frames$transition_length)
     params$state_levels <- all_levels
     params$row_id <- row_state
     params$state_length <- frames$static_length
