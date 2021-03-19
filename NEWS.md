@@ -24,6 +24,8 @@
   discrete scales (#304)
 * Fix bug in `transition_states()` where too few frames relative to states in 
   combination with `wrap = FALSE` would cause an error (#301)
+* Fix a bug in `transition_time()` when the time dimension contained `NA` values
+  (#307)
 
 # gganimate 1.0.7
 

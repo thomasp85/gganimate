@@ -158,7 +158,7 @@ get_times <- function(data, var, nframes, range) {
   time_class <- times$class
   times <- times$times
   if (is.null(range)) {
-    range <- range(unlist(times))
+    range <- range(unlist(times), na.rm = TRUE)
   } else {
     if (!inherits(range, time_class)) {
       stop('range must be given in the same class as time', call. = FALSE)
