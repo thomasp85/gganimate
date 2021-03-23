@@ -101,7 +101,7 @@ the data" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ the data" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -143,7 +143,7 @@ the data" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -180,7 +180,7 @@ modify the look of the shadow by changing the different graphic parameters in
 the data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shadow_trail</span>(<span class='kw'>distance</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>max_frames</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='no'>...</span>, <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>shadow_trail</span><span class='op'>(</span>distance <span class='op'>=</span> <span class='fl'>0.05</span>, max_frames <span class='op'>=</span> <span class='cn'>Inf</span>, <span class='va'>...</span>, exclude_layer <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,21 +213,23 @@ fraction of the full animation length</p></td>
 <code><a href='shadow_wake.html'>shadow_wake</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>Month</span>))) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'><a href='transition_time.html'>transition_time</a></span>(<span class='no'>Day</span>)
+    <pre class="examples"><div class='input'><span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>airquality</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Day</span>, <span class='va'>Temp</span>, colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='transition_time.html'>transition_time</a></span><span class='op'>(</span><span class='va'>Day</span><span class='op'>)</span>
 
 <span class='co'># Change distance between points</span>
-<span class='no'>anim1</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
-  <span class='fu'>shadow_trail</span>(<span class='fl'>0.02</span>)
+<span class='va'>anim1</span> <span class='op'>&lt;-</span> <span class='va'>anim</span> <span class='op'>+</span>
+  <span class='fu'>shadow_trail</span><span class='op'>(</span><span class='fl'>0.02</span><span class='op'>)</span>
 
 <span class='co'># Style shadow differently</span>
-<span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
-  <span class='fu'>shadow_trail</span>(<span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>shape</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='va'>anim2</span> <span class='op'>&lt;-</span> <span class='va'>anim</span> <span class='op'>+</span>
+  <span class='fu'>shadow_trail</span><span class='op'>(</span>alpha <span class='op'>=</span> <span class='fl'>0.3</span>, shape <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 
 <span class='co'># Restrict the shadow to 10 frames</span>
-<span class='no'>anim3</span> <span class='kw'>&lt;-</span> <span class='no'>anim</span> +
-  <span class='fu'>shadow_trail</span>(<span class='kw'>max_frames</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div></pre>
+<span class='va'>anim3</span> <span class='op'>&lt;-</span> <span class='va'>anim</span> <span class='op'>+</span>
+  <span class='fu'>shadow_trail</span><span class='op'>(</span>max_frames <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -243,7 +245,7 @@ fraction of the full animation length</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

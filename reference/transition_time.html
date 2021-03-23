@@ -99,7 +99,7 @@ between them." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -107,7 +107,7 @@ between them." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -141,7 +141,7 @@ between them." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -176,7 +176,7 @@ between the states will be set to correspond to the actual time difference
 between them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transition_time</span>(<span class='no'>time</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>transition_time</span><span class='op'>(</span><span class='va'>time</span>, range <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,7 +223,7 @@ exit function.</p>
     
 
 <p>It is possible to use variables calculated by the statistic to define the
-transition. Simply inclose the variable in <code>stat()</code> in the same way as when
+transition. Simply inclose the variable in <code><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat()</a></code> in the same way as when
 using computed variables in aesthetics.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -238,34 +238,35 @@ using computed variables in aesthetics.</p>
 <code><a href='transition_states.html'>transition_states</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>)) +
-  <span class='fu'>geom_point</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>Month</span>))) +
-  <span class='fu'>transition_time</span>(<span class='no'>Day</span>)
+    <pre class="examples"><div class='input'><span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>airquality</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Day</span>, <span class='va'>Temp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_time</span><span class='op'>(</span><span class='va'>Day</span><span class='op'>)</span>
 
 <span class='co'># Removing a time point will prolong the tweening between neighbouring time</span>
 <span class='co'># points so the time dimension stays linear</span>
-<span class='no'>airquality_missing</span> <span class='kw'>&lt;-</span> <span class='no'>airquality</span>[<span class='no'>airquality</span>$<span class='no'>Day</span> <span class='kw'>&lt;=</span> <span class='fl'>10</span> <span class='kw'>|</span> <span class='no'>airquality</span>$<span class='no'>Day</span> <span class='kw'>&gt;=</span> <span class='fl'>20</span>, ]
-<span class='no'>anim1</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality_missing</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>)) +
-  <span class='fu'>geom_point</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>Month</span>))) +
-  <span class='fu'>transition_time</span>(<span class='no'>Day</span>)
+<span class='va'>airquality_missing</span> <span class='op'>&lt;-</span> <span class='va'>airquality</span><span class='op'>[</span><span class='va'>airquality</span><span class='op'>$</span><span class='va'>Day</span> <span class='op'>&lt;=</span> <span class='fl'>10</span> <span class='op'>|</span> <span class='va'>airquality</span><span class='op'>$</span><span class='va'>Day</span> <span class='op'>&gt;=</span> <span class='fl'>20</span>, <span class='op'>]</span>
+<span class='va'>anim1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>airquality_missing</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Day</span>, <span class='va'>Temp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_time</span><span class='op'>(</span><span class='va'>Day</span><span class='op'>)</span>
 
 <span class='co'># Range can be constrained if needed</span>
-<span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>)) +
-  <span class='fu'>geom_point</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>Month</span>))) +
-  <span class='fu'>transition_time</span>(<span class='no'>Day</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10L</span>, <span class='fl'>20L</span>))
+<span class='va'>anim2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>airquality</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Day</span>, <span class='va'>Temp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_time</span><span class='op'>(</span><span class='va'>Day</span>, range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10L</span>, <span class='fl'>20L</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># The group aesthetic is used to connect elements</span>
 <span class='co'># No grouping</span>
-<span class='no'>anim3</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>)) +
-  <span class='fu'>geom_line</span>() +
-  <span class='fu'>transition_time</span>(<span class='no'>Month</span>)
+<span class='va'>anim3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>airquality</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Day</span>, <span class='va'>Temp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_time</span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span>
 
 <span class='co'># Group by month</span>
-<span class='no'>anim4</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>airquality</span>, <span class='fu'>aes</span>(<span class='no'>Day</span>, <span class='no'>Temp</span>)) +
-  <span class='fu'>geom_line</span>(<span class='fu'>aes</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='no'>Month</span>)) +
-  <span class='fu'>transition_time</span>(<span class='no'>Month</span>) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()</div></pre>
+<span class='va'>anim4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>airquality</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Day</span>, <span class='va'>Temp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>group <span class='op'>=</span> <span class='va'>Month</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_time</span><span class='op'>(</span><span class='va'>Month</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span><span class='op'>(</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -281,7 +282,7 @@ using computed variables in aesthetics.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

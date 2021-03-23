@@ -98,7 +98,7 @@ but they can also be set to be removed as the next layer enters." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -106,7 +106,7 @@ but they can also be set to be removed as the next layer enters." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -140,7 +140,7 @@ but they can also be set to be removed as the next layer enters." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -174,14 +174,14 @@ defined. By default prior layers are kept for the remainder of the animation,
 but they can also be set to be removed as the next layer enters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transition_layers</span>(
-  <span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>keep_layers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>layer_order</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>layer_names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>transition_layers</span><span class='op'>(</span>
+  layer_length <span class='op'>=</span> <span class='fl'>1</span>,
+  transition_length <span class='op'>=</span> <span class='fl'>1</span>,
+  keep_layers <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  from_blank <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  layer_order <span class='op'>=</span> <span class='cn'>NULL</span>,
+  layer_names <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -258,41 +258,43 @@ exit of the layer it belongs to.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Default is to use layer order and keep layers for duration of animation</span>
-<span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
-  <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>()
+<span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='st'>'grey'</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_layers</span><span class='op'>(</span>layer_length <span class='op'>=</span> <span class='fl'>1</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='enter_exit.html'>enter_grow</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Start with the first layer already present</span>
-<span class='no'>anim1</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
-  <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>()
+<span class='va'>anim1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='st'>'grey'</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_layers</span><span class='op'>(</span>layer_length <span class='op'>=</span> <span class='fl'>1</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>,
+                    from_blank <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='enter_exit.html'>enter_grow</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Change the order of the layers</span>
-<span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
-  <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>layer_order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span>)) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>()
+<span class='va'>anim2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='st'>'grey'</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_layers</span><span class='op'>(</span>layer_length <span class='op'>=</span> <span class='fl'>1</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>,
+                    from_blank <span class='op'>=</span> <span class='cn'>FALSE</span>, layer_order <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='enter_exit.html'>enter_grow</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='co'># Keep layer 1 for the whole animation, but remove the 2nd layer as the 3rd</span>
 <span class='co'># enters</span>
-<span class='no'>anim3</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>geom_smooth</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>geom_smooth</span>(<span class='fu'>aes</span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>gear</span>))) +
-  <span class='fu'>transition_layers</span>(<span class='kw'>layer_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-                    <span class='kw'>from_blank</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep_layers</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>Inf</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>enter_grow</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>() + <span class='fu'><a href='enter_exit.html'>exit_shrink</a></span>()</div></pre>
+<span class='va'>anim3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='st'>'grey'</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_layers</span><span class='op'>(</span>layer_length <span class='op'>=</span> <span class='fl'>1</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>,
+                    from_blank <span class='op'>=</span> <span class='cn'>FALSE</span>, keep_layers <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>Inf</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='enter_exit.html'>enter_grow</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='enter_exit.html'>exit_shrink</a></span><span class='op'>(</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -308,7 +310,7 @@ exit of the layer it belongs to.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

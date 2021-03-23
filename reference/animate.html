@@ -106,7 +106,7 @@ spaced frames are rendered." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -114,7 +114,7 @@ spaced frames are rendered." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -148,7 +148,7 @@ spaced frames are rendered." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -190,28 +190,28 @@ resulting number of frames will get calculated, but only <code>nframes</code> ev
 spaced frames are rendered.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>animate</span>(<span class='no'>plot</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>animate</span><span class='op'>(</span><span class='va'>plot</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for gganim</span>
-<span class='fu'>animate</span>(
-  <span class='no'>plot</span>,
-  <span class='no'>nframes</span>,
-  <span class='no'>fps</span>,
-  <span class='no'>duration</span>,
-  <span class='no'>detail</span>,
-  <span class='no'>renderer</span>,
-  <span class='no'>device</span>,
-  <span class='no'>ref_frame</span>,
-  <span class='no'>start_pause</span>,
-  <span class='no'>end_pause</span>,
-  <span class='no'>rewind</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'>animate</span><span class='op'>(</span>
+  <span class='va'>plot</span>,
+  <span class='va'>nframes</span>,
+  <span class='va'>fps</span>,
+  <span class='va'>duration</span>,
+  <span class='va'>detail</span>,
+  <span class='va'>renderer</span>,
+  <span class='va'>device</span>,
+  <span class='va'>ref_frame</span>,
+  <span class='va'>start_pause</span>,
+  <span class='va'>end_pause</span>,
+  <span class='va'>rewind</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for gganim</span>
-<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>knit_print.gganim</span>(<span class='no'>x</span>, <span class='no'>options</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>knit_print.gganim</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>options</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -244,13 +244,17 @@ For available device arguments, see <code><a href='https://rdrr.io/r/grDevices/p
     <tr>
       <th>renderer</th>
       <td><p>The function used to render the generated frames into an
-animation. Gets a vector of paths to images along with the framerate. (default <code><a href='renderers.html'>gifski_renderer()</a></code>)</p></td>
+animation. Gets a vector of paths to images along with the framerate. (by
+default it will use <code><a href='renderers.html'>gifski_renderer()</a></code> if gifski is installed. If not it
+will use <code><a href='renderers.html'>magick_renderer()</a></code> if magick is installed and then <code><a href='renderers.html'>av_renderer()</a></code>
+if av is installed. If all fails it will use the <code><a href='renderers.html'>file_renderer()</a></code>)</p></td>
     </tr>
     <tr>
       <th>device</th>
       <td><p>The device to use for rendering the single frames. Possible
-values are <code>'png'</code>, <code>'jpeg'</code>, <code>'tiff'</code>, <code>'bmp'</code>, <code>'svg'</code>, and <code>'svglite'</code>
-(requires the svglite package). (default <code>'png'</code>)</p></td>
+values are <code>'png'</code>, <code>'ragg_png'</code> (requires the ragg package), <code>'jpeg'</code>,
+<code>'tiff'</code>, <code>'bmp'</code>, <code>'svg'</code>, and <code>'svglite'</code> (requires the svglite package).
+(default <code>'png'</code>)</p></td>
     </tr>
     <tr>
       <th>ref_frame</th>
@@ -279,9 +283,9 @@ frame in the animation (default is <code>0</code> for both)</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>print.gganim</code>()  is an alias for <code>animate()</code> in the same way as
-<code>print.ggplot()</code> is an alias for <code>plot.ggplot()</code>. This ensures that gganimate
+<code><a href='https://ggplot2.tidyverse.org/reference/print.ggplot.html'>print.ggplot()</a></code> is an alias for <code><a href='https://ggplot2.tidyverse.org/reference/print.ggplot.html'>plot.ggplot()</a></code>. This ensures that gganimate
 behaves ggplot2-like and produces the animation when the object is printed.
-The <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code> method is different and produces a single frame for inspection
+The <code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code> method is different and produces a single frame for inspection
 (by default frame 50 out of 100).</p>
 <p>Animations can be saved to disk using <code><a href='anim_save.html'>anim_save()</a></code> in much the same way
 <a href='https://ggplot2.tidyverse.org/reference/ggsave.html'>ggsave()</a> works for static plots.</p>
@@ -330,27 +334,30 @@ frames)</p></li>
 Consult the documentation for these for more detail.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>mtcars</span>, <span class='fu'>aes</span>(<span class='no'>mpg</span>, <span class='no'>disp</span>)) +
-  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>gear</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span>()
+    <pre class="examples"><div class='input'><span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>mpg</span>, <span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>color <span class='op'>=</span> <span class='va'>gear</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span><span class='op'>(</span><span class='va'>gear</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>, state_length <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>exit_fade</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Explicitly animate using default (same as just printing the animation)</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>)
+<span class='fu'>animate</span><span class='op'>(</span><span class='va'>anim</span><span class='op'>)</span>
 
 <span class='co'># Change duration and framerate</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>fps</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='fl'>15</span>)
+<span class='fu'>animate</span><span class='op'>(</span><span class='va'>anim</span>, fps <span class='op'>=</span> <span class='fl'>20</span>, duration <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
 
 <span class='co'># Make the animation pause at the end and then rewind</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>nframes</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>end_pause</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>rewind</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'>animate</span><span class='op'>(</span><span class='va'>anim</span>, nframes <span class='op'>=</span> <span class='fl'>100</span>, end_pause <span class='op'>=</span> <span class='fl'>10</span>, rewind <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Use a different renderer</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>renderer</span> <span class='kw'>=</span> <span class='fu'><a href='renderers.html'>file_renderer</a></span>(<span class='st'>'~/animation/'</span>))[<span class='fl'>1</span>:<span class='fl'>6</span>]
+<span class='fu'>animate</span><span class='op'>(</span><span class='va'>anim</span>, renderer <span class='op'>=</span> <span class='fu'><a href='renderers.html'>file_renderer</a></span><span class='op'>(</span><span class='st'>'~/animation/'</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
 
 <span class='co'># Specify device dimensions and/or resolution</span>
-<span class='fu'>animate</span>(<span class='no'>anim</span>, <span class='kw'>height</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>units</span> <span class='kw'>=</span> <span class='st'>"in"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='fl'>150</span>)
-}</div></pre>
+<span class='fu'>animate</span><span class='op'>(</span><span class='va'>anim</span>, height <span class='op'>=</span> <span class='fl'>2</span>, width <span class='op'>=</span> <span class='fl'>3</span>, units <span class='op'>=</span> <span class='st'>"in"</span>, res <span class='op'>=</span> <span class='fl'>150</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -366,7 +373,7 @@ Consult the documentation for these for more detail.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

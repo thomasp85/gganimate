@@ -95,7 +95,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -103,7 +103,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -137,7 +137,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -168,19 +168,49 @@
 <h1 class="page-header" data-toc-text="development version">
 <a href="#gganimate-development-version" class="anchor"></a>gganimate (development version)<small> Unreleased </small>
 </h1>
+<ul>
+<li>Fix a bug when creating labels from aesthetics that include glue expressions (<a href='https://github.com/thomasp85/gganimate/issues/422'>#422</a>)</li>
+<li>Fix a bug in ffmpeg detection (<a href='https://github.com/thomasp85/gganimate/issues/346'>#346</a>, <a href='https://github.com/rfaelens'>@rfaelens</a>, <a href='https://github.com/thomasp85/gganimate/issues/360'>#360</a>, <a href='https://github.com/adamdsmith'>@adamdsmith</a>)</li>
+<li>Remove plyr dependency</li>
+<li>Fix a bug in <code><a href="../reference/transition_filter.html">transition_filter()</a></code> in the presence of <code>NA</code> filter values (<a href='https://github.com/thomasp85/gganimate/issues/404'>#404</a>, <a href='https://github.com/rsaporta'>@rsaporta</a>)</li>
+<li>Fix a bug with static layers that include position adjustments (<a href='https://github.com/thomasp85/gganimate/issues/418'>#418</a>)</li>
+<li>Fix a bug in <code><a href="../reference/transition_time.html">transition_time()</a></code> where multiple time values in the same frame would lead to unexpected stacking of the data (<a href='https://github.com/thomasp85/gganimate/issues/414'>#414</a>)</li>
+<li>Fix a bug in <code><a href="../reference/transition_reveal.html">transition_reveal()</a></code> where coinciding tweens would result in wrong direction of the arrow (<a href='https://github.com/thomasp85/gganimate/issues/409'>#409</a>)</li>
+<li>Fix a bug in <code>transition_layer()</code> when the last layer had an exit duration (<a href='https://github.com/thomasp85/gganimate/issues/384'>#384</a>)</li>
+<li>Fix a bug in <code><a href="../reference/transition_time.html">transition_time()</a></code> when facets had data with different starting time (<a href='https://github.com/thomasp85/gganimate/issues/357'>#357</a>)</li>
+<li>Make sure <code>exclude_layer</code> in <code>view_*()</code> is taken into account</li>
+<li>Fix a bug when using a view with <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip()</a></code> which would result in weird flickering and movement of the position guies (<a href='https://github.com/thomasp85/gganimate/issues/336'>#336</a>)</li>
+<li>Fix a bug in <code><a href="../reference/transition_reveal.html">transition_reveal()</a></code> that would require input to be ordered along the time dimension for point-like geoms (<a href='https://github.com/thomasp85/gganimate/issues/323'>#323</a>)</li>
+<li>Fix a bug in <code><a href="../reference/view_follow.html">view_follow()</a></code> that would result in errors when used with discrete scales (<a href='https://github.com/thomasp85/gganimate/issues/304'>#304</a>)</li>
+<li>Fix bug in <code><a href="../reference/transition_states.html">transition_states()</a></code> where too few frames relative to states in combination with <code>wrap = FALSE</code> would cause an error (<a href='https://github.com/thomasp85/gganimate/issues/301'>#301</a>)</li>
+<li>Fix a bug in <code><a href="../reference/transition_time.html">transition_time()</a></code> when the time dimension contained <code>NA</code> values (<a href='https://github.com/thomasp85/gganimate/issues/307'>#307</a>)</li>
+</ul>
 </div>
-    <div id="gganimate-1-0-5" class="section level1">
+    <div id="gganimate-107" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.7">
+<a href="#gganimate-107" class="anchor"></a>gganimate 1.0.7<small> 2020-10-15 </small>
+</h1>
+<ul>
+<li>Support ragg png device to ensure that it works with knitr’s ragg support</li>
+</ul>
+</div>
+    <div id="gganimate-106" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.6">
+<a href="#gganimate-106" class="anchor"></a>gganimate 1.0.6<small> 2020-07-08 </small>
+</h1>
+</div>
+    <div id="gganimate-105" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.5">
-<a href="#gganimate-1-0-5" class="anchor"></a>gganimate 1.0.5<small> 2020-02-09 </small>
+<a href="#gganimate-105" class="anchor"></a>gganimate 1.0.5<small> 2020-02-09 </small>
 </h1>
 <ul>
 <li>No longer needs the png package for gifski rendering</li>
 <li>Give startup message if no renderer backend are detected.</li>
 </ul>
 </div>
-    <div id="gganimate-1-0-4" class="section level1">
+    <div id="gganimate-104" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.4">
-<a href="#gganimate-1-0-4" class="anchor"></a>gganimate 1.0.4<small> 2019-11-18 </small>
+<a href="#gganimate-104" class="anchor"></a>gganimate 1.0.4<small> 2019-11-18 </small>
 </h1>
 <ul>
 <li>Fix a bug in <code><a href="../reference/renderers.html">ffmpeg_renderer()</a></code> where the <code>fps</code> argument were being ignored.</li>
@@ -188,29 +218,29 @@
 <li>Better fallback strategy for lack of gifski.</li>
 </ul>
 </div>
-    <div id="gganimate-1-0-3" class="section level1">
+    <div id="gganimate-103" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.3">
-<a href="#gganimate-1-0-3" class="anchor"></a>gganimate 1.0.3<small> 2019-04-02 </small>
+<a href="#gganimate-103" class="anchor"></a>gganimate 1.0.3<small> 2019-04-02 </small>
 </h1>
 <ul>
 <li>Fix a conditional in the plot building step to make it work with the ggplot2 3.1.1 hotfix.</li>
 </ul>
 </div>
-    <div id="gganimate-1-0-2" class="section level1">
+    <div id="gganimate-102" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.2">
-<a href="#gganimate-1-0-2" class="anchor"></a>gganimate 1.0.2<small> 2019-03-03 </small>
+<a href="#gganimate-102" class="anchor"></a>gganimate 1.0.2<small> 2019-03-03 </small>
 </h1>
 <ul>
 <li>Fix registration of S3 methods for suggested packages.</li>
 </ul>
 </div>
-    <div id="gganimate-1-0-1" class="section level1">
+    <div id="gganimate-101" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.1">
-<a href="#gganimate-1-0-1" class="anchor"></a>gganimate 1.0.1<small> 2019-02-15 </small>
+<a href="#gganimate-101" class="anchor"></a>gganimate 1.0.1<small> 2019-02-15 </small>
 </h1>
 <ul>
 <li>Fix bug in transitions when the group aesthetic was late evalued (<a href='https://github.com/thomasp85/gganimate/issues/262'>#262</a>)</li>
-<li>Better fade support for <code>geom_smooth()</code>. Both ribbon and line will now fade.</li>
+<li>Better fade support for <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code>. Both ribbon and line will now fade.</li>
 <li>Fix bug in transitions when group aesthetic was a string that could be interpreted as a double (<a href='https://github.com/thomasp85/gganimate/issues/266'>#266</a>)</li>
 <li>Fix bug in <code><a href="../reference/shadow_mark.html">shadow_mark()</a></code> where future shadows were drawn above the main frame data.</li>
 <li>Better error messages when a layer type is not supported by the transition</li>
@@ -220,9 +250,9 @@
 <code>view_follow</code> now works with transformed scales.</li>
 </ul>
 </div>
-    <div id="gganimate-1-0-0" class="section level1">
+    <div id="gganimate-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
-<a href="#gganimate-1-0-0" class="anchor"></a>gganimate 1.0.0<small> 2019-01-02 </small>
+<a href="#gganimate-100" class="anchor"></a>gganimate 1.0.0<small> 2019-01-02 </small>
 </h1>
 <ul>
 <li>First CRAN release, featuring a complete rewrite… Too much stuff to put in a changelog</li>
@@ -245,7 +275,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

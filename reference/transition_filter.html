@@ -101,7 +101,7 @@ kept the enter function will have no effect." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@ kept the enter function will have no effect." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -143,7 +143,7 @@ kept the enter function will have no effect." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -180,13 +180,13 @@ let data be retained as the result of the exit function. Note that if data is
 kept the enter function will have no effect.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transition_filter</span>(
-  <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>filter_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>transition_filter</span><span class='op'>(</span>
+  transition_length <span class='op'>=</span> <span class='fl'>1</span>,
+  filter_length <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>...</span>,
+  wrap <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  keep <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -251,7 +251,7 @@ the enter function.</p>
     
 
 <p>It is possible to use variables calculated by the statistic to define the
-transition. Simply inclose the variable in <code>stat()</code> in the same way as when
+transition. Simply inclose the variable in <code><a href='https://ggplot2.tidyverse.org/reference/aes_eval.html'>stat()</a></code> in the same way as when
 using computed variables in aesthetics.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -266,41 +266,43 @@ using computed variables in aesthetics.</p>
 <code><a href='transition_time.html'>transition_time</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Width</span>, <span class='no'>Petal.Length</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>transition_filter</span>(
-    <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-    <span class='kw'>filter_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-    <span class='kw'>Setosa</span> <span class='kw'>=</span> <span class='no'>Species</span> <span class='kw'>==</span> <span class='st'>'setosa'</span>,
-    <span class='kw'>Long</span> <span class='kw'>=</span> <span class='no'>Petal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>4</span>,
-    <span class='kw'>Wide</span> <span class='kw'>=</span> <span class='no'>Petal.Width</span> <span class='kw'>&gt;</span> <span class='fl'>2</span>
-  ) +
-  <span class='fu'>ggtitle</span>(
+    <pre class="examples"><div class='input'><span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Petal.Width</span>, <span class='va'>Petal.Length</span>, colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_filter</span><span class='op'>(</span>
+    transition_length <span class='op'>=</span> <span class='fl'>2</span>,
+    filter_length <span class='op'>=</span> <span class='fl'>1</span>,
+    Setosa <span class='op'>=</span> <span class='va'>Species</span> <span class='op'>==</span> <span class='st'>'setosa'</span>,
+    Long <span class='op'>=</span> <span class='va'>Petal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4</span>,
+    Wide <span class='op'>=</span> <span class='va'>Petal.Width</span> <span class='op'>&gt;</span> <span class='fl'>2</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span>
     <span class='st'>'Filter: {closest_filter}'</span>,
-    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>'{closest_expression}'</span>
-  ) +
-  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span>() +
-  <span class='fu'><a href='enter_exit.html'>exit_fly</a></span>(<span class='kw'>y_loc</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+    subtitle <span class='op'>=</span> <span class='st'>'{closest_expression}'</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>enter_fade</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>exit_fly</a></span><span class='op'>(</span>y_loc <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
 
 <span class='co'># Setting `keep = TRUE` allows you to keep the culled data on display. Only</span>
 <span class='co'># exit functions will be used in that case (as elements enters from the</span>
 <span class='co'># result of the exit function)</span>
-<span class='no'>anim2</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Width</span>, <span class='no'>Petal.Length</span>, <span class='kw'>colour</span> <span class='kw'>=</span> <span class='no'>Species</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'>transition_filter</span>(
-    <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-    <span class='kw'>filter_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-    <span class='kw'>Setosa</span> <span class='kw'>=</span> <span class='no'>Species</span> <span class='kw'>==</span> <span class='st'>'setosa'</span>,
-    <span class='kw'>Long</span> <span class='kw'>=</span> <span class='no'>Petal.Length</span> <span class='kw'>&gt;</span> <span class='fl'>4</span>,
-    <span class='kw'>Wide</span> <span class='kw'>=</span> <span class='no'>Petal.Width</span> <span class='kw'>&gt;</span> <span class='fl'>2</span>,
-    <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-  ) +
-  <span class='fu'>ggtitle</span>(
+<span class='va'>anim2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Petal.Width</span>, <span class='va'>Petal.Length</span>, colour <span class='op'>=</span> <span class='va'>Species</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>transition_filter</span><span class='op'>(</span>
+    transition_length <span class='op'>=</span> <span class='fl'>2</span>,
+    filter_length <span class='op'>=</span> <span class='fl'>1</span>,
+    Setosa <span class='op'>=</span> <span class='va'>Species</span> <span class='op'>==</span> <span class='st'>'setosa'</span>,
+    Long <span class='op'>=</span> <span class='va'>Petal.Length</span> <span class='op'>&gt;</span> <span class='fl'>4</span>,
+    Wide <span class='op'>=</span> <span class='va'>Petal.Width</span> <span class='op'>&gt;</span> <span class='fl'>2</span>,
+    keep <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span><span class='op'>(</span>
     <span class='st'>'Filter: {closest_filter}'</span>,
-    <span class='kw'>subtitle</span> <span class='kw'>=</span> <span class='st'>'{closest_expression}'</span>
-  ) +
-  <span class='fu'><a href='enter_exit.html'>exit_recolour</a></span>(<span class='kw'>colour</span> <span class='kw'>=</span> <span class='st'>'grey'</span>) +
-  <span class='fu'><a href='enter_exit.html'>exit_shrink</a></span>(<span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div></pre>
+    subtitle <span class='op'>=</span> <span class='st'>'{closest_expression}'</span>
+  <span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>exit_recolour</a></span><span class='op'>(</span>colour <span class='op'>=</span> <span class='st'>'grey'</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='enter_exit.html'>exit_shrink</a></span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -316,7 +318,7 @@ using computed variables in aesthetics.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

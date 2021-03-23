@@ -102,7 +102,7 @@ define your own ranges." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
       </span>
     </div>
 
@@ -110,7 +110,7 @@ define your own ranges." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -144,7 +144,7 @@ define your own ranges." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/thomasp85/gganimate">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -182,38 +182,38 @@ set the ranges based on that, while the <code>_manual</code> version will allow 
 define your own ranges.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>view_step</span>(
-  <span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>look_ahead</span> <span class='kw'>=</span> <span class='no'>pause_length</span>,
-  <span class='kw'>delay</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ease</span> <span class='kw'>=</span> <span class='st'>"cubic-in-out"</span>,
-  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>pause_first</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)
+    <pre class="usage"><span class='fu'>view_step</span><span class='op'>(</span>
+  pause_length <span class='op'>=</span> <span class='fl'>1</span>,
+  step_length <span class='op'>=</span> <span class='fl'>1</span>,
+  nsteps <span class='op'>=</span> <span class='cn'>NULL</span>,
+  look_ahead <span class='op'>=</span> <span class='va'>pause_length</span>,
+  delay <span class='op'>=</span> <span class='fl'>0</span>,
+  include <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  ease <span class='op'>=</span> <span class='st'>"cubic-in-out"</span>,
+  wrap <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pause_first <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fixed_x <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fixed_y <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  exclude_layer <span class='op'>=</span> <span class='cn'>NULL</span>,
+  aspect_ratio <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span>
 
-<span class='fu'>view_step_manual</span>(
-  <span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>xmin</span>,
-  <span class='no'>xmax</span>,
-  <span class='no'>ymin</span>,
-  <span class='no'>ymax</span>,
-  <span class='kw'>delay</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>ease</span> <span class='kw'>=</span> <span class='st'>"cubic-in-out"</span>,
-  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>pause_first</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fixed_x</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>fixed_y</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>exclude_layer</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>aspect_ratio</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+<span class='fu'>view_step_manual</span><span class='op'>(</span>
+  pause_length <span class='op'>=</span> <span class='fl'>1</span>,
+  step_length <span class='op'>=</span> <span class='fl'>1</span>,
+  <span class='va'>xmin</span>,
+  <span class='va'>xmax</span>,
+  <span class='va'>ymin</span>,
+  <span class='va'>ymax</span>,
+  delay <span class='op'>=</span> <span class='fl'>0</span>,
+  ease <span class='op'>=</span> <span class='st'>"cubic-in-out"</span>,
+  wrap <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pause_first <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fixed_x <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  fixed_y <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  exclude_layer <span class='op'>=</span> <span class='cn'>NULL</span>,
+  aspect_ratio <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -304,30 +304,32 @@ the different views to go through</p></td>
 <code><a href='view_zoom.html'>view_zoom</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'>view_step</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+    <pre class="examples"><div class='input'><span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Petal.Length</span>, <span class='va'>Petal.Width</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span><span class='op'>(</span><span class='va'>Species</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>, state_length <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>view_step</span><span class='op'>(</span>pause_length <span class='op'>=</span> <span class='fl'>2</span>, step_length <span class='op'>=</span> <span class='fl'>1</span>, nsteps <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 
 <span class='co'># Default is to include the data from the two states you're stepping between</span>
 <span class='co'># but this can be turned off</span>
-<span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'>view_step</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Petal.Length</span>, <span class='va'>Petal.Width</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span><span class='op'>(</span><span class='va'>Species</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>, state_length <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>view_step</span><span class='op'>(</span>pause_length <span class='op'>=</span> <span class='fl'>2</span>, step_length <span class='op'>=</span> <span class='fl'>1</span>, nsteps <span class='op'>=</span> <span class='fl'>3</span>, include <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='co'># Default is to work off-beat of transition_states so that view changes while</span>
 <span class='co'># data is static. Setting pause_first=TRUE changes this</span>
-<span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>) +
-  <span class='fu'>view_step</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pause_first</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Petal.Length</span>, <span class='va'>Petal.Width</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span><span class='op'>(</span><span class='va'>Species</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>, state_length <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>view_step</span><span class='op'>(</span>pause_length <span class='op'>=</span> <span class='fl'>1</span>, step_length <span class='op'>=</span> <span class='fl'>2</span>, nsteps <span class='op'>=</span> <span class='fl'>3</span>, pause_first <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># If the transition doesn't wrap, then the view shouldn't either</span>
-<span class='no'>anim</span> <span class='kw'>&lt;-</span> <span class='fu'>ggplot</span>(<span class='no'>iris</span>, <span class='fu'>aes</span>(<span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>)) +
-  <span class='fu'>geom_point</span>() +
-  <span class='fu'><a href='transition_states.html'>transition_states</a></span>(<span class='no'>Species</span>, <span class='kw'>transition_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>state_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) +
-  <span class='fu'>view_step</span>(<span class='kw'>pause_length</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>step_length</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>nsteps</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div></pre>
+<span class='va'>anim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>Petal.Length</span>, <span class='va'>Petal.Width</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='transition_states.html'>transition_states</a></span><span class='op'>(</span><span class='va'>Species</span>, transition_length <span class='op'>=</span> <span class='fl'>2</span>, state_length <span class='op'>=</span> <span class='fl'>1</span>, wrap <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'>view_step</span><span class='op'>(</span>pause_length <span class='op'>=</span> <span class='fl'>2</span>, step_length <span class='op'>=</span> <span class='fl'>1</span>, nsteps <span class='op'>=</span> <span class='fl'>3</span>, wrap <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -343,7 +345,7 @@ the different views to go through</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
