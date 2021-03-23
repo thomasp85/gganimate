@@ -45,7 +45,7 @@ Suggests:
     covr,
     transformr,
     av,
-    gifski,
+    gifski (>= 1.4.3),
     ragg
 Collate:
     'aaa.R'
