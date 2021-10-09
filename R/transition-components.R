@@ -51,7 +51,7 @@
 #'   geom_point() +
 #'   transition_components(time)
 #'
-#' # By default the time range is set to the range of the time varialbe (plus
+#' # By default the time range is set to the range of the time variable (plus
 #' # any enter and exit length), but this can be overwritten
 #' anim2 <- ggplot(data, aes(x, y, group = id, size = size)) +
 #'   geom_point() +
