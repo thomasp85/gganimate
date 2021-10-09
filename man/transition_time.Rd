@@ -36,7 +36,7 @@ which rows in the input data correspond to the same graphic element and will
 therefore define which elements will turn into each other between time points.
 The group aesthetic, if not set, will be calculated from the interaction of all
 discrete aesthetics in the layer (excluding \code{label}), so it is often better
-to set it explicetly when animating, to make sure your data is interpreted in
+to set it explicitly when animating, to make sure your data is interpreted in
 the right way. If the group aesthetic is not set, and no discrete aesthetics
 exists then all rows will have the same group. If the group aesthetic is not
 unique in each state, then rows will be matched first by group and then by
