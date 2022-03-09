@@ -131,7 +131,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
 # HELPERS -----------------------------------------------------------------
 
 get_row_along <- function(data, quo, nframes, range, after = FALSE) {
-  if (!after && require_stat(quo[[2]])) {
+  if (!after && require_stat(rlang::quo_get_expr(quo))) {
     return(eval_placeholder(data))
   }
   times <- lapply(data, safe_eval, expr = quo)
