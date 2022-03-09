@@ -131,7 +131,7 @@ TransitionComponents <- ggproto('TransitionComponents', Transition,
   }
 )
 get_row_comp_time <- function(data, quo, params, after = FALSE) {
-  if (!after && require_stat(quo[[2]])) {
+  if (!after && require_stat(rlang::quo_get_expr(quo))) {
     return(eval_placeholder(data))
   }
   row_time <- lapply(data, safe_eval, expr = quo)
