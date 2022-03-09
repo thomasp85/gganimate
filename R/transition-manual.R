@@ -110,7 +110,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
 )
 
 get_row_frames <- function(data, quo, after = FALSE) {
-  if (after || !require_stat(quo[[2]])) {
+  if (after || !require_stat(rlang::quo_get_expr(quo))) {
     combine_levels(data, quo)
   } else {
     eval_placeholder(data)
