@@ -114,7 +114,7 @@ TransitionFilter <- ggproto('TransitionFilter', Transition,
   var_names = 'filter',
   setup_params = function(self, data, params) {
     params$row_id <- assign_filters(data, params$filter_quos)
-    params$require_stat <- any(vapply(params$filter_quo, function(f) require_stat(f[[2]]), logical(1)))
+    params$require_stat <- any(vapply(params$filter_quo, function(f) require_stat(rlang::quo_get_expr(f)), logical(1)))
     params
   },
   setup_params2 = function(self, data, params, row_vars) {
