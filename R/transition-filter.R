@@ -205,7 +205,7 @@ TransitionFilter <- ggproto('TransitionFilter', Transition,
 )
 
 assign_filters <- function(data, filters, after = FALSE, row_vars = NULL) {
-  do_filter <- vapply(filters, function(f) require_stat(f[[2]]), logical(1)) == after
+  do_filter <- vapply(filters, function(f) require_stat(rlang::quo_get_expr(f)), logical(1)) == after
   row_filters <- lapply(data, function(d) {
     row_filter <- do.call(rbind, lapply(seq_along(filters), function(i) {
       if (!do_filter[i]) return(rep(FALSE, nrow(d)))
