@@ -146,7 +146,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
 # HELPERS -----------------------------------------------------------------
 
 get_row_time <- function(data, quo, nframes, range, after = FALSE) {
-  if (after || !require_stat(quo[[2]])) {
+  if (after || !require_stat(rlang::quo_get_expr(quo))) {
     get_times(data, quo, nframes, range)
   } else {
     eval_placeholder(data)

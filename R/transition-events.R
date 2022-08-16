@@ -183,7 +183,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
   }
 )
 get_row_event <- function(data, quo, name, to_class = NULL, after = FALSE) {
-  if (!after && require_stat(quo[[2]])) {
+  if (!after && require_stat(rlang::quo_get_expr(quo))) {
     return(eval_placeholder(data))
   }
   row_event <- lapply(data, safe_eval, expr = quo)
