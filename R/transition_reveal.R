@@ -28,10 +28,10 @@
 #' @section Object permanence:
 #' `transition_reveal` uses the group aesthetic of each layer to identify
 #' which rows in the input data correspond to the same graphic element and will
-#' therefore define a a whole to be revealed over the animation.
+#' therefore define a whole to be revealed over the animation.
 #' The group aesthetic, if not set, will be calculated from the interaction of all
 #' discrete aesthetics in the layer (excluding `label`), so it is often better
-#' to set it explicetly when animating, to make sure your data is interpreted in
+#' to set it explicitly when animating, to make sure your data is interpreted in
 #' the right way. If the group aesthetic is not set, and no discrete aesthetics
 #' exists then all rows will have the same group.
 #'
