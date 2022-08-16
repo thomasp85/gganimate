@@ -5,11 +5,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/thomasp85/gganimate/workflows/R-CMD-check/badge.svg)](https://github.com/thomasp85/gganimate/actions)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version-ago/gganimate)](https://cran.r-project.org/package=gganimate)
-[![CRAN\_Download\_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
+[![R-CMD-check](https://github.com/thomasp85/gganimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/thomasp85/gganimate/actions/workflows/R-CMD-check.yaml)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-ago/gganimate)](https://cran.r-project.org/package=gganimate)
+[![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
 [![Codecov test
-coverage](https://codecov.io/gh/thomasp85/gganimate/branch/master/graph/badge.svg)](https://codecov.io/gh/thomasp85/gganimate?branch=master)
+coverage](https://codecov.io/gh/thomasp85/gganimate/branch/main/graph/badge.svg)](https://app.codecov.io/gh/thomasp85/gganimate?branch=main)
 <!-- badges: end -->
 
 `gganimate` extends the grammar of graphics as implemented by
@@ -18,15 +18,15 @@ description of animation. It does this by providing a range of new
 grammar classes that can be added to the plot object in order to
 customise how it should change with time.
 
-  - `transition_*()` defines how the data should be spread out and how
+-   `transition_*()` defines how the data should be spread out and how
     it relates to itself across time.
-  - `view_*()` defines how the positional scales should change along the
+-   `view_*()` defines how the positional scales should change along the
     animation.
-  - `shadow_*()` defines how data from other points in time should be
+-   `shadow_*()` defines how data from other points in time should be
     presented in the given point in time.
-  - `enter_*()`/`exit_*()` defines how new data should appear and how
+-   `enter_*()`/`exit_*()` defines how new data should appear and how
     old data should disappear during the course of the animation.
-  - `ease_aes()` defines how different aesthetics should be eased during
+-   `ease_aes()` defines how different aesthetics should be eased during
     transitions.
 
 ## An Example

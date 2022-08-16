@@ -18,10 +18,10 @@ knitr::opts_chunk$set(
 # gganimate <img src="man/figures/logo.png" align="right" style="padding-left:10px;background-color:white;" />
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/thomasp85/gganimate/workflows/R-CMD-check/badge.svg)](https://github.com/thomasp85/gganimate/actions)
+[![R-CMD-check](https://github.com/thomasp85/gganimate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/thomasp85/gganimate/actions/workflows/R-CMD-check.yaml)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-ago/gganimate)](https://cran.r-project.org/package=gganimate)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
-[![Codecov test coverage](https://codecov.io/gh/thomasp85/gganimate/branch/master/graph/badge.svg)](https://codecov.io/gh/thomasp85/gganimate?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/thomasp85/gganimate/branch/main/graph/badge.svg)](https://app.codecov.io/gh/thomasp85/gganimate?branch=main)
 <!-- badges: end -->
 
 `gganimate` extends the grammar of graphics as implemented by
