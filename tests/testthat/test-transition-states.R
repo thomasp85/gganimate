@@ -1,6 +1,7 @@
 context("transition-states")
 
 test_that("area works", {
+  skip_if_not_installed('transformr')
   set.seed(1)
   df <- data.frame(
     x = c(1:10, 1:10),
