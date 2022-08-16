@@ -71,13 +71,7 @@ back to the first state.}
 start with a step so that it is aligned to the static period in
 \code{\link[=transition_states]{transition_states()}}}
 
-\item{fixed_x}{Either a logical indicating if the dimension should
-not be modified by the view, or a numeric vector giving the lower and upper
-bounds of the dimension. For the latter, an \code{NA} value will be substituted
-for whatever is calculated by the view (e.g. \code{fixed_x = c(0, NA)}) will fix
-the minimum x value to 0 and let the view calculate the upper bound.}
-
-\item{fixed_y}{Either a logical indicating if the dimension should
+\item{fixed_x, fixed_y}{Either a logical indicating if the dimension should
 not be modified by the view, or a numeric vector giving the lower and upper
 bounds of the dimension. For the latter, an \code{NA} value will be substituted
 for whatever is calculated by the view (e.g. \code{fixed_x = c(0, NA)}) will fix
