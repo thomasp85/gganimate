@@ -1,10 +1,10 @@
-pandoc: 2.7.3
-pkgdown: 1.6.1
+pandoc: 2.14.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
-  extra/talks: talks.html
+  talks: extra/talks.html
   gganimate: gganimate.html
-last_built: 2021-03-23T11:29Z
+last_built: 2022-08-16T10:19Z
 urls:
   reference: https://gganimate.com/reference
   article: https://gganimate.com/articles

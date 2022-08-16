@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://gganimate.com/404.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/articles/extra/talks.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/articles/gganimate.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/authors.html</loc>
+  </url>
+  <url>
     <loc>https://gganimate.com/index.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/news/index.html</loc>
   </url>
   <url>
     <loc>https://gganimate.com/reference/anim_save.html</loc>
@@ -29,6 +50,9 @@
   </url>
   <url>
     <loc>https://gganimate.com/reference/gif_file.html</loc>
+  </url>
+  <url>
+    <loc>https://gganimate.com/reference/index.html</loc>
   </url>
   <url>
     <loc>https://gganimate.com/reference/last_animation.html</loc>
@@ -104,11 +128,5 @@
   </url>
   <url>
     <loc>https://gganimate.com/reference/view_zoom.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/articles/extra/talks.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/articles/gganimate.html</loc>
   </url>
 </urlset>

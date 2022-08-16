@@ -38,6 +38,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -50,7 +52,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">gganimate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.7.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.7.9000</span>
       </span>
     </div>
 
@@ -58,7 +60,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -72,7 +74,7 @@
   <a href="articles/extra/talks.html">Talks</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     News
      
     <span class="caret"></span>
@@ -80,10 +82,11 @@
   <ul class="dropdown-menu" role="menu">
 <li class="dropdown-header">Release notes</li>
     <li>
-      <a href="https://www.data-imaginist.com/2019/gganimate-has-transitioned-to-a-state-of-release/">Version 1.0.0</a>
+      <a href="https://www.data-imaginist.com/2019/gganimate-has-transitioned-to-a-state-of-release/" class="external-link">Version 1.0.0</a>
     </li>
     <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="news/index.html">Change log</a>
     </li>
   </ul>
@@ -91,8 +94,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/thomasp85/gganimate">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/thomasp85/gganimate" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -114,13 +117,11 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="gganimate-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#gganimate-" class="anchor"></a>gganimate <img src="reference/figures/logo.png" align="right" style="padding-left:10px;background-color:white;">
+<div class="section level1">
+<div class="page-header"><h1 id="gganimate-">gganimate <img src="reference/figures/logo.png" align="right" style="padding-left:10px;background-color:white;"><a class="anchor" aria-label="anchor" href="#gganimate-"></a>
 </h1></div>
 <!-- badges: start -->
-
-<p><code>gganimate</code> extends the grammar of graphics as implemented by <a href="https://github.com/tidyverse/ggplot2"><code>ggplot2</code></a> to include the description of animation. It does this by providing a range of new grammar classes that can be added to the plot object in order to customise how it should change with time.</p>
+<p><code>gganimate</code> extends the grammar of graphics as implemented by <a href="https://github.com/tidyverse/ggplot2" class="external-link"><code>ggplot2</code></a> to include the description of animation. It does this by providing a range of new grammar classes that can be added to the plot object in order to customise how it should change with time.</p>
 <ul>
 <li>
 <code>transition_*()</code> defines how the data should be spread out and how it relates to itself across time.</li>
@@ -133,143 +134,153 @@
 <li>
 <code><a href="reference/ease_aes.html">ease_aes()</a></code> defines how different aesthetics should be eased during transitions.</li>
 </ul>
-<div id="an-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#an-example" class="anchor"></a>An Example</h2>
+<div class="section level2">
+<h2 id="an-example">An Example<a class="anchor" aria-label="anchor" href="#an-example"></a>
+</h2>
 <p>All of the above might seem a bit abstract. Let’s try with a contrived example:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gganimate.com">gganimate</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="co"># Here comes the gganimate code</span>
-  <span class="fu"><a href="reference/transition_states.html">transition_states</a></span><span class="op">(</span>
-    <span class="va">gear</span>,
-    transition_length <span class="op">=</span> <span class="fl">2</span>,
-    state_length <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="reference/enter_exit.html">enter_fade</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/enter_exit.html">exit_shrink</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="reference/ease_aes.html">ease_aes</a></span><span class="op">(</span><span class="st">'sine-in-out'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gganimate.com">gganimate</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="co"># Here comes the gganimate code</span></span>
+<span>  <span class="fu"><a href="reference/transition_states.html">transition_states</a></span><span class="op">(</span></span>
+<span>    <span class="va">gear</span>,</span>
+<span>    transition_length <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    state_length <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/enter_exit.html">enter_fade</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/enter_exit.html">exit_shrink</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/ease_aes.html">ease_aes</a></span><span class="op">(</span><span class="st">'sine-in-out'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-1.gif"><!-- --></p>
 <p>Here we take a simple boxplot of fuel consumption as a function of cylinders and lets it transition between the number of gears available in the cars. As this is a discrete split (<code>gear</code> being best described as an ordered factor) we use <code>transition_states</code> and provides a relative length to use for transition and state view. As not all combinations of data is present there are states missing a box. We define that when a box appears it should fade into view, whereas at should shrink away when it disappear. Lastly we decide to use a sinusoidal easing for all our aesthetics (here, only <code>y</code> is changing)</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p><code>gganimate</code> is available on CRAN and can be installed with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages('gganimate')</a></code>. If you wish to install the development version you can install directly from github using devtools:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p><code>gganimate</code> is available on CRAN and can be installed with <code>install.packages('gganimate')</code>. If you wish to install the development version you can install directly from github using devtools:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages('devtools')</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'thomasp85/gganimate'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages('devtools')</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'thomasp85/gganimate'</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="yet-another-example" class="section level2">
-<h2 class="hasAnchor">
-<a href="#yet-another-example" class="anchor"></a>Yet Another Example</h2>
+<div class="section level2">
+<h2 id="yet-another-example">Yet Another Example<a class="anchor" aria-label="anchor" href="#yet-another-example"></a>
+</h2>
 <p>It is impossible to cover everything possible with <code>gganimate</code> in a README, but animations are fun, so let’s at least have one more:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gapminder</span><span class="op">)</span>
-
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">gapminder</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">gdpPercap</span>, <span class="va">lifeExp</span>, size <span class="op">=</span> <span class="va">pop</span>, colour <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.7</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country_colors</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">continent</span><span class="op">)</span> <span class="op">+</span>
-  <span class="co"># Here comes the gganimate specific bits</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Year: {frame_time}'</span>, x <span class="op">=</span> <span class="st">'GDP per capita'</span>, y <span class="op">=</span> <span class="st">'life expectancy'</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="reference/transition_time.html">transition_time</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="reference/ease_aes.html">ease_aes</a></span><span class="op">(</span><span class="st">'linear'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jennybc/gapminder" class="external-link">gapminder</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">gapminder</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">gdpPercap</span>, <span class="va">lifeExp</span>, size <span class="op">=</span> <span class="va">pop</span>, colour <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.7</span>, show.legend <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">country_colors</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">12</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_log10</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">continent</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co"># Here comes the gganimate specific bits</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'Year: {frame_time}'</span>, x <span class="op">=</span> <span class="st">'GDP per capita'</span>, y <span class="op">=</span> <span class="st">'life expectancy'</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/transition_time.html">transition_time</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="reference/ease_aes.html">ease_aes</a></span><span class="op">(</span><span class="st">'linear'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.gif"><!-- --></p>
 <p>In this example we see the use of <code><a href="reference/transition_time.html">transition_time()</a></code> which can be used with continuous variables such as <code>year</code>. With this transition it is not necessary to provide transition and state length as the “transition variable” provides this directly (e.g. it should take twice as long to transition between 1980 and 1990 compared to 2000 to 2005). We also see the use of string literal interpolation in titles. <code>gganimate</code> lets you specify variables to evaluate inside titles and different transitions provide different type of information to use.</p>
 </div>
-<div id="where-is-my-animation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#where-is-my-animation" class="anchor"></a>Where is my animation?</h2>
-<p><code>gganimate</code> mimics the way <code>ggplot2</code> renders its output, in that the rendering is done automatically when the <code>gganim</code> object is printed. Under the hood, the <code><a href="reference/animate.html">animate()</a></code> function is called which renders the frame and passes the frames to a renderer functions which takes care of combining them to the final animation. The default renderer is <code><a href="reference/renderers.html">gifski_renderer()</a></code> which returns a <code>gif_image</code> object which is a simple wrapper around a path to a gif file. If <code><a href="reference/animate.html">animate()</a></code> has been called implicitly as part of <code>print</code> the <code>gif_image</code> object is available using the <code><a href="reference/last_animation.html">last_animation()</a></code> function (analogous to <code><a href="https://ggplot2.tidyverse.org/reference/last_plot.html">ggplot2::last_plot()</a></code>). In order to save the animation to a specific location, you can use the <code><a href="reference/anim_save.html">anim_save()</a></code> function which, like <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggplot2::ggsave</a></code>, defaults to taking the last rendered animation and writes it to a file.</p>
+<div class="section level2">
+<h2 id="where-is-my-animation">Where is my animation?<a class="anchor" aria-label="anchor" href="#where-is-my-animation"></a>
+</h2>
+<p><code>gganimate</code> mimics the way <code>ggplot2</code> renders its output, in that the rendering is done automatically when the <code>gganim</code> object is printed. Under the hood, the <code><a href="reference/animate.html">animate()</a></code> function is called which renders the frame and passes the frames to a renderer functions which takes care of combining them to the final animation. The default renderer is <code><a href="reference/renderers.html">gifski_renderer()</a></code> which returns a <code>gif_image</code> object which is a simple wrapper around a path to a gif file. If <code><a href="reference/animate.html">animate()</a></code> has been called implicitly as part of <code>print</code> the <code>gif_image</code> object is available using the <code><a href="reference/last_animation.html">last_animation()</a></code> function (analogous to <code><a href="https://ggplot2.tidyverse.org/reference/last_plot.html" class="external-link">ggplot2::last_plot()</a></code>). In order to save the animation to a specific location, you can use the <code><a href="reference/anim_save.html">anim_save()</a></code> function which, like <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave</a></code>, defaults to taking the last rendered animation and writes it to a file.</p>
 </div>
-<div id="i-dont-like-gifs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#i-dont-like-gifs" class="anchor"></a>I don’t like gifs…</h2>
-<p>gif is a fantastic format for animations due to its wide support, but sometimes another format is required. <code>gganimate</code> is agnostic to the renderer and while the default is to use <a href="https://github.com/r-rust/gifski">gifski</a> to combine the frames into a gif, it doesn’t have to be so. By passing an alternate renderer to the <code><a href="reference/animate.html">animate()</a></code> function you can control the animation format, and <code>gganimate</code> comes with a bunch (and you can write your own). To create video files you can e.g. use the <code><a href="reference/renderers.html">ffmpeg_renderer()</a></code>:</p>
+<div class="section level2">
+<h2 id="i-dont-like-gifs">I don’t like gifs…<a class="anchor" aria-label="anchor" href="#i-dont-like-gifs"></a>
+</h2>
+<p>gif is a fantastic format for animations due to its wide support, but sometimes another format is required. <code>gganimate</code> is agnostic to the renderer and while the default is to use <a href="https://github.com/r-rust/gifski" class="external-link">gifski</a> to combine the frames into a gif, it doesn’t have to be so. By passing an alternate renderer to the <code><a href="reference/animate.html">animate()</a></code> function you can control the animation format, and <code>gganimate</code> comes with a bunch (and you can write your own). To create video files you can e.g. use the <code><a href="reference/renderers.html">ffmpeg_renderer()</a></code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/transition_states.html">transition_states</a></span><span class="op">(</span><span class="va">Month</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/shadow_mark.html">shadow_mark</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, colour <span class="op">=</span> <span class="st">'grey'</span><span class="op">)</span>
-<span class="fu"><a href="reference/animate.html">animate</a></span><span class="op">(</span><span class="va">p</span>, renderer <span class="op">=</span> <span class="fu"><a href="reference/renderers.html">ffmpeg_renderer</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">'steelblue'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/transition_states.html">transition_states</a></span><span class="op">(</span><span class="va">Month</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/shadow_mark.html">shadow_mark</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span>, colour <span class="op">=</span> <span class="st">'grey'</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/animate.html">animate</a></span><span class="op">(</span><span class="va">p</span>, renderer <span class="op">=</span> <span class="fu"><a href="reference/renderers.html">ffmpeg_renderer</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><em>Video output are automatically embedded in RMarkdown documents, but GitHub strips video when rendering READMEs so you can’t see it here</em></p>
 <p>Further there’s support for rendering to sprite sheets if that is your vice.</p>
 </div>
-<div id="old-api" class="section level2">
-<h2 class="hasAnchor">
-<a href="#old-api" class="anchor"></a>Old API</h2>
-<p>This is the second iteration of the gganimate package. The first, developed by <a href="https://github.com/dgrtwo">David Robinson</a> had a very different API, and relied on specifying animation frame membership inside <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> blocks in the <code>geom_*()</code> calls. This approach was easy to grasp, but essentially limited in capabilities and has thus been abandoned for a more thorough grammar.</p>
-<p>Code written for the old API will not work with this <code>gganimate</code> version and there will not come a future support for it. If you wish to continue using the old API then avoid upgrading <code>gganimate</code>. If you’ve already upgraded and wish to downgrade, the latest version of the old API is available as a <a href="https://github.com/thomasp85/gganimate/releases/tag/v0.1.1">GitHub release</a>.</p>
+<div class="section level2">
+<h2 id="old-api">Old API<a class="anchor" aria-label="anchor" href="#old-api"></a>
+</h2>
+<p>This is the second iteration of the gganimate package. The first, developed by <a href="https://github.com/dgrtwo" class="external-link">David Robinson</a> had a very different API, and relied on specifying animation frame membership inside <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes()</a></code> blocks in the <code>geom_*()</code> calls. This approach was easy to grasp, but essentially limited in capabilities and has thus been abandoned for a more thorough grammar.</p>
+<p>Code written for the old API will not work with this <code>gganimate</code> version and there will not come a future support for it. If you wish to continue using the old API then avoid upgrading <code>gganimate</code>. If you’ve already upgraded and wish to downgrade, the latest version of the old API is available as a <a href="https://github.com/thomasp85/gganimate/releases/tag/v0.1.1" class="external-link">GitHub release</a>.</p>
 <p>If you wish to convert your old animations to the new API, the closest you get is probably with <code>transition_manual</code>, even though it is not completely substitutable:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Old code</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span>, frame <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># New code</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu"><a href="reference/transition_manual.html">transition_manual</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Old code</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span>, frame <span class="op">=</span> <span class="va">gear</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># New code</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span>, <span class="va">mpg</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="reference/transition_manual.html">transition_manual</a></span><span class="op">(</span><span class="va">gear</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=gganimate">https://​cloud.r-project.org/​package=gganimate</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/thomasp85/gganimate/">https://​github.com/​thomasp85/​gganimate/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/thomasp85/gganimate/issues">https://​github.com/​thomasp85/​gganimate/​issues</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>
-<a href="https://data-imaginist.com">Thomas Lin Pedersen</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5147-4711" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>
-<a href="http://varianceexplained.org">David Robinson</a> <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="https://cloud.r-project.org/package=gganimate" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/thomasp85/gganimate/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/thomasp85/gganimate/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/thomasp85/gganimate/actions"><img src="https://github.com/thomasp85/gganimate/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://cran.r-project.org/package=gganimate"><img src="http://www.r-pkg.org/badges/version-ago/gganimate" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=gganimate"><img src="http://cranlogs.r-pkg.org/badges/gganimate" alt="CRAN_Download_Badge"></a></li>
-<li><a href="https://codecov.io/gh/thomasp85/gganimate?branch=master"><img src="https://codecov.io/gh/thomasp85/gganimate/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li>
+<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing gganimate</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>
+<a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5147-4711" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>
+<a href="http://varianceexplained.org" class="external-link">David Robinson</a> <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/thomasp85/gganimate/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/thomasp85/gganimate/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://cran.r-project.org/package=gganimate" class="external-link"><img src="http://www.r-pkg.org/badges/version-ago/gganimate" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=gganimate" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/gganimate" alt="CRAN_Download_Badge"></a></li>
+<li><a href="https://app.codecov.io/gh/thomasp85/gganimate?branch=main" class="external-link"><img src="https://codecov.io/gh/thomasp85/gganimate/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://data-imaginist.com">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org">David Robinson</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
