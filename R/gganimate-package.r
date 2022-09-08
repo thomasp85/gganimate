@@ -14,8 +14,8 @@
 #'
 #' - The [gganimate wiki](https://github.com/thomasp85/gganimate/wiki) includes
 #'   user supplied example walkthroughs
-#' - The [learngganimate](https://github.com/ropenscilabs/learngganimate) project
-#'   by rOpenSci Labs includes a long range of detailed explorations of the
-#'   different gganimate functions
+#' - The [learngganimate](https://github.com/ropensci-archive/learngganimate)
+#'   project by rOpenSci Labs includes a long range of detailed explorations of
+#'   the different gganimate functions
 #'
 '_PACKAGE'

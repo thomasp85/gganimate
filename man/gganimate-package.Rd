@@ -24,9 +24,9 @@ worth mentioning:
 \itemize{
 \item The \href{https://github.com/thomasp85/gganimate/wiki}{gganimate wiki} includes
 user supplied example walkthroughs
-\item The \href{https://github.com/ropenscilabs/learngganimate}{learngganimate} project
-by rOpenSci Labs includes a long range of detailed explorations of the
-different gganimate functions
+\item The \href{https://github.com/ropensci-archive/learngganimate}{learngganimate}
+project by rOpenSci Labs includes a long range of detailed explorations of
+the different gganimate functions
 }
 }
 
