@@ -1,3 +1,5 @@
+# gganimate (development version)
+
 # gganimate 1.0.8
 
 * Fix a bug when creating labels from aesthetics that include glue expressions 
