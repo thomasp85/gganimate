@@ -45,7 +45,8 @@ Suggests:
     transformr,
     av,
     gifski (>= 1.4.3),
-    ragg
+    ragg,
+    sf
 Collate:
     'aaa.R'
     'anim_save.R'
