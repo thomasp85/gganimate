@@ -2,6 +2,7 @@
 
 * Fix for using `"svg"` device during knitting (#484)
 * Fix for correctly getting chunk options during knitting (#485)
+* Fix a bug in `transition_reveal()` that would remove terminal data (#480)
 
 # gganimate 1.0.8
 

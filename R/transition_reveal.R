@@ -123,7 +123,10 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
-    all_frames[!(c(diff(all_frames$.time), 1) <= .Machine$double.eps & all_frames$.phase == 'raw'), ]
+    repeated <- c(diff(all_frames$.time), 1) <= .Machine$double.eps &
+      c(all_frames$group[-nrow(all_frames)] == all_frames$group[-1], TRUE) &
+      all_frames$.phase == 'raw'
+    all_frames[!repeated, ]
   }
 )
 
