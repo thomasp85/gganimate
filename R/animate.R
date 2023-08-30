@@ -184,7 +184,7 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
   if (args$start_pause != 0) frames_vars <- rbind(frames_vars[rep(1, args$start_pause), , drop = FALSE], frames_vars)
   if (args$end_pause != 0) frames_vars <- rbind(frames_vars, frames_vars[rep(nrow(frames_vars), args$end_pause), , drop = FALSE])
   if (args$rewind) frames_vars <- rbind(frames_vars, frames_vars[rev(seq_len(orig_nframes - nrow(frames_vars))), , drop = FALSE])
-
+  print(args$renderer)
   animation <- args$renderer(frames_vars$frame_source, args$fps)
   attr(animation, 'frame_vars') <- frames_vars
   set_last_animation(animation)
@@ -294,6 +294,8 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
     svg = svg,
     svglite = svglite::svglite
   )
+  args <- list(...)
+  args <- args[names(args) %in% names(formals(device))]
 
   pb <- progress_bar$new(
     'Rendering [:bar] at :fps fps ~ eta: :eta',
@@ -303,7 +305,7 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   pb$tick(0)
 
   for (i in seq_along(frames)) {
-    if (!stream) device(files[i], ...)
+    if (!stream) do.call(device, c(list(files[i]), args))
 
     tryCatch(
       plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights),
