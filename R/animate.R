@@ -210,7 +210,7 @@ gg_animate <- gganimate
 #' @importFrom utils modifyList
 prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, rewind, ...) {
   args <- list()
-  chunk_args <- if (is_knitting()) get_knitr_options(knitr::opts_chunk$get(), unlist = FALSE) else list(dev_args = list())
+  chunk_args <- if (is_knitting()) get_knitr_options(knitr::opts_current$get(), unlist = FALSE) else list(dev_args = list())
   args$nframes <- nframes %?% chunk_args$nframes %||% getOption('gganimate.nframes', 100)
   args$fps <- fps %?% chunk_args$fps %||% getOption('gganimate.fps', 10)
   duration <- duration %?% chunk_args$duration %||% getOption('gganimate.duration', NULL)
