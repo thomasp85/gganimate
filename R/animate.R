@@ -184,7 +184,7 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
   if (args$start_pause != 0) frames_vars <- rbind(frames_vars[rep(1, args$start_pause), , drop = FALSE], frames_vars)
   if (args$end_pause != 0) frames_vars <- rbind(frames_vars, frames_vars[rep(nrow(frames_vars), args$end_pause), , drop = FALSE])
   if (args$rewind) frames_vars <- rbind(frames_vars, frames_vars[rev(seq_len(orig_nframes - nrow(frames_vars))), , drop = FALSE])
-  print(args$renderer)
+
   animation <- args$renderer(frames_vars$frame_source, args$fps)
   attr(animation, 'frame_vars') <- frames_vars
   set_last_animation(animation)
