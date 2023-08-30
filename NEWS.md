@@ -1,5 +1,8 @@
 # gganimate (development version)
 
+* Fix for using `"svg"` device during knitting (#484)
+* Fix for correctly getting chunk options during knitting (#485)
+
 # gganimate 1.0.8
 
 * Fix a bug when creating labels from aesthetics that include glue expressions 
