@@ -39,6 +39,16 @@ Scene <- ggproto('Scene', NULL,
     if (self$transition$require_late_tween(self$transition_params)) self$tween_first[] <- FALSE
     self$group_column <- self$get_group_column(layers)
     self$match_shape <- self$get_shape_match(layers)
+    # Sad concession that the core ideas in gganimate doesn't work with stat_align
+    if (inherits(self$transition, 'TransitionReveal')) {
+      has_align <- vapply(layers, function(l) inherits(l$stat, 'StatAlign'), logical(1))
+      if (any(has_align)) {
+        cli::cli_abort(c(
+          "{.fun transition_reveal} is incompatible with {.fun stat_align}",
+          i = "consider setting {.code stat = \"align\"} in layer {which(has_align)}"
+        ))
+      }
+    }
   },
   before_stat = function(self, layer_data) {
     layer_data <- self$transition$map_data(layer_data, self$transition_params)
