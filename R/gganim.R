@@ -1,7 +1,7 @@
 #' @importFrom ggplot2 is.ggplot
 as.gganim <- function(x) {
   if (is.gganim(x)) return(x)
-  if (!is.ggplot(x)) stop('Only knows how to convert ggplot to gganim', call. = FALSE)
+  if (!is.ggplot(x)) cli::cli_abort('Only knows how to convert {.cls ggplot} objects to gganim')
   class(x) <- c('gganim', class(x))
   if (inherits(x, 'ggraph')) {
     cl <- class(x)
@@ -37,9 +37,9 @@ knit_print.gganim <- function(x, options, ...) {
   knitr_options <- get_knitr_options(options)
   if (knitr::is_latex_output()) {
     knitr_options$device <- 'current'
-    do.call(animate, c(list(plot = x), knitr_options))
+    inject(animate(plot = x, !!!knitr_options))
   } else {
-    anim <- do.call(animate, c(list(plot = x), knitr_options))
+    anim <- inject(animate(plot = x, !!!knitr_options))
     knitr::knit_print(anim, options, ...)
   }
 }

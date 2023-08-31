@@ -95,11 +95,11 @@ Scene <- ggproto('Scene', NULL,
     self$shadow_params$excluded_layers <- union(self$shadow$exclude_layer, static_layers)
     self$shadow_params <- self$shadow$train(layer_data, self$shadow_params)
     frame_vars <- list(
-      data.frame(frame = seq_len(self$nframes), nframes = self$nframes, progress = seq_len(self$nframes)/self$nframes),
+      data_frame0(frame = seq_len(self$nframes), nframes = self$nframes, progress = seq_len(self$nframes)/self$nframes),
       self$transition$get_frame_vars(self$transition_params),
       self$view$get_frame_vars(self$view_params)
     )
-    self$frame_vars <- do.call(cbind, frame_vars[!vapply(frame_vars, is.null, logical(1))])
+    self$frame_vars <- vctrs::vec_cbind(!!!frame_vars, .name_repair = 'minimal')
     layer_data
   },
   get_frame = function(self, plot, i) {

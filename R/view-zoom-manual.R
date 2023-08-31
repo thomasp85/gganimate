@@ -19,7 +19,7 @@ view_zoom_manual <- function(pause_length = 1, step_length = 1, xmin, xmax, ymin
           params = list(
             pause_length = pause_length,
             step_length = step_length,
-            windows = data.frame(
+            windows = data_frame0(
               xmin = xmin,
               xmax = xmax,
               ymin = ymin,

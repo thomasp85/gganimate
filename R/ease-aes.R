@@ -60,7 +60,7 @@
 ease_aes <- function(default = 'linear', ...) {
   aesthetics <- list(...)
   if (length(aesthetics) > 0) {
-    if (is.null(names(aesthetics))) stop('Aesthetics must be named', call. = FALSE)
+    if (is.null(names(aesthetics))) cli::cli_abort('Aesthetics must be named')
     if ('x' %in% names(aesthetics)) {
       aesthetics[setdiff(x_aes, names(aesthetics))] <- aesthetics['x']
     }

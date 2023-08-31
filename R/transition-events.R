@@ -123,7 +123,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
       range  <- c(low, high)
     } else {
       if (!inherits(params$range, time_class)) {
-        stop('range must be given in the same class as time', call. = FALSE)
+        cli::cli_abort('{.arg range} must be given in the same class as {.field time}')
       }
       as.numeric(params$range)
     }
@@ -155,7 +155,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
     static = lengths(start) == 0
     params$row_id <- Map(function(st, end, en, ex, s) if (s) character(0) else paste(st, end, en, ex, sep = '_'),
                          st = start, end = end, en = enter_length, ex = exit_length, s = static)
-    params$frame_info <- data.frame(
+    params$frame_info <- data_frame0(
       frame_time = frame_time
     )
     params$nframes <- nrow(params$frame_info)
@@ -175,7 +175,7 @@ TransitionEvents <- ggproto('TransitionEvents', Transition,
     all_frames <- switch(
       type,
       point = tween_events(data, ease, params$nframes, !!start, !!end, c(1, params$nframes), enter, exit, !!enter_length, !!exit_length),
-      stop(type, ' layers not currently supported by transition_events', call. = FALSE)
+      cli::cli_abort('{type} layers not currently supported by {.fun transition_events}')
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
@@ -213,8 +213,8 @@ recast_event_times <- function(start, end, enter_length, exit_length, late_start
       names(exit_length)[names(exit_length) == 'times'] <- 'values'
     }
   }
-  if (length(unique(c(start$class, end$class, enter_length$class, exit_length$class))) != 1) {
-    stop('start, end, enter_length, and exit_length must have the same class')
+  if (vctrs::vec_unique_count(c(start$class, end$class, enter_length$class, exit_length$class)) > 1) {
+    cli::cli_abort('{.arg {c("start", "end", "enter_length", "exit_length")}} must have the same class')
   }
   list(
     start = start,

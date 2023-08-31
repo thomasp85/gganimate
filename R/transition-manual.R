@@ -50,7 +50,7 @@
 transition_manual <- function(frames, ..., cumulative = FALSE) {
   frames_quo <- enquo(frames)
   require_quo(frames_quo, 'frames')
-  frame_vars <- data.frame(..., stringsAsFactors = FALSE, check.names = FALSE)
+  frame_vars <- data_frame0(...)
   ggproto(NULL, TransitionManual, params = list(frames_quo = frames_quo, frame_vars = frame_vars, cumulative = cumulative))
 }
 #' @rdname gganimate-ggproto
@@ -76,14 +76,14 @@ TransitionManual <- ggproto('TransitionManual', Transition,
     }
     all_frames <- params$frames$levels
     params$row_id <- params$frames$values
-    params$frame_info <- data.frame(
+    params$frame_info <- data_frame0(
       previous_frame = c('', all_frames[-length(all_frames)]),
       current_frame = all_frames,
       next_frame = c(all_frames[-1], '')
     )
     if (nrow(params$frame_vars) != 0) {
       if (nrow(params$frame_info) != nrow(params$frame_vars)) {
-        stop('Additional frame variables must have the same length as the number of frames', call. = FALSE)
+        cli::cli_abort('Additional frame variables must have the same length as the number of frames')
       }
       params$frame_info <- cbind(params$frame_info, params$frame_vars)
     }
@@ -97,7 +97,7 @@ TransitionManual <- ggproto('TransitionManual', Transition,
     data$group <- paste0(row_state$before, row_state$after)
     state <- as.integer(row_state$frames)
     states <- split(seq_len(nrow(data)), state)
-    all_frames <- do.call(rbind, lapply(seq_along(states), function(i) {
+    all_frames <- vec_rbind0(!!!lapply(seq_along(states), function(i) {
       index <- unlist(states[seq_len(i)])
       frame <- data[index, , drop = FALSE]
       frame$.frame <- i

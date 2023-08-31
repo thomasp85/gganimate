@@ -100,7 +100,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     static <- lengths(params$along$values) == 0
     params$row_id <- Map(function(t, s) if (s) character() else t,
                          t = params$along$values, s = static)
-    params$frame_info <- data.frame(frame_along = params$along$frame_time)
+    params$frame_info <- data_frame0(frame_along = params$along$frame_time)
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
@@ -119,7 +119,7 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
       point = tween_along(data, ease, params$nframes, !!time, group, c(1, params$nframes), FALSE, params$keep_last),
       path = tween_along(data, ease, params$nframes, !!time, group, c(1, params$nframes), TRUE, params$keep_last),
       polygon = tween_along(data, ease, params$nframes, !!time, group, c(1, params$nframes), TRUE, params$keep_last),
-      stop(type, ' layers not currently supported by transition_reveal', call. = FALSE)
+      cli::cli_abort('{type} layers not currently supported by {.fun transition_reveal}')
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
@@ -145,7 +145,7 @@ get_row_along <- function(data, quo, nframes, range, after = FALSE) {
     range <- range(unlist(times))
   } else {
     if (!inherits(range, time_class)) {
-      stop('range must be given in the same class as time', call. = FALSE)
+      cli::cli_abort('{.arg range} must be given in the same class as {.field time}')
     }
     range <- as.numeric(range)
   }

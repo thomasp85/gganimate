@@ -89,7 +89,7 @@
 transition_filter <- function(transition_length = 1, filter_length = 1, ..., wrap = TRUE, keep = FALSE) {
   filter_quos <- quos_auto_name(quos(...))
   if (length(filter_quos) < 2) {
-    stop('transition_filter requires at least 2 filtering conditions', call. = FALSE)
+    cli::cli_abort('{.fun transition_filter} requires at least 2 filtering conditions')
   }
   ggproto(NULL, TransitionFilter,
     params = list(
@@ -191,7 +191,7 @@ TransitionFilter <- ggproto('TransitionFilter', Transition,
           path = transform_path(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
           polygon = transform_polygon(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit, match),
           sf = transform_sf(all_frames, next_filter, ease, params$transition_length[i], !!id, enter, exit),
-          stop(type, ' layers not currently supported by transition_filter', call. = FALSE)
+          cli::cli_abort('{type} layers not currently supported by {.fun transition_filter}')
         )
       }
     }
@@ -207,11 +207,11 @@ TransitionFilter <- ggproto('TransitionFilter', Transition,
 assign_filters <- function(data, filters, after = FALSE, row_vars = NULL) {
   do_filter <- vapply(filters, function(f) require_stat(rlang::quo_get_expr(f)), logical(1)) == after
   row_filters <- lapply(data, function(d) {
-    row_filter <- do.call(rbind, lapply(seq_along(filters), function(i) {
+    row_filter <- vec_rbind0(!!!lapply(seq_along(filters), function(i) {
       if (!do_filter[i]) return(rep(FALSE, nrow(d)))
       filter <- safe_eval(filters[[i]], d)
       filter <- filter %||% rep(TRUE, nrow(d))
-      if (!is.logical(filter)) stop('Filters must return a logical vector', call. = FALSE)
+      if (!is.logical(filter)) cli::cli_abort('Filters must return a logical vector')
       filter
     }))
     if (all(row_filter)) return(numeric(0))

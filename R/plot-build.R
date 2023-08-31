@@ -1,53 +1,53 @@
 #' @importFrom ggplot2 ggplot_build geom_blank waiver
-#' @importFrom utils packageVersion
 #' @export
 ggplot_build.gganim <- function(plot) {
   plot <- plot_clone(plot)
   if (length(plot$layers) == 0) {
     plot <- plot + geom_blank()
   }
+
+  # gganimate
   scene <- create_scene(plot$transition, plot$view, plot$shadow, plot$ease, plot$transmuters, plot$nframes)
+  # --
+
   layers <- plot$layers
-  layer_data <- lapply(layers, function(y) y$layer_data(plot$data))
+  data <- rep(list(NULL), length(layers))
 
   scales <- plot$scales
 
+  # gganimate
   # Extract scale names and merge it with label list
   scale_labels <- lapply(scales$scales, `[[`, 'name')
   names(scale_labels) <- vapply(scales$scales, function(sc) sc$aesthetics[1], character(1))
   lapply(scales$scales, function(sc) sc$name <- waiver())
   scale_labels <- scale_labels[!vapply(scale_labels, is.waive, logical(1))]
   plot$labels[names(scale_labels)] <- scale_labels
+  # --
 
-  # Apply function to layer and matching data
-  by_layer <- function(f) {
-    out <- vector("list", length(data))
-    for (i in seq_along(data)) {
-      out[[i]] <- f(l = layers[[i]], d = data[[i]])
-    }
-    out
-  }
 
   # Allow all layers to make any final adjustments based
   # on raw input data and plot info
-  data <- layer_data
-  if (packageVersion("ggplot2") > "3.1.1") {
-    # ggplot2 versions 3.1.0 or earlier do not support `setup_layer()`
-    data <- by_layer(function(l, d) l$setup_layer(d, plot))
-  }
+  data <- by_layer(function(l, d) l$layer_data(plot$data), layers, data, "computing layer data")
+  data <- by_layer(function(l, d) l$setup_layer(d, plot), layers, data, "setting up layer")
 
   # Initialise panels, add extra data for margins & missing faceting
   # variables, and add on a PANEL variable to data
-
   layout <- create_layout(plot$facet, plot$coordinates)
   data <- layout$setup(data, plot$data, plot$plot_env)
-  scene$setup(data)
-  # Compute aesthetics to produce data with generalised variable names
-  data <- by_layer(function(l, d) l$compute_aesthetics(d, plot))
 
+  # gganimate
+  scene$setup(data)
+  # --
+
+  # Compute aesthetics to produce data with generalised variable names
+  data <- by_layer(function(l, d) l$compute_aesthetics(d, plot), layers, data, "computing aesthetics")
+
+  # gganimate
   scene$identify_layers(data, layers)
+  # --
+
   # Transform all scales
-  data <- lapply(data, scales_transform_df, scales = scales)
+  data <- lapply(data, scales$transform_df)
 
   # Map and train positions so that statistics have access to ranges
   # and all positions are numeric
@@ -57,26 +57,34 @@ ggplot_build.gganim <- function(plot) {
   layout$train_position(data, scale_x(), scale_y())
   data <- layout$map_position(data)
 
+  # gganimate
   data <- scene$before_stat(data)
+  # --
 
   # Apply and map statistics
-  data <- by_layer(function(l, d) l$compute_statistic(d, layout))
-  data <- by_layer(function(l, d) l$map_statistic(d, plot))
+  data <- by_layer(function(l, d) l$compute_statistic(d, layout), layers, data, "computing stat")
+  data <- by_layer(function(l, d) l$map_statistic(d, plot), layers, data, "mapping stat to aesthetics")
 
+  # gganimate
   data <- scene$after_stat(data)
+  # --
 
   # Make sure missing (but required) aesthetics are added
-  scales_add_missing(plot, c("x", "y"), plot$plot_env)
+  plot$scales$add_missing(c("x", "y"), plot$plot_env)
 
   # Reparameterise geoms from (e.g.) y and width to ymin and ymax
-  data <- by_layer(function(l, d) l$compute_geom_1(d))
+  data <- by_layer(function(l, d) l$compute_geom_1(d), layers, data, "setting up geom")
 
+  # gganimate
   data <- scene$before_position(data)
+  # --
 
   # Apply position adjustments
-  data <- by_layer(function(l, d) l$compute_position(d, layout))
+  data <- by_layer(function(l, d) l$compute_position(d, layout), layers, data, "computing position")
 
+  # gganimate
   data <- scene$after_position(data)
+  # --
 
   # Reset position scales, then re-train and map.  This ensures that facets
   # have control over the range of a plot: is it generated from what is
@@ -89,25 +97,47 @@ ggplot_build.gganim <- function(plot) {
   # Train and map non-position scales
   npscales <- scales$non_position_scales()
   if (npscales$n() > 0) {
-    lapply(data, scales_train_df, scales = npscales)
-    data <- lapply(data, scales_map_df, scales = npscales)
+    lapply(data, npscales$train_df)
+    data <- lapply(data, npscales$map_df)
   }
 
   # Fill in defaults etc.
-  data <- by_layer(function(l, d) l$compute_geom_2(d))
+  data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
 
+  # gganimate
   data <- scene$after_defaults(data)
+  # --
 
   # Let layer stat have a final say before rendering
-  data <- by_layer(function(l, d) l$finish_statistics(d))
+  data <- by_layer(function(l, d) l$finish_statistics(d), layers, data, "finishing layer stat")
 
   # Let Layout modify data before rendering
   data <- layout$finish_data(data)
 
+  # gganimate
   data <- scene$finish_data(data)
+  # --
+
+  # Consolidate alt-text
+  plot$labels$alt <- plot$labels[["alt"]] %||% ""
 
   structure(
     list(data = data, layout = layout, plot = plot, scene = scene),
     class = "gganim_built"
   )
+}
+
+# Apply function to layer and matching data
+by_layer <- function(f, layers, data, step = NULL) {
+  ordinal <- scales::label_ordinal()
+  out <- vector("list", length(data))
+  try_fetch(
+    for (i in seq_along(data)) {
+      out[[i]] <- f(l = layers[[i]], d = data[[i]])
+    },
+    error = function(cnd) {
+      cli::cli_abort(c("Problem while {step}.", "i" = "Error occurred in the {ordinal(i)} layer."), call = layers[[i]]$constructor, parent = cnd)
+    }
+  )
+  out
 }

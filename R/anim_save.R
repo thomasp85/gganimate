@@ -37,7 +37,7 @@ save_animation <- function(animation, file) {
 }
 #' @export
 save_animation.default <- function(animation, file) {
-  stop('The animation object does not specify a save_animation method', call. = FALSE)
+  cli::cli_abort('The animation object does not specify a save_animation method')
 }
 #' @export
 save_animation.gif_image <- function(animation, file) {
@@ -48,9 +48,7 @@ save_animation.gif_image <- function(animation, file) {
 save_animation.video_file <- save_animation.gif_image
 #' @export
 `save_animation.magick-image` <- function(animation, file) {
-  if (!requireNamespace('magick', quietly = TRUE)) {
-    stop('The magick package is required for this functionality', call. = FALSE)
-  }
+  check_installed('magick', 'to use the `magick_renderer()`')
   magick::image_write(animation, file)
   invisible(NULL)
 }

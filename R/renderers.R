@@ -83,13 +83,11 @@ NULL
 #' @rdname renderers
 #' @export
 gifski_renderer <- function(file = NULL, loop = TRUE, width = NULL, height = NULL) {
-  if (!requireNamespace('gifski', quietly = TRUE)) {
-    stop('The gifski package is required to use gifski_renderer', call. = FALSE)
-  }
+  check_installed('gifski', 'to use the `gifski_renderer`')
   function(frames, fps) {
     if (is.null(file)) file <- tempfile(fileext = '.gif')
     if (!all(grepl('.png$', frames))) {
-      stop('gifski only supports png files', call. = FALSE)
+      cli::cli_abort('{.pkg gifski} only supports png files', call. = FALSE)
     }
     if (is.null(width) || is.null(height)) {
       dims <- png_dim(frames[1])
@@ -117,9 +115,7 @@ file_renderer <- function(dir = '.', prefix = 'gganim_plot', overwrite = FALSE) 
 #' @rdname renderers
 #' @export
 av_renderer <- function(file = NULL, vfilter = "null", codec = NULL, audio = NULL) {
-  if (!requireNamespace('av', quietly = TRUE)) {
-    stop('The av package is required to use av_renderer', call. = FALSE)
-  }
+  check_installed('av', 'to use the `av_renderer`')
   def_ext <- if (.Platform$GUI == "RStudio" && "libvpx" %in% av::av_encoders()$name) ".webm" else ".mp4"
   function(frames, fps) {
     if (is.null(file)) {
@@ -147,7 +143,7 @@ has_ffmpeg <- function(ffmpeg = 'ffmpeg') {
 #' @export
 ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_fmt = 'yuv420p')) {
   ffmpeg <- ffmpeg %||% 'ffmpeg'
-  if (!has_ffmpeg(ffmpeg)) stop('The ffmpeg library is not available at the specified location', call. = FALSE)
+  if (!has_ffmpeg(ffmpeg)) cli::cli_abort('The ffmpeg library is not available at the specified location')
   if (format == 'auto') {
     format <- if (.Platform$GUI == "RStudio" &&
                   any(grepl('--enable-libvpx', system2(ffmpeg, '-version', stdout = TRUE)))) {
@@ -158,13 +154,13 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
   }
   if (is.list(options)) {
     if (is.null(names(options))) {
-      stop('options list must be named', call. = FALSE)
+      cli::cli_abort('{.arg options} must be a named list')
     }
     opt_name <- paste0('-', sub('^-', '', names(options)))
     opts <- vapply(options, paste, character(1), collapse = ' ')
     options <- paste(paste0(opt_name, ' ', opts), collapse = ' ')
   }
-  stopifnot(is.character(options))
+  check_character(options)
 
   function(frames, fps) {
     progress <- interactive()
@@ -182,7 +178,7 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
       options,
       output_file
     ))
-    if (!file.exists(output_file)) stop('Rendering with ffmpeg failed', call. = FALSE)
+    if (!file.exists(output_file)) cli::cli_abort('Rendering with ffmpeg failed to produce an output file')
     if (format == 'gif') {
       gif_file(output_file)
     } else {
@@ -193,9 +189,7 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
 #' @rdname renderers
 #' @export
 magick_renderer <- function(loop = TRUE) {
-  if (!requireNamespace('magick', quietly = TRUE)) {
-    stop('The magick package is required to use magick_renderer', call. = FALSE)
-  }
+  check_installed('magick', 'to use the `magick_renderer`')
   function(frames, fps) {
     anim <- if (grepl('.svg$', frames[1])) {
       magick::image_read_svg(frames)
@@ -209,9 +203,7 @@ magick_renderer <- function(loop = TRUE) {
 #' @rdname renderers
 #' @export
 sprite_renderer <- function() {
-  if (!requireNamespace('magick', quietly = TRUE)) {
-    stop('The magick package is required to use sprite_renderer', call. = FALSE)
-  }
+  check_installed('magick', 'to use the `sprite_renderer`')
   function(frames, fps) {
     sprite <- if (grepl('.svg$', frames[1])) {
       magick::image_read_svg(frames)
@@ -252,8 +244,8 @@ sprite_renderer <- function() {
 #' @aliases gif_image
 #'
 gif_file <- function(file) {
-  stopifnot(length(file) == 1)
-  if (!grepl('.gif$', file)) stop('file must be a gif', call. = FALSE)
+  check_string(file, allow_empty = FALSE)
+  if (!grepl('.gif$', file)) cli::cli_abort('{.arg file} must point to a gif file')
   class(file) <- 'gif_image'
   file
 }
@@ -281,9 +273,7 @@ knit_print.gif_image <- function(x, options, ...) {
 #' @rdname gif_file
 #' @export
 split.gif_image <- function(x, f, drop = FALSE, ...) {
-  if (!requireNamespace('magick', quietly = TRUE)) {
-    stop('Splitting gifs require the magick package', call. = FALSE)
-  }
+  check_installed('magick', 'to split gif files')
   gif <- magick::image_read(x)
   split(gif, f, drop = drop, ...)
 }
@@ -309,7 +299,7 @@ split.gif_image <- function(x, f, drop = FALSE, ...) {
 #' @export
 #'
 video_file <- function(file) {
-  stopifnot(length(file) == 1)
+  check_string(file, allow_empty = FALSE)
   class(file) <- 'video_file'
   file
 }
@@ -345,15 +335,11 @@ knit_print.video_file <- function(x, options, ...) {
 }
 #' @export
 split.video_file <- function(x, f, drop = FALSE, ...) {
-  stop('video_file objects does not support splitting', call. = FALSE)
+  cli::cli_abort('{.cls video_file} objects does not support splitting', call. = FALSE)
 }
 as_html_video <- function(x, width = NULL, autoplay = TRUE) {
-  if (!requireNamespace("base64enc", quietly = TRUE)) {
-    stop('The base64enc package is required for showing video')
-  }
-  if (!requireNamespace("htmltools", quietly = TRUE)) {
-    stop('The htmltools package is required for showing video')
-  }
+  check_installed('base64enc', 'for showing video')
+  check_installed('htmltools', 'for showing video')
   format <- tolower(sub('^.*\\.(.+)$', '\\1', x))
   htmltools::HTML(paste0(
     '<video controls', if (autoplay) ' autoplay' else '',
@@ -388,7 +374,7 @@ get_chunk_autoplay <- function(options) {
 #' @export
 #'
 sprite_file <- function(file, fps, width, full_width, height) {
-  stopifnot(length(file) == 1)
+  check_string(file, allow_empty = FALSE)
   attributes(file) <- list(fps = fps, single_width = width, full_width = full_width, height = height)
   class(file) <- 'sprite_image'
   file
@@ -405,12 +391,8 @@ knit_print.sprite_image <- function(x, options, ...) {
 }
 #' @importFrom glue glue
 as_sprite_html <- function(x, width = NULL, ...) {
-  if (!requireNamespace("base64enc", quietly = TRUE)) {
-    stop('The base64enc package is required for showing video')
-  }
-  if (!requireNamespace("htmltools", quietly = TRUE)) {
-    stop('The htmltools package is required for showing video')
-  }
+  check_installed('base64enc', 'for showing sprites')
+  check_installed('htmltools', 'for showing sprites')
   # Sprite animation code inspired by https://medium.com/dailyjs/how-to-build-a-simple-sprite-animation-in-javascript-b764644244aa
   sprite_id <- sample(1e6, 1)
   css <- glue(
@@ -477,7 +459,7 @@ as_sprite_html <- function(x, width = NULL, ...) {
 }
 #' @export
 split.sprite_image <- function(x, f, drop = FALSE, ...) {
-  stop('sprite_image objects does not support splitting', call. = FALSE)
+  cli::cli_abort('sprite_image objects does not support splitting')
 }
 
 

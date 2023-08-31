@@ -51,7 +51,7 @@ view_follow <- function(fixed_x = FALSE, fixed_y = FALSE, exclude_layer = NULL, 
 ViewFollow <- ggproto('ViewFollow', View,
   set_view = function(self, plot, params, i) {
     if (inherits(plot$layout$coord, 'CoordPolar')) {
-      stop('This view does not support polar coordinates')
+      cli::cli_abort('{.fun view_follow} does not support polar coordinates')
     }
     ranges <- self$get_ranges(plot$data, params)
     ranges <- ranges[!seq_along(ranges) %in% params$excluded_layers]

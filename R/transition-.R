@@ -37,10 +37,10 @@ Transition <- ggproto('Transition', NULL,
     expanded <- lapply(split(data, data$PANEL), function(data) {
       self$expand_panel(data, type, id, match, ease, enter, exit, params, layer_index)
     })
-    do.call(rbind, expanded)
+    vec_rbind0(!!!expanded)
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
-    stop('The transition has not implemented any data expansion', call. = FALSE)
+    cli::cli_abort('The transition has not implemented any data expansion')
   },
   unmap_frames = function(self, data, params) {
     lapply(data, function(d) {
@@ -72,7 +72,7 @@ Transition <- ggproto('Transition', NULL,
     lapply(data, function(d) {
       split_panel <- stri_match(d$group, regex = '^(.+)<(.*)>(.*)$')
       if (is.na(split_panel[1])) return(list(d))
-      d$group <- match(d$group, unique(d$group))
+      d$group <- match(d$group, unique0(d$group))
       empty_d <- d[0, , drop = FALSE]
       d <- split(d, as.integer(split_panel[, 3]))
       frames <- rep(list(empty_d), params$nframes)
@@ -112,7 +112,7 @@ Transition <- ggproto('Transition', NULL,
   },
   get_all_row_vars = function(self, data) {
     all_vars <- lapply(data, self$get_row_vars)
-    var_names <- unique(unlist(lapply(all_vars, names)))
+    var_names <- unique0(unlist(lapply(all_vars, names)))
     structure(lapply(var_names, function(var) {
       lapply(all_vars, `[[`, var)
     }), names = var_names)
@@ -177,7 +177,7 @@ get_frame_info <- function(static_levels, static_lengths, transition_lengths, nf
   }
 
   closest_static <- tween_constant(as.list(statics[c(seq_along(statics), 1)]), frames + 1)[[1]][seq_len(nframes)]
-  info <- data.frame(
+  info <- data_frame0(
     transitioning = phase == 'transition',
     previous_ = previous_static,
     closest_ = closest_static,
@@ -193,9 +193,9 @@ standardise_times <- function(times, name, to_class = NULL) {
     cl <- inherits(x, possible_classes, which = TRUE)
     which(cl != 0 & cl == min(cl[cl != 0]))[1]
   }, integer(1))
-  if (anyNA(classes)) stop(name, ' data must either be ', paste0(possible_classes[-length(possible_classes)], collapse = ', '), ', or', possible_classes[length(possible_classes)], call. = FALSE)
-  if (length(unique(classes)) > 1) stop(name, ' data must be the same class in all layers', call. = FALSE)
-  cl <- possible_classes[unique(classes)]
+  if (anyNA(classes)) cli::cli_abort('{name} data must either be an {.or {possible_classes}} object')
+  if (vctrs::vec_unique_count(classes) > 1) cli::cli_abort('{name} data must be the same class in all layers')
+  cl <- possible_classes[unique0(classes)]
   if (length(cl) == 1 && (cl == 'difftime' || cl == 'hms')) {
     if (is.null(to_class)) {
       times <- lapply(times, `units<-`, 'secs')
@@ -211,7 +211,7 @@ standardise_times <- function(times, name, to_class = NULL) {
 
     }
   }
-  if (!is.null(to_class) && length(cl) != 0) if (cl != to_class) stop(name, ' data must be ', to_class, call. = FALSE)
+  if (!is.null(to_class) && length(cl) != 0 && cl != to_class) cli::cli_abort('{name} data must be {.cls {to_class}}')
   list(
     times = lapply(times, as.numeric),
     class = cl

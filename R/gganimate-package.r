@@ -1,4 +1,3 @@
-#' @importFrom rlang %||%
 #' @aliases gganimate-package
 #'
 #' @section Good starting points:
@@ -18,4 +17,10 @@
 #'   project by rOpenSci Labs includes a long range of detailed explorations of
 #'   the different gganimate functions
 #'
-'_PACKAGE'
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+#' @import rlang
+## usethis namespace: end
+NULL

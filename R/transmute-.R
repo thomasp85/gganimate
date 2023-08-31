@@ -139,7 +139,7 @@ TransmuteFactory <- ggproto('TransmuteFactory', NULL,
     invisible(self)
   },
   add_factory = function(self, x) {
-    if (!self$inherit(x)) stop("Can only combine factories of same class", call. = FALSE)
+    if (!self$inherit(x)) cli::cli_abort("Can only combine factories of the same class")
     if (x$reset) {
       self$factory_layer <- list()
       self$name <- character()

@@ -66,7 +66,7 @@ ShadowTrail <- ggproto('ShadowTrail', Shadow,
       }
       d <- d[params$shadow_frames]
       frames <- rep(params$shadow_frames, vapply(d, nrow, integer(1)))
-      d <- do.call(rbind, d)
+      d <- vec_rbind0(!!!d)
       for (i in names(params$dots)) {
         if (!is.null(d[[i]])) d[[i]] <- eval_tidy(params$dots[[i]], d)
       }
@@ -78,13 +78,13 @@ ShadowTrail <- ggproto('ShadowTrail', Shadow,
     Map(function(d, s, e) {
       if (e) return(d[[1]])
       s <- s[s$.frame < frame_ind, , drop = FALSE]
-      frames <- unique(s$.frame)
+      frames <- unique0(s$.frame)
       if (params$max_frames < length(frames)) {
         first_frame <- sort(frames, decreasing = TRUE)[params$max_frames]
         s <- s[s$.frame >= first_frame, , drop = FALSE]
       }
       s$.frame <- NULL
-      rbind(s, d[[1]])
+      vec_rbind0(s, d[[1]])
     }, d = data, s = params$raw, e = seq_along(data) %in% params$excluded_layers)
   }
 )

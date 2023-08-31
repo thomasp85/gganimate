@@ -99,7 +99,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
       params$time$values <- suppressWarnings(lapply(row_vars$time, as.integer))
     }
     params$row_id <- params$time$values
-    params$frame_info <- data.frame(frame_time = params$time$frame_time)
+    params$frame_info <- data_frame0(frame_time = params$time$frame_time)
     params
   },
   expand_panel = function(self, data, type, id, match, ease, enter, exit, params, layer_index) {
@@ -131,7 +131,7 @@ TransitionTime <- ggproto('TransitionTime', Transition,
         path = transform_path(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
         polygon = transform_polygon(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit, match),
         sf = transform_sf(all_frames, states[[i]], ease, nframes[i], !!id, enter, exit),
-        stop(type, ' layers not currently supported by transition_time', call. = FALSE)
+        cli::cli_abort('{type} layers not currently supported by {.fun transition_time}')
       )
     }
     true_frame <- seq(max(1, times[1]), min(times[length(times)], params$nframes))
@@ -161,13 +161,13 @@ get_times <- function(data, var, nframes, range) {
     range <- range(unlist(times), na.rm = TRUE)
   } else {
     if (!inherits(range, time_class)) {
-      stop('range must be given in the same class as time', call. = FALSE)
+      cli::cli_abort('{.arg range} must be given in the same class as {.field time}')
     }
     range <- as.numeric(range)
   }
   times <- lapply(times, function(v) {
     if (is.null(v)) return(integer())
-    v_u <- unique(v)
+    v_u <- unique0(v)
     v_v <- round(1 + (nframes - 1) * (v_u - range[1]) / diff(range))
     v_v[duplicated(v_v)] <- NA
     v_v[match(v, v_u)]

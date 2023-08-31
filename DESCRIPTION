@@ -1,51 +1,58 @@
-Package: gganimate
 Type: Package
+Package: gganimate
 Title: A Grammar of Animated Graphics
 Version: 1.0.8.9000
-Authors@R: 
-    c(person("Thomas Lin", "Pedersen", email = "thomasp85@gmail.com",
-             role = c("aut", "cre"), 
-             comment = c(ORCID = "0000-0002-5147-4711")),
-      person("David", "Robinson", email = "admiral.david@gmail.com",
-             role = c("aut")),
-      person("RStudio",
-             role = "cph"))
+Authors@R: c(
+    person("Thomas Lin", "Pedersen", , "thomasp85@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-5147-4711")),
+    person("David", "Robinson", , "admiral.david@gmail.com", role = "aut"),
+    person("Posit, PBC", role = c("cph", "fnd"))
+  )
 Maintainer: Thomas Lin Pedersen <thomasp85@gmail.com>
-Description: The grammar of graphics as implemented in the 'ggplot2' package has
-    been successful in providing a powerful API for creating static 
-    visualisation. In order to extend the API for animated graphics this package
-    provides a completely new set of grammar, fully compatible with 'ggplot2' 
-    for specifying transitions and animations in a flexible and extensible way.
+Description: The grammar of graphics as implemented in the 'ggplot2'
+    package has been successful in providing a powerful API for creating
+    static visualisation. In order to extend the API for animated graphics
+    this package provides a completely new set of grammar, fully
+    compatible with 'ggplot2' for specifying transitions and animations in
+    a flexible and extensible way.
 License: MIT + file LICENSE
-Encoding: UTF-8
-VignetteBuilder: knitr
-RoxygenNote: 7.2.1
-Roxygen: list(markdown = TRUE)
 URL: https://gganimate.com, https://github.com/thomasp85/gganimate
 BugReports: https://github.com/thomasp85/gganimate/issues
-Depends: ggplot2 (>= 3.0.0)
-Imports: stringi,
-    tweenr (>= 1.0.1),
-    grid,
-    rlang,
+Depends: 
+    ggplot2 (>= 3.0.0)
+Imports: 
+    cli,
     glue,
-    progress,
-    scales,
     grDevices,
-    utils
+    grid,
+    lifecycle,
+    progress,
+    rlang,
+    scales,
+    stringi,
+    tweenr (>= 1.0.1),
+    utils,
+    vctrs
 Suggests: 
-    magick,
-    svglite,
-    knitr,
-    rmarkdown,
-    testthat,
-    base64enc,
-    htmltools,
-    covr,
-    transformr,
     av,
+    base64enc,
+    covr,
     gifski (>= 1.4.3),
-    ragg
+    htmltools,
+    knitr,
+    magick,
+    ragg,
+    rmarkdown,
+    svglite,
+    testthat,
+    transformr
+VignetteBuilder: 
+    knitr
+Remotes: 
+    tidyverse/ggplot2
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
 Collate:
     'aaa.R'
     'anim_save.R'
@@ -57,6 +64,8 @@ Collate:
     'gganimate-package.r'
     'ggplot2_reimpl.R'
     'group_column.R'
+    'import-standalone-obj-type.R'
+    'import-standalone-types-check.R'
     'layer_type.R'
     'match_shapes.R'
     'plot-build.R'

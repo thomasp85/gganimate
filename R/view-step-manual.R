@@ -18,7 +18,7 @@ view_step_manual <- function(pause_length = 1, step_length = 1, xmin, xmax, ymin
           params = list(
             pause_length = pause_length,
             step_length = step_length,
-            windows = data.frame(
+            windows = data_frame0(
               xmin = xmin,
               xmax = xmax,
               ymin = ymin,
@@ -58,7 +58,7 @@ ViewStepManual <- ggproto('ViewStepManual', ViewStep,
     nframes <- params$nframes
     if (params$wrap) nframes <- nframes + 1
     frames <- distribute_frames(params$pause_length, params$step_length, nframes)
-    params$windows <- rbind(
+    params$windows <- vec_rbind0(
       params$windows,
       params$windows[rep(1, length(frames$static_length) - nrow(params$windows) + 1), , drop = FALSE]
     )

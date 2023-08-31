@@ -75,8 +75,8 @@ easing for all our aesthetics (here, only `y` is changing)
 you can install directly from github using devtools:
 
 ```{r, eval=FALSE}
-# install.packages('devtools')
-devtools::install_github('thomasp85/gganimate')
+# install.packages('pak')
+pak::pak('thomasp85/gganimate')
 ```
 
 ## Yet Another Example

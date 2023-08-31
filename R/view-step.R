@@ -133,7 +133,7 @@ ViewStep <- ggproto('ViewStep', View,
       ranges <- ranges[!seq_along(ranges) %in% params$excluded_layers]
       x_range <- range(unlist(lapply(ranges, `[[`, 'x')))
       y_range <- range(unlist(lapply(ranges, `[[`, 'y')))
-      data.frame(xmin = x_range[1], xmax = x_range[2], ymin = y_range[1], ymax = y_range[2])
+      data_frame0(xmin = x_range[1], xmax = x_range[2], ymin = y_range[1], ymax = y_range[2])
     })
     if (params$include) {
       windows <- lapply(seq_along(windows), function(i) {
@@ -143,8 +143,8 @@ ViewStep <- ggproto('ViewStep', View,
         } else {
           i <- c(i - 1, i)
         }
-        range <- do.call(rbind, windows[i])
-        data.frame(xmin = min(range$xmin), xmax = max(range$xmax), ymin = min(range$ymin), ymax = max(range$ymax))
+        range <- vec_rbind0(!!!windows[i])
+        data_frame0(xmin = min(range$xmin), xmax = max(range$xmax), ymin = min(range$ymin), ymax = max(range$ymax))
       })
     }
 

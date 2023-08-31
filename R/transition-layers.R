@@ -124,7 +124,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       layer_length <- c(layer_length, 0)
     }
     frames <- distribute_frames(layer_length, transition_length, params$nframes)
-    frames <- data.frame(layer = frames$static_length, exit = frames$transition_length)
+    frames <- data_frame0(layer = frames$static_length, exit = frames$transition_length)
     frames$enter <- c(0, frames$exit[-nrow(frames)])
     if (params$from_blank) frames <- frames[-1, ]
     params$offset <- c(0, cumsum(frames$enter + frames$layer)[-nrow(frames)])
@@ -135,7 +135,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       params$layer_names <- as.character(seq_along(data))
     } else {
       if (length(params$layer_names) != length(data)) {
-        stop('When providing layer names the number of names must match the number of layers', call. = FALSE)
+        cli::cli_abort('When providing layer names the number of names must match the number of layers')
       }
     }
     if (transitions_out) {
@@ -174,7 +174,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
       path = transform_path(data[0,], data, ease, enter_length, NULL, enter, exit),
       polygon = transform_polygon(data[0,], data, ease, enter_length, NULL, enter, exit),
       sf = transform_sf(data[0,], data, ease, enter_length, NULL, enter, exit),
-      stop(type, ' layers not currently supported by transition_layers', call. = FALSE)
+      cli::cli_abort('{type} layers not currently supported by {.fun transition_layers}')
     )
     layer <- keep_state(layer, layer_length)
     if (is.finite(params$keep_layers[layer_index])) {
@@ -184,7 +184,7 @@ TransitionLayers <- ggproto('TransitionLayers', Transition,
         path = transform_path(layer, data[0,], ease, exit_length, NULL, enter, exit),
         polygon = transform_polygon(layer, data[0,], ease, exit_length, NULL, enter, exit),
         sf = transform_sf(layer, data[0,], ease, exit_length, NULL, enter, exit),
-        stop(type, ' layers not currently supported by transition_layers', call. = FALSE)
+        cli::cli_abort('{type} layers not currently supported by {.fun transition_layers}')
       )
     }
     layer <- layer[layer$.frame <= params$nframes, , drop = FALSE]

@@ -89,7 +89,7 @@ transition_window <- function(windows, next_window, n, params) {
   y1 <- next_window$ymin + h1/2
   y_traj <- trajectory(y0, y1, h0, h1, n + 1, params$pan_zoom, params$ease)
 
-  new_windows <- data.frame(
+  new_windows <- data_frame0(
     xmin = as.vector(x_traj$u - x_traj$v/2),
     xmax = as.vector(x_traj$u + x_traj$v/2),
     ymin = as.vector(y_traj$u - y_traj$v/2),
@@ -98,7 +98,7 @@ transition_window <- function(windows, next_window, n, params) {
   )
   missing_cols <- setdiff(names(start), names(new_windows))
   new_windows[missing_cols] <- start[1, missing_cols, drop = FALSE]
-  rbind(
+  vec_rbind0(
     windows,
     new_windows[-1, match(names(start), names(new_windows))]
   )

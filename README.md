@@ -18,16 +18,16 @@ description of animation. It does this by providing a range of new
 grammar classes that can be added to the plot object in order to
 customise how it should change with time.
 
--   `transition_*()` defines how the data should be spread out and how
-    it relates to itself across time.
--   `view_*()` defines how the positional scales should change along the
-    animation.
--   `shadow_*()` defines how data from other points in time should be
-    presented in the given point in time.
--   `enter_*()`/`exit_*()` defines how new data should appear and how
-    old data should disappear during the course of the animation.
--   `ease_aes()` defines how different aesthetics should be eased during
-    transitions.
+- `transition_*()` defines how the data should be spread out and how it
+  relates to itself across time.
+- `view_*()` defines how the positional scales should change along the
+  animation.
+- `shadow_*()` defines how data from other points in time should be
+  presented in the given point in time.
+- `enter_*()`/`exit_*()` defines how new data should appear and how old
+  data should disappear during the course of the animation.
+- `ease_aes()` defines how different aesthetics should be eased during
+  transitions.
 
 ## An Example
 
@@ -70,8 +70,8 @@ aesthetics (here, only `y` is changing)
 version you can install directly from github using devtools:
 
 ``` r
-# install.packages('devtools')
-devtools::install_github('thomasp85/gganimate')
+# install.packages('pak')
+pak::pak('thomasp85/gganimate')
 ```
 
 ## Yet Another Example

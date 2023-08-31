@@ -95,7 +95,7 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
     lapply(shadow, function(d) {
       if (length(d) == 0) return(NULL)
       i <- rep(params$at[seq_along(d)], vapply(d, nrow, integer(1)))
-      d <- do.call(rbind, d)
+      d <- vec_rbind0(!!!d)
 
       if (!is.null(params$colour)) {
         if (!is.null(d$colour)) d$colour <- tween_at(params$colour, d$colour, i, params$falloff)
@@ -134,8 +134,8 @@ ShadowWake <- ggproto('ShadowWake', Shadow,
       if (e) return(d[[1]])
       ids <- d[[1]]$.id[!d[[1]]$.phase %in% params$exclude_phase]
       s <- s[s$.id %in% ids, , drop = FALSE]
-      d <- rbind(s, d[[1]])
-      d[order(match(d$.id, unique(d$.id))), , drop = FALSE]
+      d <- vec_rbind0(s, d[[1]])
+      d[order(match(d$.id, unique0(d$.id))), , drop = FALSE]
     }, d = data, s = shadow, e = seq_along(data) %in% params$excluded_layers)
   }
 )

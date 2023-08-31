@@ -39,12 +39,12 @@ split_animation <- function(animation = last_animation(), by) {
   fv <- frame_vars(animation)
   by <- eval_tidy(by, fv)
   if (length(by) != nrow(fv)) {
-    stop('`by` must have the same length as the number of frames', call. = FALSE)
+    cli::cli_abort('{.arg by} must have the same length as the number of frames')
   }
   tryCatch(
     split(animation, by),
     error = function(e) {
-      stop('The renderer output doesn\'t support splitting')
+      cli::cli_abort('The renderer output doesn\'t support splitting')
     }
   )
 }

@@ -109,7 +109,7 @@ TransitionComponents <- ggproto('TransitionComponents', Transition,
     params$frame_time <- params$time$frame_time
     params$row_id <- Map(function(t, s) if (s) character() else t,
                          t = params$time$values, s = static)
-    params$frame_info <- data.frame(
+    params$frame_info <- data_frame0(
       frame_time = params$time$frame_time
     )
     params$nframes <- nrow(params$frame_info)
@@ -123,7 +123,7 @@ TransitionComponents <- ggproto('TransitionComponents', Transition,
     all_frames <- switch(
       type,
       point = tween_components(data, ease, params$nframes, !!time, group, c(1, params$nframes), enter, exit, params$enter_length, params$exit_length),
-      stop(type, ' layers not currently supported by transition_components', call. = FALSE)
+      cli::cli_abort('{type} layers not currently supported by {.fun transition_components}')
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
@@ -141,7 +141,7 @@ get_row_comp_time <- function(data, quo, params, after = FALSE) {
     0
   } else {
     if (!inherits(params$enter_length, standard_times$class)) {
-      stop('enter_length must be given in the same class as time', call. = FALSE)
+      cli::cli_abort('{.arg enter_length} must be given in the same class as {.field time}')
     }
     as.numeric(params$enter_length)
   }
@@ -149,7 +149,7 @@ get_row_comp_time <- function(data, quo, params, after = FALSE) {
     0
   } else {
     if (!inherits(params$exit_length, standard_times$class)) {
-      stop('exit_length must be given in the same class as time', call. = FALSE)
+      cli::cli_abort('{.arg exit_length} must be given in the same class as {.field time}')
     }
     as.numeric(params$exit_length)
   }
@@ -157,7 +157,7 @@ get_row_comp_time <- function(data, quo, params, after = FALSE) {
     range(unlist(standard_times$times)) + c(-enter_length, exit_length)
   } else {
     if (!inherits(params$range, standard_times$class)) {
-      stop('range must be given in the same class as time', call. = FALSE)
+      cli::cli_abort('{.arg range} must be given in the same class as {.field time}')
     }
     as.numeric(params$range)
   }

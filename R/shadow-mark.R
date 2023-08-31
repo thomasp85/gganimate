@@ -65,7 +65,7 @@ ShadowMark <- ggproto('ShadowMark', Shadow,
         dd[dd$.phase == 'raw', , drop = FALSE]
       })
       frames <- rep(seq_along(d), vapply(d, nrow, integer(1)))
-      d <- do.call(rbind, d)
+      d <- vec_rbind0(!!!d)
       for (i in names(params$dots)) {
         if (!is.null(d[[i]])) d[[i]] <- eval_tidy(params$dots[[i]], d)
       }
@@ -86,7 +86,7 @@ ShadowMark <- ggproto('ShadowMark', Shadow,
       if (nrow(s) == 0) return(d[[1]])
       s$.frame <- NULL
       s$group <- s$group - (max(s$group) + 1) # make sure shadow groups are prior to frame group
-      rbind(s, d[[1]])
+      vec_rbind0(s, d[[1]])
     }, d = data, s = params$raw, e = seq_along(data) %in% params$excluded_layers)
   }
 )

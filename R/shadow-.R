@@ -16,12 +16,12 @@ Shadow <- ggproto('Shadow', NULL,
     integer(0)
   },
   prepare_shadow = function(self, shadow, params) {
-    lapply(shadow, do.call, what = rbind)
+    lapply(shadow, function(x) vec_rbind0(!!!x))
   },
   prepare_frame_data = function(self, data, shadow, params, frame_ind, shadow_ind) {
     Map(function(d, s, e) {
       if (e) return(d[[1]])
-      rbind(s, d[[1]])
+      vec_rbind0(s, d[[1]])
     }, d = data, s = shadow, e = seq_along(data) %in% params$excluded_layers)
   }
 )
