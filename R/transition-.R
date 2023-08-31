@@ -159,10 +159,10 @@ distribute_frames <- function(statics, transitions, frames) {
 #' @importFrom tweenr tween_constant
 get_frame_info <- function(static_levels, static_lengths, transition_lengths, nframes, static_first, static_name, ...) {
   if (static_first) {
-    frames <- as.vector(rbind(static_lengths, transition_lengths))
+    frames <- vctrs::vec_interleave(static_lengths, transition_lengths)
     phase <- rep(rep(c('static', 'transition'), length(static_lengths)), frames)[seq_len(nframes)]
   } else {
-    frames <- as.vector(rbind(transition_lengths, static_lengths))
+    frames <- vctrs::vec_interleave(transition_lengths, static_lengths)
     phase <- rep(rep(c('transition', 'static'), length(static_lengths)), frames)[seq_len(nframes)]
   }
   statics <- rep(static_levels, each = 2)
