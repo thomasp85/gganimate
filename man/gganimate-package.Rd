@@ -49,7 +49,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item RStudio [copyright holder]
+  \item Posit, PBC [copyright holder, funder]
 }
 
 }

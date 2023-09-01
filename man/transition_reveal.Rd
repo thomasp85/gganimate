@@ -77,6 +77,25 @@ anim2 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
   geom_point(colour = 'red', size = 3) +
   transition_reveal(Day)
 
+# Since ggplot2 3.4 geom_ribbon and geom_area has used stat_align
+# This stat is incompatible with transition_reveal when applied before
+# stats are calculated
+anim3 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+  geom_area() +
+  transition_reveal(Day)
+
+try(anim)
+
+# This can be fixed by either reverting to use stat_identity
+anim4 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+  geom_area(stat = "identity") +
+  transition_reveal(Day)
+
+# Or by applying the transition after the stat
+anim5 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+  geom_area() +
+  transition_reveal(after_stat(x))
+
 }
 \seealso{
 Other transitions: 

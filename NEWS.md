@@ -5,6 +5,8 @@
 * Fix a bug in `transition_reveal()` that would remove terminal data (#480)
 * General upkeep to keep it in line with the evolvling coding principles in 
   ggplot2 (move to using vctrs, cli, lifecycle, etc)
+* `transition_reveal()` now throws an error when it is used in conjunction with
+  `stat_align()` and transitioning before the stat has been calculated (#476)
 
 # gganimate 1.0.8
 

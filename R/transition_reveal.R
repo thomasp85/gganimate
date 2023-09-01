@@ -61,6 +61,25 @@
 #'   geom_point(colour = 'red', size = 3) +
 #'   transition_reveal(Day)
 #'
+#' # Since ggplot2 3.4 geom_ribbon and geom_area has used stat_align
+#' # This stat is incompatible with transition_reveal when applied before
+#' # stats are calculated
+#' anim3 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+#'   geom_area() +
+#'   transition_reveal(Day)
+#'
+#' try(anim)
+#'
+#' # This can be fixed by either reverting to use stat_identity
+#' anim4 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+#'   geom_area(stat = "identity") +
+#'   transition_reveal(Day)
+#'
+#' # Or by applying the transition after the stat
+#' anim5 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
+#'   geom_area() +
+#'   transition_reveal(after_stat(x))
+#'
 transition_reveal <- function(along, range = NULL, keep_last = TRUE, id) {
   if (!missing(id)) warning('The `id` argument has been deprecated. Set `id` in each layer with the `group` aesthetic', call. = FALSE)
   along_quo <- enquo(along)
@@ -95,6 +114,17 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     if (is_placeholder(params$along)) {
       params$along <- get_row_along(data, params$along_quo, params$nframes, params$range, after = TRUE)
     } else {
+      if (any(params$stat_align_layer)) {
+        cli::cli_abort(
+          c(
+            "{.fun transition_reveal} cannot do pre-stat transitioning when using {.fun stat_align}",
+            i = "Set {.arg along} to a computed aesthetic, e.g. {.code along = after_stat(x)}, or",
+            " " = "use {.fun stat_identity} in layer{?s} {as.character(which(params$stat_align_layer))}"
+          ),
+          call = call2("transition_reveal")
+        )
+      }
+
       params$along$values <- row_vars$along
     }
     static <- lengths(params$along$values) == 0
