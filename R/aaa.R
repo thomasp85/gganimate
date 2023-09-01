@@ -24,7 +24,7 @@ require_quo <- function(expr, name) {
 }
 require_stat <- function(x) {
   if (is.call(x)) {
-    if (identical(x[[1]], quote(stat))) {
+    if (identical(x[[1]], quote(stat)) || identical(x[[1]], quote(after_stat))) {
       TRUE
     } else {
       any(vapply(x, require_stat, logical(1)))
