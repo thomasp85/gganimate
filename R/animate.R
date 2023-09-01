@@ -165,7 +165,7 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
   }
 
   if (args$nframes != length(frame_ind)) {
-    message('nframes and fps adjusted to match transition')
+    cli::cli_inform('{.arg nframes} and {.arg fps} adjusted to match transition')
     args$fps <- args$fps * length(frame_ind) / args$nframes
   }
 

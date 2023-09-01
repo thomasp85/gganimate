@@ -95,7 +95,7 @@ gifski_renderer <- function(file = NULL, loop = TRUE, width = NULL, height = NUL
       width <- width %||% dims[2]
     }
     progress <- interactive()
-    if (progress) message('')
+    if (progress) cli::cli_inform('')
     gif <- gifski::gifski(frames, file, width, height, delay = 1/fps, loop, progress)
     gif_file(gif)
   }
