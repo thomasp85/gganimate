@@ -30,6 +30,7 @@ Imports:
     rlang,
     scales,
     stringi,
+    transformr (>= 0.1.4.9000),
     tweenr (>= 1.0.1),
     utils,
     vctrs
@@ -44,12 +45,12 @@ Suggests:
     ragg,
     rmarkdown,
     svglite,
-    testthat,
-    transformr
+    testthat
 VignetteBuilder: 
     knitr
-Remotes: 
-    tidyverse/ggplot2
+Remotes:  
+    tidyverse/ggplot2,
+    thomasp85/transformr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
