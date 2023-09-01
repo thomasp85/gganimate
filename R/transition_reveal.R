@@ -15,7 +15,6 @@
 #' of `along`
 #' @param keep_last For non-path/polygon layers should the last row be kept for
 #' subsequent frames.
-#' @param id **Deprecated**
 #'
 #' @section Label variables:
 #' `transition_along` makes the following variables available for string
@@ -80,8 +79,7 @@
 #'   geom_area() +
 #'   transition_reveal(after_stat(x))
 #'
-transition_reveal <- function(along, range = NULL, keep_last = TRUE, id) {
-  if (!missing(id)) warning('The `id` argument has been deprecated. Set `id` in each layer with the `group` aesthetic', call. = FALSE)
+transition_reveal <- function(along, range = NULL, keep_last = TRUE) {
   along_quo <- enquo(along)
   require_quo(along_quo, 'along')
   ggproto(NULL, TransitionReveal,

@@ -11,7 +11,6 @@
 #' time plus enter and exit length
 #' @param enter_length,exit_length How long time should be spend on enter and
 #' exit transitions. Defaults to 0
-#' @param id **Deprecated**
 #'
 #' @section Label variables:
 #' `transition_components` makes the following variables available for string
@@ -64,8 +63,7 @@
 #'   enter_grow() +
 #'   exit_fade()
 #'
-transition_components <- function(time, range = NULL, enter_length = NULL, exit_length = NULL, id) {
-  if (!missing(id)) warning('The `id` argument has been deprecated. Set `id` in each layer with the `group` aesthetic', call. = FALSE)
+transition_components <- function(time, range = NULL, enter_length = NULL, exit_length = NULL) {
   time_quo <- enquo(time)
   require_quo(time_quo, 'time')
   ggproto(NULL, TransitionComponents,

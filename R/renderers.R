@@ -107,7 +107,7 @@ file_renderer <- function(dir = '.', prefix = 'gganim_plot', overwrite = FALSE) 
     if (!dir.exists(dir)) dir.create(dir, showWarnings = FALSE, recursive = TRUE)
     new_names <- file.path(dir, sub('gganim_plot', prefix, basename(frames)))
     if (any(!file.copy(frames, new_names, overwrite = overwrite))) {
-      warning('file_renderer failed to copy frames to the destination directory', call. = FALSE)
+      cli::cli_warn('{.fun file_renderer} failed to copy frames to the destination directory')
     }
     invisible(new_names)
   }
@@ -129,7 +129,7 @@ av_renderer <- function(file = NULL, vfilter = "null", codec = NULL, audio = NUL
   }
 }
 has_ffmpeg <- function(ffmpeg = 'ffmpeg') {
-  tryCatch(
+  try_fetch(
     {
       suppressWarnings(system2(ffmpeg, '-version', stdout = FALSE, stderr = FALSE))
       TRUE
@@ -329,13 +329,13 @@ knit_print.video_file <- function(x, options, ...) {
       ...
     )
   } else {
-    warning('The video format doesn\'t support HTML', call. = FALSE)
+    cli::cli_warn('The video format doesn\'t support HTML')
     invisible(NULL)
   }
 }
 #' @export
 split.video_file <- function(x, f, drop = FALSE, ...) {
-  cli::cli_abort('{.cls video_file} objects does not support splitting', call. = FALSE)
+  cli::cli_abort('{.cls video_file} objects does not support splitting')
 }
 as_html_video <- function(x, width = NULL, autoplay = TRUE) {
   check_installed('base64enc', 'for showing video')

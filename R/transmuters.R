@@ -148,7 +148,7 @@ transmute_recolour <- function(type, ..., colour = 'white', fill = colour, name)
   )
 }
 transmute_fly <- function(type, ..., x_loc = NA, y_loc = NA, name) {
-  if (is.na(x_loc) && is.na(y_loc)) warning('Both x_loc and y_loc are `NA`. No position change will occur.', call. = FALSE)
+  if (is.na(x_loc) && is.na(y_loc)) cli::cli_warn('Both {.arg x_loc} and {.arg y_loc} are NA. No position change will occur.')
   create_factory(
     type,
     default = function(x) {
@@ -181,7 +181,7 @@ transmute_fly <- function(type, ..., x_loc = NA, y_loc = NA, name) {
   )
 }
 transmute_drift <- function(type, ..., x_mod = 0, y_mod = 0, name) {
-  if (x_mod == 0 && y_mod == 0) warning('Both x_mod and y_mod are 0. No position change will occur.', call. = FALSE)
+  if (x_mod == 0 && y_mod == 0) cli::cli_warn('Both {.arg x_mod} and {.arg y_mod} are 0. No position change will occur.')
   create_factory(
     type,
     default = function(x) {

@@ -139,7 +139,7 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
     ...
   )
   if (is_knitting() && identical(def_ren$renderer, args$renderer) && !def_ren$has_proper) {
-    warning('No renderer available. Please install the gifski, av, or magick package to create animated output', call. = FALSE)
+    cli::cli_warn('No renderer available. Please install the {.or {.pkg {c("gifski", "av", "magick")}}} package to create animated output')
     return(invisible(NULL))
   }
   orig_nframes <- args$nframes
@@ -248,10 +248,10 @@ prerender <- function(plot, nframes) {
 draw_frames <- function(plot, frames, device, ref_frame, ...) {
   stream <- device == 'current'
 
-  dims <- tryCatch(
+  dims <- try_fetch(
     plot_dims(plot, ref_frame),
     error = function(e) {
-      warning('Cannot get dimensions of plot table. Plot region might not be fixed', call. = FALSE)
+      cli::cli_warn('Cannot get dimensions of plot table. Plot region might not be fixed', parent = e)
       list(widths = NULL, heights = NULL)
     }
   )
@@ -298,10 +298,10 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   for (i in seq_along(frames)) {
     if (!stream) inject(device(files[i], !!!args))
 
-    tryCatch(
+    try_fetch(
       plot$scene$plot_frame(plot, frames[i], widths = dims$widths, heights = dims$heights),
       error = function(e) {
-        warning(conditionMessage(e), call. = FALSE)
+        cli::cli_warn('Failed to plot frame', parent = e)
       }
     )
 
