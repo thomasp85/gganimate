@@ -8,8 +8,7 @@ transition_components(
   time,
   range = NULL,
   enter_length = NULL,
-  exit_length = NULL,
-  id
+  exit_length = NULL
 )
 }
 \arguments{
@@ -21,8 +20,6 @@ time plus enter and exit length}
 
 \item{enter_length, exit_length}{How long time should be spend on enter and
 exit transitions. Defaults to 0}
-
-\item{id}{\strong{Deprecated}}
 }
 \description{
 This transition allows individual visual components to define their own

@@ -4,7 +4,7 @@
 \alias{transition_reveal}
 \title{Reveal data along a given dimension}
 \usage{
-transition_reveal(along, range = NULL, keep_last = TRUE, id)
+transition_reveal(along, range = NULL, keep_last = TRUE)
 }
 \arguments{
 \item{along}{An unquoted expression giving the dimension to tween along. For
@@ -16,8 +16,6 @@ of \code{along}}
 
 \item{keep_last}{For non-path/polygon layers should the last row be kept for
 subsequent frames.}
-
-\item{id}{\strong{Deprecated}}
 }
 \description{
 This transition allows you to let data gradually appear, based on a given
