@@ -151,10 +151,12 @@ TransitionReveal <- ggproto('TransitionReveal', Transition,
     )
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
-    repeated <- c(diff(all_frames$.time), 1) <= .Machine$double.eps &
-      c(all_frames$group[-nrow(all_frames)] == all_frames$group[-1], TRUE) &
-      all_frames$.phase == 'raw'
-    all_frames[!repeated, ]
+    transitions <- setdiff(which(all_frames$.phase == "transition"), 1L)
+    transitions <- transitions[all_frames$.phase[transitions-1L] == "raw" & all_frames$group[transitions-1L] == all_frames$group[transitions]]
+    possible_repeats <- sort(c(transitions, transitions - 1L))
+    repeated <- duplicated(all_frames[possible_repeats, names(all_frames) != '.phase'], fromLast = TRUE)
+    repeated <- possible_repeats[repeated]
+    if (length(repeated) == 0) all_frames else all_frames[-repeated, ]
   }
 )
 

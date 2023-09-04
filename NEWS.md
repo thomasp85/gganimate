@@ -2,7 +2,8 @@
 
 * Fix for using `"svg"` device during knitting (#484)
 * Fix for correctly getting chunk options during knitting (#485)
-* Fix a bug in `transition_reveal()` that would remove terminal data (#480)
+* Fix a bug in `transition_reveal()` that would remove data during transitions
+  (#480 and #473)
 * General upkeep to keep it in line with the evolvling coding principles in 
   ggplot2 (move to using vctrs, cli, lifecycle, etc)
 * `transition_reveal()` now throws an error when it is used in conjunction with
