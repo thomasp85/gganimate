@@ -31,7 +31,7 @@ Imports:
     scales,
     stringi,
     transformr (>= 0.1.4.9000),
-    tweenr (>= 1.0.1),
+    tweenr (>= 2.0.2.9000),
     utils,
     vctrs
 Suggests: 
@@ -50,7 +50,8 @@ VignetteBuilder:
     knitr
 Remotes:  
     tidyverse/ggplot2,
-    thomasp85/transformr
+    thomasp85/transformr,
+    thomasp85/tweenr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
