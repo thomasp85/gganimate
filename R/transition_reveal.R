@@ -17,7 +17,7 @@
 #' subsequent frames.
 #'
 #' @section Label variables:
-#' `transition_along` makes the following variables available for string
+#' `transition_reveal` makes the following variables available for string
 #' literal interpretation, in addition to the general ones provided by
 #' [animate()]:
 #'
