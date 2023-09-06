@@ -8,6 +8,7 @@
   ggplot2 (move to using vctrs, cli, lifecycle, etc)
 * `transition_reveal()` now throws an error when it is used in conjunction with
   `stat_align()` and transitioning before the stat has been calculated (#476)
+* Label interpolation now works when labels are expressions (#439)
 
 # gganimate 1.0.8
 

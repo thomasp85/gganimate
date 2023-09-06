@@ -144,15 +144,26 @@ Scene <- ggproto('Scene', NULL,
     label_var <- as.list(self$frame_vars[i, ])
     label_var$data <- plot$data
     plot$plot$labels <- lapply(plot$plot$labels, function(label) {
-      if (is.expression(label) || is.call(label)) return(label)
-      vapply(label, function(l) {
-        l2 <- try(glue_data(label_var, l, .envir = plot$plot$plot_env), silent = TRUE)
+      orig_call <- FALSE
+      if (is.call(label)) {
+        orig_call <- TRUE
+        label <- list(label)
+      }
+      new_label <- lapply(label, function(l) {
+        l2 <- try(glue_call(label_var, l, .envir = plot$plot$plot_env), silent = TRUE)
         if (inherits(l2, 'try-error')) {
           l
         } else {
           l2
         }
-      }, character(1))
+      })
+      if (orig_call) {
+        new_label[[1]]
+      } else if (is.expression(label)) {
+        as.expression(new_label)
+      } else {
+        unlist(new_label)
+      }
     })
     plot
   },
@@ -175,3 +186,13 @@ Scene <- ggproto('Scene', NULL,
     vapply(layers, tween_before_stat, logical(1))
   }
 )
+
+glue_call <- function(.x, call, .envir) {
+  if (is_string(call)) {
+    return(glue_data(.x, call, .envir = .envir))
+  }
+  if (is_call(call)) {
+    call[] <- lapply(call, glue_call, .x = .x, .envir = .envir)
+  }
+  call
+}
