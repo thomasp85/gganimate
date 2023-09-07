@@ -9,6 +9,10 @@
 * `transition_reveal()` now throws an error when it is used in conjunction with
   `stat_align()` and transitioning before the stat has been calculated (#476)
 * Label interpolation now works when labels are expressions (#439)
+* `as_html_video()` gains `muted`, `loop`, and `controls` argument to control 
+  presentation of the video. Like autoplay these can be controlled during knitr
+  through the chunk options (e.g. `gganimate = list(muted = TRUE, loop = TRUE)`)
+  (#444)
 
 # gganimate 1.0.8
 

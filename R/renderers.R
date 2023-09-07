@@ -310,7 +310,7 @@ print.video_file <- function(x, width = NULL, ...) {
     if (grepl('\\.mp4$', x, ignore.case = TRUE) && .Platform$GUI == "RStudio") {
       utils::browseURL(x)
     } else {
-      print(htmltools::browsable(as_html_video(x, width)))
+      print(htmltools::browsable(as_html_video(x, width, ...)))
     }
   } else {
     viewer <- getOption("viewer", utils::browseURL)
@@ -323,7 +323,14 @@ knit_print.video_file <- function(x, options, ...) {
   if (grepl('\\.(mp4)|(webm)|(ogg)$', x, ignore.case = TRUE)) {
     knitr::knit_print(
       htmltools::browsable(
-        as_html_video(x, width = get_chunk_width(options), autoplay = get_chunk_autoplay(options))
+        as_html_video(
+          x,
+          width = get_chunk_width(options),
+          autoplay = get_chunk_autoplay(options),
+          muted = get_chunk_muted(options),
+          loop = get_chunk_loop(options),
+          controls = get_chunk_controls(options)
+        )
       ),
       options,
       ...
@@ -337,19 +344,32 @@ knit_print.video_file <- function(x, options, ...) {
 split.video_file <- function(x, f, drop = FALSE, ...) {
   cli::cli_abort('{.cls video_file} objects does not support splitting')
 }
-as_html_video <- function(x, width = NULL, autoplay = TRUE) {
+as_html_video <- function(x, width = NULL, autoplay = TRUE, muted = FALSE, loop = FALSE, controls = TRUE, ...) {
   check_installed('base64enc', 'for showing video')
   check_installed('htmltools', 'for showing video')
   format <- tolower(sub('^.*\\.(.+)$', '\\1', x))
   htmltools::HTML(paste0(
-    '<video controls', if (autoplay) ' autoplay' else '',
+    '<video',
+    if (autoplay) ' autoplay' else '',
+    if (muted) ' muted' else '',
+    if (loop) ' loop' else '',
+    if (controls) ' controls' else '',
     if (is.null(width)) '' else paste0(' width="', width, '"'),
     '>',
     '<source src="data:video/', format, ';base64,', base64enc::base64encode(x), '" type="video/mp4"></video>'
   ))
 }
 get_chunk_autoplay <- function(options) {
-  options$gganimate.autoplay %||% TRUE
+  options$gganimate$autoplay %||% TRUE
+}
+get_chunk_muted <- function(options) {
+  options$gganimate$muted %||% FALSE
+}
+get_chunk_loop <- function(options) {
+  options$gganimate$loop %||% FALSE
+}
+get_chunk_controls <- function(options) {
+  options$gganimate$controls %||% TRUE
 }
 #' Wrap an image sprite for easy handling
 #'
