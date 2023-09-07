@@ -133,7 +133,7 @@ Scene <- ggproto('Scene', NULL,
     if (is.null(vp)) {
       grid.draw(plot)
     } else {
-      if (is.character(vp)) seekViewport(vp)
+      if (is_character(vp)) seekViewport(vp)
       else pushViewport(vp)
       grid.draw(plot)
       upViewport()
@@ -145,7 +145,7 @@ Scene <- ggproto('Scene', NULL,
     label_var$data <- plot$data
     plot$plot$labels <- lapply(plot$plot$labels, function(label) {
       orig_call <- FALSE
-      if (is.call(label)) {
+      if (is_call(label)) {
         orig_call <- TRUE
         label <- list(label)
       }
@@ -159,7 +159,7 @@ Scene <- ggproto('Scene', NULL,
       })
       if (orig_call) {
         new_label[[1]]
-      } else if (is.expression(label)) {
+      } else if (is_expression(label)) {
         as.expression(new_label)
       } else {
         unlist(new_label)

@@ -331,7 +331,7 @@ plot_dims <- function(plot, ref_frame) {
   widths <- convertWidth(widths_rel, 'mm')
   heights_rel <- frame$heights
   heights <- convertHeight(heights_rel, 'mm')
-  if (is.list(widths)) { # New unit spec
+  if (is_list(widths)) { # New unit spec
     null_widths <- vapply(unclass(widths), `[[`, numeric(1), 1L) == 0
     null_heights <- vapply(unclass(heights), `[[`, numeric(1), 1L) == 0
   } else {

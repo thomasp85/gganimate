@@ -17,12 +17,12 @@ View <- ggproto('View', NULL,
     plot
   },
   reset_limits = function(self, plot, xlim, ylim) {
-    if (is.logical(self$fixed_lim$x)) {
+    if (is_logical(self$fixed_lim$x)) {
       if (self$fixed_lim$x) xlim <- plot$layout$coord$limits$x
     } else {
       xlim[!is.na(self$fixed_lim$x)] <- self$fixed_lim$x[!is.na(self$fixed_lim$x)]
     }
-    if (is.logical(self$fixed_lim$y)) {
+    if (is_logical(self$fixed_lim$y)) {
       if (self$fixed_lim$y) ylim <- plot$layout$coord$limits$y
     } else {
       ylim[!is.na(self$fixed_lim$y)] <- self$fixed_lim$y[!is.na(self$fixed_lim$y)]

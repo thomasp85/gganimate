@@ -9,9 +9,9 @@ safe_eval <- function(expr, data) {
     eval_tidy(expr, data),
     error = function(e) numeric()
   )
-  if (!is.function(value) &&
-      !is.environment(value) &&
-      !is.symbol(value) &&
+  if (!is_function(value) &&
+      !is_environment(value) &&
+      !is_symbol(value) &&
       !is.language(value) &&
       (length(value) == 1 || length(value) == nrow(data))) {
     value
@@ -26,7 +26,7 @@ require_quo <- function(expr, name) {
   }
 }
 require_stat <- function(x) {
-  if (is.call(x)) {
+  if (is_call(x)) {
     if (identical(x[[1]], quote(stat)) || identical(x[[1]], quote(after_stat))) {
       TRUE
     } else {

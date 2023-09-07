@@ -52,8 +52,8 @@
 #' }
 #'
 shadow_wake <- function(wake_length, size = TRUE, alpha = TRUE, colour = NULL, fill = NULL, falloff = 'cubic-in', wrap = TRUE, exclude_layer = NULL, exclude_phase = c('enter', 'exit')) {
-  if (is.logical(size)) size <- if (size) 0 else NULL
-  if (is.logical(alpha)) alpha <- if (alpha) 0 else NULL
+  if (is_logical(size)) size <- if (size) 0 else NULL
+  if (is_logical(alpha)) alpha <- if (alpha) 0 else NULL
 
   ggproto(NULL, ShadowWake,
     exclude_layer = exclude_layer,

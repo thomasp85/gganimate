@@ -152,7 +152,7 @@ ffmpeg_renderer <- function(format = 'auto', ffmpeg = NULL, options = list(pix_f
       "mp4"
     }
   }
-  if (is.list(options)) {
+  if (is_list(options)) {
     if (is.null(names(options))) {
       cli::cli_abort('{.arg options} must be a named list')
     }
@@ -253,7 +253,7 @@ gif_file <- function(file) {
 #' @export
 print.gif_image <- function(x, ...) {
   viewer <- getOption("viewer", utils::browseURL)
-  if (is.function(viewer) && length(x)) {
+  if (is_function(viewer) && length(x)) {
     viewer(x)
   } else {
     invisible()

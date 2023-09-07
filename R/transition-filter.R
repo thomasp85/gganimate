@@ -211,7 +211,7 @@ assign_filters <- function(data, filters, after = FALSE, row_vars = NULL) {
       if (!do_filter[i]) return(rep(FALSE, nrow(d)))
       filter <- safe_eval(filters[[i]], d)
       filter <- filter %||% rep(TRUE, nrow(d))
-      if (!is.logical(filter)) cli::cli_abort('Filters must return a logical vector')
+      if (!is_logical(filter)) cli::cli_abort('Filters must return a logical vector')
       filter
     }))
     if (all(row_filter)) return(numeric(0))

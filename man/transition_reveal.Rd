@@ -28,7 +28,7 @@ disconnected segments as will happen when using \code{\link[=transition_time]{tr
 }
 \section{Label variables}{
 
-\code{transition_along} makes the following variables available for string
+\code{transition_reveal} makes the following variables available for string
 literal interpretation, in addition to the general ones provided by
 \code{\link[=animate]{animate()}}:
 \itemize{
