@@ -48,6 +48,9 @@ View <- ggproto('View', NULL,
       # We need to do it twice because CoordFlip flips the scales in-place
       plot$layout$setup_panel_params()
     }
+    if (inherits(plot$plot$guides, "Guides")) {
+      plot$layout$setup_panel_guides(plot$plot$guides, plot$plot$layers)
+    }
     plot
   },
   get_ranges = function(self, data, params) {
