@@ -94,10 +94,18 @@ ggplot_build.gganim <- function(plot) {
   layout$setup_panel_params()
   data <- layout$map_position(data)
 
+  new_guides <- inherits(plot$guides, "Guides")
+  if (new_guides) {
+    layout$setup_panel_guides(plot$guides, plot$layers)
+  }
+
   # Train and map non-position scales
   npscales <- scales$non_position_scales()
   if (npscales$n() > 0) {
     lapply(data, npscales$train_df)
+    if (new_guides) {
+      plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data)
+    }
     data <- lapply(data, npscales$map_df)
   }
 
