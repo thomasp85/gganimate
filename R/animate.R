@@ -229,12 +229,10 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
   args$start_pause <- start_pause %?% chunk_args$start_pause %||% getOption('gganimate.start_pause', 0)
   args$end_pause <- end_pause %?% chunk_args$end_pause %||% getOption('gganimate.end_pause', 0)
   args$rewind <- rewind %?% chunk_args$rewind %||% getOption('gganimate.rewind', FALSE)
-  dev_args <- list(...)
-  args$dev_args <- if (length(dev_args) > 0) {
-    modifyList(getOption('gganimate.dev_args', list()), dev_args)
-  } else {
-    modifyList(getOption('gganimate.dev_args', list()), chunk_args$dev_args)
-  }
+
+  args$dev_args <- modifyList(getOption('gganimate.dev_args', list()), chunk_args$dev_args)
+  args$dev_args <- modifyList(args$dev_args, list(...))
+
   args
 }
 # Build plot for a specific number of frames
