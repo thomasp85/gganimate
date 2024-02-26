@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   talks: extra/talks.html
   gganimate: gganimate.html
-last_built: 2024-02-26T12:21Z
+last_built: 2024-02-26T12:26Z
 urls:
   reference: https://gganimate.com/reference
   article: https://gganimate.com/articles
