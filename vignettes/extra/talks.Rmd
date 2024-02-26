@@ -1,6 +1,10 @@
 ---
 title: "gganimate Talks"
 output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{gganimate Talks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
