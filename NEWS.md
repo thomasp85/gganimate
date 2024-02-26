@@ -13,6 +13,7 @@
   presentation of the video. Like autoplay these can be controlled during knitr
   through the chunk options (e.g. `gganimate = list(muted = TRUE, loop = TRUE)`)
   (#444)
+* Make the build process up-to-date with ggplot2 3.5.0
 
 # gganimate 1.0.8
 
