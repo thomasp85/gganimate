@@ -82,9 +82,20 @@
       <small>Source: <a href="https://github.com/thomasp85/gganimate/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2"><h2 class="page-header" data-toc-text="development version" id="gganimate-development-version">gganimate (development version)<a class="anchor" aria-label="anchor" href="#gganimate-development-version"></a></h2></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="1.0.8" id="gganimate-108">gganimate 1.0.8<a class="anchor" aria-label="anchor" href="#gganimate-108"></a></h2>
+<h2 class="page-header" data-toc-text="development version" id="gganimate-development-version">gganimate (development version)<a class="anchor" aria-label="anchor" href="#gganimate-development-version"></a></h2>
+<ul><li>Fix for using <code>"svg"</code> device during knitting (<a href="https://github.com/thomasp85/gganimate/issues/484" class="external-link">#484</a>)</li>
+<li>Fix for correctly getting chunk options during knitting (<a href="https://github.com/thomasp85/gganimate/issues/485" class="external-link">#485</a>)</li>
+<li>Fix a bug in <code><a href="../reference/transition_reveal.html">transition_reveal()</a></code> that would remove data during transitions (<a href="https://github.com/thomasp85/gganimate/issues/480" class="external-link">#480</a> and <a href="https://github.com/thomasp85/gganimate/issues/473" class="external-link">#473</a>)</li>
+<li>General upkeep to keep it in line with the evolvling coding principles in ggplot2 (move to using vctrs, cli, lifecycle, etc)</li>
+<li>
+<code><a href="../reference/transition_reveal.html">transition_reveal()</a></code> now throws an error when it is used in conjunction with <code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">stat_align()</a></code> and transitioning before the stat has been calculated (<a href="https://github.com/thomasp85/gganimate/issues/476" class="external-link">#476</a>)</li>
+<li>Label interpolation now works when labels are expressions (<a href="https://github.com/thomasp85/gganimate/issues/439" class="external-link">#439</a>)</li>
+<li>
+<code>as_html_video()</code> gains <code>muted</code>, <code>loop</code>, and <code>controls</code> argument to control presentation of the video. Like autoplay these can be controlled during knitr through the chunk options (e.g. <code>gganimate = list(muted = TRUE, loop = TRUE)</code>) (<a href="https://github.com/thomasp85/gganimate/issues/444" class="external-link">#444</a>)</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.8" id="gganimate-108">gganimate 1.0.8<small>2022-09-08</small><a class="anchor" aria-label="anchor" href="#gganimate-108"></a></h2>
 <ul><li>Fix a bug when creating labels from aesthetics that include glue expressions (<a href="https://github.com/thomasp85/gganimate/issues/422" class="external-link">#422</a>)</li>
 <li>Fix a bug in ffmpeg detection (<a href="https://github.com/thomasp85/gganimate/issues/346" class="external-link">#346</a>, <a href="https://github.com/rfaelens" class="external-link">@rfaelens</a>, <a href="https://github.com/thomasp85/gganimate/issues/360" class="external-link">#360</a>, <a href="https://github.com/adamdsmith" class="external-link">@adamdsmith</a>)</li>
 <li>Remove plyr dependency</li>
@@ -103,8 +114,11 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.7" id="gganimate-107">gganimate 1.0.7<small>2020-10-15</small><a class="anchor" aria-label="anchor" href="#gganimate-107"></a></h2>
-<ul><li>Support ragg png device to ensure that it works with knitr’s ragg support</li></ul></div>
-    <div class="section level2"><h2 class="page-header" data-toc-text="1.0.6" id="gganimate-106">gganimate 1.0.6<small>2020-07-08</small><a class="anchor" aria-label="anchor" href="#gganimate-106"></a></h2></div>
+<ul><li>Support ragg png device to ensure that it works with knitr’s ragg support</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.6" id="gganimate-106">gganimate 1.0.6<small>2020-07-08</small><a class="anchor" aria-label="anchor" href="#gganimate-106"></a></h2>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.5" id="gganimate-105">gganimate 1.0.5<small>2020-02-09</small><a class="anchor" aria-label="anchor" href="#gganimate-105"></a></h2>
 <ul><li>No longer needs the png package for gifski rendering</li>
@@ -118,10 +132,12 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.3" id="gganimate-103">gganimate 1.0.3<small>2019-04-02</small><a class="anchor" aria-label="anchor" href="#gganimate-103"></a></h2>
-<ul><li>Fix a conditional in the plot building step to make it work with the ggplot2 3.1.1 hotfix.</li></ul></div>
+<ul><li>Fix a conditional in the plot building step to make it work with the ggplot2 3.1.1 hotfix.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.2" id="gganimate-102">gganimate 1.0.2<small>2019-03-03</small><a class="anchor" aria-label="anchor" href="#gganimate-102"></a></h2>
-<ul><li>Fix registration of S3 methods for suggested packages.</li></ul></div>
+<ul><li>Fix registration of S3 methods for suggested packages.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.1" id="gganimate-101">gganimate 1.0.1<small>2019-02-15</small><a class="anchor" aria-label="anchor" href="#gganimate-101"></a></h2>
 <ul><li>Fix bug in transitions when the group aesthetic was late evalued (<a href="https://github.com/thomasp85/gganimate/issues/262" class="external-link">#262</a>)</li>
@@ -136,7 +152,8 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0.0" id="gganimate-100">gganimate 1.0.0<small>2019-01-02</small><a class="anchor" aria-label="anchor" href="#gganimate-100"></a></h2>
-<ul><li>First CRAN release, featuring a complete rewrite… Too much stuff to put in a changelog</li></ul></div>
+<ul><li>First CRAN release, featuring a complete rewrite… Too much stuff to put in a changelog</li>
+</ul></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -147,11 +164,11 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>.</p>
+  <p></p><p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>, Posit, PBC.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

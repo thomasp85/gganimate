@@ -20,11 +20,12 @@
 <script src="pkgdown.js"></script><!-- docsearch --><script src="docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="A Grammar of Animated Graphics">
-<meta property="og:description" content="The grammar of graphics as implemented in the ggplot2 package has
-    been successful in providing a powerful API for creating static 
-    visualisation. In order to extend the API for animated graphics this package
-    provides a completely new set of grammar, fully compatible with ggplot2 
-    for specifying transitions and animations in a flexible and extensible way.">
+<meta property="og:description" content="The grammar of graphics as implemented in the ggplot2
+    package has been successful in providing a powerful API for creating
+    static visualisation. In order to extend the API for animated graphics
+    this package provides a completely new set of grammar, fully
+    compatible with ggplot2 for specifying transitions and animations in
+    a flexible and extensible way.">
 <meta property="og:image" content="https://gganimate.com/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -121,6 +122,7 @@
 <div class="page-header"><h1 id="gganimate-">gganimate <img src="reference/figures/logo.png" align="right" style="padding-left:10px;background-color:white;"><a class="anchor" aria-label="anchor" href="#gganimate-"></a>
 </h1></div>
 <!-- badges: start -->
+
 <p><code>gganimate</code> extends the grammar of graphics as implemented by <a href="https://github.com/tidyverse/ggplot2" class="external-link"><code>ggplot2</code></a> to include the description of animation. It does this by providing a range of new grammar classes that can be added to the plot object in order to customise how it should change with time.</p>
 <ul>
 <li>
@@ -161,8 +163,8 @@
 </h2>
 <p><code>gganimate</code> is available on CRAN and can be installed with <code>install.packages('gganimate')</code>. If you wish to install the development version you can install directly from github using devtools:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages('devtools')</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'thomasp85/gganimate'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages('pak')</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">'thomasp85/gganimate'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="yet-another-example">Yet Another Example<a class="anchor" aria-label="anchor" href="#yet-another-example"></a>
@@ -234,12 +236,17 @@
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>
-<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
+<div class="community">
+<h2 data-toc-skip>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
@@ -255,7 +262,7 @@
 <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-5147-4711" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>
 <a href="http://varianceexplained.org" class="external-link">David Robinson</a> <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">More about authors...</a></li>
+<li>Posit, PBC <br><small class="roles"> Copyright holder, funder </small>  </li>
 </ul>
 </div>
 
@@ -275,12 +282,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>.</p>
+<p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>, Posit, PBC.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

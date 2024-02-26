@@ -100,7 +100,7 @@ disconnected segments as will happen when using <code><a href="transition_time.h
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transition_reveal</span><span class="op">(</span><span class="va">along</span>, range <span class="op">=</span> <span class="cn">NULL</span>, keep_last <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">id</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transition_reveal</span><span class="op">(</span><span class="va">along</span>, range <span class="op">=</span> <span class="cn">NULL</span>, keep_last <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -120,16 +120,12 @@ of <code>along</code></p></dd>
 <dd><p>For non-path/polygon layers should the last row be kept for
 subsequent frames.</p></dd>
 
-
-<dt>id</dt>
-<dd><p><strong>Deprecated</strong></p></dd>
-
 </dl></div>
     <div id="label-variables">
     <h2>Label variables</h2>
     
 
-<p><code>transition_along</code> makes the following variables available for string
+<p><code>transition_reveal</code> makes the following variables available for string
 literal interpretation, in addition to the general ones provided by
 <code><a href="animate.html">animate()</a></code>:</p><ul><li><p><strong>frame_along</strong> gives the position on the along-dimension that the current
 frame corresponds to</p></li>
@@ -188,6 +184,29 @@ using computed variables in aesthetics.</p>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">'red'</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu">transition_reveal</span><span class="op">(</span><span class="va">Day</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Since ggplot2 3.4 geom_ribbon and geom_area has used stat_align</span></span></span>
+<span class="r-in"><span><span class="co"># This stat is incompatible with transition_reveal when applied before</span></span></span>
+<span class="r-in"><span><span class="co"># stats are calculated</span></span></span>
+<span class="r-in"><span><span class="va">anim3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span>, group <span class="op">=</span> <span class="va">Month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">transition_reveal</span><span class="op">(</span><span class="va">Day</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="va">anim</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_line()`: Each group consists of only one observation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> `geom_line()`: Each group consists of only one observation.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Do you need to adjust the <span style="color: #00BB00;">group</span> aesthetic?</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># This can be fixed by either reverting to use stat_identity</span></span></span>
+<span class="r-in"><span><span class="va">anim4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span>, group <span class="op">=</span> <span class="va">Month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">transition_reveal</span><span class="op">(</span><span class="va">Day</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Or by applying the transition after the stat</span></span></span>
+<span class="r-in"><span><span class="va">anim5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Day</span>, <span class="va">Temp</span>, group <span class="op">=</span> <span class="va">Month</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu">transition_reveal</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -198,11 +217,11 @@ using computed variables in aesthetics.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>.</p>
+  <p></p><p>Developed by <a href="https://data-imaginist.com" class="external-link">Thomas Lin Pedersen</a>, <a href="http://varianceexplained.org" class="external-link">David Robinson</a>, Posit, PBC.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
