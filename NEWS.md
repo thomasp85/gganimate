@@ -1,4 +1,4 @@
-# gganimate (development version)
+# gganimate 1.0.9
 
 * Fix for using `"svg"` device during knitting (#484)
 * Fix for correctly getting chunk options during knitting (#485)
