@@ -1,7 +1,7 @@
 Type: Package
 Package: gganimate
 Title: A Grammar of Animated Graphics
-Version: 1.0.9
+Version: 1.0.9.9000
 Authors@R: c(
     person("Thomas Lin", "Pedersen", , "thomasp85@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-5147-4711")),
