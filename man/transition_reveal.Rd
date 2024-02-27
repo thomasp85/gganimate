@@ -82,8 +82,6 @@ anim3 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
   geom_area() +
   transition_reveal(Day)
 
-try(anim)
-
 # This can be fixed by either reverting to use stat_identity
 anim4 <- ggplot(airquality, aes(Day, Temp, group = Month)) +
   geom_area(stat = "identity") +
