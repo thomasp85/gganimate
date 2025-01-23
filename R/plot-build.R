@@ -108,15 +108,26 @@ ggplot_build.gganim <- function(plot) {
   # Train and map non-position scales
   npscales <- scales$non_position_scales()
   if (npscales$n() > 0) {
-    lapply(data, npscales$train_df)
-    if (new_guides) {
+    if (new_theme) {
+      npscales$set_palettes(plot$theme)
+      lapply(data, npscales$train_df)
+      plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data, plot$theme)
+    } else if (new_guides) {
+      lapply(data, npscales$train_df)
       plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data)
     }
     data <- lapply(data, npscales$map_df)
   }
 
   # Fill in defaults etc.
-  data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
+  if (new_theme) {
+    data <- by_layer(
+      function(l, d) l$compute_geom_2(d, theme = plot$theme),
+      layers, data, "setting up geom_aesthetics"
+    )
+  } else {
+    data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
+  }
 
   # gganimate
   data <- scene$after_defaults(data)
