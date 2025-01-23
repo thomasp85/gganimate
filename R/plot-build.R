@@ -94,6 +94,12 @@ ggplot_build.gganim <- function(plot) {
   layout$setup_panel_params()
   data <- layout$map_position(data)
 
+  complete_theme <- get0("complete_theme", asNamespace("ggplot2"))
+  new_theme <- is.function(complete_theme)
+  if (new_theme) {
+    plot$theme <- complete_theme(plot$theme)
+  }
+
   new_guides <- inherits(plot$guides, "Guides")
   if (new_guides) {
     layout$setup_panel_guides(plot$guides, plot$layers)
