@@ -94,6 +94,12 @@ ggplot_build.gganim <- function(plot) {
   layout$setup_panel_params()
   data <- layout$map_position(data)
 
+  complete_theme <- get0("complete_theme", asNamespace("ggplot2"))
+  new_theme <- is.function(complete_theme)
+  if (new_theme) {
+    plot$theme <- complete_theme(plot$theme)
+  }
+
   new_guides <- inherits(plot$guides, "Guides")
   if (new_guides) {
     layout$setup_panel_guides(plot$guides, plot$layers)
@@ -102,15 +108,28 @@ ggplot_build.gganim <- function(plot) {
   # Train and map non-position scales
   npscales <- scales$non_position_scales()
   if (npscales$n() > 0) {
-    lapply(data, npscales$train_df)
-    if (new_guides) {
+    if (new_theme) {
+      npscales$set_palettes(plot$theme)
+      lapply(data, npscales$train_df)
+      plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data, plot$theme)
+    } else if (new_guides) {
+      lapply(data, npscales$train_df)
       plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data)
+    } else {
+      lapply(data, npscales$train_df)
     }
     data <- lapply(data, npscales$map_df)
   }
 
   # Fill in defaults etc.
-  data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
+  if (new_theme) {
+    data <- by_layer(
+      function(l, d) l$compute_geom_2(d, theme = plot$theme),
+      layers, data, "setting up geom_aesthetics"
+    )
+  } else {
+    data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
+  }
 
   # gganimate
   data <- scene$after_defaults(data)
