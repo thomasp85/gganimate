@@ -1,138 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://gganimate.com/404.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/articles/extra/talks.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/articles/gganimate.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/anim_save.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/animate.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/ease_aes.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/enter_exit.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/frame_vars.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/gganimate-ggproto.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/gganimate-package.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/gganimate.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/gif_file.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/last_animation.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/layer_type.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/renderers.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/save_animation.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/shadow_mark.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/shadow_null.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/shadow_trail.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/shadow_wake.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/split_animation.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/sprite_file.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_components.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_events.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_filter.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_layers.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_manual.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_null.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_reveal.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_states.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/transition_time.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/tween_before_stat.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/video_file.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/view_follow.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/view_static.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/view_step.html</loc>
-  </url>
-  <url>
-    <loc>https://gganimate.com/reference/view_zoom.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://gganimate.com/404.html</loc></url>
+<url><loc>https://gganimate.com/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://gganimate.com/LICENSE-text.html</loc></url>
+<url><loc>https://gganimate.com/LICENSE.html</loc></url>
+<url><loc>https://gganimate.com/articles/extra/talks.html</loc></url>
+<url><loc>https://gganimate.com/articles/gganimate.html</loc></url>
+<url><loc>https://gganimate.com/articles/index.html</loc></url>
+<url><loc>https://gganimate.com/authors.html</loc></url>
+<url><loc>https://gganimate.com/index.html</loc></url>
+<url><loc>https://gganimate.com/news/index.html</loc></url>
+<url><loc>https://gganimate.com/reference/anim_save.html</loc></url>
+<url><loc>https://gganimate.com/reference/animate.html</loc></url>
+<url><loc>https://gganimate.com/reference/ease_aes.html</loc></url>
+<url><loc>https://gganimate.com/reference/enter_exit.html</loc></url>
+<url><loc>https://gganimate.com/reference/frame_vars.html</loc></url>
+<url><loc>https://gganimate.com/reference/gganimate-ggproto.html</loc></url>
+<url><loc>https://gganimate.com/reference/gganimate-package.html</loc></url>
+<url><loc>https://gganimate.com/reference/gganimate.html</loc></url>
+<url><loc>https://gganimate.com/reference/gif_file.html</loc></url>
+<url><loc>https://gganimate.com/reference/index.html</loc></url>
+<url><loc>https://gganimate.com/reference/last_animation.html</loc></url>
+<url><loc>https://gganimate.com/reference/layer_type.html</loc></url>
+<url><loc>https://gganimate.com/reference/renderers.html</loc></url>
+<url><loc>https://gganimate.com/reference/save_animation.html</loc></url>
+<url><loc>https://gganimate.com/reference/shadow_mark.html</loc></url>
+<url><loc>https://gganimate.com/reference/shadow_null.html</loc></url>
+<url><loc>https://gganimate.com/reference/shadow_trail.html</loc></url>
+<url><loc>https://gganimate.com/reference/shadow_wake.html</loc></url>
+<url><loc>https://gganimate.com/reference/split_animation.html</loc></url>
+<url><loc>https://gganimate.com/reference/sprite_file.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_components.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_events.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_filter.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_layers.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_manual.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_null.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_reveal.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_states.html</loc></url>
+<url><loc>https://gganimate.com/reference/transition_time.html</loc></url>
+<url><loc>https://gganimate.com/reference/tween_before_stat.html</loc></url>
+<url><loc>https://gganimate.com/reference/video_file.html</loc></url>
+<url><loc>https://gganimate.com/reference/view_follow.html</loc></url>
+<url><loc>https://gganimate.com/reference/view_static.html</loc></url>
+<url><loc>https://gganimate.com/reference/view_step.html</loc></url>
+<url><loc>https://gganimate.com/reference/view_zoom.html</loc></url>
 </urlset>
+
