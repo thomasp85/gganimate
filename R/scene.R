@@ -143,7 +143,7 @@ Scene <- ggproto('Scene', NULL,
   set_labels = function(self, plot, i) {
     label_var <- as.list(self$frame_vars[i, ])
     label_var$data <- plot$data
-    plot$plot$labels <- lapply(plot$plot$labels, function(label) {
+    plot$plot$labels <- labs(!!!lapply(plot$plot$labels, function(label) {
       orig_call <- FALSE
       if (is_call(label)) {
         orig_call <- TRUE
@@ -164,7 +164,7 @@ Scene <- ggproto('Scene', NULL,
       } else {
         unlist(new_label)
       }
-    })
+    }))
     plot
   },
   get_group_column = function(self, layers) {
