@@ -29,7 +29,7 @@ test_that('bin2d works', {
     y = c(rnorm(100), runif(100)),
     f = rep(c('a', 'b'), each = 100)
   )
-  p <- ggplot(df) + geom_bin2d(aes(x, y), drop = FALSE) + transition_states(f, 2, 1)
+  p <- ggplot(df) + geom_bin2d(aes(x, y), drop = FALSE, bins = 30) + transition_states(f, 2, 1)
   expect_silent(prerender(p, 50))
 })
 
