@@ -106,9 +106,15 @@ ggplot_build.gganim <- function(plot) {
   # Train and map non-position scales
   npscales <- scales$non_position_scales()
   if (npscales$n() > 0) {
-    lapply(data, npscales$train_df)
-    if (new_guides) {
-      plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data)
+    if (is.function(npscales$set_palettes)) {
+      npscales$set_palettes(plot$theme)
+      lapply(data, npscales$train_df)
+      plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data, theme = plot$theme)
+    } else {
+      lapply(data, npscales$train_df)
+      if (new_guides) {
+        plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data)
+      }
     }
     data <- lapply(data, npscales$map_df)
   }
