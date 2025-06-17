@@ -104,7 +104,6 @@ Scene <- ggproto('Scene', NULL,
     layer_data
   },
   get_frame = function(self, plot, i) {
-    class(plot) <- 'ggplot_built'
     data <- self$transition$get_frame_data(plot$data, self$transition_params, i)
     shadow_i <- self$shadow$get_frames(self$shadow_params, i)
     shadow <- self$transition$get_frame_data(plot$data, self$transition_params, shadow_i)
@@ -121,7 +120,7 @@ Scene <- ggproto('Scene', NULL,
   },
   plot_frame = function(self, plot, i, newpage = is.null(vp), vp = NULL, widths = NULL, heights = NULL, ...) {
     plot <- self$get_frame(plot, i)
-    plot <- ggplot_gtable(plot)
+    plot <- render_frame(plot)
     if (!is.null(widths)) plot$widths <- widths
     if (!is.null(heights)) plot$heights <- heights
     if (newpage) grid.newpage()
