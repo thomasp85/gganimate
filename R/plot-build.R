@@ -21,7 +21,15 @@ ggplot_build.gganim <- function(plot) {
   names(scale_labels) <- vapply(scales$scales, function(sc) sc$aesthetics[1], character(1))
   lapply(scales$scales, function(sc) sc$name <- waiver())
   scale_labels <- scale_labels[!vapply(scale_labels, is.waive, logical(1))]
-  plot$labels[names(scale_labels)] <- scale_labels
+
+  # `setup_plot_labels()` is an internal function, but I'm sure the ggplot2
+  # devs allow us some grace and leniency.
+  setup_plot_labels <- get0("setup_plot_labels", asNamespace("ggplot2"))
+  if (is.function(setup_plot_labels)) {
+    plot$labels <- setup_plot_labels(plot, layers, data)
+  } else {
+    plot$labels[names(scale_labels)] <- scale_labels
+  }
   # --
 
 
