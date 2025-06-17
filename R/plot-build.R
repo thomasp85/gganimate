@@ -114,7 +114,14 @@ ggplot_build.gganim <- function(plot) {
   }
 
   # Fill in defaults etc.
-  data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
+  if (is.function(complete_theme)) {
+    data <- by_layer(
+      function(l, d) l$compute_geom_2(d, theme = plot$theme),
+      layers, data, "setting up geom aesthetics"
+    )
+  } else {
+    data <- by_layer(function(l, d) l$compute_geom_2(d), layers, data, "setting up geom aesthetics")
+  }
 
   # gganimate
   data <- scene$after_defaults(data)
