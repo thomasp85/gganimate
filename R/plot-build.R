@@ -98,6 +98,10 @@ ggplot_build.gganim <- function(plot) {
   if (new_guides) {
     layout$setup_panel_guides(plot$guides, plot$layers)
   }
+  complete_theme <- get0("complete_theme", asNamespace("ggplot2"))
+  if (is.function(complete_theme)) {
+    plot$theme <- complete_theme(plot$theme)
+  }
 
   # Train and map non-position scales
   npscales <- scales$non_position_scales()
