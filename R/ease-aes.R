@@ -94,7 +94,7 @@ EaseAes <- ggproto("EaseAes", NULL,
 
 #' @importFrom ggplot2 ggplot_add
 #' @export
-ggplot_add.EaseAes <- function(object, plot, object_name) {
+ggplot_add.EaseAes <- function(object, plot, ...) {
   plot <- as.gganim(plot)
   plot$ease <- object
   plot

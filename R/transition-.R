@@ -120,7 +120,7 @@ Transition <- ggproto('Transition', NULL,
 )
 #' @importFrom ggplot2 ggplot_add
 #' @export
-ggplot_add.Transition <- function(object, plot, object_name) {
+ggplot_add.Transition <- function(object, plot, ...) {
   plot <- as.gganim(plot)
   plot$transition <- object
   plot

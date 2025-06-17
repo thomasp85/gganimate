@@ -1,6 +1,6 @@
 #' @importFrom ggplot2 ggplot_build geom_blank waiver
 #' @export
-ggplot_build.gganim <- function(plot) {
+ggplot_build.gganim <- function(plot, ...) {
   plot <- plot_clone(plot)
   if (length(plot$layers) == 0) {
     plot <- plot + geom_blank()
