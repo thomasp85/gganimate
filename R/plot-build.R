@@ -119,8 +119,6 @@ ggplot_build.gganim <- function(plot, ...) {
     } else {
       lapply(data, npscales$train_df)
       plot$guides <- plot$guides$build(npscales, plot$layers, plot$labels, data)
-    } else {
-      lapply(data, npscales$train_df)
     }
     data <- lapply(data, npscales$map_df)
   }
