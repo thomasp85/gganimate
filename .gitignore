@@ -4,3 +4,5 @@ inst/doc
 .RData
 gganimate.Rproj
 docs
+
+/.quarto/

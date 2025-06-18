@@ -9,7 +9,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version-ago/gganimate)](https://cran.r-project.org/package=gganimate)
 [![CRAN_Download_Badge](http://cranlogs.r-pkg.org/badges/gganimate)](https://cran.r-project.org/package=gganimate)
 [![Codecov test
-coverage](https://codecov.io/gh/thomasp85/gganimate/branch/main/graph/badge.svg)](https://app.codecov.io/gh/thomasp85/gganimate?branch=main)
+coverage](https://codecov.io/gh/thomasp85/gganimate/graph/badge.svg)](https://app.codecov.io/gh/thomasp85/gganimate)
 <!-- badges: end -->
 
 `gganimate` extends the grammar of graphics as implemented by
@@ -38,15 +38,15 @@ example:
 library(ggplot2)
 library(gganimate)
 
-ggplot(mtcars, aes(factor(cyl), mpg)) + 
-  geom_boxplot() + 
+ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_boxplot() +
   # Here comes the gganimate code
   transition_states(
     gear,
     transition_length = 2,
     state_length = 1
   ) +
-  enter_fade() + 
+  enter_fade() +
   exit_shrink() +
   ease_aes('sine-in-out')
 ```
@@ -132,9 +132,9 @@ gif, it doesn’t have to be so. By passing an alternate renderer to the
 video files you can e.g. use the `ffmpeg_renderer()`:
 
 ``` r
-p <- ggplot(airquality, aes(Day, Temp)) + 
-  geom_line(size = 2, colour = 'steelblue') + 
-  transition_states(Month, 4, 1) + 
+p <- ggplot(airquality, aes(Day, Temp)) +
+  geom_line(size = 2, colour = 'steelblue') +
+  transition_states(Month, 4, 1) +
   shadow_mark(size = 1, colour = 'grey')
 animate(p, renderer = ffmpeg_renderer())
 ```
@@ -167,11 +167,11 @@ completely substitutable:
 
 ``` r
 # Old code
-ggplot(mtcars) + 
+ggplot(mtcars) +
   geom_boxplot(aes(factor(cyl), mpg, frame = gear))
 
 # New code
-ggplot(mtcars) + 
-  geom_boxplot(aes(factor(cyl), mpg)) + 
+ggplot(mtcars) +
+  geom_boxplot(aes(factor(cyl), mpg)) +
   transition_manual(gear)
 ```
