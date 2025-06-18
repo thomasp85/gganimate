@@ -5,8 +5,8 @@ vignette: >
   %\VignetteIndexEntry{Getting Started}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  markdown: 
+editor_options:
+  markdown:
     wrap: 72
 ---
 
@@ -47,7 +47,7 @@ understanding the code, as we'll dissect it later.
 library(gganimate)
 
 # We'll start with a static plot
-p <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
+p <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
   geom_point()
 
 plot(p)
@@ -57,7 +57,7 @@ You go from a static plot made with *ggplot2* to an animated one, simply
 by adding on functions from *gganimate*.
 
 ```{r}
-anim <- p + 
+anim <- p +
   transition_states(Species,
                     transition_length = 2,
                     state_length = 1)
@@ -90,7 +90,7 @@ first argument sets the default easing and subsequent named arguments
 sets it for specific aesthetics.
 
 ```{r}
-anim + 
+anim +
   ease_aes('cubic-in-out') # Slow start and end for a smoother look
 ```
 
@@ -98,7 +98,7 @@ anim +
 > during an animation.
 
 ```{r}
-anim + 
+anim +
   ease_aes(y = 'bounce-out') # Sets special ease for y aesthetic
 ```
 
@@ -110,7 +110,7 @@ providing a set of variables for each frame, which can be inserted into
 plot labels using [*glue*](https://glue.tidyverse.org) syntax.
 
 ```{r}
-anim + 
+anim +
   ggtitle('Now showing {closest_state}',
           subtitle = 'Frame {frame} of {nframes}')
 ```
@@ -139,8 +139,8 @@ Just to make this very clear (it is an important concept). The line plot
 equivalent of our animation above is:
 
 ```{r}
-ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
-  geom_line(aes(group = rep(1:50, 3)), colour = 'grey') + 
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
+  geom_line(aes(group = rep(1:50, 3)), colour = 'grey') +
   geom_point()
 ```
 
@@ -160,8 +160,8 @@ matched by *gganimate*. So, there are two ways to fix our plot:
 1.  Add some aesthetics that distinguish the different species
 
 ```{r}
-ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
-  geom_point(aes(colour = Species)) + 
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
+  geom_point(aes(colour = Species)) +
   transition_states(Species,
                     transition_length = 2,
                     state_length = 1)
@@ -170,8 +170,8 @@ ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
 2.  Set the group directly
 
 ```{r}
-ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
-  geom_point(aes(group = seq_along(Species))) + 
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
+  geom_point(aes(group = seq_along(Species))) +
   transition_states(Species,
                     transition_length = 2,
                     state_length = 1)
@@ -186,8 +186,8 @@ as keeping our (now obviously faulty) transition while having different
 colour for the different species)
 
 ```{r}
-ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
-  geom_point(aes(colour = Species, group = 1L)) + 
+ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
+  geom_point(aes(colour = Species, group = 1L)) +
   transition_states(Species,
                     transition_length = 2,
                     state_length = 1)
@@ -207,14 +207,14 @@ for modifying the state of appearing (entering) and disappearing
 state. Let's spice up our animation a bit:
 
 ```{r}
-anim <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) + 
-  geom_point(aes(colour = Species), size = 2) + 
+anim <- ggplot(iris, aes(x = Petal.Width, y = Petal.Length)) +
+  geom_point(aes(colour = Species), size = 2) +
   transition_states(Species,
                     transition_length = 2,
                     state_length = 1)
 
-anim + 
-  enter_fade() + 
+anim +
+  enter_fade() +
   exit_shrink()
 ```
 
@@ -228,8 +228,8 @@ Enter and exit functions are composable though, so you can often come
 pretty far by combining preexisting ones
 
 ```{r}
-anim + 
-  enter_fade() + enter_drift(x_mod = -1) + 
+anim +
+  enter_fade() + enter_drift(x_mod = -1) +
   exit_shrink() + exit_drift(x_mod = 5)
 ```
 
@@ -247,8 +247,8 @@ are only ever given when you ask *gganimate* to render the animation.
 When you print an animation object the `animate()` function is called on
 the animation with default arguments, some of which are:
 
--   **nframes** sets the number of frames (defaults to `100`)
--   **fps** sets the number of frames (defaults to `10`)
+-   **nframes** sets the number of frames to render (defaults to `100`)
+-   **fps** sets the frame rate of the animation in frames/sec (defaults to `10`)
 -   **dev** sets the device used to render each frame (defaults to
     `'png'`)
 -   **renderer** sets the function used to combine each frame into an
