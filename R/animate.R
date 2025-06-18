@@ -324,7 +324,7 @@ plot_dims <- function(plot, ref_frame) {
     unlink(tmpf)
   })
   frame <- plot$scene$get_frame(plot, ref_frame)
-  frame <- ggplot_gtable(frame)
+  frame <- render_frame(frame)
   widths_rel <- frame$widths
   widths <- convertWidth(widths_rel, 'mm')
   heights_rel <- frame$heights
@@ -342,3 +342,13 @@ plot_dims <- function(plot, ref_frame) {
 }
 
 is_knitting <- function() isTRUE(getOption("knitr.in.progress"))
+
+render_frame <- function(frame) {
+  class_ggplot_built <- get0("class_ggplot_built", asNamespace("ggplot2"))
+  if (is.function(class_ggplot_built)) {
+    frame <- class_ggplot_built(data = frame$data, layout = frame$layout, plot = frame$plot)
+  } else {
+    class(frame) <- "ggplot_built"
+  }
+  ggplot_gtable(frame)
+}

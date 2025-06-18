@@ -200,7 +200,7 @@ c.TransmuteFactory <- function(...) {
 }
 #' @export
 #' @importFrom ggplot2 ggplot_add
-ggplot_add.EnterFactory <- function(object, plot, object_name) {
+ggplot_add.EnterFactory <- function(object, plot, ...) {
   plot <- as.gganim(plot)
   plot$transmuters <- plot$transmuters$clone()
   plot$transmuters$add_enter(object)
@@ -208,7 +208,7 @@ ggplot_add.EnterFactory <- function(object, plot, object_name) {
 }
 #' @export
 #' @importFrom ggplot2 ggplot_add
-ggplot_add.ExitFactory <- function(object, plot, object_name) {
+ggplot_add.ExitFactory <- function(object, plot, ...) {
   plot <- as.gganim(plot)
   plot$transmuters <- plot$transmuters$clone()
   plot$transmuters$add_exit(object)

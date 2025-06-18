@@ -74,7 +74,7 @@ View <- ggproto('View', NULL,
 )
 #' @importFrom ggplot2 ggplot_add
 #' @export
-ggplot_add.View <- function(object, plot, object_name) {
+ggplot_add.View <- function(object, plot, ...) {
   plot <- as.gganim(plot)
   plot$view <- object
   plot

@@ -19,7 +19,7 @@ License: MIT + file LICENSE
 URL: https://gganimate.com, https://github.com/thomasp85/gganimate
 BugReports: https://github.com/thomasp85/gganimate/issues
 Depends: 
-    ggplot2 (>= 3.5.0)
+    ggplot2 (>= 3.5.2)
 Imports: 
     cli,
     glue,

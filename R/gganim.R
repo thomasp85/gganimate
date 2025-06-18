@@ -1,7 +1,7 @@
-#' @importFrom ggplot2 is.ggplot
+#' @importFrom ggplot2 is_ggplot
 as.gganim <- function(x) {
   if (is.gganim(x)) return(x)
-  if (!is.ggplot(x)) cli::cli_abort('Only knows how to convert {.cls ggplot} objects to gganim')
+  if (!is_ggplot(x)) cli::cli_abort('Only knows how to convert {.cls ggplot} objects to gganim')
   class(x) <- c('gganim', class(x))
   if (inherits(x, 'ggraph')) {
     cl <- class(x)
