@@ -1,3 +1,5 @@
+# gganimate (development version)
+
 # gganimate 1.0.10
 
 * Adapt to upcoming ggplot2 release
