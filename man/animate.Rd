@@ -31,8 +31,8 @@ knit_print.gganim(x, options, ...)
 \arguments{
 \item{plot, x}{A \code{gganim} object}
 
-\item{...}{Arguments passed on to the device.
-For available device arguments, see \code{\link[grDevices:png]{grDevices::png()}} or \code{\link[grDevices:cairo]{grDevices::svg()}}}
+\item{...}{Arguments passed to the device. For animated devices, include
+\code{extension} for file extension (e.g., \code{".webp"}).}
 
 \item{nframes}{The number of frames to render (default \code{100})}
 
@@ -48,10 +48,9 @@ default it will use \code{\link[=gifski_renderer]{gifski_renderer()}} if gifski 
 will use \code{\link[=magick_renderer]{magick_renderer()}} if magick is installed and then \code{\link[=av_renderer]{av_renderer()}}
 if av is installed. If all fails it will use the \code{\link[=file_renderer]{file_renderer()}})}
 
-\item{device}{The device to use for rendering the single frames. Possible
-values are \code{'png'}, \code{'ragg_png'} (requires the ragg package), \code{'jpeg'},
-\code{'tiff'}, \code{'bmp'}, \code{'svg'}, and \code{'svglite'} (requires the svglite package).
-(default \code{'png'})}
+\item{device}{Device for rendering frames. Use string names for file-based devices
+('png', 'ragg_png', 'jpeg', 'tiff', 'bmp', 'svg', 'svglite', 'current') or
+pass device functions directly for animated devices (e.g., \code{agg_webp_anim}).}
 
 \item{ref_frame}{The frame to use for fixing dimensions of the plot, e.g. the
 space available for axis text. Defaults to the first frame. Negative values

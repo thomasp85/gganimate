@@ -1,5 +1,10 @@
 # gganimate (development version)
 
+* Add support for animated devices that can handle multiple frames in one session.
+  You can now pass device functions directly to the `device` parameter (e.g., 
+  `device = agg_webp_anim`) and specify the output file extension with the 
+  `extension` parameter. Use `animated_renderer()` to handle the output.
+
 # gganimate 1.0.11
 
 * Fix an issue with label rendering in ggplot2 v4

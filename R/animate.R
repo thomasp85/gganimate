@@ -22,18 +22,17 @@
 #' default it will use [gifski_renderer()] if gifski is installed. If not it
 #' will use [magick_renderer()] if magick is installed and then [av_renderer()]
 #' if av is installed. If all fails it will use the [file_renderer()])
-#' @param device The device to use for rendering the single frames. Possible
-#' values are `'png'`, `'ragg_png'` (requires the ragg package), `'jpeg'`,
-#' `'tiff'`, `'bmp'`, `'svg'`, and `'svglite'` (requires the svglite package).
-#' (default `'png'`)
+#' @param device Device for rendering frames. Use string names for file-based devices
+#'   ('png', 'ragg_png', 'jpeg', 'tiff', 'bmp', 'svg', 'svglite', 'current') or
+#'   pass device functions directly for animated devices (e.g., `agg_webp_anim`).
 #' @param ref_frame The frame to use for fixing dimensions of the plot, e.g. the
 #' space available for axis text. Defaults to the first frame. Negative values
 #' counts backwards (-1 is the last frame) (default `1`)
 #' @param start_pause,end_pause Number of times to repeat the first and last
 #' frame in the animation (default is `0` for both)
 #' @param rewind Should the animation roll back in the end (default `FALSE`)
-#' @param ... Arguments passed on to the device.
-#' For available device arguments, see [grDevices::png()] or [grDevices::svg()]
+#' @param ... Arguments passed to the device. For animated devices, include
+#'   `extension` for file extension (e.g., `".webp"`).
 #'
 #' @return The return value of the [renderer][renderers] function
 #'
@@ -86,9 +85,9 @@
 #' Consult the documentation for these for more detail.
 #'
 #' @importFrom grid grid.newpage grid.draw convertWidth convertHeight
-#' @importFrom grDevices png jpeg tiff bmp svg dev.off
+#' @importFrom grDevices png jpeg tiff bmp svg dev.off dev.cur dev.flush
 #' @importFrom progress progress_bar
-#' @importFrom ggplot2 ggplot_gtable ggplot_build
+#' @importFrom ggplot2 ggplot_gtable ggplot_build ggplot labs
 #' @export
 #'
 #' @examples
@@ -154,7 +153,7 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
 
   frame_ind <- unique0(round(seq(1, nframes_final, length.out = args$nframes)))
 
-  if (args$device == 'current') {
+  if (is.character(args$device) && args$device == 'current') {
     frame_ind <- c(rep(frame_ind[1], args$start_pause), frame_ind, rep(frame_ind[length(frame_ind)], args$end_pause))
     if (args$rewind) frame_ind <- c(frame_ind, rev(frame_ind))
     if (args$ref_frame < 0) {
@@ -171,15 +170,16 @@ animate.gganim <- function(plot, nframes, fps, duration, detail, renderer, devic
 
   if (args$ref_frame < 0) args$ref_frame <- nframes_final + 1 + args$ref_frame
 
-  frames_vars <- inject(draw_frames(plot = plot, frames = frame_ind, device = args$device, ref_frame = args$ref_frame, !!!args$dev_args))
-  if (args$device == 'current') return(invisible(frames_vars))
+  if (is.function(args$device)) {
+    animation <- render_with_animated_device(plot, frame_ind, args)
+    frame_data <- attr(animation, "frame_data")
+  } else {
+    frame_data <- inject(draw_frames(plot = plot, frames = frame_ind, device = args$device, ref_frame = args$ref_frame, !!!args$dev_args))
+    if (is.character(args$device) && args$device == 'current') return(invisible(frame_data))
 
-  if (args$start_pause != 0) frames_vars <- vec_rbind0(frames_vars[rep(1, args$start_pause), , drop = FALSE], frames_vars)
-  if (args$end_pause != 0) frames_vars <- vec_rbind0(frames_vars, frames_vars[rep(nrow(frames_vars), args$end_pause), , drop = FALSE])
-  if (args$rewind) frames_vars <- vec_rbind0(frames_vars, frames_vars[rev(seq_len(orig_nframes - nrow(frames_vars))), , drop = FALSE])
-
-  animation <- args$renderer(frames_vars$frame_source, args$fps)
-  attr(animation, 'frame_vars') <- frames_vars
+    animation <- render_with_file_device(frame_data, args, orig_nframes)
+  }
+  attr(animation, "frame_vars") <- frame_data
   set_last_animation(animation)
   animation
 }
@@ -218,13 +218,18 @@ prepare_args <- function(nframes, fps, duration, detail, renderer, device, ref_f
   }
   args$detail <- detail %?% chunk_args$detail %||% getOption('gganimate.detail', 1)
   args$renderer <- renderer %?% chunk_args$renderer %||% getOption('gganimate.renderer', def_ren$renderer)
-  args$device <- tolower(device %?% chunk_args$device %||% getOption('gganimate.device', 'png'))
-  if (args$device == 'svglite') {
-    check_installed('svglite', 'to use the svglite device')
+  device_value <- device %?% chunk_args$device %||% getOption('gganimate.device', 'png')
+  args$device <- if (is.function(device_value)) device_value else tolower(device_value)
+
+  if (!is.function(args$device)) {
+    if (args$device == 'svglite') {
+      check_installed('svglite', 'to use the svglite device')
+    }
+    if (args$device == 'ragg_png') {
+      check_installed('ragg', 'to use the ragg_png device')
+    }
   }
-  if (args$device == 'ragg_png') {
-    check_installed('ragg', 'to use the ragg_png device')
-  }
+
   args$ref_frame <- ref_frame %?% chunk_args$ref_frame %||% getOption('gganimate.ref_frame', 1)
   args$start_pause <- start_pause %?% chunk_args$start_pause %||% getOption('gganimate.start_pause', 0)
   args$end_pause <- end_pause %?% chunk_args$end_pause %||% getOption('gganimate.end_pause', 0)
@@ -244,6 +249,10 @@ prerender <- function(plot, nframes) {
 # Returns a data.frame of frame metadata with image location in frame_source
 # column
 draw_frames <- function(plot, frames, device, ref_frame, ...) {
+  if (is.function(device)) {
+    return(draw_frames_animated(plot, frames, device, ref_frame, ...))
+  }
+
   stream <- device == 'current'
 
   dims <- try_fetch(
@@ -311,14 +320,93 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
     if (!stream) dev.off()
   }
 
-  frame_vars <- plot$scene$frame_vars[frames, , drop = FALSE]
-  if (!stream) frame_vars$frame_source <- files
-  frame_vars
+  frame_data <- plot$scene$frame_vars[frames, , drop = FALSE]
+  if (!stream) frame_data$frame_source <- files
+  frame_data
 }
+
+draw_frames_animated <- function(plot, frames, device_fn, ref_frame, ...) {
+  if (!is.function(device_fn)) {
+    cli::cli_abort("Animated device must be a function")
+  }
+
+  args <- list(...)
+  extension <- args$extension %||% ".out"
+  output_file <- tempfile(fileext = extension)
+
+  device_params <- names(formals(device_fn))
+  device_args <- args[names(args) %in% device_params]
+  device_args$filename <- output_file
+
+  try_fetch(
+    do.call(device_fn, device_args),
+    error = function(e) {
+      cli::cli_abort("Failed to initialize animated device", parent = e)
+    }
+  )
+
+  on.exit({
+    if (dev.cur() != 1) dev.off()
+  })
+
+  dims <- try_fetch(
+    plot_dims(plot, ref_frame),
+    error = function(e) {
+      cli::cli_warn(
+        "Cannot get dimensions of plot table. Plot region might not be fixed",
+        parent = e
+      )
+      list(widths = NULL, heights = NULL)
+    }
+  )
+
+  pb <- progress_bar$new(
+    "Rendering animated [:bar] at :fps fps ~ eta: :eta",
+    total = length(frames)
+  )
+  start <- Sys.time()
+  pb$tick(0)
+
+  for (i in seq_along(frames)) {
+    grid.newpage()
+    try_fetch(
+      plot$scene$plot_frame(
+        plot, frames[i],
+        newpage = FALSE,
+        widths = dims$widths,
+        heights = dims$heights
+      ),
+      error = function(e) {
+        cli::cli_warn("Failed to plot frame", parent = e)
+      }
+    )
+    dev.flush()
+
+    rate <- i / as.double(Sys.time() - start, units = "secs")
+    if (is.nan(rate)) rate <- 0
+    rate <- format(rate, digits = 2)
+    pb$tick(tokens = list(fps = rate))
+  }
+
+  frame_data <- plot$scene$frame_vars[frames, , drop = FALSE]
+  frame_data$frame_source <- rep(output_file, length(frames))
+
+  dev.off()
+  on.exit(NULL)
+
+  frame_data
+}
+
+
 # Get dimensions of plot based on a reference frame
 plot_dims <- function(plot, ref_frame) {
   tmpf <- tempfile()
-  png(tmpf)
+  try_fetch(
+    png(tmpf),
+    error = function(e) {
+      cli::cli_abort("Failed to create temporary graphics device", parent = e)
+    }
+  )
   on.exit({
     dev.off()
     unlink(tmpf)
@@ -339,6 +427,21 @@ plot_dims <- function(plot, ref_frame) {
   widths[null_widths] <- widths_rel[null_widths]
   heights[null_heights] <- heights_rel[null_heights]
   list(widths = widths, heights = heights)
+}
+
+render_with_animated_device <- function(plot, frame_ind, args) {
+  frame_data <- inject(draw_frames_animated(plot = plot, frames = frame_ind, device_fn = args$device, ref_frame = args$ref_frame, !!!args$dev_args))
+  animation <- unique(frame_data$frame_source)[1]
+  attr(animation, "frame_data") <- frame_data
+  animation
+}
+
+render_with_file_device <- function(frame_data, args, orig_nframes) {
+  if (args$start_pause != 0) frame_data <- vec_rbind0(frame_data[rep(1, args$start_pause), , drop = FALSE], frame_data)
+  if (args$end_pause != 0) frame_data <- vec_rbind0(frame_data, frame_data[rep(nrow(frame_data), args$end_pause), , drop = FALSE])
+  if (args$rewind) frame_data <- vec_rbind0(frame_data, frame_data[rev(seq_len(orig_nframes - nrow(frame_data))), , drop = FALSE])
+
+  args$renderer(frame_data$frame_source, args$fps)
 }
 
 is_knitting <- function() isTRUE(getOption("knitr.in.progress"))

@@ -63,6 +63,7 @@
 #' - **`av_renderer`**: Returns a [video_file] object
 #' - **`ffmpeg_renderer`**: Returns a [video_file] object
 #' - **`file_renderer`**: Returns a vector of file paths
+#' - **`animated_renderer`**: Returns a file path to the animated output
 #'
 #' @name renderers
 #' @rdname renderers
@@ -216,6 +217,20 @@ sprite_renderer <- function() {
     file <- tempfile(fileext = '.png')
     magick::image_write(sprite, file, 'png')
     sprite_file(file, fps, width = single_dim$width, full_width = full_dim$width, height = single_dim$height)
+  }
+}
+#' @rdname renderers
+#' @export
+animated_renderer <- function() {
+  function(frames, fps) {
+    # For animated devices, all frame paths are the same file
+    output_file <- unique(frames)[1]
+
+    if (!file.exists(output_file)) {
+      cli::cli_abort("Animated output file not found: {output_file}")
+    }
+
+    output_file
   }
 }
 

@@ -8,6 +8,7 @@
 \alias{ffmpeg_renderer}
 \alias{magick_renderer}
 \alias{sprite_renderer}
+\alias{animated_renderer}
 \title{Renderers provided by gganimate}
 \usage{
 gifski_renderer(file = NULL, loop = TRUE, width = NULL, height = NULL)
@@ -25,6 +26,8 @@ ffmpeg_renderer(
 magick_renderer(loop = TRUE)
 
 sprite_renderer()
+
+animated_renderer()
 }
 \arguments{
 \item{file}{The animation file}
@@ -72,6 +75,7 @@ The return type of the different returned renderers are:
 \item \strong{\code{av_renderer}}: Returns a \link{video_file} object
 \item \strong{\code{ffmpeg_renderer}}: Returns a \link{video_file} object
 \item \strong{\code{file_renderer}}: Returns a vector of file paths
+\item \strong{\code{animated_renderer}}: Returns a file path to the animated output
 }
 }
 \description{
