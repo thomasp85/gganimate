@@ -3,7 +3,7 @@ create_scene <- function(transition, view, shadow, ease, transmuters, nframes) {
   if (is.null(nframes)) nframes <- 100
   ggproto(NULL, Scene, transition = transition, view = view, shadow = shadow, ease = ease, transmuters = transmuters, nframes = nframes)
 }
-#' @importFrom ggplot2 ggproto ggplot_gtable
+#' @importFrom ggplot2 ggproto ggplot_gtable labs
 #' @importFrom glue glue_data
 #' @importFrom grid grid.newpage grid.draw seekViewport pushViewport upViewport
 Scene <- ggproto('Scene', NULL,
