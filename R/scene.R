@@ -158,7 +158,7 @@ Scene <- ggproto('Scene', NULL,
       })
       if (orig_call) {
         new_label[[1]]
-      } else if (is_expression(label)) {
+      } else if (is.expression(label)) {
         as.expression(new_label)
       } else {
         unlist(new_label)
