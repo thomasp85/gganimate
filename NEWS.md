@@ -1,5 +1,7 @@
 # gganimate (development version)
 
+* Fix an issue with label rendering in ggplot2 v4
+
 # gganimate 1.0.10
 
 * Adapt to upcoming ggplot2 release

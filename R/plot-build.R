@@ -15,6 +15,11 @@ ggplot_build.gganim <- function(plot, ...) {
 
   scales <- plot$scales
 
+  # Allow all layers to make any final adjustments based
+  # on raw input data and plot info
+  data <- by_layer(function(l, d) l$layer_data(plot$data), layers, data, "computing layer data")
+  data <- by_layer(function(l, d) l$setup_layer(d, plot), layers, data, "setting up layer")
+
   # gganimate
   # Extract scale names and merge it with label list
   scale_labels <- lapply(scales$scales, `[[`, 'name')
@@ -27,16 +32,9 @@ ggplot_build.gganim <- function(plot, ...) {
   setup_plot_labels <- get0("setup_plot_labels", asNamespace("ggplot2"))
   if (is.function(setup_plot_labels)) {
     plot$labels <- setup_plot_labels(plot, layers, data)
-  } else {
-    plot$labels[names(scale_labels)] <- scale_labels
   }
+  plot$labels[names(scale_labels)] <- scale_labels
   # --
-
-
-  # Allow all layers to make any final adjustments based
-  # on raw input data and plot info
-  data <- by_layer(function(l, d) l$layer_data(plot$data), layers, data, "computing layer data")
-  data <- by_layer(function(l, d) l$setup_layer(d, plot), layers, data, "setting up layer")
 
   # Initialise panels, add extra data for margins & missing faceting
   # variables, and add on a PANEL variable to data
