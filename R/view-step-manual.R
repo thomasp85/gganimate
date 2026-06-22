@@ -73,7 +73,7 @@ ViewStepManual <- ggproto('ViewStepManual', ViewStep,
       }
     }
     frame_ranges <- frame_ranges[seq_len(params$nframes), , drop = FALSE]
-    frame_ranges$.frame <- (seq_len(nrow(frame_ranges)) + round(params$delay * frames$mod)) %% params$nframes
+    frame_ranges$.frame <- ((seq_len(nrow(frame_ranges)) -1L) + round(params$delay * frames$mod)) %% params$nframes
     frame_ranges <- frame_ranges[order(frame_ranges$.frame), ]
     params$frame_ranges <- frame_ranges
     params
