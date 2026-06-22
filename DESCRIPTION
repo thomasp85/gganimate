@@ -46,7 +46,8 @@ Suggests:
     rmarkdown,
     sf,
     svglite,
-    testthat
+    testthat,
+    xml2
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

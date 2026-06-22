@@ -246,32 +246,21 @@ prerender <- function(plot, nframes) {
 draw_frames <- function(plot, frames, device, ref_frame, ...) {
   stream <- device == 'current'
 
-  dims <- try_fetch(
-    plot_dims(plot, ref_frame),
-    error = function(e) {
-      cli::cli_warn('Cannot get dimensions of plot table. Plot region might not be fixed', parent = e)
-      list(widths = NULL, heights = NULL)
-    }
-  )
-
-  dir <- tempfile(pattern = '')
-  dir.create(dir, showWarnings = FALSE)
-  files <- file.path(dir, sprintf('gganim_plot%04d', seq_along(frames)))
-  files <- switch(
+  ext <- switch(
     tolower(device),
     ragg_png = ,
-    png = paste0(files, '.png'),
+    png = '.png',
     jpg = ,
-    jpeg = paste0(files, '.jpg'),
+    jpeg = '.jpg',
     tif = ,
-    tiff = paste0(files, '.tif'),
-    bmp = paste0(files, '.bmp'),
+    tiff = '.tif',
+    bmp = '.bmp',
     svglite = ,
-    svg = paste0(files, '.svg'),
-    current = files,
+    svg = '.svg',
+    current = '',
     cli::cli_abort('Unsupported device: {device}')
   )
-  device <- switch(
+  device_fn <- switch(
     device,
     ragg_png = ragg::agg_png,
     png = png,
@@ -281,10 +270,25 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
     tiff = tiff,
     bmp = bmp,
     svg = svg,
-    svglite = svglite::svglite
+    svglite = svglite::svglite,
+    current = png
   )
   args <- list(...)
-  args <- args[names(args) %in% names(formals(device))]
+  args <- args[names(args) %in% names(formals(device_fn))]
+
+  dims <- try_fetch(
+    plot_dims(plot, ref_frame, device = device_fn, dev_args = args),
+    error = function(e) {
+      cli::cli_warn('Cannot get dimensions of plot table. Plot region might not be fixed', parent = e)
+      list(widths = NULL, heights = NULL)
+    }
+  )
+
+  dir <- tempfile(pattern = '')
+  dir.create(dir, showWarnings = FALSE)
+  files <- file.path(dir, sprintf('gganim_plot%04d', seq_along(frames)))
+  files <- if (stream) files else paste0(files, ext)
+  device <- device_fn
 
   pb <- progress_bar$new(
     'Rendering [:bar] at :fps fps ~ eta: :eta',
@@ -316,9 +320,9 @@ draw_frames <- function(plot, frames, device, ref_frame, ...) {
   frame_vars
 }
 # Get dimensions of plot based on a reference frame
-plot_dims <- function(plot, ref_frame) {
+plot_dims <- function(plot, ref_frame, device = png, dev_args = list()) {
   tmpf <- tempfile()
-  png(tmpf)
+  inject(device(tmpf, !!!dev_args))
   on.exit({
     dev.off()
     unlink(tmpf)
