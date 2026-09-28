@@ -97,7 +97,7 @@ ViewStep <- ggproto('ViewStep', View,
       pause_length <- c(0, pause_length)
       step_length <- c(step_length, 0)
       look_ahead <- c(look_ahead, look_ahead[1])
-      if (!params$wrap) pause_length[length(pause_length)] <- 0
+      if (!params$wrap) step_length[length(step_length) - 1] <- 0
     } else if (!params$wrap) {
       step_length[length(step_length)] <- 0
     }

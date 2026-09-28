@@ -1,5 +1,9 @@
 # gganimate (development version)
 
+* Fix `view_step()` ignoring `wrap = FALSE` (#499), without regressing the
+  timing of the default `wrap = TRUE` case as an earlier attempt at this fix
+  did
+
 # gganimate 1.0.11
 
 * Fix an issue with label rendering in ggplot2 v4
