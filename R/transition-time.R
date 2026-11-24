@@ -109,6 +109,9 @@ TransitionTime <- ggproto('TransitionTime', Transition,
     time <- suppressWarnings(as.integer(row_time$time))
     states <- split(data, time)
     times <- as.integer(names(states))
+    first_frame <- max(1, times[1])
+    last_frame <- min(times[length(times)], params$nframes)
+    if (first_frame > last_frame) return(data[0, , drop = FALSE])
     nframes <- diff(times)
     nframes[1] <- nframes[1] + 1
 
@@ -134,8 +137,12 @@ TransitionTime <- ggproto('TransitionTime', Transition,
         cli::cli_abort('{type} layers not currently supported by {.fun transition_time}')
       )
     }
-    true_frame <- seq(max(1, times[1]), min(times[length(times)], params$nframes))
-    all_frames <- all_frames[all_frames$.frame %in% true_frame, , drop = FALSE]
+    # Tweening starts at frame 1, even when the first state precedes the range.
+    if (times[1] < 1) {
+      all_frames$.frame <- all_frames$.frame + times[1] - 1
+    }
+    keep <- all_frames$.frame >= first_frame & all_frames$.frame <= last_frame
+    all_frames <- all_frames[keep, , drop = FALSE]
     all_frames$group <- paste0(all_frames$group, '<', all_frames$.frame, '>')
     all_frames$.frame <- NULL
     all_frames
